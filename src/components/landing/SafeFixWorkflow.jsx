@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { AlertTriangle, Search, Shield, CheckCircle2, ArrowRight } from 'lucide-react';
-import { useRef } from 'react';
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
 const STEPS = [
   {
@@ -43,21 +44,25 @@ const STEPS = [
 ];
 
 const MODES = [
-  { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',       color: '#3b82f6' },
-  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',         color: '#2dd4bf' },
-  { label: 'Auto-Fix (Low Risk)', desc: 'Auto-apply pre-approved safe patterns',         color: '#f59e0b' },
-  { label: 'Full Autopilot',      desc: 'AI handles everything within defined bounds',   color: '#34d399' },
+  { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',     color: '#3b82f6' },
+  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#2dd4bf' },
+  { label: 'Auto-Fix (Low Risk)', desc: 'Auto-apply pre-approved safe patterns',       color: '#f59e0b' },
+  { label: 'Full Autopilot',      desc: 'AI handles everything within defined bounds', color: '#34d399' },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.07 } }),
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
+};
+const itemVar = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
 };
 
 export default function SafeFixWorkflow() {
   const [activeStep, setActiveStep] = useState(1);
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: '-80px' });
+  const inView = useInView(sectionRef, { once: true, margin: '-60px' });
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -70,56 +75,63 @@ export default function SafeFixWorkflow() {
     <section
       ref={sectionRef}
       id="safefix"
-      className="relative py-28 overflow-hidden"
-      style={{ backgroundColor: '#0a0a0a' }}
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ backgroundColor: '#080808' }}
     >
       {/* Glows */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(16,185,129,0.09) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(16,185,129,0.07) 0%, transparent 70%)' }}
       />
       <div
         className="absolute bottom-0 left-0 w-[500px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 55% 50% at 20% 100%, rgba(59,130,246,0.07) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 55% 50% at 20% 100%, rgba(59,130,246,0.06) 0%, transparent 70%)' }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Header */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
+
+        {/* ── Header ── */}
         <motion.div
-          className="text-center mb-16"
-          initial="hidden" animate={inView ? 'show' : 'hidden'}
-          variants={fadeUp} custom={0}
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-emerald-500/25 text-emerald-400 bg-emerald-500/8 mb-5">
+          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-emerald-500/20 text-emerald-500/60 mb-5">
             SafeFix Workflow
           </span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
+          <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-5 max-w-3xl mx-auto">
             Not a Black Box.{' '}
             <span className="text-gradient-violet">A Dimmer Switch.</span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
             Every AI decision is explainable and every fix is dry-run validated before it touches production.
             You set the autonomy level — per cluster, per namespace, per risk tier.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          {/* Steps — 3 cols */}
-          <div className="lg:col-span-3 space-y-3">
-            {STEPS.map((step, i) => {
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 items-start">
+
+          {/* ── Steps ── */}
+          <motion.div
+            className="lg:col-span-3 space-y-3"
+            variants={container}
+            initial="hidden"
+            animate={inView ? 'show' : 'hidden'}
+          >
+            {STEPS.map((step) => {
               const Icon = step.icon;
               const isActive = activeStep === step.id;
               return (
                 <motion.div
                   key={step.id}
+                  variants={itemVar}
+                  onClick={() => setActiveStep(step.id)}
                   className={`relative p-5 rounded-2xl border cursor-pointer transition-all duration-300 overflow-hidden ${
                     isActive
                       ? 'border-white/20 bg-white/[0.05]'
                       : 'border-white/[0.07] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.035]'
                   }`}
-                  initial="hidden" animate={inView ? 'show' : 'hidden'}
-                  variants={fadeUp} custom={i + 1}
-                  onClick={() => setActiveStep(step.id)}
                 >
                   {/* Active left accent */}
                   {isActive && (
@@ -129,7 +141,15 @@ export default function SafeFixWorkflow() {
                     />
                   )}
 
-                  <div className="flex items-start gap-4 pl-1">
+                  {/* Hover glow */}
+                  {isActive && (
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{ background: `radial-gradient(ellipse 60% 80% at 0% 50%, ${step.accent}08, transparent 70%)` }}
+                    />
+                  )}
+
+                  <div className="relative flex items-start gap-4 pl-1">
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5 border transition-all duration-300"
                       style={{
@@ -185,15 +205,16 @@ export default function SafeFixWorkflow() {
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Approval modes — 2 cols */}
+          {/* ── Approval modes ── */}
           <motion.div
             className="lg:col-span-2"
-            initial="hidden" animate={inView ? 'show' : 'hidden'}
-            variants={fadeUp} custom={5}
+            initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+            animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+            transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
           >
-            <div className="card-specular rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6">
+            <div className="bento-card p-6">
               <div className="mb-5">
                 <h3 className="text-white font-bold text-base mb-1">Approval Modes</h3>
                 <p className="text-slate-500 text-xs">A spectrum, not a toggle — configure per cluster or namespace</p>
@@ -201,18 +222,22 @@ export default function SafeFixWorkflow() {
 
               <div className="space-y-2.5">
                 {MODES.map((m, i) => (
-                  <motion.div
+                  <div
                     key={m.label}
                     className="group flex items-center justify-between p-3.5 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.14] transition-all duration-200 cursor-default"
-                    initial="hidden" animate={inView ? 'show' : 'hidden'}
-                    variants={fadeUp} custom={i + 6}
                   >
-                    <div>
-                      <div className="text-sm font-medium text-white/80 mb-0.5">{m.label}</div>
-                      <div className="text-xs text-slate-600">{m.desc}</div>
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-1.5 h-6 rounded-full shrink-0"
+                        style={{ background: m.color, opacity: 0.7 }}
+                      />
+                      <div>
+                        <div className="text-sm font-medium text-white/80 mb-0.5">{m.label}</div>
+                        <div className="text-xs text-slate-600">{m.desc}</div>
+                      </div>
                     </div>
                     <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-white/50 group-hover:translate-x-0.5 transition-all duration-200" />
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 

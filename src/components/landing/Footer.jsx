@@ -15,15 +15,16 @@ export default function Footer() {
       className="relative border-t border-white/[0.07] overflow-hidden"
       style={{ backgroundColor: '#000000' }}
     >
-      {/* Subtle bottom glow */}
+      {/* Subtle glow */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(59,130,246,0.05) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(59,130,246,0.04) 0%, transparent 70%)' }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 mb-14">
-          {/* Brand col — 2 spans */}
+
+          {/* ── Brand col ── */}
           <div className="md:col-span-2">
             <OrkastorLogo size={30} showWordmark className="mb-5" />
             <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-[240px]">
@@ -50,10 +51,10 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* ── Link columns ── */}
           {Object.entries(LINKS).map(([category, links]) => (
             <div key={category} className="md:col-span-1">
-              <h3 className="text-white text-xs font-semibold uppercase tracking-widest mb-4">{category}</h3>
+              <h3 className="text-white text-xs font-semibold uppercase tracking-[0.12em] mb-4">{category}</h3>
               <ul className="space-y-2.5">
                 {links.map(link => (
                   <li key={link}>
@@ -70,8 +71,9 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/[0.06] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* ── Bottom bar ── */}
+        <div className="section-divider mb-8" />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <OrkastorLogo size={18} showWordmark={false} />
             <p className="text-slate-700 text-xs">

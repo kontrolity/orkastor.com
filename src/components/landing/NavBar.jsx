@@ -12,10 +12,10 @@ const NAV_LINKS = [
 ];
 
 export default function NavBar() {
-  const [scrolled, setScrolled]   = useState(false);
-  const [menuOpen, setMenuOpen]   = useState(false);
-  const [visible, setVisible]     = useState(true);
-  const lastScrollY               = React.useRef(0);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible]   = useState(true);
+  const lastScrollY              = React.useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -30,38 +30,33 @@ export default function NavBar() {
 
   return (
     <>
-      {/* Announcement bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-brand-cyan/10 via-brand-violet/10 to-brand-cyan/10 border-b border-white/5 py-2 px-4 text-center text-xs text-slate-400">
+      {/* ── Announcement bar ── */}
+      <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.05] py-2 px-4 text-center text-xs text-slate-400"
+           style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
         <span className="inline-flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-blue-500/15 border border-blue-500/25 rounded-full text-blue-400 text-[11px] font-semibold tracking-wide uppercase">
-            Private Beta
-          </span>
-          <span className="hidden sm:inline">The only AI SRE where inference runs inside your environment — join 1,200+ engineers</span>
-          <span className="sm:hidden">Early access open</span>
-          <a href="#cta" className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors">
-            Apply →
+          <a href="#cta" className="badge-pill group">
+            <span className="pill-tag">Private Beta</span>
+            <span className="hidden sm:inline">In-environment AI inference — join 1,200+ engineers</span>
+            <span className="sm:hidden">Early access open</span>
+            <ChevronRight className="w-3 h-3 text-blue-400/60 group-hover:translate-x-0.5 transition-transform" />
           </a>
         </span>
       </div>
 
-      {/* Nav bar */}
+      {/* ── Nav bar ── */}
       <motion.header
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
         className={`fixed top-[33px] left-0 right-0 z-50 transition-all duration-[400ms] ${
-          scrolled
-            ? 'glass-dark border-b border-white/[0.07]'
-            : 'bg-transparent'
+          scrolled ? 'glass-dark border-b border-white/[0.07]' : 'bg-transparent'
         }`}
       >
         {/* Specular bottom border on scroll */}
         {scrolled && (
           <div
             className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-            style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.3) 30%, rgba(16,185,129,0.2) 70%, transparent 100%)',
-            }}
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.3) 30%, rgba(16,185,129,0.2) 70%, transparent 100%)' }}
           />
         )}
 
@@ -109,14 +104,14 @@ export default function NavBar() {
         </div>
       </motion.header>
 
-      {/* Mobile menu */}
+      {/* ── Mobile menu ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             key="mobile-menu"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
             transition={{ duration: 0.2 }}
             className="fixed top-[109px] left-3 right-3 z-50 glass-dark rounded-2xl p-4 md:hidden border border-white/[0.08]"
           >

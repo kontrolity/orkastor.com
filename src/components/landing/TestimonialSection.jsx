@@ -1,14 +1,15 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Star } from 'lucide-react';
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
 const FEATURED = {
   quote: "Orkastor reduced our P0 response time from 45 minutes to under 2 minutes. The AI's root cause analysis is eerily accurate — it caught a memory leak we'd been chasing for months within 8 seconds. Our on-call rotation is finally sustainable.",
   author: 'Sarah Chen',
   role: 'Principal SRE',
   company: 'FinTech Corp',
-  avatar: 'SC',
-  accentColor: '#3b82f6',
+  initials: 'SC',
 };
 
 const OTHERS = [
@@ -17,123 +18,156 @@ const OTHERS = [
     author: 'Marcus Rodriguez',
     role: 'VP Engineering',
     company: 'CloudScale',
-    avatar: 'MR',
-    accentColor: '#10b981',
+    initials: 'MR',
+    accent: '#10b981',
   },
   {
     quote: "The runbook automation alone saved us 20+ engineer-hours per week. The CLI is a genuine joy to use — feels like it was designed by someone who actually does on-call.",
     author: 'Alex Kim',
     role: 'Staff Engineer',
     company: 'DataPipe',
-    avatar: 'AK',
-    accentColor: '#60a5fa',
+    initials: 'AK',
+    accent: '#60a5fa',
   },
   {
     quote: "We tried 3 other AIOps tools before Orkastor. None of them ran in our private cluster. The zero-data-exfiltration guarantee made the security review a non-event.",
     author: 'Priya Nair',
     role: 'Head of Platform',
     company: 'HealthStream',
-    avatar: 'PN',
-    accentColor: '#34d399',
+    initials: 'PN',
+    accent: '#34d399',
   },
 ];
 
-function Avatar({ initials }) {
+function Stars() {
+  return (
+    <div className="flex gap-1 mb-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      ))}
+    </div>
+  );
+}
+
+function InitialAvatar({ initials, accent }) {
   return (
     <div
-      className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold border text-slate-400"
-      style={{ background: 'rgba(255,255,255,0.07)', borderColor: 'rgba(255,255,255,0.14)' }}
+      className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-xs font-bold border"
+      style={{
+        background: accent ? `${accent}12` : 'rgba(255,255,255,0.06)',
+        borderColor: accent ? `${accent}28` : 'rgba(255,255,255,0.12)',
+        color: accent || '#94a3b8',
+      }}
     >
       {initials}
     </div>
   );
 }
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.55, delay: i * 0.08 } }),
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
+};
+const itemVar = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
 };
 
 export default function TestimonialSection() {
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: '-80px' });
+  const inView = useInView(sectionRef, { once: true, margin: '-60px' });
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-28 overflow-hidden"
-      style={{ backgroundColor: '#000000' }}
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ backgroundColor: '#080808' }}
     >
       {/* Emerald glow */}
       <div
-        className="absolute top-1/4 right-0 w-[600px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(16,185,129,0.08) 0%, transparent 70%)' }}
+        className="absolute top-1/4 right-0 w-[500px] h-[400px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(16,185,129,0.06) 0%, transparent 70%)' }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Header */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
+
+        {/* ── Header ── */}
         <motion.div
           className="text-center mb-14"
-          initial="hidden" animate={inView ? 'show' : 'hidden'}
-          variants={fadeUp} custom={0}
+          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-white/[0.10] text-white/[0.30] mb-5">
+          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
             Social Proof
           </span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-4 max-w-3xl mx-auto">
             Trusted by{' '}
             <span className="text-gradient-brand">Engineering Teams</span>
           </h2>
+          <p className="text-slate-500 text-base max-w-lg mx-auto">
+            From fintech to healthtech — teams that can't compromise on data privacy.
+          </p>
         </motion.div>
 
-        {/* Featured testimonial */}
+        {/* ── Featured testimonial ── */}
         <motion.div
-          className="card-specular relative p-8 md:p-10 rounded-2xl border border-white/[0.1] bg-white/[0.035] mb-5 overflow-hidden"
-          initial="hidden" animate={inView ? 'show' : 'hidden'}
-          variants={fadeUp} custom={1}
+          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 0.65, delay: 0.1, ease: EASE_OUT_EXPO }}
+          className="bento-card p-8 md:p-10 mb-4 relative"
         >
           {/* Glow corner */}
           <div
-            className="absolute top-0 right-0 w-64 h-64 pointer-events-none"
-            style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)' }}
+            className="absolute top-0 right-0 w-72 h-72 pointer-events-none"
+            style={{ background: 'radial-gradient(circle at 100% 0%, rgba(59,130,246,0.06) 0%, transparent 70%)' }}
           />
 
-          <Quote className="w-10 h-10 mb-6 text-white/[0.15]" />
+          <Stars />
 
-          <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-8 max-w-4xl">
+          <blockquote className="text-lg md:text-xl font-medium text-white/90 leading-relaxed mb-8 max-w-4xl">
             "{FEATURED.quote}"
           </blockquote>
 
-          <div className="flex items-center gap-4">
-            <Avatar initials={FEATURED.avatar} />
+          <div className="flex items-center gap-4 pt-6 border-t border-white/[0.06]">
+            <InitialAvatar initials={FEATURED.initials} accent="#3b82f6" />
             <div>
-              <div className="text-white font-semibold">{FEATURED.author}</div>
-              <div className="text-slate-500 text-sm">{FEATURED.role} · {FEATURED.company}</div>
+              <div className="text-white font-semibold text-sm">{FEATURED.author}</div>
+              <div className="text-slate-500 text-xs mt-0.5">{FEATURED.role} · {FEATURED.company}</div>
+            </div>
+            <div className="ml-auto hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/6">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              <span className="text-[10px] text-blue-400 font-medium">Verified customer</span>
             </div>
           </div>
         </motion.div>
 
-        {/* Supporting testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {OTHERS.map((t, i) => (
+        {/* ── Supporting testimonials ── */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          variants={container}
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+        >
+          {OTHERS.map(t => (
             <motion.div
               key={t.author}
-              className="card-specular p-6 rounded-2xl border border-white/[0.07] bg-white/[0.025] hover:border-white/[0.13] hover:bg-white/[0.04] transition-all duration-300"
-              initial="hidden" animate={inView ? 'show' : 'hidden'}
-              variants={fadeUp} custom={i + 2}
+              variants={itemVar}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="bento-card group p-6"
             >
-              <Quote className="w-6 h-6 mb-4 text-white/[0.12]" />
+              <Stars />
               <p className="text-slate-300 text-sm leading-relaxed mb-6">"{t.quote}"</p>
-              <div className="flex items-center gap-3">
-                <Avatar initials={t.avatar} />
+              <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
+                <InitialAvatar initials={t.initials} accent={t.accent} />
                 <div>
                   <div className="text-white font-medium text-sm">{t.author}</div>
-                  <div className="text-slate-600 text-xs">{t.role} · {t.company}</div>
+                  <div className="text-slate-600 text-xs mt-0.5">{t.role} · {t.company}</div>
                 </div>
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
