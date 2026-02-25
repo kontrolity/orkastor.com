@@ -67,7 +67,7 @@ function AnimatedTerminal() {
 
       <div
         ref={containerRef}
-        className="p-5 font-mono text-[13px] leading-relaxed space-y-0.5 h-64 overflow-hidden"
+        className="p-3 sm:p-5 font-mono text-[11px] sm:text-[13px] leading-relaxed space-y-0.5 h-56 sm:h-64 overflow-hidden"
         style={{ scrollBehavior: 'smooth' }}
       >
         {TERMINAL_LINES.map((line, i) => (
@@ -193,12 +193,14 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.32 }}
-          className="inline-flex items-center gap-3 px-5 py-3 rounded-xl font-mono text-sm border border-white/[0.07] bg-black/50 backdrop-blur-sm mb-16"
+          className="flex justify-center mb-16"
         >
-          <span className="text-slate-600">$</span>
-          <span className="text-blue-300">brew install orkastor</span>
-          <span className="text-slate-700">&&</span>
-          <span className="text-blue-300">orkastor init</span>
+          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-3 rounded-xl font-mono text-xs sm:text-sm border border-white/[0.07] bg-black/50 backdrop-blur-sm max-w-[90vw] overflow-x-auto whitespace-nowrap">
+            <span className="text-slate-600">$</span>
+            <span className="text-blue-300">brew install orkastor</span>
+            <span className="text-slate-700">&&</span>
+            <span className="text-blue-300">orkastor init</span>
+          </div>
         </motion.div>
 
         {/* Animated Terminal */}
@@ -229,7 +231,7 @@ export default function HeroSection() {
       {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #080f1c)' }}
+        style={{ background: 'linear-gradient(to bottom, transparent, #000000)' }}
       />
     </section>
   );

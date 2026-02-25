@@ -137,12 +137,14 @@ export default function CTASection() {
           transition={{ duration: 0.5, delay: 0.38 }}
         >
           <p className="text-slate-600 text-sm mb-3">Or start immediately:</p>
-          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl font-mono text-sm border border-white/[0.07] bg-black/50 backdrop-blur-sm">
-            <Terminal className="w-4 h-4 text-slate-600" />
-            <span className="text-slate-500">$</span>
-            <span className="text-blue-300">brew install orkastor</span>
-            <span className="text-slate-700">&&</span>
-            <span className="text-blue-300">orkastor init</span>
+          <div className="flex justify-center">
+            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-3 rounded-xl font-mono text-xs sm:text-sm border border-white/[0.07] bg-black/50 backdrop-blur-sm max-w-[90vw] overflow-x-auto whitespace-nowrap">
+              <Terminal className="w-4 h-4 text-slate-600 shrink-0" />
+              <span className="text-slate-500">$</span>
+              <span className="text-blue-300">brew install orkastor</span>
+              <span className="text-slate-700">&&</span>
+              <span className="text-blue-300">orkastor init</span>
+            </div>
           </div>
         </motion.div>
       </div>

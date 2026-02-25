@@ -65,11 +65,11 @@ function AnimatedOutput({ lines, delay }) {
   }, [lines, delay]);
 
   return (
-    <div className="space-y-0.5 min-h-[200px]">
+    <div className="space-y-0.5 min-h-[160px] sm:min-h-[200px]">
       {lines.map((line, i) => (
         <div
           key={i}
-          className={`text-[13px] leading-relaxed font-mono transition-opacity duration-200 ${
+          className={`text-[11px] sm:text-[13px] leading-relaxed font-mono transition-opacity duration-200 ${
             visible.includes(i) ? 'opacity-100' : 'opacity-0'
           } ${line.color || 'text-transparent'}`}
         >
@@ -185,13 +185,13 @@ export default function CLIExamples() {
             </div>
 
             {/* Content */}
-            <div className="p-5">
-              <div className="flex items-center gap-2 font-mono text-[13px] mb-4 pb-3 border-b border-white/[0.06]">
-                <span className="text-slate-700">$</span>
+            <div className="p-3 sm:p-5">
+              <div className="flex items-center gap-2 font-mono text-[11px] sm:text-[13px] mb-4 pb-3 border-b border-white/[0.06] overflow-x-auto">
+                <span className="text-slate-700 shrink-0">$</span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={active}
-                    className="text-blue-300"
+                    className="text-blue-300 whitespace-nowrap"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}

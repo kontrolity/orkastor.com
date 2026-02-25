@@ -36,7 +36,8 @@ export default function NavBar() {
           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-blue-500/15 border border-blue-500/25 rounded-full text-blue-400 text-[11px] font-semibold tracking-wide uppercase">
             Private Beta
           </span>
-          Now accepting early access — join 1,200+ SREs on the waitlist
+          <span className="hidden sm:inline">Now accepting early access — join 1,200+ SREs on the waitlist</span>
+          <span className="sm:hidden">Early access open</span>
           <a href="#cta" className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors">
             Apply →
           </a>

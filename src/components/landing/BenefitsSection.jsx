@@ -98,7 +98,7 @@ export default function BenefitsSection() {
             return (
               <motion.div
                 key={b.label}
-                className="card-specular relative group p-8 rounded-2xl border border-white/[0.08] bg-white/[0.025] hover:bg-white/[0.04] hover:border-white/[0.14] transition-all duration-300 overflow-hidden"
+                className="card-specular relative group p-5 sm:p-8 rounded-2xl border border-white/[0.08] bg-white/[0.025] hover:bg-white/[0.04] hover:border-white/[0.14] transition-all duration-300 overflow-hidden"
                 initial="hidden" animate={inView ? 'show' : 'hidden'}
                 variants={fadeUp} custom={i + 1}
               >
@@ -119,7 +119,7 @@ export default function BenefitsSection() {
 
                   <div>
                     {/* Big stat */}
-                    <div className="text-[52px] font-black leading-none mb-1 tracking-tight text-white">
+                    <div className="text-4xl sm:text-[52px] font-black leading-none mb-1 tracking-tight text-white">
                       {b.stat}
                     </div>
                     <div className="text-white font-bold text-lg mb-2">{b.label}</div>

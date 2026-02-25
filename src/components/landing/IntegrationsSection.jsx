@@ -34,7 +34,7 @@ function IntegrationPill({ name, cat, color }) {
       </div>
       <div>
         <div className="text-white text-sm font-semibold leading-tight">{name}</div>
-        <div className="text-slate-600 text-[10px] uppercase tracking-wider">{cat}</div>
+        <div className="text-slate-500 text-[10px] uppercase tracking-wider">{cat}</div>
       </div>
     </div>
   );
