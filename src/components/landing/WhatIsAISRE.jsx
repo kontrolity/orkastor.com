@@ -6,7 +6,7 @@ const PILLARS = [
   {
     icon: Eye,
     title: 'Continuous Monitoring',
-    description: 'Deep observability across metrics, logs, traces, and events — unified in one intelligent view across your entire cluster.',
+    description: 'Deep observability across metrics, logs, traces, and events — unified in one intelligent view across your entire infrastructure.',
     accent: 'blue',
     glyph: '01',
   },
@@ -109,8 +109,8 @@ export default function WhatIsAISRE() {
             <span className="text-gradient-cyan">Automated at Scale</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Orkastor brings the knowledge of your best SRE to every corner of your infrastructure,
-            running around the clock without toil fatigue.
+            Orkastor brings the knowledge of your best SRE to every corner of your infrastructure —
+            from Kubernetes pods to cloud provider services — running around the clock without toil fatigue.
           </p>
         </motion.div>
 

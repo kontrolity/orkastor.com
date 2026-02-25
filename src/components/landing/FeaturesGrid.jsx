@@ -9,13 +9,13 @@ const HERO_FEATURES = [
   {
     icon: Activity,
     title: 'Real-time Observability',
-    description: 'Unified view of metrics, logs, and traces across every service in your cluster — no context switching required.',
+    description: 'Unified view of metrics, logs, and traces across every service in your infrastructure — Kubernetes, cloud, and on-prem.',
     accent: 'blue',
   },
   {
     icon: Lock,
     title: 'Air-Gapped Security',
-    description: 'Runs entirely inside your cluster. Zero data exfiltration. SOC 2, HIPAA, and PCI-DSS ready.',
+    description: 'Runs entirely inside your environment. Zero data exfiltration. SOC 2, HIPAA, and PCI-DSS ready.',
     accent: 'emerald',
   },
   {
@@ -75,7 +75,7 @@ export default function FeaturesGrid() {
             <span className="text-gradient-brand">AI SRE Platform</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            All the tools your team needs to achieve high reliability — without the toil.
+            All the tools your team needs to achieve high reliability across cloud and Kubernetes — without the toil.
           </p>
         </motion.div>
 

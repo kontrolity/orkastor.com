@@ -73,8 +73,8 @@ export default function CTASection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.14 }}
         >
-          Join engineering teams who've cut incident response time by 3× and freed
-          their SREs to build — not babysit infrastructure.
+          Join engineering teams who've cut incident response time by 3× across cloud and Kubernetes —
+          freeing their SREs to build, not babysit infrastructure.
         </motion.p>
 
         {/* Email capture or success */}

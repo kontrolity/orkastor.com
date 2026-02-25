@@ -23,7 +23,7 @@ const BENEFITS = [
     icon: Users,
     stat: '1:50',
     label: 'SRE:Service Ratio',
-    description: 'One SRE can confidently own 50+ services when Orkastor handles routine monitoring and fixes around the clock.',
+    description: 'One SRE can confidently own 50+ services across cloud and Kubernetes when Orkastor handles routine monitoring and fixes around the clock.',
     accentColor: '#60a5fa',
     glowColor: 'rgba(96,165,250,0.10)',
   },

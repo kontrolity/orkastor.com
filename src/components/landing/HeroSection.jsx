@@ -135,7 +135,7 @@ export default function HeroSection() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/25 bg-blue-500/8 text-blue-300 text-xs font-semibold tracking-wide uppercase card-specular">
             <Sparkles className="w-3 h-3" />
-            AI-Powered Kubernetes SRE Platform
+            AI SRE · Cloud &amp; Kubernetes Infrastructure
           </span>
         </motion.div>
 
@@ -146,9 +146,9 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.08 }}
           className="text-[clamp(48px,8vw,88px)] font-black tracking-tight leading-[0.95] mb-6"
         >
-          <span className="text-white">Your AI SRE</span>
+          <span className="text-white">Your AI SRE for</span>
           <br />
-          <span className="text-gradient-brand">That Never Sleeps.</span>
+          <span className="text-gradient-brand">Any Infrastructure.</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -158,10 +158,10 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.16 }}
           className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Orkastor diagnoses Kubernetes incidents, surfaces root causes with evidence,
-          and applies human-approved fixes — running{' '}
-          <span className="text-slate-200 font-medium">entirely inside your cluster.</span>
-          {' '}No SaaS. No data leaving your network.
+          Orkastor monitors your cloud infrastructure and Kubernetes clusters, diagnoses
+          incidents with AI-driven root cause analysis, and applies human-approved fixes —{' '}
+          <span className="text-slate-200 font-medium">AWS, GCP, Azure, or on-prem.</span>
+          {' '}No SaaS. No data leaving your environment.
         </motion.p>
 
         {/* CTA Row */}
