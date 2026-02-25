@@ -63,8 +63,8 @@ export default function CTASection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.08 }}
         >
-          Ready to Eliminate{' '}
-          <span className="text-gradient-brand">Alert Fatigue?</span>
+          AI SRE That Stays{' '}
+          <span className="text-gradient-brand">Inside Your Walls.</span>
         </motion.h2>
 
         <motion.p
@@ -73,8 +73,9 @@ export default function CTASection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.14 }}
         >
-          Join engineering teams who've cut incident response time by 3× across cloud and Kubernetes —
-          freeing their SREs to build, not babysit infrastructure.
+          While every other AI SRE tool sends your infrastructure data to an external LLM,
+          Orkastor's inference runs inside your own environment —
+          with 3× faster resolution and zero data exfiltration.
         </motion.p>
 
         {/* Email capture or success */}

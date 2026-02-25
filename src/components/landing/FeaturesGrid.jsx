@@ -2,26 +2,26 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import {
   Activity, Bell, GitBranch, BookOpen, Clock, Code2,
-  Lock, MessageSquare, Search, Server, Settings2, Workflow,
+  Lock, MessageSquare, Search, Server, Settings2, SlidersHorizontal,
 } from 'lucide-react';
 
 const HERO_FEATURES = [
   {
     icon: Activity,
-    title: 'Real-time Observability',
-    description: 'Unified view of metrics, logs, and traces across every service in your infrastructure — Kubernetes, cloud, and on-prem.',
+    title: 'Unified Observability',
+    description: 'Metrics, logs, traces, and events across Kubernetes, AWS, GCP, and Azure — one intelligent view, no context switching, no data leaving your environment.',
     accent: 'blue',
   },
   {
     icon: Lock,
-    title: 'Air-Gapped Security',
-    description: 'Runs entirely inside your environment. Zero data exfiltration. SOC 2, HIPAA, and PCI-DSS ready.',
+    title: 'Private In-Environment AI',
+    description: 'AI inference runs inside your own VPC — no calls to OpenAI, Bedrock, or any external LLM. Zero data exfiltration. SOC 2, HIPAA, and PCI-DSS ready by design.',
     accent: 'emerald',
   },
   {
     icon: Code2,
-    title: 'Code-Level RCA',
-    description: 'Trace incidents to the exact commit or config change that caused them — with evidence.',
+    title: 'Deployment-Aware RCA',
+    description: 'Trace incidents to the exact deploy or config change that caused them — with a full evidence chain and confidence score before a fix is proposed.',
     accent: 'emerald',
   },
 ];
@@ -33,9 +33,9 @@ const GRID_FEATURES = [
   { icon: Clock, title: 'SLO Management', desc: 'Define, track, and enforce SLOs with automatic error budget reporting.' },
   { icon: MessageSquare, title: 'Slack & Teams Native', desc: 'Manage incidents and approve fixes without leaving chat.' },
   { icon: Search, title: 'Semantic Log Search', desc: 'Ask questions in plain English, get answers from your logs instantly.' },
-  { icon: Server, title: 'Multi-Cloud', desc: 'Works across AWS, GCP, Azure, and on-premise Kubernetes clusters.' },
-  { icon: Settings2, title: 'Policy as Code', desc: 'Define remediation policies in YAML or OPA — version controlled.' },
-  { icon: Workflow, title: 'Workflow Builder', desc: 'Visual editor for complex multi-step remediation sequences.' },
+  { icon: Server, title: 'Multi-Cloud', desc: 'Works across AWS, GCP, Azure, and on-premise Kubernetes clusters — one agent, one audit trail.' },
+  { icon: Settings2, title: 'Policy as Code', desc: 'Define remediation policies in YAML or OPA — version controlled, auditable, and enforced automatically.' },
+  { icon: SlidersHorizontal, title: 'Configurable Autonomy', desc: 'Not binary — a spectrum. Set Observe Only, Suggest & Approve, or Full Autopilot per cluster or namespace.' },
 ];
 
 const fadeUp = {
@@ -68,14 +68,15 @@ export default function FeaturesGrid() {
           variants={fadeUp} custom={0}
         >
           <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-white/[0.10] text-white/[0.30] mb-5">
-            Everything You Need
+            Platform Capabilities
           </span>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
-            The Complete{' '}
-            <span className="text-gradient-brand">AI SRE Platform</span>
+            From Alert to Resolution —{' '}
+            <span className="text-gradient-brand">One Platform, Zero SaaS</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            All the tools your team needs to achieve high reliability across cloud and Kubernetes — without the toil.
+            Unlike point solutions that only alert or only diagnose, Orkastor closes the full loop —
+            and everything runs inside your own environment.
           </p>
         </motion.div>
 

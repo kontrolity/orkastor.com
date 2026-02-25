@@ -13,14 +13,14 @@ const PILLARS = [
   {
     icon: Brain,
     title: 'AI-Driven Analysis',
-    description: 'ML models trained on SRE playbooks detect anomalies, correlate signals across services, and surface root causes in seconds.',
+    description: 'AI inference runs inside your VPC — no external LLM calls. Correlates signals across services and surfaces root causes with a confidence score in seconds.',
     accent: 'emerald',
     glyph: '02',
   },
   {
     icon: Wrench,
     title: 'Safe Auto-Remediation',
-    description: 'Automated fixes with configurable approval gates. You stay in control — decide how much to automate, per risk level.',
+    description: 'Fixes are dry-run validated before you approve them. Configure autonomy per cluster or namespace — from Observe Only to Full Autopilot.',
     accent: 'blue',
     glyph: '03',
   },
@@ -102,15 +102,16 @@ export default function WhatIsAISRE() {
           variants={fadeUp} custom={0}
         >
           <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-white/[0.10] text-white/[0.30] mb-5">
-            What is AI SRE
+            How It Works
           </span>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
-            SRE Expertise,{' '}
-            <span className="text-gradient-cyan">Automated at Scale</span>
+            Monitor. Diagnose. Fix.{' '}
+            <span className="text-gradient-cyan">Nothing Leaves Your Network.</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Orkastor brings the knowledge of your best SRE to every corner of your infrastructure —
-            from Kubernetes pods to cloud provider services — running around the clock without toil fatigue.
+            Most tools alert. Some diagnose. Few fix. Orkastor does all three —
+            across Kubernetes and cloud provider services — with AI inference running
+            entirely inside your own environment. No external LLM calls. Ever.
           </p>
         </motion.div>
 

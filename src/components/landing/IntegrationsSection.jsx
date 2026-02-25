@@ -99,12 +99,12 @@ export default function IntegrationsSection() {
             Integrations
           </span>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
-            Works With Your{' '}
+            Plugs Into Your{' '}
             <span className="text-gradient-cyan">Entire Stack</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Orkastor connects to the tools you already use.
-            No rip-and-replace required.
+            Connects to the cloud providers, monitoring tools, and alert channels you already use.
+            No rip-and-replace. No data leaving your environment.
           </p>
         </motion.div>
       </div>

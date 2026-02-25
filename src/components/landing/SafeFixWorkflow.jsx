@@ -94,12 +94,12 @@ export default function SafeFixWorkflow() {
             SafeFix Workflow
           </span>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-5">
-            From Alert to Resolution{' '}
-            <span className="text-gradient-violet">in Seconds</span>
+            Not a Black Box.{' '}
+            <span className="text-gradient-violet">A Dimmer Switch.</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Every remediation goes through a transparent, auditable pipeline.
-            You control exactly how much autonomy to grant.
+            Every AI decision is explainable and every fix is dry-run validated before it touches production.
+            You set the autonomy level — per cluster, per namespace, per risk tier.
           </p>
         </motion.div>
 
@@ -196,7 +196,7 @@ export default function SafeFixWorkflow() {
             <div className="card-specular rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6">
               <div className="mb-5">
                 <h3 className="text-white font-bold text-base mb-1">Approval Modes</h3>
-                <p className="text-slate-500 text-xs">Configure trust level per cluster or namespace</p>
+                <p className="text-slate-500 text-xs">A spectrum, not a toggle — configure per cluster or namespace</p>
               </div>
 
               <div className="space-y-2.5">
@@ -217,7 +217,7 @@ export default function SafeFixWorkflow() {
               </div>
 
               <div className="mt-5 pt-4 border-t border-white/[0.06] text-xs text-slate-600 leading-relaxed">
-                All modes include full audit logging and support OPA policy enforcement.
+                All modes include full audit logging, OPA policy enforcement, and zero external AI calls — inference stays inside your environment.
               </div>
             </div>
           </motion.div>

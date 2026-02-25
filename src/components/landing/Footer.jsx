@@ -27,8 +27,8 @@ export default function Footer() {
           <div className="md:col-span-2">
             <OrkastorLogo size={30} showWordmark className="mb-5" />
             <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-[240px]">
-              AI SRE platform that monitors, diagnoses, and fixes your cloud infrastructure —
-              Kubernetes, AWS, GCP, Azure, and beyond.
+              Monitor. Diagnose. Fix. Across Kubernetes and cloud — with AI inference that
+              runs inside your own environment. Zero exfiltration. Full control.
             </p>
 
             {/* Social links */}

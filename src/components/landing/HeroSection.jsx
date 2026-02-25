@@ -90,9 +90,9 @@ function AnimatedTerminal() {
 
 const STATS = [
   { val: '80%',   label: 'Faster MTTR' },
-  { val: '0',     label: 'Bytes exfiltrated' },
-  { val: '18s',   label: 'Mean resolution' },
-  { val: '100%',  label: 'Human approved' },
+  { val: '0',     label: 'Bytes leave your network' },
+  { val: '18s',   label: 'Mean resolution time' },
+  { val: '100%',  label: 'Human-approved fixes' },
 ];
 
 export default function HeroSection() {
@@ -135,7 +135,7 @@ export default function HeroSection() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/25 bg-blue-500/8 text-blue-300 text-xs font-semibold tracking-wide uppercase card-specular">
             <Sparkles className="w-3 h-3" />
-            AI SRE · Cloud &amp; Kubernetes Infrastructure
+            In-Environment AI · Zero Exfiltration · Full Control
           </span>
         </motion.div>
 
@@ -146,9 +146,9 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.08 }}
           className="text-[clamp(48px,8vw,88px)] font-black tracking-tight leading-[0.95] mb-6"
         >
-          <span className="text-white">Your AI SRE for</span>
+          <span className="text-white">The AI SRE That</span>
           <br />
-          <span className="text-gradient-brand">Any Infrastructure.</span>
+          <span className="text-gradient-brand">Never Leaves Your Network.</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -158,10 +158,10 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.16 }}
           className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Orkastor monitors your cloud infrastructure and Kubernetes clusters, diagnoses
-          incidents with AI-driven root cause analysis, and applies human-approved fixes —{' '}
-          <span className="text-slate-200 font-medium">AWS, GCP, Azure, or on-prem.</span>
-          {' '}No SaaS. No data leaving your environment.
+          Monitor cloud infrastructure and Kubernetes, pinpoint root causes in seconds,
+          apply human-approved fixes — all running{' '}
+          <span className="text-slate-200 font-medium">inside your own environment.</span>
+          {' '}No SaaS. No external AI calls. No data ever leaving your network.
         </motion.p>
 
         {/* CTA Row */}
