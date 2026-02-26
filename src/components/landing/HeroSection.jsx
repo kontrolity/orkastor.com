@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Terminal, ArrowRight, Play, Sparkles, ChevronRight } from 'lucide-react';
+import { Terminal, ArrowRight, Play, Sparkles, ChevronRight, Lock, Zap, CheckCircle2 } from 'lucide-react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
@@ -149,12 +149,12 @@ export default function HeroSection() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
 
-        {/* ── Announcement Badge (Linear/Clerk pattern) ── */}
+        {/* ── Announcement Badge ── */}
         <motion.div
           initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
-          className="flex justify-center mb-7"
+          className="flex justify-center mb-8"
         >
           <a href="#kubegraf" className="badge-pill group">
             <span className="pill-tag">New</span>
@@ -163,35 +163,73 @@ export default function HeroSection() {
           </a>
         </motion.div>
 
+        {/* ── Mono eyebrow ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.04, ease: EASE_OUT_EXPO }}
+          className="flex items-center justify-center gap-3 mb-5"
+        >
+          <span className="w-8 h-px bg-gradient-to-r from-transparent to-slate-700" />
+          <span className="text-[11px] font-mono tracking-[0.22em] uppercase text-slate-600">
+            AI-Powered Orchestration Platform
+          </span>
+          <span className="w-8 h-px bg-gradient-to-l from-transparent to-slate-700" />
+        </motion.div>
+
         {/* ── Headline ── */}
         <motion.h1
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.7, delay: 0.07, ease: EASE_OUT_EXPO }}
-          className="text-[clamp(52px,9vw,104px)] font-black tracking-[-0.04em] leading-[0.92] mb-6"
+          transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
+          className="text-[clamp(56px,9.5vw,112px)] font-black tracking-[-0.04em] leading-[0.9] mb-8"
         >
-          <span className="text-white">The AI Operations Platform</span>
-          <br />
-          <span className="text-gradient-brand">That Never Leaves Your Network.</span>
+          <span className="block text-white/90">Cloud &amp; DevOps</span>
+          <span className="text-gradient-brand">Orchestrator</span>
         </motion.h1>
 
         {/* ── Subheadline ── */}
         <motion.p
           initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.65, delay: 0.14, ease: EASE_OUT_EXPO }}
-          className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+          transition={{ duration: 0.65, delay: 0.16, ease: EASE_OUT_EXPO }}
+          className="text-base sm:text-lg md:text-[19px] font-light text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
         >
-          Modular AI agents deployed inside your own environment — starting with{' '}
-          <span className="text-slate-200 font-medium">KubēGraf for Kubernetes SRE.</span>
-          {' '}Detect root causes and apply human-approved fixes without sending a byte to the cloud.
+          AI agents that run <span className="text-slate-200 font-normal">inside your own environment</span> — no data leaves your network.
+          Starting with{' '}
+          <span className="inline-flex items-center gap-1 mx-0.5 px-2 py-0.5 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-300 text-[15px] font-semibold font-mono align-middle">
+            KubēGraf
+          </span>
+          {' '}for Kubernetes SRE, expanding to cloud costs, security, and beyond.
         </motion.p>
+
+        {/* ── Trust pills ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.22, ease: EASE_OUT_EXPO }}
+          className="flex flex-wrap justify-center gap-2 mb-10"
+        >
+          {[
+            { icon: Lock,         label: 'Zero Exfiltration' },
+            { icon: Zap,          label: '18s Mean Resolution' },
+            { icon: CheckCircle2, label: 'Human-Approved Fixes' },
+          ].map(({ icon: Icon, label }) => (
+            <span
+              key={label}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.07] bg-white/[0.03] text-[12px] font-medium text-slate-500"
+            >
+              <Icon className="w-3 h-3 text-slate-600" />
+              {label}
+            </span>
+          ))}
+        </motion.div>
 
         {/* ── CTAs ── */}
         <motion.div
           initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.65, delay: 0.28, ease: EASE_OUT_EXPO }}
           className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10"
         >
           <a
@@ -214,7 +252,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.28, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.6, delay: 0.36, ease: EASE_OUT_EXPO }}
           className="flex justify-center mb-14"
         >
           <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-[11px] sm:text-[13px] border border-white/[0.07] bg-black/60 backdrop-blur-sm max-w-[90vw] overflow-x-auto whitespace-nowrap">
@@ -230,7 +268,7 @@ export default function HeroSection() {
           style={{ y: terminalY, opacity: terminalOpacity }}
           initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.8, delay: 0.35, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.8, delay: 0.42, ease: EASE_OUT_EXPO }}
         >
           <AnimatedTerminal />
         </motion.div>
