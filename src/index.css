@@ -119,63 +119,25 @@ body::after {
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(59,130,246,0.4); }
 
-/* ─── Section Divider ─────────────────────────────────────────── */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255,255,255,0.06) 20%,
-    rgba(255,255,255,0.10) 50%,
-    rgba(255,255,255,0.06) 80%,
-    transparent 100%
-  );
-}
-
 /* ─── Bento Card ─────────────────────────────────────────────── */
 .bento-card {
   position: relative;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.025);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 8px 32px rgba(0, 0, 0, 0.55),
-    0 32px 72px rgba(0, 0, 0, 0.30);
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 4px 24px rgba(0,0,0,0.4);
   overflow: hidden;
-  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .bento-card:hover {
-  border-color: rgba(59, 130, 246, 0.22);
-  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
   box-shadow:
-    0 0 0 1px rgba(59, 130, 246, 0.12) inset,
-    0 8px 40px rgba(0, 0, 0, 0.60),
-    0 0 60px rgba(59, 130, 246, 0.06);
-}
-
-/* Top specular highlight edge */
-.bento-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.20) 40%, rgba(255,255,255,0.20) 60%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Noise texture inside card */
-.bento-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 182px 182px;
+    0 8px 32px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(255,255,255,0.06) inset;
 }
 
 /* ─── Animated Gradient Border Card ──────────────────────────── */
@@ -255,11 +217,11 @@ body::after {
 .btn-shimmer {
   background: linear-gradient(
     110deg,
-    #1d4ed8 0%,
-    #3b82f6 22%,
-    #f8fafc 45%,
-    #3b82f6 68%,
-    #1d4ed8 100%
+    #1e3a5f 0%,
+    #3b82f6 30%,
+    #e2e8f0 50%,
+    #3b82f6 70%,
+    #1e3a5f 100%
   );
   background-size: 300% auto;
   animation: shimmer-slide 3.5s linear infinite;
@@ -295,7 +257,7 @@ body::after {
   background-clip: text;
 }
 .text-gradient-brand {
-  background: linear-gradient(120deg, #a78bfa 0%, #60a5fa 35%, #38bdf8 65%, #34d399 100%);
+  background: linear-gradient(120deg, #60a5fa 0%, #2dd4bf 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -357,62 +319,10 @@ body::after {
   pointer-events: none;
 }
 
-/* ─── Meteor / Shooting star ──────────────────────────────────── */
-.meteor {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2px;
-  height: 2px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 6px 2px rgba(180, 220, 255, 0.7);
-  opacity: 0;
-  animation: meteor-fall linear infinite;
-}
-.meteor::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 120px;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
-}
-
-/* ─── Aurora glow blobs ───────────────────────────────────────── */
-.aurora-violet {
-  position: absolute;
-  border-radius: 9999px;
-  pointer-events: none;
-  background: radial-gradient(ellipse, #7c3aed 0%, transparent 68%);
-  filter: blur(80px);
-}
-.aurora-blue {
-  position: absolute;
-  border-radius: 9999px;
-  pointer-events: none;
-  background: radial-gradient(ellipse, #3b82f6 0%, transparent 68%);
-  filter: blur(90px);
-}
-.aurora-teal {
-  position: absolute;
-  border-radius: 9999px;
-  pointer-events: none;
-  background: radial-gradient(ellipse, #2dd4bf 0%, transparent 68%);
-  filter: blur(80px);
-}
-
-/* ─── Dot Grid / Line Grid ────────────────────────────────────── */
+/* ─── Dot Grid ────────────────────────────────────────────────── */
 .bg-dot-grid {
   background-image: radial-gradient(rgba(255,255,255,0.10) 1px, transparent 1px);
   background-size: 28px 28px;
-}
-.bg-line-grid {
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
 }
 
 /* ─── Terminal ────────────────────────────────────────────────── */
@@ -456,29 +366,6 @@ body::after {
 .animate-marquee-right { animation: marquee-right 28s linear infinite; }
 .animate-marquee-left:hover,
 .animate-marquee-right:hover { animation-play-state: paused; }
-
-/* ─── Spotlight overlay ───────────────────────────────────────── */
-.spotlight-overlay {
-  position: absolute;
-  pointer-events: none;
-  top: -40%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 140%;
-  height: 100%;
-  opacity: 0;
-  animation: spotlight-in 1.8s ease 0.2s 1 forwards;
-}
-
-/* ─── Beam line ───────────────────────────────────────────────── */
-.beam-line {
-  position: absolute;
-  height: 1px;
-  width: 60%;
-  left: 20%;
-  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), rgba(45,212,191,0.4), transparent);
-  animation: beam 3.5s ease-in-out infinite;
-}
 
 /* ─── Animations (utility classes) ───────────────────────────── */
 .animate-glow-pulse   { animation: glow-pulse 5s ease-in-out infinite; }

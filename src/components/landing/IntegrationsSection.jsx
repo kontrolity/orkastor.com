@@ -66,46 +66,29 @@ export default function IntegrationsSection() {
     <section
       ref={sectionRef}
       id="integrations"
-      className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#080808' }}
+      className="relative py-16 overflow-hidden"
+      style={{ backgroundColor: '#000000' }}
     >
-      {/* Glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%)' }}
-      />
-
       {/* Left/right fade masks */}
       <div
         className="absolute inset-y-0 left-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to right, #080808, transparent)' }}
+        style={{ background: 'linear-gradient(to right, #000000, transparent)' }}
       />
       <div
         className="absolute inset-y-0 right-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to left, #080808, transparent)' }}
+        style={{ background: 'linear-gradient(to left, #000000, transparent)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
-
-        {/* ── Header ── */}
-        <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
+        {/* ── Simple mono header ── */}
+        <motion.p
+          className="text-center text-xs font-mono tracking-[0.18em] uppercase text-slate-600 mb-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
         >
-          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
-            Integrations
-          </span>
-          <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-4 max-w-3xl mx-auto">
-            Plugs Into Your{' '}
-            <span className="text-gradient-cyan">Entire Stack</span>
-          </h2>
-          <p className="text-slate-500 text-base max-w-2xl mx-auto">
-            Connects to the cloud providers, monitoring tools, and alert channels you already use.
-            No rip-and-replace. No data leaving your environment.
-          </p>
-        </motion.div>
+          Works with your entire stack
+        </motion.p>
       </div>
 
       {/* ── Marquee rows — full width ── */}
@@ -113,7 +96,7 @@ export default function IntegrationsSection() {
         className="space-y-3"
         initial={{ opacity: 0, filter: 'blur(4px)' }}
         animate={inView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
+        transition={{ duration: 0.65, delay: 0.1, ease: EASE_OUT_EXPO }}
       >
         <MarqueeRow items={ROW_1} />
         <MarqueeRow items={ROW_2} reverse />
@@ -121,10 +104,10 @@ export default function IntegrationsSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
         <motion.p
-          className="text-center text-slate-600 text-sm mt-10"
+          className="text-center text-slate-600 text-sm mt-8"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
           + 40 more integrations via webhooks and custom connectors
         </motion.p>

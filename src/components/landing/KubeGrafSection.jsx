@@ -1,42 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Terminal, ArrowRight, Play, GitMerge, Shield, Search, Activity, ExternalLink } from 'lucide-react';
+import { Terminal, CheckCircle2, ExternalLink } from 'lucide-react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-const itemVar = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
-};
-
-const FEATURES = [
+const CHECKLIST = [
   {
-    icon: Activity,
     title: 'Multi-Source Correlation',
-    desc: 'Fuses logs, metrics, events, and deployments into a single causal timeline.',
-    accent: '#2dd4bf',
+    desc: 'Fuses logs, metrics, events, deployments into a single causal timeline.',
   },
   {
-    icon: Shield,
     title: 'SafeFix™ Auto-Remediation',
-    desc: 'AI-generated fixes with human approval gate and automatic rollback if metrics regress.',
-    accent: '#3b82f6',
+    desc: 'AI-generated fixes with human approval gate before touching production.',
   },
   {
-    icon: Search,
     title: 'Dry-Run Validation',
-    desc: 'Every proposed change is validated in dry-run mode before it touches production.',
-    accent: '#8b5cf6',
+    desc: 'Every change validated in dry-run mode before it touches production.',
   },
   {
-    icon: GitMerge,
     title: 'Confidence-Scored RCA',
-    desc: 'Root cause analysis with an evidence chain and percentage confidence for every finding.',
-    accent: '#f59e0b',
+    desc: 'Evidence chain with percentage confidence for every root cause finding.',
   },
 ];
 
@@ -132,66 +115,59 @@ export default function KubeGrafSection() {
       {/* Top teal glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[280px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(45,212,191,0.09) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(45,212,191,0.07) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
 
-        {/* ── Section header ── */}
-        <motion.div
-          className="text-center mb-14 md:mb-18"
-          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
-        >
-          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-teal-500/30 text-teal-400/80 bg-teal-500/[0.07] mb-5">
-            Flagship Module
-          </span>
-          <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-5 max-w-4xl mx-auto">
-            KubēGraf —{' '}
-            <span className="text-gradient-brand">AI SRE for Kubernetes</span>
-          </h2>
-          <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            The first Orkastor module: monitors your Kubernetes clusters in real time,
-            correlates signals across every source, and resolves incidents — all inside your VPC.
-          </p>
-        </motion.div>
+        {/* ── Two-column layout ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-        {/* ── Two-column layout: features + terminal ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-12">
-
-          {/* Feature mini-cards */}
+          {/* Left column — checklist */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-            variants={container}
-            initial="hidden"
-            animate={inView ? 'show' : 'hidden'}
+            initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+            animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+            transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
           >
-            {FEATURES.map((feat) => (
-              <motion.div
-                key={feat.title}
-                variants={itemVar}
-                whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                className="bento-card group p-6"
-              >
-                {/* Hover glow */}
-                <div
-                  className="absolute top-0 left-0 w-full h-full rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ background: `radial-gradient(circle at 0% 0%, ${feat.accent}10, transparent 60%)` }}
-                />
-                <div
-                  className="relative w-10 h-10 rounded-xl flex items-center justify-center mb-4 border shrink-0 transition-all duration-300 group-hover:scale-105"
-                  style={{ background: `${feat.accent}12`, borderColor: `${feat.accent}28` }}
-                >
-                  <feat.icon className="w-4.5 h-4.5" style={{ color: feat.accent }} />
+            <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-teal-500/30 text-teal-400/80 bg-teal-500/[0.07] mb-6">
+              Flagship Module
+            </span>
+
+            <h2 className="text-[clamp(32px,4.5vw,52px)] font-black tracking-[-0.03em] text-white mb-4 leading-[1.05]">
+              KubēGraf —<br />
+              <span className="text-gradient-brand">AI SRE for Kubernetes</span>
+            </h2>
+
+            <p className="text-slate-500 text-base leading-relaxed mb-8 max-w-md">
+              The first Orkastor module: monitors your Kubernetes clusters in real time,
+              correlates signals across every source, and resolves incidents — all inside your VPC.
+            </p>
+
+            {/* Checklist */}
+            <div className="space-y-5 mb-8">
+              {CHECKLIST.map((item) => (
+                <div key={item.title} className="flex gap-4">
+                  <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-white font-semibold text-sm">{item.title}</p>
+                    <p className="text-slate-500 text-sm">{item.desc}</p>
+                  </div>
                 </div>
-                <h3 className="relative text-white font-bold text-sm mb-1.5 leading-snug">{feat.title}</h3>
-                <p className="relative text-slate-500 text-xs leading-relaxed">{feat.desc}</p>
-              </motion.div>
-            ))}
+              ))}
+            </div>
+
+            <a
+              href="https://kubegraf.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-shimmer inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[14px] font-bold hover:scale-[1.02] active:scale-[0.99] transition-transform"
+            >
+              Try KubēGraf Free
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </motion.div>
 
-          {/* Terminal visual */}
+          {/* Right column — terminal */}
           <motion.div
             initial={{ opacity: 0, x: 24, filter: 'blur(8px)' }}
             animate={inView ? { opacity: 1, x: 0, filter: 'blur(0px)' } : {}}
@@ -200,31 +176,6 @@ export default function KubeGrafSection() {
             <KubeTerminal />
           </motion.div>
         </div>
-
-        {/* ── CTAs ── */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-3 justify-center items-center"
-          initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.65, delay: 0.35, ease: EASE_OUT_EXPO }}
-        >
-          <a
-            href="https://kubegraf.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold shadow-glow-strong hover:scale-[1.02] active:scale-[0.99] transition-transform"
-          >
-            Try KubēGraf Free
-            <ExternalLink className="w-4 h-4" />
-          </a>
-          <a
-            href="#safefix"
-            className="btn-ghost card-glow-border-hover inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
-          >
-            <Play className="w-4 h-4 text-teal-400" />
-            See SafeFix Workflow
-          </a>
-        </motion.div>
       </div>
     </section>
   );

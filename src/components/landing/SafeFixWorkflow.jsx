@@ -162,7 +162,12 @@ export default function SafeFixWorkflow() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <h3 className="text-white font-semibold text-sm">{step.title}</h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-mono tracking-widest text-slate-600">
+                            {String(step.id).padStart(2, '0')}
+                          </span>
+                          <h3 className="text-white font-semibold text-sm">{step.title}</h3>
+                        </div>
                         <span className="text-xs font-mono text-slate-600">{step.time}</span>
                       </div>
                       <p className="text-slate-500 text-xs leading-relaxed">{step.description}</p>

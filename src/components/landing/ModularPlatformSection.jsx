@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Activity, DollarSign, Lock, Cloud, GitBranch, Plus } from 'lucide-react';
+import { Activity, DollarSign, Lock, Cloud, GitBranch, Plus } from 'lucide-react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
@@ -69,8 +69,8 @@ export default function ModularPlatformSection() {
     <section
       ref={sectionRef}
       id="platform"
-      className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#080808' }}
+      className="relative py-24 md:py-28 overflow-hidden"
+      style={{ backgroundColor: '#050505' }}
     >
       {/* Top glow */}
       <div
@@ -161,51 +161,6 @@ export default function ModularPlatformSection() {
           </motion.div>
         </motion.div>
 
-        {/* ── Architecture diagram ── */}
-        <motion.div
-          className="mb-14"
-          initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_EXPO }}
-        >
-          <p className="text-center text-[11px] font-mono tracking-[0.18em] uppercase text-slate-600 mb-6">
-            Platform Architecture
-          </p>
-          <div className="relative rounded-2xl overflow-hidden border border-white/[0.07] bg-black/40">
-            {/* Subtle inner glow */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(45,212,191,0.04) 0%, transparent 70%)' }}
-            />
-            <img
-              src="/orkastor-architecture.png"
-              alt="Orkastor platform architecture — Users, AI Agent, Orchestrator, vCluster Controller, Cloud Abstraction, KubēGraf SRE Module"
-              className="w-full h-auto block"
-            />
-          </div>
-        </motion.div>
-
-        {/* ── CTAs ── */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-3 justify-center items-center"
-          initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.65, delay: 0.4, ease: EASE_OUT_EXPO }}
-        >
-          <a
-            href="#cta"
-            className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold shadow-glow-strong hover:scale-[1.02] active:scale-[0.99] transition-transform"
-          >
-            Request Early Access
-            <ArrowRight className="w-4 h-4" />
-          </a>
-          <a
-            href="#cta"
-            className="btn-ghost card-glow-border-hover inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
-          >
-            Join Waitlist
-          </a>
-        </motion.div>
       </div>
     </section>
   );

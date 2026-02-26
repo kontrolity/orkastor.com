@@ -4,12 +4,10 @@ import { Menu, X, ChevronRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const NAV_LINKS = [
-  { label: 'Features',     href: '#features' },
-  { label: 'SafeFix',      href: '#safefix' },
-  { label: 'Platform',     href: '#platform' },
-  { label: 'CLI',          href: '#cli' },
-  { label: 'Integrations', href: '#integrations' },
-  { label: 'Docs',         href: '#' },
+  { label: 'Features',  href: '#features' },
+  { label: 'KubēGraf', href: '#kubegraf' },
+  { label: 'Platform',  href: '#platform' },
+  { label: 'Docs',      href: '#' },
 ];
 
 export default function NavBar() {
@@ -31,25 +29,12 @@ export default function NavBar() {
 
   return (
     <>
-      {/* ── Announcement bar ── */}
-      <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.05] py-2 px-4 text-center text-xs text-slate-400"
-           style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
-        <span className="inline-flex items-center gap-2">
-          <a href="https://kubegraf.io/" target="_blank" rel="noopener noreferrer" className="badge-pill group">
-            <span className="pill-tag">New</span>
-            <span className="hidden sm:inline">KubēGraf v1.0 — in-environment AI SRE for Kubernetes</span>
-            <span className="sm:hidden">KubēGraf v1.0 is here</span>
-            <ChevronRight className="w-3 h-3 text-blue-400/60 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-        </span>
-      </div>
-
       {/* ── Nav bar ── */}
       <motion.header
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-[33px] left-0 right-0 z-50 transition-all duration-[400ms] ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-[400ms] ${
           scrolled ? 'glass-dark border-b border-white/[0.07]' : 'bg-transparent'
         }`}
       >
@@ -114,7 +99,7 @@ export default function NavBar() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
             transition={{ duration: 0.2 }}
-            className="fixed top-[109px] left-3 right-3 z-50 glass-dark rounded-2xl p-4 md:hidden border border-white/[0.08]"
+            className="fixed top-[76px] left-3 right-3 z-50 glass-dark rounded-2xl p-4 md:hidden border border-white/[0.08]"
           >
             {NAV_LINKS.map(link => (
               <a

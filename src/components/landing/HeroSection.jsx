@@ -1,37 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Terminal, ArrowRight, Play, ChevronRight, Lock, Zap, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Terminal, ArrowRight, ChevronRight } from 'lucide-react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
-
-/* ── Meteor particles ───────────────────────────────────────── */
-const METEORS = [
-  { top: '12%', left: '20%',  delay: '0s',    duration: '9s'  },
-  { top: '28%', left: '55%',  delay: '2.5s',  duration: '8s'  },
-  { top: '8%',  left: '72%',  delay: '5s',    duration: '10s' },
-  { top: '45%', left: '10%',  delay: '1.2s',  duration: '7s'  },
-  { top: '60%', left: '80%',  delay: '3.8s',  duration: '11s' },
-  { top: '18%', left: '38%',  delay: '6.5s',  duration: '8.5s'},
-];
-
-function Meteors() {
-  return (
-    <>
-      {METEORS.map((m, i) => (
-        <span
-          key={i}
-          className="meteor"
-          style={{
-            top: m.top,
-            left: m.left,
-            animationDelay: m.delay,
-            animationDuration: m.duration,
-          }}
-        />
-      ))}
-    </>
-  );
-}
 
 /* ── Animated Terminal ──────────────────────────────────────── */
 const TERMINAL_LINES = [
@@ -122,43 +93,18 @@ const STATS = [
 ];
 
 export default function HeroSection() {
-  const { scrollY } = useScroll();
-  const terminalY       = useTransform(scrollY, [0, 500], [0, 30]);
-  const terminalOpacity = useTransform(scrollY, [0, 400], [1, 0.55]);
-
   return (
     <section
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-[109px]"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-[76px]"
       style={{ backgroundColor: '#000000' }}
     >
-      {/* ── Aurora mesh ── */}
-      {/* Violet — top left */}
+      {/* Single faint blue radial glow */}
       <div
-        className="aurora-violet absolute w-[700px] h-[700px] opacity-[0.13]"
-        style={{ top: '-200px', left: '-150px' }}
-      />
-      {/* Blue — center top */}
-      <div
-        className="aurora-blue absolute w-[900px] h-[700px] opacity-[0.18]"
-        style={{ top: '-180px', left: '50%', transform: 'translateX(-50%)' }}
-      />
-      {/* Teal — top right */}
-      <div
-        className="aurora-teal absolute w-[600px] h-[500px] opacity-[0.11]"
-        style={{ top: '-100px', right: '-100px' }}
-      />
-      {/* Violet — bottom left accent */}
-      <div
-        className="aurora-violet absolute w-[400px] h-[400px] opacity-[0.06]"
-        style={{ bottom: '10%', left: '5%' }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.10) 0%, transparent 65%)' }}
       />
 
-
-      {/* ── Meteors ── */}
-      <Meteors />
-
-
-<div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
+      <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
 
         {/* ── Announcement Badge ── */}
         <motion.div
@@ -167,23 +113,11 @@ export default function HeroSection() {
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
           className="flex justify-center mb-8"
         >
-          <a href="#kubegraf" className="badge-pill group">
+          <a href="https://kubegraf.io/" target="_blank" rel="noopener noreferrer" className="badge-pill group">
             <span className="pill-tag">New</span>
             KubēGraf v1.0 — in-environment AI SRE for Kubernetes
             <ChevronRight className="w-3.5 h-3.5 text-blue-400/60 group-hover:translate-x-0.5 transition-transform" />
           </a>
-        </motion.div>
-
-        {/* ── Mono eyebrow ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.04, ease: EASE_OUT_EXPO }}
-          className="flex items-center justify-center mb-5"
-        >
-          <span className="text-[11px] font-mono tracking-[0.22em] uppercase text-slate-600">
-            AI-Powered Orchestration Platform
-          </span>
         </motion.div>
 
         {/* ── Headline ── */}
@@ -191,15 +125,11 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
-          className="text-[clamp(44px,8vw,100px)] font-black tracking-[-0.04em] leading-[0.92] mb-8"
+          className="text-[clamp(48px,7vw,88px)] font-black tracking-[-0.04em] leading-[0.92] mb-8 text-white"
           style={{ textWrap: 'balance' }}
         >
-          <span className="block">
-            <span className="text-gradient-brand">Orkastor</span>
-            <span className="text-white/40 font-light text-[0.45em] align-middle"> — </span>
-            <span className="text-white">The AI DevOps &amp;</span>
-          </span>
-          <span className="block text-white">Cloud Orchestrator</span>
+          The AI DevOps &amp;<br />
+          Cloud Orchestrator.
         </motion.h1>
 
         {/* ── Subheadline ── */}
@@ -207,64 +137,34 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.65, delay: 0.16, ease: EASE_OUT_EXPO }}
-          className="text-base sm:text-lg md:text-[19px] font-light text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
+          className="text-base sm:text-lg text-slate-400 max-w-lg mx-auto mb-10 leading-relaxed"
         >
-          AI agents that run{' '}
-          <span className="text-slate-200 font-normal">inside your own environment</span>{' '}
-          — no data leaves your network. Starting with{' '}
-          <a
-            href="https://kubegraf.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 mx-0.5 px-2 py-0.5 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-300 text-[15px] font-semibold font-mono align-middle hover:bg-teal-500/20 hover:border-teal-500/35 transition-colors"
-          >
-            KubēGraf
-          </a>{' '}
-          for Kubernetes SRE, expanding to cloud costs, security, and beyond.
+          AI agents that run inside your own environment —
+          no data leaves your network.
         </motion.p>
-
-        {/* ── Trust pills ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.22, ease: EASE_OUT_EXPO }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
-        >
-          {[
-            { icon: Lock,         label: 'Zero Exfiltration' },
-            { icon: Zap,          label: '18s Mean Resolution' },
-            { icon: CheckCircle2, label: 'Human-Approved Fixes' },
-          ].map(({ icon: Icon, label }) => (
-            <span
-              key={label}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] text-[12px] font-medium text-slate-500 backdrop-blur-sm"
-            >
-              <Icon className="w-3 h-3 text-slate-600" />
-              {label}
-            </span>
-          ))}
-        </motion.div>
 
         {/* ── CTAs ── */}
         <motion.div
           initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.65, delay: 0.28, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.65, delay: 0.24, ease: EASE_OUT_EXPO }}
           className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10"
         >
           <a
             href="#cta"
-            className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold shadow-glow-strong hover:scale-[1.02] active:scale-[0.99] transition-transform"
+            className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.02] active:scale-[0.99] transition-transform"
           >
-            Get Started Free
+            Get Early Access
             <ArrowRight className="w-4 h-4" />
           </a>
           <a
-            href="#kubegraf"
-            className="btn-ghost card-glow-border-hover inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
+            href="https://kubegraf.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
           >
-            <Play className="w-4 h-4 text-teal-400" />
-            See KubēGraf in Action
+            See KubēGraf
+            <ArrowRight className="w-4 h-4 opacity-60" />
           </a>
         </motion.div>
 
@@ -272,7 +172,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.36, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.6, delay: 0.32, ease: EASE_OUT_EXPO }}
           className="flex justify-center mb-14"
         >
           <div className="card-frosted inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-[11px] sm:text-[13px] max-w-[90vw] overflow-x-auto whitespace-nowrap">
@@ -285,7 +185,6 @@ export default function HeroSection() {
 
         {/* ── Terminal ── */}
         <motion.div
-          style={{ y: terminalY, opacity: terminalOpacity }}
           initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.8, delay: 0.42, ease: EASE_OUT_EXPO }}
