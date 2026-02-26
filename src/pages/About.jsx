@@ -22,10 +22,10 @@ const VALUES = [
 ];
 
 const STATS = [
-  { value: '2024',  label: 'Founded' },
   { value: '500+',  label: 'Beta users' },
   { value: '18s',   label: 'Mean resolution time' },
   { value: '80%',   label: 'Faster MTTR' },
+  { value: '0',     label: 'Bytes leave your network' },
 ];
 
 export default function About() {
@@ -46,14 +46,13 @@ export default function About() {
               About Orkastor
             </span>
             <h1 className="text-[clamp(38px,5.5vw,64px)] font-black tracking-[-0.03em] leading-[1.02] text-white mb-6">
-              We got tired of<br />
-              <span className="text-gradient-brand">fighting fires manually.</span>
+              The AI platform for<br />
+              <span className="text-gradient-brand">modern infrastructure.</span>
             </h1>
             <p className="text-slate-400 text-lg leading-relaxed max-w-xl mx-auto">
-              Orkastor started as an internal tool inside a fintech SRE team. After watching the
-              same incidents repeat themselves week after week, we decided to build the AI agent
-              we always wished existed — one that runs inside your environment and actually closes
-              the loop from alert to fix.
+              Orkastor is a modular AI DevOps platform that runs entirely inside your own
+              environment — detecting, diagnosing and resolving infrastructure incidents
+              automatically, with full human oversight at every step.
             </p>
           </div>
         </section>
