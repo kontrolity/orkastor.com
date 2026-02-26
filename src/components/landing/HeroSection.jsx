@@ -221,9 +221,14 @@ export default function HeroSection() {
           AI agents that run{' '}
           <span className="text-slate-200 font-normal">inside your own environment</span>{' '}
           — no data leaves your network. Starting with{' '}
-          <span className="inline-flex items-center gap-1 mx-0.5 px-2 py-0.5 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-300 text-[15px] font-semibold font-mono align-middle">
+          <a
+            href="https://kubegraf.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mx-0.5 px-2 py-0.5 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-300 text-[15px] font-semibold font-mono align-middle hover:bg-teal-500/20 hover:border-teal-500/35 transition-colors"
+          >
             KubēGraf
-          </span>{' '}
+          </a>{' '}
           for Kubernetes SRE, expanding to cloud costs, security, and beyond.
         </motion.p>
 

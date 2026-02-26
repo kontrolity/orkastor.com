@@ -35,7 +35,7 @@ export default function NavBar() {
       <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.05] py-2 px-4 text-center text-xs text-slate-400"
            style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
         <span className="inline-flex items-center gap-2">
-          <a href="#kubegraf" className="badge-pill group">
+          <a href="https://kubegraf.io/" target="_blank" rel="noopener noreferrer" className="badge-pill group">
             <span className="pill-tag">New</span>
             <span className="hidden sm:inline">KubēGraf v1.0 — in-environment AI SRE for Kubernetes</span>
             <span className="sm:hidden">KubēGraf v1.0 is here</span>

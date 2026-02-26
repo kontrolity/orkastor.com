@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Terminal, ArrowRight, Play, GitMerge, Shield, Search, Activity } from 'lucide-react';
+import { Terminal, ArrowRight, Play, GitMerge, Shield, Search, Activity, ExternalLink } from 'lucide-react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
@@ -209,11 +209,13 @@ export default function KubeGrafSection() {
           transition={{ duration: 0.65, delay: 0.35, ease: EASE_OUT_EXPO }}
         >
           <a
-            href="#cta"
+            href="https://kubegraf.io/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold shadow-glow-strong hover:scale-[1.02] active:scale-[0.99] transition-transform"
           >
             Try KubēGraf Free
-            <ArrowRight className="w-4 h-4" />
+            <ExternalLink className="w-4 h-4" />
           </a>
           <a
             href="#safefix"
