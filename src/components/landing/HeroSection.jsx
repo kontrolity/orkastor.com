@@ -182,10 +182,14 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
-          className="text-[clamp(56px,9.5vw,112px)] font-black tracking-[-0.04em] leading-[0.9] mb-8"
+          className="text-[clamp(44px,8vw,100px)] font-black tracking-[-0.04em] leading-[0.92] mb-8"
         >
-          <span className="block text-white/90">Cloud &amp; DevOps</span>
-          <span className="text-gradient-brand">Orchestrator</span>
+          <span className="block">
+            <span className="text-gradient-brand">Orkastor</span>
+            <span className="text-white/40 font-light"> — </span>
+            <span className="text-white">The AI DevOps &amp;</span>
+          </span>
+          <span className="block text-white">Cloud Orchestrator</span>
         </motion.h1>
 
         {/* ── Subheadline ── */}
