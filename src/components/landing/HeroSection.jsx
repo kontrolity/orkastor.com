@@ -153,15 +153,6 @@ export default function HeroSection() {
         style={{ bottom: '10%', left: '5%' }}
       />
 
-      {/* ── Dot grid ── */}
-      <div
-        className="absolute inset-0 bg-dot-grid pointer-events-none"
-        style={{
-          maskImage: 'radial-gradient(ellipse 75% 70% at 50% 30%, black 10%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 50% 30%, black 10%, transparent 80%)',
-          opacity: 0.6,
-        }}
-      />
 
       {/* ── Meteors ── */}
       <Meteors />
