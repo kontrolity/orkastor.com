@@ -170,9 +170,9 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.07, ease: EASE_OUT_EXPO }}
           className="text-[clamp(52px,9vw,104px)] font-black tracking-[-0.04em] leading-[0.92] mb-6"
         >
-          <span className="text-white">Orkastor — The AI DevOps</span>
+          <span className="text-white">The AI Operations Platform</span>
           <br />
-          <span className="text-gradient-brand">&amp; Cloud Orchestrator</span>
+          <span className="text-gradient-brand">That Never Leaves Your Network.</span>
         </motion.h1>
 
         {/* ── Subheadline ── */}
@@ -182,9 +182,9 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.14, ease: EASE_OUT_EXPO }}
           className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Autonomously manage, monitor, and optimize Kubernetes, multi-cloud infrastructure,
-          GitOps/CD pipelines, security, and costs —{' '}
-          <span className="text-slate-200 font-medium">powered by intelligent AI.</span>
+          Modular AI agents deployed inside your own environment — starting with{' '}
+          <span className="text-slate-200 font-medium">KubēGraf for Kubernetes SRE.</span>
+          {' '}Detect root causes and apply human-approved fixes without sending a byte to the cloud.
         </motion.p>
 
         {/* ── CTAs ── */}
