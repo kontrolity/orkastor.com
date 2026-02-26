@@ -156,9 +156,9 @@ export default function HeroSection() {
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
           className="flex justify-center mb-7"
         >
-          <a href="#safefix" className="badge-pill group">
+          <a href="#kubegraf" className="badge-pill group">
             <span className="pill-tag">New</span>
-            SafeFix — AI remediation inside your VPC
+            KubēGraf v1.0 — in-environment AI SRE for Kubernetes
             <ChevronRight className="w-3.5 h-3.5 text-blue-400/60 group-hover:translate-x-0.5 transition-transform" />
           </a>
         </motion.div>
@@ -170,9 +170,9 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.07, ease: EASE_OUT_EXPO }}
           className="text-[clamp(52px,9vw,104px)] font-black tracking-[-0.04em] leading-[0.92] mb-6"
         >
-          <span className="text-white">The AI SRE That</span>
+          <span className="text-white">Orkastor — The AI DevOps</span>
           <br />
-          <span className="text-gradient-brand">Never Leaves Your Network.</span>
+          <span className="text-gradient-brand">&amp; Cloud Orchestrator</span>
         </motion.h1>
 
         {/* ── Subheadline ── */}
@@ -182,10 +182,9 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.14, ease: EASE_OUT_EXPO }}
           className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Monitor cloud infrastructure and Kubernetes, pinpoint root causes in seconds,
-          apply human-approved fixes — all running{' '}
-          <span className="text-slate-200 font-medium">inside your own environment.</span>
-          {' '}No SaaS. No external AI calls.
+          Autonomously manage, monitor, and optimize Kubernetes, multi-cloud infrastructure,
+          GitOps/CD pipelines, security, and costs —{' '}
+          <span className="text-slate-200 font-medium">powered by intelligent AI.</span>
         </motion.p>
 
         {/* ── CTAs ── */}
@@ -199,16 +198,15 @@ export default function HeroSection() {
             href="#cta"
             className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold shadow-glow-strong hover:scale-[1.02] active:scale-[0.99] transition-transform"
           >
-            <Terminal className="w-4 h-4" />
-            Install Free
+            Get Started Free
             <ArrowRight className="w-4 h-4" />
           </a>
           <a
-            href="#safefix"
+            href="#kubegraf"
             className="btn-ghost card-glow-border-hover inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
           >
             <Play className="w-4 h-4 text-blue-400" />
-            See SafeFix in Action
+            See KubēGraf in Action
           </a>
         </motion.div>
 

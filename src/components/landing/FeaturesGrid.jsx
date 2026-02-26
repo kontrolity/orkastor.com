@@ -234,7 +234,7 @@ export default function FeaturesGrid() {
   return (
     <section
       ref={sectionRef}
-      id="platform"
+      id="features"
       className="relative py-24 md:py-32 overflow-hidden"
       style={{ backgroundColor: '#080808' }}
     >
@@ -254,7 +254,7 @@ export default function FeaturesGrid() {
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
           <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
-            Platform Capabilities
+            KubēGraf Features
           </span>
           <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-5 max-w-4xl mx-auto">
             From Alert to Resolution —{' '}

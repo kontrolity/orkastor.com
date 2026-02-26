@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Terminal, Shield, Lock, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Terminal, Shield, Lock, Zap, ExternalLink, Github, CalendarDays } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
@@ -58,7 +58,7 @@ export default function CTASection() {
       <div className="beam-line" style={{ top: '20%', animationDelay: '0s' }} />
       <div className="beam-line" style={{ top: '70%', animationDelay: '2s', opacity: 0.3 }} />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-6 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center">
 
         {/* Logo mark */}
         <motion.div
@@ -83,7 +83,7 @@ export default function CTASection() {
 
         {/* Subheadline */}
         <motion.p
-          className="text-base md:text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto"
+          className="text-base md:text-lg text-slate-400 mb-12 leading-relaxed max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 18, filter: 'blur(4px)' }}
           animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
           transition={{ duration: 0.65, delay: 0.14, ease: EASE_OUT_EXPO }}
@@ -94,42 +94,89 @@ export default function CTASection() {
           <span className="text-slate-200 font-medium">zero data exfiltration.</span>
         </motion.p>
 
-        {/* Email capture */}
+        {/* ── 3-card grid ── */}
         <motion.div
-          initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10"
+          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
           animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
           transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
         >
-          {!submitted ? (
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6"
-            >
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="your@company.com"
-                required
-                className="flex-1 px-4 py-3.5 rounded-xl text-sm bg-white/[0.05] border border-white/[0.1] text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.07] transition-all"
-              />
-              <button
-                type="submit"
-                className="btn-shimmer inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-[15px] font-bold whitespace-nowrap hover:scale-[1.02] active:scale-[0.99] transition-transform"
-              >
-                Get Early Access
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
-          ) : (
-            <div className="mb-6 py-5 px-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.06] inline-block">
-              <div className="flex items-center gap-2 text-emerald-400 font-semibold text-lg mb-1">
-                <CheckCircle2 className="w-5 h-5" />
-                You're on the list!
-              </div>
-              <p className="text-slate-400 text-sm">We'll reach out shortly with early access details.</p>
+          {/* Waitlist card */}
+          <div className="bento-card p-6 text-left flex flex-col" style={{ borderColor: 'rgba(59,130,246,0.2)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-blue-500/25 bg-blue-500/10 mb-4">
+              <Terminal className="w-5 h-5 text-blue-400" />
             </div>
-          )}
+            <h3 className="text-white font-bold text-base mb-1">Join the Waitlist</h3>
+            <p className="text-slate-500 text-xs mb-5 leading-relaxed">Early adopters get free tier access at launch.</p>
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className="mt-auto flex flex-col gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="your@company.com"
+                  required
+                  className="px-3.5 py-3 rounded-lg text-sm bg-white/[0.05] border border-white/[0.1] text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.07] transition-all"
+                />
+                <button
+                  type="submit"
+                  className="btn-shimmer inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-bold hover:scale-[1.02] active:scale-[0.99] transition-transform"
+                >
+                  Get Early Access
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+            ) : (
+              <div className="mt-auto py-4 px-4 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06]">
+                <div className="flex items-center gap-2 text-emerald-400 font-semibold text-sm mb-1">
+                  <CheckCircle2 className="w-4 h-4" />
+                  You're on the list!
+                </div>
+                <p className="text-slate-500 text-xs">We'll reach out with early access details.</p>
+              </div>
+            )}
+          </div>
+
+          {/* Demo card */}
+          <div className="bento-card p-6 text-left flex flex-col" style={{ borderColor: 'rgba(16,185,129,0.2)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-emerald-500/25 bg-emerald-500/10 mb-4">
+              <CalendarDays className="w-5 h-5 text-emerald-400" />
+            </div>
+            <h3 className="text-white font-bold text-base mb-1">Book a Demo</h3>
+            <p className="text-slate-500 text-xs mb-5 leading-relaxed">For enterprise teams evaluating AI DevOps solutions. Walk through a live deployment.</p>
+            <a
+              href="#"
+              className="mt-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-bold border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/15 hover:border-emerald-500/40 transition-all"
+            >
+              Schedule a Call
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Dev card */}
+          <div className="bento-card p-6 text-left flex flex-col" style={{ borderColor: 'rgba(45,212,191,0.2)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-teal-500/25 bg-teal-500/10 mb-4">
+              <Github className="w-5 h-5 text-teal-400" />
+            </div>
+            <h3 className="text-white font-bold text-base mb-1">Start Building</h3>
+            <p className="text-slate-500 text-xs mb-5 leading-relaxed">Developers &amp; SREs — explore docs, API reference, and the open-source repo.</p>
+            <div className="mt-auto flex gap-2">
+              <a
+                href="#"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-bold border border-teal-500/30 bg-teal-500/10 text-teal-400 hover:bg-teal-500/15 hover:border-teal-500/40 transition-all"
+              >
+                View Docs
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="#"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-bold border border-white/10 bg-white/[0.04] text-slate-400 hover:text-white hover:border-white/20 hover:bg-white/[0.07] transition-all"
+              >
+                <Github className="w-3.5 h-3.5" />
+                GitHub
+              </a>
+            </div>
+          </div>
         </motion.div>
 
         {/* Perks */}

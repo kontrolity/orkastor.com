@@ -3,9 +3,9 @@ import { Github, Twitter, Linkedin } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const LINKS = {
-  Product:   ['Features', 'SafeFix', 'CLI', 'Integrations', 'Pricing', 'Changelog'],
+  Product:   ['Platform', 'KubēGraf', 'SafeFix', 'CLI', 'Integrations', 'Pricing', 'Changelog'],
   Company:   ['About', 'Blog', 'Careers', 'Press', 'Contact'],
-  Resources: ['Documentation', 'API Reference', 'Status Page', 'Community', 'Security'],
+  Resources: ['Documentation', 'API Reference', 'GitHub', 'Status Page', 'Community', 'Security'],
   Legal:     ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'DPA'],
 };
 
@@ -28,8 +28,8 @@ export default function Footer() {
           <div className="md:col-span-2">
             <OrkastorLogo size={30} showWordmark className="mb-5" />
             <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-[240px]">
-              Monitor. Diagnose. Fix. Across Kubernetes and cloud — with AI inference that
-              runs inside your own environment. Zero exfiltration. Full control.
+              The AI DevOps &amp; Cloud Orchestration platform. Modular AI agents for
+              Kubernetes, cloud costs, security, and beyond — all running inside your environment.
             </p>
 
             {/* Social links */}
@@ -77,7 +77,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <OrkastorLogo size={18} showWordmark={false} />
             <p className="text-slate-700 text-xs">
-              © 2025 Orkastor. All rights reserved.
+              © 2025 Orkastor by Kontrolity Ltd. All rights reserved.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-700">

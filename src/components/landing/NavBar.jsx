@@ -6,6 +6,7 @@ import OrkastorLogo from './OrkastorLogo';
 const NAV_LINKS = [
   { label: 'Features',     href: '#features' },
   { label: 'SafeFix',      href: '#safefix' },
+  { label: 'Platform',     href: '#platform' },
   { label: 'CLI',          href: '#cli' },
   { label: 'Integrations', href: '#integrations' },
   { label: 'Docs',         href: '#' },
@@ -34,10 +35,10 @@ export default function NavBar() {
       <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.05] py-2 px-4 text-center text-xs text-slate-400"
            style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
         <span className="inline-flex items-center gap-2">
-          <a href="#cta" className="badge-pill group">
-            <span className="pill-tag">Private Beta</span>
-            <span className="hidden sm:inline">In-environment AI inference — join 1,200+ engineers</span>
-            <span className="sm:hidden">Early access open</span>
+          <a href="#kubegraf" className="badge-pill group">
+            <span className="pill-tag">New</span>
+            <span className="hidden sm:inline">KubēGraf v1.0 — in-environment AI SRE for Kubernetes</span>
+            <span className="sm:hidden">KubēGraf v1.0 is here</span>
             <ChevronRight className="w-3 h-3 text-blue-400/60 group-hover:translate-x-0.5 transition-transform" />
           </a>
         </span>
