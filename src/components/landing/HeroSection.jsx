@@ -166,11 +166,8 @@ export default function HeroSection() {
       {/* ── Meteors ── */}
       <Meteors />
 
-      {/* ── Beam lines ── */}
-      <div className="beam-line" style={{ top: '28%', animationDelay: '0s' }} />
-      <div className="beam-line" style={{ top: '52%', animationDelay: '1.8s', opacity: 0.35 }} />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
+<div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
 
         {/* ── Announcement Badge ── */}
         <motion.div

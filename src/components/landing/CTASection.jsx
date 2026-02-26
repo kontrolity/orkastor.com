@@ -54,11 +54,8 @@ export default function CTASection() {
         }}
       />
 
-      {/* Beam lines */}
-      <div className="beam-line" style={{ top: '20%', animationDelay: '0s' }} />
-      <div className="beam-line" style={{ top: '70%', animationDelay: '2s', opacity: 0.3 }} />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center">
+<div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center">
 
 
 {/* Headline */}
@@ -185,15 +182,7 @@ export default function CTASection() {
           ))}
         </motion.div>
 
-        {/* Section divider */}
-        <motion.div
-          className="section-divider mb-10"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.35 }}
-        />
-
-        {/* Trust signals row */}
+{/* Trust signals row */}
         <motion.div
           className="flex flex-wrap justify-center gap-6 mb-10"
           initial={{ opacity: 0, y: 12 }}
