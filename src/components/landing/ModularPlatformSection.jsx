@@ -9,8 +9,8 @@ const container = {
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 const itemVar = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
+  hidden: { opacity: 0, y: 20 },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
 };
 
 const MODULES = [
@@ -83,8 +83,8 @@ export default function ModularPlatformSection() {
         {/* ── Section header ── */}
         <motion.div
           className="text-center mb-14 md:mb-18"
-          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
           <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">

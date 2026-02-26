@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Lock, Shield, Search, CheckCircle2, Server, Cpu } from 'lucide-react';
 
@@ -9,22 +9,22 @@ const container = {
   show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
+  hidden: { opacity: 0, y: 20 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
 };
 
-/* ── Shared bento card wrapper ───────────────────────────────── */
+/* ── Bento card with spotlight ───────────────────────────────── */
 function BentoCard({ className = '', children, accentColor }) {
   return (
     <motion.div
       variants={item}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className={`bento-card group p-6 ${className}`}
+      className={`bento-card spotlight-card group p-6 ${className}`}
     >
       {accentColor && (
         <div
           className="absolute top-0 left-0 w-full h-full rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ background: `radial-gradient(circle at 0% 0%, ${accentColor}18, transparent 65%)` }}
+          style={{ background: `radial-gradient(circle at 0% 0%, ${accentColor}14, transparent 60%)` }}
         />
       )}
       {children}
@@ -46,7 +46,26 @@ function IconBadge({ icon: Icon, color }) {
 
 export default function FeaturesGrid() {
   const sectionRef = useRef(null);
+  const gridRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: '-60px' });
+
+  /* ── Cursor spotlight ── */
+  const handleMouseMove = useCallback((e) => {
+    const cards = gridRef.current?.querySelectorAll('.spotlight-card');
+    cards?.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const cards = gridRef.current?.querySelectorAll('.spotlight-card');
+    cards?.forEach(card => {
+      card.style.setProperty('--mouse-x', '-400px');
+      card.style.setProperty('--mouse-y', '-400px');
+    });
+  }, []);
 
   return (
     <section
@@ -66,8 +85,8 @@ export default function FeaturesGrid() {
         {/* ── Section header ── */}
         <motion.div
           className="text-center mb-14 md:mb-16"
-          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
           <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
@@ -79,21 +98,24 @@ export default function FeaturesGrid() {
           </h2>
           <p className="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">
             Unlike point solutions that only alert or only diagnose, Orkastor closes the full loop —
-            and everything runs inside your own environment.
+            everything runs inside your own environment.
           </p>
         </motion.div>
 
-        {/* ── 12-col bento grid ── */}
+        {/* ── 12-col bento grid with cursor spotlight ── */}
         <motion.div
+          ref={gridRef}
           className="grid grid-cols-12 gap-4"
           variants={container}
           initial="hidden"
           animate={inView ? 'show' : 'hidden'}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
         >
 
           {/* ── Row 1 ── */}
 
-          {/* Zero Exfiltration hero card — col 7 */}
+          {/* Zero Exfiltration hero card */}
           <BentoCard className="col-span-12 md:col-span-7" accentColor="#2dd4bf">
             <IconBadge icon={Lock} color="#2dd4bf" />
             <h3 className="relative text-white font-bold text-xl mb-2.5 leading-snug">
@@ -109,13 +131,13 @@ export default function FeaturesGrid() {
             </div>
           </BentoCard>
 
-          {/* Stat cards stacked — col 5 */}
+          {/* Stat cards stacked */}
           <div className="col-span-12 md:col-span-5 flex flex-col gap-4">
             <motion.div
               variants={item}
-              className="bento-card p-6 flex-1 flex flex-col justify-center"
+              className="bento-card spotlight-card p-6 flex-1 flex flex-col justify-center"
             >
-              <div className="text-[52px] font-black text-white leading-none tracking-[-0.03em] text-glow-blue mb-1">
+              <div className="shimmer-stat text-[52px] font-black leading-none tracking-[-0.03em] mb-1">
                 80%
               </div>
               <div className="text-slate-500 text-sm font-medium">Faster MTTR</div>
@@ -123,9 +145,9 @@ export default function FeaturesGrid() {
             </motion.div>
             <motion.div
               variants={item}
-              className="bento-card p-6 flex-1 flex flex-col justify-center"
+              className="bento-card spotlight-card p-6 flex-1 flex flex-col justify-center"
             >
-              <div className="text-[52px] font-black text-white leading-none tracking-[-0.03em] text-glow-blue mb-1">
+              <div className="shimmer-stat text-[52px] font-black leading-none tracking-[-0.03em] mb-1">
                 18s
               </div>
               <div className="text-slate-500 text-sm font-medium">Mean Resolution</div>
@@ -135,7 +157,7 @@ export default function FeaturesGrid() {
 
           {/* ── Row 2 ── */}
 
-          {/* SafeFix card — col 5 */}
+          {/* SafeFix card */}
           <BentoCard className="col-span-12 md:col-span-5" accentColor="#3b82f6">
             <IconBadge icon={Shield} color="#3b82f6" />
             <h3 className="relative text-white font-bold text-lg mb-2.5 leading-snug">
@@ -147,7 +169,7 @@ export default function FeaturesGrid() {
             </p>
           </BentoCard>
 
-          {/* RCA wide card — col 7 */}
+          {/* RCA wide card */}
           <BentoCard className="col-span-12 md:col-span-7" accentColor="#8b5cf6">
             <IconBadge icon={Search} color="#8b5cf6" />
             <h3 className="relative text-white font-bold text-lg mb-2.5 leading-snug">
@@ -156,7 +178,6 @@ export default function FeaturesGrid() {
             <p className="relative text-slate-500 text-sm leading-relaxed mb-5">
               Correlates signals across services and pinpoints the root cause with a full evidence chain.
             </p>
-            {/* Evidence chain snippet */}
             <div className="relative space-y-2 p-3 rounded-xl border border-white/[0.06] bg-black/30">
               {[
                 { label: 'Deploy v2.3.1',     conf: '94%', color: '#ef4444' },
@@ -174,36 +195,27 @@ export default function FeaturesGrid() {
 
           {/* ── Row 3 — 3 equal ── */}
 
-          {/* Human Approval Gate */}
           <BentoCard className="col-span-12 md:col-span-4" accentColor="#f59e0b">
             <IconBadge icon={CheckCircle2} color="#f59e0b" />
-            <h3 className="relative text-white font-bold text-base mb-2">
-              Human Approval Gate
-            </h3>
+            <h3 className="relative text-white font-bold text-base mb-2">Human Approval Gate</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Every AI-proposed fix requires explicit approval. No silent changes, no surprises.
               Full audit trail on every action.
             </p>
           </BentoCard>
 
-          {/* Dry-Run Validation */}
           <BentoCard className="col-span-12 md:col-span-4" accentColor="#2dd4bf">
             <IconBadge icon={Cpu} color="#2dd4bf" />
-            <h3 className="relative text-white font-bold text-base mb-2">
-              Dry-Run Validation
-            </h3>
+            <h3 className="relative text-white font-bold text-base mb-2">Dry-Run Validation</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Every proposed change is validated in dry-run mode before touching production —
               including OPA policy checks.
             </p>
           </BentoCard>
 
-          {/* 100% In-Environment */}
           <BentoCard className="col-span-12 md:col-span-4" accentColor="#60a5fa">
             <IconBadge icon={Server} color="#60a5fa" />
-            <h3 className="relative text-white font-bold text-base mb-2">
-              100% In-Environment
-            </h3>
+            <h3 className="relative text-white font-bold text-base mb-2">100% In-Environment</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Runs as a Kubernetes operator inside your cluster. Zero external SaaS dependencies.
               Your data never leaves.

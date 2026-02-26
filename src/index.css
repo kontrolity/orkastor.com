@@ -88,7 +88,9 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #000000;
+    font-optical-sizing: auto;
+    font-feature-settings: 'cv01', 'cv02', 'cv03', 'cv04';
+    background-color: #050505;
     color: #f8fafc;
     @apply border-border outline-ring/50;
   }
@@ -129,15 +131,31 @@ body::after {
     0 1px 0 rgba(255,255,255,0.04) inset,
     0 4px 24px rgba(0,0,0,0.4);
   overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .bento-card:hover {
-  border-color: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.04);
   transform: translateY(-2px);
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.5),
+    0 12px 40px rgba(0,0,0,0.55),
     0 0 0 1px rgba(255,255,255,0.06) inset;
+}
+
+/* ─── Cursor Spotlight Card ───────────────────────────────────── */
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    350px circle at var(--mouse-x, -400px) var(--mouse-y, -400px),
+    rgba(255,255,255,0.05),
+    transparent 40%
+  );
+  pointer-events: none;
+  opacity: 1;
 }
 
 /* ─── Animated Gradient Border Card ──────────────────────────── */
@@ -273,6 +291,29 @@ body::after {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ─── Hero Headline Gradient (white → gray, Vercel/Linear style) ── */
+.text-gradient-hero {
+  background: linear-gradient(180deg, #ffffff 30%, #6b7280 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Shimmer Stat Numbers ────────────────────────────────────── */
+.shimmer-stat {
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0.95) 25%,
+    rgba(255,255,255,0.45) 50%,
+    rgba(255,255,255,0.95) 75%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-slide 5s linear infinite;
 }
 
 /* ─── Glow Shadows ────────────────────────────────────────────── */

@@ -96,20 +96,56 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-[76px]"
-      style={{ backgroundColor: '#000000' }}
+      style={{ backgroundColor: '#050505' }}
     >
-      {/* Single faint blue radial glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.10) 0%, transparent 65%)' }}
-      />
+      {/* ── Mesh gradient background ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Blue — center top, primary glow */}
+        <div
+          className="absolute"
+          style={{
+            top: '-10%', left: '50%', transform: 'translateX(-50%)',
+            width: '900px', height: '650px',
+            background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.15) 0%, transparent 65%)',
+          }}
+        />
+        {/* Violet — upper left accent */}
+        <div
+          className="absolute"
+          style={{
+            top: '0%', left: '-5%',
+            width: '500px', height: '500px',
+            background: 'radial-gradient(ellipse at 20% 20%, rgba(139,92,246,0.08) 0%, transparent 60%)',
+          }}
+        />
+        {/* Teal — upper right accent */}
+        <div
+          className="absolute"
+          style={{
+            top: '0%', right: '-5%',
+            width: '450px', height: '450px',
+            background: 'radial-gradient(ellipse at 80% 20%, rgba(45,212,191,0.06) 0%, transparent 60%)',
+          }}
+        />
+        {/* Noise texture overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+            backgroundRepeat: 'repeat',
+            backgroundSize: '180px',
+            opacity: 0.04,
+            mixBlendMode: 'overlay',
+          }}
+        />
+      </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
 
         {/* ── Announcement Badge ── */}
         <motion.div
-          initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
           className="flex justify-center mb-8"
         >
@@ -120,12 +156,12 @@ export default function HeroSection() {
           </a>
         </motion.div>
 
-        {/* ── Headline ── */}
+        {/* ── Headline — white → gray gradient ── */}
         <motion.h1
-          initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
-          className="text-[clamp(48px,7vw,88px)] font-black tracking-[-0.04em] leading-[0.92] mb-8 text-white"
+          className="text-gradient-hero text-[clamp(52px,8vw,96px)] font-black tracking-[-0.04em] leading-[0.88] mb-8"
           style={{ textWrap: 'balance' }}
         >
           The AI DevOps &amp;<br />
@@ -134,8 +170,8 @@ export default function HeroSection() {
 
         {/* ── Subheadline ── */}
         <motion.p
-          initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.16, ease: EASE_OUT_EXPO }}
           className="text-base sm:text-lg text-slate-400 max-w-lg mx-auto mb-10 leading-relaxed"
         >
@@ -145,8 +181,8 @@ export default function HeroSection() {
 
         {/* ── CTAs ── */}
         <motion.div
-          initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.24, ease: EASE_OUT_EXPO }}
           className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10"
         >
@@ -185,14 +221,14 @@ export default function HeroSection() {
 
         {/* ── Terminal ── */}
         <motion.div
-          initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.42, ease: EASE_OUT_EXPO }}
         >
           <AnimatedTerminal />
         </motion.div>
 
-        {/* ── Stats bar ── */}
+        {/* ── Stats bar — shimmer numbers ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -202,7 +238,7 @@ export default function HeroSection() {
           {STATS.map((s, i) => (
             <React.Fragment key={s.label}>
               <div className="text-center px-5 sm:px-8 py-3">
-                <div className="text-2xl sm:text-[28px] font-black text-white text-glow-blue tabular-nums">
+                <div className="shimmer-stat text-2xl sm:text-[28px] font-black tabular-nums">
                   {s.val}
                 </div>
                 <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600 mt-1">
@@ -220,7 +256,7 @@ export default function HeroSection() {
       {/* ── Bottom fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #000000)' }}
+        style={{ background: 'linear-gradient(to bottom, transparent, #050505)' }}
       />
     </section>
   );

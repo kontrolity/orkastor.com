@@ -125,8 +125,8 @@ export default function KubeGrafSection() {
 
           {/* Left column — checklist */}
           <motion.div
-            initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-            animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
           >
             <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-teal-500/30 text-teal-400/80 bg-teal-500/[0.07] mb-6">
@@ -169,8 +169,8 @@ export default function KubeGrafSection() {
 
           {/* Right column — terminal */}
           <motion.div
-            initial={{ opacity: 0, x: 24, filter: 'blur(8px)' }}
-            animate={inView ? { opacity: 1, x: 0, filter: 'blur(0px)' } : {}}
+            initial={{ opacity: 0, x: 24 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.2, ease: EASE_OUT_EXPO }}
           >
             <KubeTerminal />

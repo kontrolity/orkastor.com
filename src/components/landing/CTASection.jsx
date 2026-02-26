@@ -48,8 +48,8 @@ export default function CTASection() {
         {/* ── Headline ── */}
         <motion.h2
           className="text-[clamp(32px,5vw,56px)] font-black tracking-[-0.04em] leading-[0.95] text-white mb-4"
-          initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
         >
           Start with KubēGraf Free
@@ -58,8 +58,8 @@ export default function CTASection() {
         {/* ── Subheadline ── */}
         <motion.p
           className="text-base text-slate-400 mb-8 leading-relaxed"
-          initial={{ opacity: 0, y: 18, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 18 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.14, ease: EASE_OUT_EXPO }}
         >
           Join the waitlist — early adopters get free tier access at launch.
@@ -67,8 +67,8 @@ export default function CTASection() {
 
         {/* ── Email form ── */}
         <motion.div
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
         >
           {!submitted ? (
