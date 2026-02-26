@@ -153,9 +153,9 @@ export default function HeroSection() {
         style={{ bottom: '10%', left: '5%' }}
       />
 
-      {/* ── Line grid (crosshatch) ── */}
+      {/* ── Dot grid ── */}
       <div
-        className="absolute inset-0 bg-line-grid pointer-events-none"
+        className="absolute inset-0 bg-dot-grid pointer-events-none"
         style={{
           maskImage: 'radial-gradient(ellipse 75% 70% at 50% 30%, black 10%, transparent 80%)',
           WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 50% 30%, black 10%, transparent 80%)',
@@ -188,13 +188,11 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.04, ease: EASE_OUT_EXPO }}
-          className="flex items-center justify-center gap-3 mb-5"
+          className="flex items-center justify-center mb-5"
         >
-          <span className="w-8 h-px bg-gradient-to-r from-transparent to-slate-700" />
           <span className="text-[11px] font-mono tracking-[0.22em] uppercase text-slate-600">
             AI-Powered Orchestration Platform
           </span>
-          <span className="w-8 h-px bg-gradient-to-l from-transparent to-slate-700" />
         </motion.div>
 
         {/* ── Headline ── */}
