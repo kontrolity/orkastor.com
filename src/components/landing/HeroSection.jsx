@@ -186,7 +186,7 @@ export default function HeroSection() {
         >
           <span className="block">
             <span className="text-gradient-brand">Orkastor</span>
-            <span className="text-white/40 font-light"> — </span>
+            <span className="text-white/40 font-light text-[0.45em] align-middle"> — </span>
             <span className="text-white">The AI DevOps &amp;</span>
           </span>
           <span className="block text-white">Cloud Orchestrator</span>
