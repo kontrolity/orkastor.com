@@ -3,44 +3,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, ChevronRight, ArrowUpRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
-/* ── Nav data ────────────────────────────────────────────────── */
+/* ── Nav structure ───────────────────────────────────────────── */
 const NAV_ITEMS = [
   {
-    label: 'Features',
+    label: 'Product',
     items: [
-      { label: 'Overview',              href: '#features' },
-      { label: 'SafeFix™ Workflow',     href: '#safefix' },
-      { label: 'Root Cause Analysis',   href: '#features' },
-      { label: 'Integrations',          href: '#integrations' },
-    ],
-  },
-  {
-    label: 'KubēGraf',
-    items: [
-      { label: 'Overview',        href: '#kubegraf' },
-      { label: 'Documentation',   href: '#' },
-      { label: 'Changelog',       href: '#' },
-      { label: 'Try Free',        href: 'https://kubegraf.io', external: true },
-    ],
-  },
-  {
-    label: 'Platform',
-    items: [
-      { label: 'All Modules',    href: '#platform' },
-      { label: 'Integrations',   href: '#integrations' },
-      { label: 'CLI Reference',  href: '#' },
-      { label: 'Roadmap',        href: '#' },
+      { label: 'Features',      href: '/#features' },
+      { label: 'KubēGraf',      href: '/#kubegraf' },
+      { label: 'Integrations',  href: '/#integrations' },
+      { label: 'Pricing',       href: '/pricing' },
     ],
   },
   {
     label: 'Docs',
     items: [
-      { label: 'Getting Started', href: '#' },
-      { label: 'API Reference',   href: '#' },
-      { label: 'GitHub',          href: '#', external: true },
-      { label: 'Changelog',       href: '#' },
+      { label: 'Getting Started', href: '/docs' },
+      { label: 'API Reference',   href: '/docs' },
+      { label: 'CLI Reference',   href: '/docs' },
+      { label: 'Changelog',       href: '/changelog' },
     ],
   },
+  // Direct links (no dropdown)
+  { label: 'Pricing',    href: '/pricing' },
+  { label: 'KubēGraf',  href: 'https://kubegraf.io', external: true },
 ];
 
 /* ── Desktop dropdown panel ──────────────────────────────────── */
@@ -51,10 +36,10 @@ function DropdownPanel({ items }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 6 }}
       transition={{ duration: 0.13, ease: [0.4, 0, 0.2, 1] }}
-      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-48"
+      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-44"
     >
       <div
-        className="rounded-xl border border-white/[0.08] py-1.5 overflow-hidden"
+        className="rounded-xl border border-white/[0.08] py-1.5"
         style={{
           background: 'rgba(10, 10, 12, 0.97)',
           backdropFilter: 'blur(20px) saturate(180%)',
@@ -81,23 +66,41 @@ function DropdownPanel({ items }) {
 }
 
 /* ── Desktop nav item ────────────────────────────────────────── */
-function NavItem({ label, items }) {
+function NavItem({ navItem }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
+  const hasDropdown = !!navItem.items;
+
   useEffect(() => {
+    if (!hasDropdown) return;
     const handler = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     };
     document.addEventListener('pointerdown', handler);
     return () => document.removeEventListener('pointerdown', handler);
-  }, []);
+  }, [hasDropdown]);
 
   useEffect(() => {
+    if (!hasDropdown) return;
     const handler = (e) => { if (e.key === 'Escape') setOpen(false); };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, []);
+  }, [hasDropdown]);
+
+  if (!hasDropdown) {
+    return (
+      <a
+        href={navItem.href}
+        target={navItem.external ? '_blank' : undefined}
+        rel={navItem.external ? 'noopener noreferrer' : undefined}
+        className="flex items-center gap-1 px-4 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/[0.05] rounded-lg transition-all duration-200"
+      >
+        {navItem.label}
+        {navItem.external && <ArrowUpRight className="w-3 h-3 opacity-50" />}
+      </a>
+    );
+  }
 
   return (
     <div
@@ -116,22 +119,37 @@ function NavItem({ label, items }) {
             : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
         }`}
       >
-        {label}
+        {navItem.label}
         <ChevronDown
           className={`w-3.5 h-3.5 opacity-50 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
         />
       </button>
 
       <AnimatePresence>
-        {open && <DropdownPanel items={items} />}
+        {open && <DropdownPanel items={navItem.items} />}
       </AnimatePresence>
     </div>
   );
 }
 
-/* ── Mobile accordion item ───────────────────────────────────── */
-function MobileNavItem({ label, items, onClose }) {
+/* ── Mobile menu ─────────────────────────────────────────────── */
+function MobileNavItem({ navItem, onClose }) {
   const [open, setOpen] = useState(false);
+
+  if (!navItem.items) {
+    return (
+      <a
+        href={navItem.href}
+        target={navItem.external ? '_blank' : undefined}
+        rel={navItem.external ? 'noopener noreferrer' : undefined}
+        onClick={onClose}
+        className="flex items-center justify-between px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-white/[0.05] rounded-xl transition-all"
+      >
+        {navItem.label}
+        {navItem.external && <ArrowUpRight className="w-3.5 h-3.5 text-slate-600" />}
+      </a>
+    );
+  }
 
   return (
     <div>
@@ -139,7 +157,7 @@ function MobileNavItem({ label, items, onClose }) {
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between px-4 py-3 text-slate-300 hover:text-white hover:bg-white/[0.05] rounded-xl transition-all text-sm"
       >
-        {label}
+        {navItem.label}
         <ChevronDown
           className={`w-4 h-4 opacity-40 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
         />
@@ -156,7 +174,7 @@ function MobileNavItem({ label, items, onClose }) {
             className="overflow-hidden"
           >
             <div className="px-2 pt-0.5 pb-2">
-              {items.map((item) => (
+              {navItem.items.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
@@ -166,9 +184,7 @@ function MobileNavItem({ label, items, onClose }) {
                   className="flex items-center justify-between px-4 py-2.5 rounded-xl text-[13px] text-slate-400 hover:text-white hover:bg-white/[0.04] transition-colors group"
                 >
                   {item.label}
-                  {item.external && (
-                    <ArrowUpRight className="w-3 h-3 text-slate-600 shrink-0" />
-                  )}
+                  {item.external && <ArrowUpRight className="w-3 h-3 text-slate-600 shrink-0" />}
                 </a>
               ))}
             </div>
@@ -224,7 +240,7 @@ export default function NavBar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
             {NAV_ITEMS.map((item) => (
-              <NavItem key={item.label} label={item.label} items={item.items} />
+              <NavItem key={item.label} navItem={item} />
             ))}
           </nav>
 
@@ -234,7 +250,7 @@ export default function NavBar() {
               Sign In
             </a>
             <a
-              href="#cta"
+              href="/pricing"
               className="btn-shimmer inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
               Get Early Access
@@ -272,14 +288,13 @@ export default function NavBar() {
             {NAV_ITEMS.map((item) => (
               <MobileNavItem
                 key={item.label}
-                label={item.label}
-                items={item.items}
+                navItem={item}
                 onClose={() => setMenuOpen(false)}
               />
             ))}
             <div className="mt-2 pt-2 border-t border-white/[0.06] px-2 pb-1">
               <a
-                href="#cta"
+                href="/pricing"
                 onClick={() => setMenuOpen(false)}
                 className="btn-shimmer w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold"
               >
