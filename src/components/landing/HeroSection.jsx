@@ -310,7 +310,7 @@ export default function HeroSection() {
         transition={{ duration: 1.1, delay: 0.6, ease: EASE_OUT_EXPO }}
       >
         <img
-          src="/orkastor-bot.png"
+          src="/orkastor-head.png"
           alt=""
           aria-hidden="true"
           className="w-[260px] lg:w-[320px] xl:w-[360px] h-auto opacity-70"

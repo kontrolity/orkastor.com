@@ -68,7 +68,7 @@ export default function CTASection() {
           transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
         >
           <img
-            src="/orkastor-bot.png"
+            src="/orkastor-head.png"
             alt="Orkastor"
             className="w-44 h-auto"
             style={{ mixBlendMode: 'screen' }}
