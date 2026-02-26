@@ -105,6 +105,12 @@ module.exports = {
           from: { opacity: '0', transform: 'translateY(8px)' },
           to:   { opacity: '1', transform: 'translateY(0)' },
         },
+        'meteor-fall': {
+          '0%':   { transform: 'rotate(215deg) translateX(0)',      opacity: '0' },
+          '5%':   { opacity: '1' },
+          '70%':  { opacity: '1' },
+          '100%': { transform: 'rotate(215deg) translateX(-600px)', opacity: '0' },
+        },
       },
       animation: {
         'accordion-down':  'accordion-down 0.2s ease-out',
@@ -119,6 +125,7 @@ module.exports = {
         'marquee-left':    'marquee-left 32s linear infinite',
         'marquee-right':   'marquee-right 28s linear infinite',
         'spin-slow':       'spin-slow 20s linear infinite',
+        'meteor-fall':     'meteor-fall 8s linear infinite',
       },
     },
   },

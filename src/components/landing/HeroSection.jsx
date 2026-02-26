@@ -1,9 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Terminal, ArrowRight, Play, Sparkles, ChevronRight, Lock, Zap, CheckCircle2 } from 'lucide-react';
+import { Terminal, ArrowRight, Play, ChevronRight, Lock, Zap, CheckCircle2 } from 'lucide-react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
+/* ── Meteor particles ───────────────────────────────────────── */
+const METEORS = [
+  { top: '12%', left: '20%',  delay: '0s',    duration: '9s'  },
+  { top: '28%', left: '55%',  delay: '2.5s',  duration: '8s'  },
+  { top: '8%',  left: '72%',  delay: '5s',    duration: '10s' },
+  { top: '45%', left: '10%',  delay: '1.2s',  duration: '7s'  },
+  { top: '60%', left: '80%',  delay: '3.8s',  duration: '11s' },
+  { top: '18%', left: '38%',  delay: '6.5s',  duration: '8.5s'},
+];
+
+function Meteors() {
+  return (
+    <>
+      {METEORS.map((m, i) => (
+        <span
+          key={i}
+          className="meteor"
+          style={{
+            top: m.top,
+            left: m.left,
+            animationDelay: m.delay,
+            animationDuration: m.duration,
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+/* ── Animated Terminal ──────────────────────────────────────── */
 const TERMINAL_LINES = [
   { delay: 0,    text: '$ orkastor watch --cluster production',       color: 'text-slate-400' },
   { delay: 700,  text: 'Connecting to api.prod.internal...',          color: 'text-slate-600' },
@@ -47,7 +77,7 @@ function AnimatedTerminal() {
   }, []);
 
   return (
-    <div className="terminal-window w-full max-w-2xl mx-auto">
+    <div className="terminal-window w-full">
       <div className="terminal-titlebar">
         <span className="terminal-dot bg-red-500/80" />
         <span className="terminal-dot bg-amber-500/80" />
@@ -63,7 +93,7 @@ function AnimatedTerminal() {
       </div>
       <div
         ref={containerRef}
-        className="p-4 sm:p-5 font-mono text-[11px] sm:text-[12.5px] leading-relaxed space-y-px h-52 sm:h-60 overflow-hidden"
+        className="p-4 sm:p-5 font-mono text-[11px] sm:text-[12.5px] leading-relaxed space-y-px h-56 overflow-hidden"
         style={{ scrollBehavior: 'smooth' }}
       >
         {TERMINAL_LINES.map((line, i) => (
@@ -93,61 +123,54 @@ const STATS = [
 
 export default function HeroSection() {
   const { scrollY } = useScroll();
-  const terminalY = useTransform(scrollY, [0, 500], [0, 40]);
-  const terminalOpacity = useTransform(scrollY, [0, 400], [1, 0.6]);
+  const terminalY       = useTransform(scrollY, [0, 500], [0, 30]);
+  const terminalOpacity = useTransform(scrollY, [0, 400], [1, 0.55]);
 
   return (
     <section
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-[109px]"
       style={{ backgroundColor: '#000000' }}
     >
-      {/* ── Spotlight SVG ── */}
-      <svg
-        className="spotlight-overlay"
-        viewBox="0 0 1200 800"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <defs>
-          <radialGradient id="sg1" cx="50%" cy="0%" r="60%" gradientUnits="objectBoundingBox">
-            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.18" />
-            <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient id="sg2" cx="75%" cy="0%" r="50%" gradientUnits="objectBoundingBox">
-            <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.10" />
-            <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <ellipse cx="600" cy="-80" rx="700" ry="420" fill="url(#sg1)" />
-        <ellipse cx="900" cy="-60" rx="420" ry="280" fill="url(#sg2)" />
-      </svg>
-
-      {/* ── Mesh blobs ── */}
+      {/* ── Aurora mesh ── */}
+      {/* Violet — top left */}
       <div
-        className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[500px] pointer-events-none rounded-full opacity-[0.18]"
-        style={{ background: 'radial-gradient(ellipse, #3b82f6 0%, transparent 70%)', filter: 'blur(80px)' }}
+        className="aurora-violet absolute w-[700px] h-[700px] opacity-[0.13]"
+        style={{ top: '-200px', left: '-150px' }}
       />
+      {/* Blue — center top */}
       <div
-        className="absolute top-[-60px] right-[-80px] w-[400px] h-[350px] pointer-events-none rounded-full opacity-[0.09] animate-glow-drift"
-        style={{ background: 'radial-gradient(ellipse, #2dd4bf 0%, transparent 70%)', filter: 'blur(70px)' }}
+        className="aurora-blue absolute w-[900px] h-[700px] opacity-[0.18]"
+        style={{ top: '-180px', left: '50%', transform: 'translateX(-50%)' }}
+      />
+      {/* Teal — top right */}
+      <div
+        className="aurora-teal absolute w-[600px] h-[500px] opacity-[0.11]"
+        style={{ top: '-100px', right: '-100px' }}
+      />
+      {/* Violet — bottom left accent */}
+      <div
+        className="aurora-violet absolute w-[400px] h-[400px] opacity-[0.06]"
+        style={{ bottom: '10%', left: '5%' }}
       />
 
-      {/* ── Dot grid ── */}
+      {/* ── Line grid (crosshatch) ── */}
       <div
-        className="absolute inset-0 bg-dot-grid pointer-events-none"
+        className="absolute inset-0 bg-line-grid pointer-events-none"
         style={{
-          maskImage: 'radial-gradient(ellipse 80% 65% at 50% 35%, black 15%, transparent 75%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 65% at 50% 35%, black 15%, transparent 75%)',
+          maskImage: 'radial-gradient(ellipse 75% 70% at 50% 30%, black 10%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 50% 30%, black 10%, transparent 80%)',
+          opacity: 0.6,
         }}
       />
 
-      {/* ── Beam line ── */}
-      <div className="beam-line" style={{ top: '30%', animationDelay: '0s' }} />
-      <div className="beam-line" style={{ top: '55%', animationDelay: '1.5s', opacity: 0.4 }} />
+      {/* ── Meteors ── */}
+      <Meteors />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
+      {/* ── Beam lines ── */}
+      <div className="beam-line" style={{ top: '28%', animationDelay: '0s' }} />
+      <div className="beam-line" style={{ top: '52%', animationDelay: '1.8s', opacity: 0.35 }} />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 text-center py-16 sm:py-20">
 
         {/* ── Announcement Badge ── */}
         <motion.div
@@ -183,6 +206,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
           className="text-[clamp(44px,8vw,100px)] font-black tracking-[-0.04em] leading-[0.92] mb-8"
+          style={{ textWrap: 'balance' }}
         >
           <span className="block">
             <span className="text-gradient-brand">Orkastor</span>
@@ -199,12 +223,13 @@ export default function HeroSection() {
           transition={{ duration: 0.65, delay: 0.16, ease: EASE_OUT_EXPO }}
           className="text-base sm:text-lg md:text-[19px] font-light text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
         >
-          AI agents that run <span className="text-slate-200 font-normal">inside your own environment</span> — no data leaves your network.
-          Starting with{' '}
+          AI agents that run{' '}
+          <span className="text-slate-200 font-normal">inside your own environment</span>{' '}
+          — no data leaves your network. Starting with{' '}
           <span className="inline-flex items-center gap-1 mx-0.5 px-2 py-0.5 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-300 text-[15px] font-semibold font-mono align-middle">
             KubēGraf
-          </span>
-          {' '}for Kubernetes SRE, expanding to cloud costs, security, and beyond.
+          </span>{' '}
+          for Kubernetes SRE, expanding to cloud costs, security, and beyond.
         </motion.p>
 
         {/* ── Trust pills ── */}
@@ -221,7 +246,7 @@ export default function HeroSection() {
           ].map(({ icon: Icon, label }) => (
             <span
               key={label}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.07] bg-white/[0.03] text-[12px] font-medium text-slate-500"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] text-[12px] font-medium text-slate-500 backdrop-blur-sm"
             >
               <Icon className="w-3 h-3 text-slate-600" />
               {label}
@@ -247,7 +272,7 @@ export default function HeroSection() {
             href="#kubegraf"
             className="btn-ghost card-glow-border-hover inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
           >
-            <Play className="w-4 h-4 text-blue-400" />
+            <Play className="w-4 h-4 text-teal-400" />
             See KubēGraf in Action
           </a>
         </motion.div>
@@ -259,10 +284,10 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.36, ease: EASE_OUT_EXPO }}
           className="flex justify-center mb-14"
         >
-          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-[11px] sm:text-[13px] border border-white/[0.07] bg-black/60 backdrop-blur-sm max-w-[90vw] overflow-x-auto whitespace-nowrap">
+          <div className="card-frosted inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-[11px] sm:text-[13px] max-w-[90vw] overflow-x-auto whitespace-nowrap">
             <span className="text-slate-700">$</span>
             <span className="text-blue-300">brew install orkastor</span>
-            <span className="text-slate-800">&&</span>
+            <span className="text-slate-700">&&</span>
             <span className="text-teal-400">orkastor init</span>
           </div>
         </motion.div>
@@ -277,12 +302,12 @@ export default function HeroSection() {
           <AnimatedTerminal />
         </motion.div>
 
-        {/* ── Stats bar with dividers ── */}
+        {/* ── Stats bar ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.55 }}
-          className="flex flex-wrap justify-center items-center mt-12"
+          className="flex flex-wrap justify-center items-center mt-14"
         >
           {STATS.map((s, i) => (
             <React.Fragment key={s.label}>
@@ -302,9 +327,9 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-{/* ── Bottom fade ── */}
+      {/* ── Bottom fade ── */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
         style={{ background: 'linear-gradient(to bottom, transparent, #000000)' }}
       />
     </section>
