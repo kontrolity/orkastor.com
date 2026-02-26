@@ -60,22 +60,8 @@ export default function CTASection() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center">
 
-        {/* Logo mark */}
-        <motion.div
-          className="flex justify-center mb-6"
-          initial={{ opacity: 0, scale: 0.88, filter: 'blur(8px)' }}
-          animate={inView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
-        >
-          <img
-            src="/orkastor-head.png"
-            alt="Orkastor"
-            className="w-44 h-auto"
-            style={{ mixBlendMode: 'screen' }}
-          />
-        </motion.div>
 
-        {/* Headline */}
+{/* Headline */}
         <motion.h2
           className="text-[clamp(36px,6vw,76px)] font-black tracking-[-0.04em] leading-[0.95] text-white mb-5"
           initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
