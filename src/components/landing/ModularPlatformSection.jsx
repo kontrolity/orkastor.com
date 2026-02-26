@@ -161,6 +161,30 @@ export default function ModularPlatformSection() {
           </motion.div>
         </motion.div>
 
+        {/* ── Architecture diagram ── */}
+        <motion.div
+          className="mb-14"
+          initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_EXPO }}
+        >
+          <p className="text-center text-[11px] font-mono tracking-[0.18em] uppercase text-slate-600 mb-6">
+            Platform Architecture
+          </p>
+          <div className="relative rounded-2xl overflow-hidden border border-white/[0.07] bg-black/40">
+            {/* Subtle inner glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(45,212,191,0.04) 0%, transparent 70%)' }}
+            />
+            <img
+              src="/orkastor-architecture.png"
+              alt="Orkastor platform architecture — Users, AI Agent, Orchestrator, vCluster Controller, Cloud Abstraction, KubēGraf SRE Module"
+              className="w-full h-auto block"
+            />
+          </div>
+        </motion.div>
+
         {/* ── CTAs ── */}
         <motion.div
           className="flex flex-col sm:flex-row gap-3 justify-center items-center"
