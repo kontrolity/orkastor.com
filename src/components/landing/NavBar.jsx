@@ -26,6 +26,7 @@ const NAV_ITEMS = [
   // Direct links (no dropdown)
   { label: 'Pricing',    href: '/pricing' },
   { label: 'KubēGraf',  href: 'https://kubegraf.io', external: true },
+  { label: 'About',     href: '/about' },
 ];
 
 /* ── Desktop dropdown panel ──────────────────────────────────── */
