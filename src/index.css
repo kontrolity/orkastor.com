@@ -367,6 +367,7 @@ body::after {
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 0 6px 2px rgba(180, 220, 255, 0.7);
+  opacity: 0;
   animation: meteor-fall linear infinite;
 }
 .meteor::before {
