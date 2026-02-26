@@ -302,6 +302,22 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
+      {/* ── Floating bot mascot ── */}
+      <motion.div
+        className="absolute right-[-60px] sm:right-[-20px] lg:right-[2%] top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
+        initial={{ opacity: 0, x: 40, filter: 'blur(12px)' }}
+        animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.1, delay: 0.6, ease: EASE_OUT_EXPO }}
+      >
+        <img
+          src="/orkastor-bot.png"
+          alt=""
+          aria-hidden="true"
+          className="w-[260px] lg:w-[320px] xl:w-[360px] h-auto opacity-70"
+          style={{ mixBlendMode: 'screen' }}
+        />
+      </motion.div>
+
       {/* ── Bottom fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"

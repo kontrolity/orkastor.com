@@ -62,12 +62,17 @@ export default function CTASection() {
 
         {/* Logo mark */}
         <motion.div
-          className="flex justify-center mb-8"
-          initial={{ opacity: 0, scale: 0.85, filter: 'blur(4px)' }}
+          className="flex justify-center mb-6"
+          initial={{ opacity: 0, scale: 0.88, filter: 'blur(8px)' }}
           animate={inView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
         >
-          <OrkastorLogo size={52} showWordmark={false} />
+          <img
+            src="/orkastor-bot.png"
+            alt="Orkastor"
+            className="w-44 h-auto"
+            style={{ mixBlendMode: 'screen' }}
+          />
         </motion.div>
 
         {/* Headline */}
