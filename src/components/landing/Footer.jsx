@@ -76,7 +76,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <OrkastorLogo size={18} showWordmark={false} />
             <p className="text-slate-700 text-xs">
-              © 2025 Orkastor by Kontrolity Ltd. All rights reserved.
+              © 2025 Orkastor. All rights reserved.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-700">
