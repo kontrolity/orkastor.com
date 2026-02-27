@@ -4,59 +4,48 @@ import { ArrowRight, ChevronRight, Shield, Lock, Server, CheckCircle2, Zap } fro
 
 const EASE = [0.16, 1, 0.3, 1];
 
-/* ── Circuit / Grid Background ───────────────────────────────── */
-function CircuitBackground() {
+/* ── Animated gradient mesh background ───────────────────────── */
+function GradientMeshBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {/* Fine grid lines */}
+      {/* Blob 1 — violet, center-top */}
       <div
-        className="absolute inset-0"
+        className="blob-1 absolute rounded-full"
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(108,71,255,0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(108,71,255,0.06) 1px, transparent 1px)
-          `,
-          backgroundSize: '64px 64px',
+          top: '-20%',
+          left: '30%',
+          width: '700px',
+          height: '700px',
+          background: 'radial-gradient(circle, rgba(108,71,255,0.22) 0%, transparent 70%)',
+          filter: 'blur(60px)',
         }}
       />
-      {/* Secondary finer grid */}
+      {/* Blob 2 — sky, bottom-right */}
       <div
-        className="absolute inset-0"
+        className="blob-2 absolute rounded-full"
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '16px 16px',
+          bottom: '-10%',
+          right: '-5%',
+          width: '500px',
+          height: '500px',
+          background: 'radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%)',
+          filter: 'blur(80px)',
         }}
       />
-
-      {/* Animated horizontal accent lines */}
-      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hline1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="30%" stopColor="#6C47FF" stopOpacity="0.25" />
-            <stop offset="70%" stopColor="#0EA5E9" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-          <linearGradient id="hline2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="40%" stopColor="#0EA5E9" stopOpacity="0.18" />
-            <stop offset="60%" stopColor="#6C47FF" stopOpacity="0.10" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-          <linearGradient id="vline1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="40%" stopColor="#6C47FF" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
-        <line x1="0" y1="38%" x2="100%" y2="38%" stroke="url(#hline1)" strokeWidth="1" />
-        <line x1="0" y1="62%" x2="100%" y2="62%" stroke="url(#hline2)" strokeWidth="1" />
-        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="url(#vline1)" strokeWidth="1" />
-      </svg>
-
+      {/* Blob 3 — purple, left */}
+      <div
+        className="blob-3 absolute rounded-full"
+        style={{
+          top: '40%',
+          left: '-10%',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+        }}
+      />
+      {/* Dot grid overlay */}
+      <div className="absolute inset-0 bg-dot-grid opacity-20" />
     </div>
   );
 }
@@ -65,14 +54,24 @@ function CircuitBackground() {
 function DashboardMockup() {
   return (
     <div
-      className="w-full rounded-2xl overflow-hidden select-none"
+      className="w-full rounded-2xl overflow-hidden select-none relative"
       style={{
         background: '#080C14',
         border: '1px solid rgba(255,255,255,0.08)',
         boxShadow:
-          '0 0 0 1px rgba(108,71,255,0.12), 0 60px 120px rgba(0,0,0,0.35), 0 0 100px rgba(108,71,255,0.12)',
+          '0 0 0 1px rgba(108,71,255,0.18), 0 80px 160px rgba(0,0,0,0.5), 0 0 120px rgba(108,71,255,0.15)',
       }}
     >
+      {/* Animated top border */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[1px]"
+        style={{
+          background: 'linear-gradient(90deg, transparent 0%, #6C47FF 30%, #0EA5E9 70%, transparent 100%)',
+          backgroundSize: '200% auto',
+          animation: 'shimmer-slide 3s linear infinite',
+        }}
+      />
+
       {/* Browser chrome */}
       <div
         className="flex items-center gap-2 px-4 py-3 border-b"
@@ -136,36 +135,28 @@ function DashboardMockup() {
 
         {/* Panel 1: Live Incidents */}
         <div className="p-4 border-r" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-          <div
-            className="text-[9px] font-bold uppercase tracking-widest mb-3"
-            style={{ color: '#4B5563' }}
-          >
+          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
             Live Incidents
           </div>
           {[
-            { svc: 'api-server', ns: 'production', status: 'CrashLoop', color: '#ef4444', active: true },
-            { svc: 'payment-svc', ns: 'checkout', status: 'OOMKilled', color: '#f59e0b', active: false },
-            { svc: 'auth-worker', ns: 'identity', status: 'Degraded', color: '#6C47FF', active: false },
+            { svc: 'api-server',   ns: 'production', status: 'CrashLoop', color: '#ef4444', active: true  },
+            { svc: 'payment-svc',  ns: 'checkout',   status: 'OOMKilled', color: '#f59e0b', active: false },
+            { svc: 'auth-worker',  ns: 'identity',   status: 'Degraded',  color: '#6C47FF', active: false },
           ].map((inc, i) => (
             <div
               key={i}
-              className="mb-2 p-2.5 rounded-xl cursor-pointer transition-all"
+              className="mb-2 p-2.5 rounded-xl cursor-pointer"
               style={{
                 background: inc.active ? 'rgba(239,68,68,0.06)' : 'rgba(255,255,255,0.02)',
                 border: `1px solid ${inc.active ? 'rgba(239,68,68,0.18)' : 'rgba(255,255,255,0.05)'}`,
               }}
             >
               <div className="flex items-center gap-2 mb-1">
-                <div
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ background: inc.color, boxShadow: `0 0 6px ${inc.color}` }}
-                />
+                <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: inc.color, boxShadow: `0 0 6px ${inc.color}` }} />
                 <span className="text-[11px] font-mono text-white font-semibold truncate">{inc.svc}</span>
                 {inc.active && (
-                  <span
-                    className="ml-auto text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider"
-                    style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}
-                  >
+                  <span className="ml-auto text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider"
+                    style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}>
                     Live
                   </span>
                 )}
@@ -175,18 +166,13 @@ function DashboardMockup() {
               </div>
             </div>
           ))}
-
-          {/* Stats strip */}
           <div className="mt-3 grid grid-cols-2 gap-1.5">
             {[
               { label: 'MTTR', val: '18s', color: '#6C47FF' },
               { label: 'Resolved', val: '142', color: '#0EA5E9' },
             ].map(s => (
-              <div
-                key={s.label}
-                className="p-2 rounded-lg text-center"
-                style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}
-              >
+              <div key={s.label} className="p-2 rounded-lg text-center"
+                style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <div className="text-base font-black font-mono" style={{ color: s.color }}>{s.val}</div>
                 <div className="text-[8px] uppercase tracking-wider" style={{ color: '#374151' }}>{s.label}</div>
               </div>
@@ -196,189 +182,96 @@ function DashboardMockup() {
 
         {/* Panel 2: Root Cause Analysis */}
         <div className="p-4 border-r" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-          <div
-            className="text-[9px] font-bold uppercase tracking-widest mb-3"
-            style={{ color: '#4B5563' }}
-          >
+          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
             Root Cause Analysis
           </div>
-
-          <div
-            className="p-3 rounded-xl mb-3"
-            style={{ background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.15)' }}
-          >
+          <div className="p-3 rounded-xl mb-3" style={{ background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.15)' }}>
             <div className="flex items-center gap-2 mb-1.5">
               <Zap className="w-3 h-3 text-amber-400" />
               <span className="text-[11px] font-semibold text-white">Incident #2847</span>
-              <span
-                className="ml-auto text-[8px] px-1.5 py-0.5 rounded-full font-bold"
-                style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}
-              >
-                ACTIVE
-              </span>
+              <span className="ml-auto text-[8px] px-1.5 py-0.5 rounded-full font-bold"
+                style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}>ACTIVE</span>
             </div>
-            <div className="text-[10px] font-mono" style={{ color: '#6B7280' }}>
-              api-server · CrashLoopBackOff
-            </div>
+            <div className="text-[10px] font-mono" style={{ color: '#6B7280' }}>api-server · CrashLoopBackOff</div>
           </div>
-
           <div className="mb-2">
-            <div className="text-[9px] font-medium mb-2" style={{ color: '#6B7280' }}>
-              Confidence scores
-            </div>
+            <div className="text-[9px] font-medium mb-2" style={{ color: '#6B7280' }}>Confidence scores</div>
             {[
-              { label: 'Deploy v2.3.1', conf: '94%', color: '#6C47FF', w: '94%' },
+              { label: 'Deploy v2.3.1',      conf: '94%', color: '#6C47FF', w: '94%' },
               { label: 'Memory limit 512Mi', conf: '91%', color: '#8B5CF6', w: '91%' },
               { label: 'Traffic spike +40%', conf: '88%', color: '#0EA5E9', w: '88%' },
             ].map(c => (
               <div key={c.label} className="flex items-center gap-2 mb-2">
-                <div
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ background: c.color }}
-                />
-                <div className="flex-1 text-[9px] font-mono truncate" style={{ color: '#9CA3AF' }}>
-                  {c.label}
-                </div>
-                <span className="text-[9px] font-mono font-semibold" style={{ color: c.color }}>
-                  {c.conf}
-                </span>
-                <div
-                  className="w-10 h-1 rounded-full overflow-hidden"
-                  style={{ background: 'rgba(255,255,255,0.06)' }}
-                >
-                  <div
-                    className="h-full rounded-full"
-                    style={{ width: c.w, background: c.color }}
-                  />
+                <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: c.color }} />
+                <div className="flex-1 text-[9px] font-mono truncate" style={{ color: '#9CA3AF' }}>{c.label}</div>
+                <span className="text-[9px] font-mono font-semibold" style={{ color: c.color }}>{c.conf}</span>
+                <div className="w-10 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                  <div className="h-full rounded-full" style={{ width: c.w, background: c.color }} />
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Evidence chain */}
-          <div
-            className="p-2 rounded-lg"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}
-          >
-            <div className="text-[8px] font-mono" style={{ color: '#4B5563' }}>
-              📋 Evidence chain: deploy → OOM → restart loop
-            </div>
+          <div className="p-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}>
+            <div className="text-[8px] font-mono" style={{ color: '#4B5563' }}>📋 Evidence chain: deploy → OOM → restart loop</div>
           </div>
         </div>
 
         {/* Panel 3: SafeFix */}
         <div className="p-4">
-          <div
-            className="text-[9px] font-bold uppercase tracking-widest mb-3"
-            style={{ color: '#4B5563' }}
-          >
+          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
             SafeFix™ Proposal
           </div>
-
-          <div
-            className="p-3 rounded-xl mb-3"
-            style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}
-          >
+          <div className="p-3 rounded-xl mb-3" style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold" style={{ color: '#A78BFA' }}>
-                Auto-Remediation
-              </span>
-              <span
-                className="text-[8px] px-1.5 py-0.5 rounded font-mono"
-                style={{
-                  background: 'rgba(52,211,153,0.1)',
-                  border: '1px solid rgba(52,211,153,0.2)',
-                  color: '#34d399',
-                }}
-              >
+              <span className="text-[10px] font-bold" style={{ color: '#A78BFA' }}>Auto-Remediation</span>
+              <span className="text-[8px] px-1.5 py-0.5 rounded font-mono"
+                style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.2)', color: '#34d399' }}>
                 dry-run ✓
               </span>
             </div>
-            <div
-              className="font-mono text-[10px] p-2 rounded-lg mb-3"
-              style={{
-                background: 'rgba(0,0,0,0.4)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                color: '#A78BFA',
-              }}
-            >
+            <div className="font-mono text-[10px] p-2 rounded-lg mb-3"
+              style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.05)', color: '#A78BFA' }}>
               limits.memory: 512Mi → 1Gi
             </div>
             <div className="flex gap-1.5">
-              <button
-                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(108,71,255,0.4), rgba(79,46,232,0.4))',
-                  color: '#C4B5FD',
-                  border: '1px solid rgba(108,71,255,0.4)',
-                }}
-              >
+              <button className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-bold"
+                style={{ background: 'linear-gradient(135deg, rgba(108,71,255,0.4), rgba(79,46,232,0.4))', color: '#C4B5FD', border: '1px solid rgba(108,71,255,0.4)' }}>
                 <CheckCircle2 className="w-3 h-3" />
                 Approve
               </button>
-              <button
-                className="flex-1 py-1.5 rounded-lg text-[10px]"
-                style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  color: '#4B5563',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}
-              >
+              <button className="flex-1 py-1.5 rounded-lg text-[10px]"
+                style={{ background: 'rgba(255,255,255,0.03)', color: '#4B5563', border: '1px solid rgba(255,255,255,0.06)' }}>
                 Dismiss
               </button>
             </div>
           </div>
-
-          {/* Resolution timeline */}
           <div className="mt-2">
             <div className="text-[9px] mb-2" style={{ color: '#4B5563' }}>Resolution timeline</div>
             <div className="flex items-center">
               {[
-                { t: 'T+0s', done: true, label: 'Detect' },
-                { t: 'T+3s', done: true, label: 'RCA' },
-                { t: 'T+8s', done: true, label: 'Fix' },
-                { t: 'T+18s', done: false, label: 'Done' },
+                { t: 'T+0s',  done: true,  label: 'Detect' },
+                { t: 'T+3s',  done: true,  label: 'RCA'    },
+                { t: 'T+8s',  done: true,  label: 'Fix'    },
+                { t: 'T+18s', done: false, label: 'Done'   },
               ].map((item, i, arr) => (
                 <React.Fragment key={item.t}>
                   <div className="flex flex-col items-center">
-                    <div
-                      className="w-2 h-2 rounded-full"
-                      style={{
-                        background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)',
-                        boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none',
-                      }}
-                    />
-                    <span
-                      className="text-[8px] font-mono mt-1"
-                      style={{ color: item.done ? '#6C47FF' : '#374151' }}
-                    >
-                      {item.t}
-                    </span>
+                    <div className="w-2 h-2 rounded-full"
+                      style={{ background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none' }} />
+                    <span className="text-[8px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#374151' }}>{item.t}</span>
                   </div>
                   {i < arr.length - 1 && (
-                    <div
-                      className="flex-1 h-px mx-1"
-                      style={{
-                        background: item.done
-                          ? 'linear-gradient(90deg, #6C47FF, rgba(108,71,255,0.3))'
-                          : 'rgba(255,255,255,0.06)',
-                      }}
-                    />
+                    <div className="flex-1 h-px mx-1"
+                      style={{ background: item.done ? 'linear-gradient(90deg, #6C47FF, rgba(108,71,255,0.3))' : 'rgba(255,255,255,0.06)' }} />
                   )}
                 </React.Fragment>
               ))}
             </div>
           </div>
-
-          {/* Bottom stat */}
-          <div
-            className="mt-3 p-2 rounded-lg flex items-center gap-2"
-            style={{ background: 'rgba(52,211,153,0.05)', border: '1px solid rgba(52,211,153,0.12)' }}
-          >
+          <div className="mt-3 p-2 rounded-lg flex items-center gap-2"
+            style={{ background: 'rgba(52,211,153,0.05)', border: '1px solid rgba(52,211,153,0.12)' }}>
             <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
-            <span className="text-[9px] font-mono" style={{ color: '#34d399' }}>
-              142 incidents auto-resolved this month
-            </span>
+            <span className="text-[9px] font-mono" style={{ color: '#34d399' }}>142 incidents auto-resolved this month</span>
           </div>
         </div>
       </div>
@@ -390,12 +283,16 @@ function DashboardMockup() {
 export default function HeroSection() {
   return (
     <section
-      className="relative overflow-hidden pt-[76px]"
-      style={{ backgroundColor: '#f9fafb', minHeight: '100vh' }}
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: '#0C0C14',
+        minHeight: '100vh',
+        paddingTop: 'calc(76px + var(--banner-height, 0px))',
+      }}
     >
-      <CircuitBackground />
+      <GradientMeshBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24 w-full">
 
         {/* ── Centered text block ── */}
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-14">
@@ -413,9 +310,9 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all hover:opacity-80"
               style={{
-                background: 'rgba(108,71,255,0.08)',
-                border: '1px solid rgba(108,71,255,0.22)',
-                color: '#6C47FF',
+                background: 'rgba(108,71,255,0.1)',
+                border: '1px solid rgba(108,71,255,0.28)',
+                color: '#A78BFA',
               }}
             >
               <span
@@ -434,12 +331,8 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
-            className="font-black tracking-[-0.04em] mb-6"
-            style={{
-              fontSize: 'clamp(44px, 7vw, 84px)',
-              lineHeight: 1.02,
-              color: '#030712',
-            }}
+            className="font-black tracking-[-0.04em] mb-6 text-white"
+            style={{ fontSize: 'clamp(44px, 7vw, 84px)', lineHeight: 1.02 }}
           >
             AI-powered incident
             <br />
@@ -460,8 +353,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.16, ease: EASE }}
-            className="text-lg leading-relaxed mb-10 max-w-xl"
-            style={{ color: '#6B7280' }}
+            className="text-lg leading-relaxed mb-10 max-w-xl text-slate-400"
           >
             AI agents that detect, diagnose, and fix Kubernetes incidents —
             running entirely inside your own environment.
@@ -480,7 +372,7 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.99]"
               style={{
                 background: 'linear-gradient(135deg, #6C47FF 0%, #4F2EE8 100%)',
-                boxShadow: '0 4px 24px rgba(108,71,255,0.35), 0 1px 0 rgba(255,255,255,0.12) inset',
+                boxShadow: '0 4px 24px rgba(108,71,255,0.4), 0 1px 0 rgba(255,255,255,0.12) inset',
               }}
             >
               Get Early Access
@@ -490,38 +382,34 @@ export default function HeroSection() {
               href="https://kubegraf.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all hover:bg-gray-50"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all"
               style={{
-                color: '#374151',
-                background: 'white',
-                border: '1px solid rgba(0,0,0,0.10)',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                color: '#CBD5E1',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
               See KubēGraf ↗
             </a>
           </motion.div>
 
-          {/* Trust indicators */}
+          {/* Inline stats row */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.65, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
+            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm"
           >
             {[
-              { icon: Lock, label: 'Zero data exfiltration' },
-              { icon: Shield, label: 'SOC 2 ready' },
-              { icon: Server, label: 'Runs in your VPC' },
-            ].map(({ icon: Icon, label }) => (
-              <span
-                key={label}
-                className="flex items-center gap-1.5 text-xs"
-                style={{ color: '#9CA3AF' }}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                {label}
-              </span>
+              '18s avg MTTR',
+              '142+ incidents resolved',
+              'Zero data exfiltration',
+              'SOC 2 ready',
+            ].map((stat, i, arr) => (
+              <React.Fragment key={stat}>
+                <span className="text-slate-500">{stat}</span>
+                {i < arr.length - 1 && <span className="text-slate-700 hidden sm:inline">·</span>}
+              </React.Fragment>
             ))}
           </motion.div>
         </div>
@@ -533,22 +421,35 @@ export default function HeroSection() {
           transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
           className="relative max-w-5xl mx-auto"
         >
+          {/* Floating live badge */}
+          <div
+            className="absolute -top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+            style={{
+              background: 'rgba(16,185,129,0.1)',
+              border: '1px solid rgba(16,185,129,0.25)',
+              color: '#34d399',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Live — Production
+          </div>
+
           {/* Glow under the card */}
           <div
             className="absolute -inset-x-8 -bottom-8 h-24 pointer-events-none"
             style={{
-              background:
-                'radial-gradient(ellipse 65% 80% at 50% 100%, rgba(108,71,255,0.18) 0%, transparent 70%)',
+              background: 'radial-gradient(ellipse 65% 80% at 50% 100%, rgba(108,71,255,0.2) 0%, transparent 70%)',
             }}
           />
           <DashboardMockup />
         </motion.div>
       </div>
 
-      {/* Bottom fade from light to dark */}
+      {/* Bottom fade to main bg */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent 0%, #f9fafb 40%, #131316 100%)' }}
+        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, transparent, #131316)' }}
       />
     </section>
   );

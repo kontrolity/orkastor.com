@@ -1,9 +1,11 @@
 import React from 'react';
+import AnnouncementBanner from '@/components/landing/AnnouncementBanner';
 import NavBar from '@/components/landing/NavBar';
 import HeroSection from '@/components/landing/HeroSection';
 import LogoBar from '@/components/landing/LogoBar';
+import StatsStrip from '@/components/landing/StatsStrip';
+import FeatureTabs from '@/components/landing/FeatureTabs';
 import IntegrationsSection from '@/components/landing/IntegrationsSection';
-import KubeGrafSection from '@/components/landing/KubeGrafSection';
 import FeaturesGrid from '@/components/landing/FeaturesGrid';
 import SafeFixWorkflow from '@/components/landing/SafeFixWorkflow';
 import TestimonialSection from '@/components/landing/TestimonialSection';
@@ -14,11 +16,13 @@ import Footer from '@/components/landing/Footer';
 export default function Home() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#131316' }}>
+      <AnnouncementBanner />
       <NavBar />
       <HeroSection />
       <LogoBar />
+      <StatsStrip />
+      <FeatureTabs />
       <IntegrationsSection />
-      <KubeGrafSection />
       <FeaturesGrid />
       <SafeFixWorkflow />
       <TestimonialSection />

@@ -198,10 +198,8 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible]   = useState(true);
   const lastScrollY              = useRef(0);
-  const linkCls = scrolled
-    ? 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
-    : 'text-gray-600 hover:text-gray-900 hover:bg-black/[0.04]';
-  const signInCls = scrolled ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-gray-900';
+  const linkCls  = 'text-slate-400 hover:text-white hover:bg-white/[0.05]';
+  const signInCls = 'text-slate-400 hover:text-white';
 
   useEffect(() => {
     const onScroll = () => {
@@ -220,10 +218,10 @@ export default function NavBar() {
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="fixed left-0 right-0 z-50 transition-all duration-300"
         style={scrolled
-          ? { background: 'rgba(19,19,22,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }
-          : { background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }
+          ? { top: 'var(--banner-height, 0px)', background: 'rgba(19,19,22,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }
+          : { top: 'var(--banner-height, 0px)', background: 'transparent', backdropFilter: 'none', borderBottom: '1px solid transparent' }
         }
       >
         {scrolled && (
