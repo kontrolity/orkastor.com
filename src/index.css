@@ -5,7 +5,7 @@
 /* ═══════════════════════════════════════════════════════════════
    CLERK.COM DESIGN SYSTEM — EXACT REPLICATION
    Font:        Geist (Vercel) — Variable woff2
-   Dark bg:     #131316  (Woodsmoke)
+   Dark bg:     #1E1A33  (Woodsmoke)
    Card bg:     #1D1D21
    Gray-950:    #030712
    Light hero:  #F9FAFB (gray-50)
@@ -88,7 +88,7 @@
 
   /* ── Clerk's exact backgrounds ──────────────────────────── */
   --bg-hero:             #F9FAFB;   /* gray-50  — light hero */
-  --bg-dark:             #131316;   /* Woodsmoke — dark sections */
+  --bg-dark:             #1E1A33;   /* Woodsmoke — dark sections */
   --bg-dark-card:        #1D1D21;   /* exact Clerk card bg */
   --bg-gray950:          #030712;   /* gray-950 — deepest dark */
   --bg-card-glass:       rgba(31,41,55,0.4); /* gray-800/40 */
@@ -109,7 +109,7 @@
   --amber:               #f59e0b;
 
   /* Legacy bg vars for existing components */
-  --bg-base:             #131316;
+  --bg-base:             #1E1A33;
   --bg-alt:              #1D1D21;
   --bg-card:             rgba(255,255,255,0.025);
   --bg-card-solid:       #1D1D21;
@@ -152,7 +152,7 @@
     -moz-osx-font-smoothing: grayscale;
     font-synthesis-weight: none;   /* Clerk uses [font-synthesis-weight:none] */
     font-optical-sizing: auto;
-    background-color: #131316;     /* Woodsmoke — Clerk's dark default */
+    background-color: #1E1A33;     /* Woodsmoke — Clerk's dark default */
     color: #F9FAFB;
     @apply border-border outline-ring/50;
   }
@@ -182,7 +182,7 @@ body::after {
 
 /* ─── Scrollbar ───────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #131316; }
+::-webkit-scrollbar-track { background: #1E1A33; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(108,71,255,0.5); }
 
@@ -525,7 +525,7 @@ body::after {
 }
 /* Nav glass — Clerk uses bg-[--root-bg] which on dark = transparent */
 .glass-dark {
-  background: rgba(19,19,22,0.90);           /* #131316 at 90% */
+  background: rgba(19,19,22,0.90);           /* #1E1A33 at 90% */
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);

@@ -76,7 +76,7 @@ export default function SafeFixWorkflow() {
       ref={sectionRef}
       id="safefix"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Glow */}
       <div

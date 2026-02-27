@@ -114,7 +114,7 @@ export default function KubeGrafSection() {
       ref={sectionRef}
       id="kubegraf"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Top glow */}
       <div

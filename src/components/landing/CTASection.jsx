@@ -26,7 +26,7 @@ export default function CTASection() {
       ref={sectionRef}
       id="cta"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Radial glow */}
       <div
