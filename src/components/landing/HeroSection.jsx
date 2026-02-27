@@ -334,7 +334,7 @@ export default function HeroSection() {
             className="font-black tracking-[-0.04em] mb-6 text-white"
             style={{ fontSize: 'clamp(44px, 7vw, 84px)', lineHeight: 1.02 }}
           >
-            AI-powered incident
+            The AI DevOps &amp;
             <br />
             <span
               style={{
@@ -344,7 +344,7 @@ export default function HeroSection() {
                 backgroundClip: 'text',
               }}
             >
-              resolution.
+              Cloud Orchestrator
             </span>
           </motion.h1>
 
