@@ -447,7 +447,7 @@ export default function HeroSection() {
       {/* Bottom fade to main bg */}
       <div
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #1E1A33)' }}
+        style={{ background: 'linear-gradient(to bottom, transparent, #131316)' }}
       />
     </section>
   );

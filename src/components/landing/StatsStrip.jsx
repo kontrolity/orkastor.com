@@ -66,7 +66,7 @@ export default function StatsStrip() {
     <section
       ref={sectionRef}
       className="relative py-16"
-      style={{ backgroundColor: '#1E1A33' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Top separator */}
       <div

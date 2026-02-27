@@ -84,7 +84,7 @@ export default function LogoBar() {
       ref={ref}
       className="relative py-14 overflow-hidden"
       style={{
-        backgroundColor: '#1E1A33',
+        backgroundColor: '#131316',
         borderTop: '1px solid rgba(255,255,255,0.05)',
         borderBottom: '1px solid rgba(255,255,255,0.05)',
       }}

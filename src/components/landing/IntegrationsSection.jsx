@@ -81,16 +81,16 @@ export default function IntegrationsSection() {
       ref={sectionRef}
       id="integrations"
       className="relative py-16 overflow-hidden"
-      style={{ backgroundColor: '#1E1A33' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Left/right fade masks */}
       <div
         className="absolute inset-y-0 left-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to right, #1E1A33, transparent)' }}
+        style={{ background: 'linear-gradient(to right, #131316, transparent)' }}
       />
       <div
         className="absolute inset-y-0 right-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to left, #1E1A33, transparent)' }}
+        style={{ background: 'linear-gradient(to left, #131316, transparent)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
