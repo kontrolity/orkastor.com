@@ -34,7 +34,7 @@ export default function AnnouncementBanner() {
           className="fixed left-0 right-0 z-[60] h-12 flex items-center"
           style={{
             top: 0,
-            background: '#0C0C14',
+            background: '#130F27',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}
         >
@@ -46,8 +46,8 @@ export default function AnnouncementBanner() {
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
             >
               <span
-                className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
-                style={{ background: '#6C47FF' }}
+                className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                style={{ background: '#E9E2FF', color: '#1E1A33' }}
               >
                 New
               </span>

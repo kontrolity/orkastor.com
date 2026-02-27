@@ -19,7 +19,7 @@ const OTHERS = [
     role: 'VP Engineering',
     company: 'CloudScale',
     initials: 'MR',
-    accent: '#6C47FF',
+    accent: '#7748F6',
   },
   {
     quote: "The runbook automation alone saved us 20+ engineer-hours per week. The CLI is a genuine joy to use — feels like it was designed by someone who actually does on-call.",
@@ -35,7 +35,7 @@ const OTHERS = [
     role: 'Head of Platform',
     company: 'HealthStream',
     initials: 'PN',
-    accent: '#6C47FF',
+    accent: '#7748F6',
   },
 ];
 
@@ -81,14 +81,14 @@ export default function TestimonialSection() {
     <section
       ref={sectionRef}
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Faint glow */}
       <div
         className="absolute top-1/4 right-0 w-[500px] h-[400px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(108,71,255,0.06) 0%, transparent 70%)',
+            'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(119,72,246,0.06) 0%, transparent 70%)',
         }}
       />
 
@@ -132,7 +132,7 @@ export default function TestimonialSection() {
             className="absolute top-0 right-0 w-72 h-72 pointer-events-none"
             style={{
               background:
-                'radial-gradient(circle at 100% 0%, rgba(108,71,255,0.07) 0%, transparent 70%)',
+                'radial-gradient(circle at 100% 0%, rgba(119,72,246,0.07) 0%, transparent 70%)',
             }}
           />
 
@@ -146,7 +146,7 @@ export default function TestimonialSection() {
             className="flex items-center gap-4 pt-6"
             style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
           >
-            <InitialAvatar initials={FEATURED.initials} accent="#6C47FF" />
+            <InitialAvatar initials={FEATURED.initials} accent="#7748F6" />
             <div>
               <div className="text-white font-semibold text-sm">{FEATURED.author}</div>
               <div className="text-slate-500 text-xs mt-0.5">{FEATURED.role} · {FEATURED.company}</div>
@@ -154,11 +154,11 @@ export default function TestimonialSection() {
             <div
               className="ml-auto hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full"
               style={{
-                border: '1px solid rgba(108,71,255,0.2)',
-                background: 'rgba(108,71,255,0.06)',
+                border: '1px solid rgba(119,72,246,0.2)',
+                background: 'rgba(119,72,246,0.06)',
               }}
             >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#6C47FF' }} />
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#7748F6' }} />
               <span className="text-[10px] font-medium" style={{ color: '#A78BFA' }}>Verified customer</span>
             </div>
           </div>

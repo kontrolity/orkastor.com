@@ -13,7 +13,7 @@ const ROW_1 = [
   { name: 'OpsGenie',   color: '#3B82F6' },
   { name: 'Splunk',     color: '#EF4444' },
   { name: 'New Relic',  color: '#00D4AA' },
-  { name: 'Kubernetes', color: '#6C47FF' },
+  { name: 'Kubernetes', color: '#7748F6' },
   { name: 'ArgoCD',     color: '#F43F5E' },
   { name: 'Terraform',  color: '#818CF8' },
   { name: 'Helm',       color: '#0EA5E9' },
@@ -84,7 +84,7 @@ export default function LogoBar() {
       ref={ref}
       className="relative py-14 overflow-hidden"
       style={{
-        backgroundColor: '#131316',
+        backgroundColor: '#1E1A33',
         borderTop: '1px solid rgba(255,255,255,0.05)',
         borderBottom: '1px solid rgba(255,255,255,0.05)',
       }}
@@ -93,7 +93,7 @@ export default function LogoBar() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 100% at 50% 50%, rgba(108,71,255,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 100% at 50% 50%, rgba(119,72,246,0.04) 0%, transparent 70%)',
         }}
       />
 

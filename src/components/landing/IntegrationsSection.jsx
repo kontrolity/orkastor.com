@@ -8,7 +8,7 @@ const ROW_1 = [
   { name: 'AWS',          cat: 'Cloud',      color: '#F59E0B' },
   { name: 'Google Cloud', cat: 'Cloud',      color: '#34D399' },
   { name: 'Azure',        cat: 'Cloud',      color: '#3B82F6' },
-  { name: 'Datadog',      cat: 'Monitoring', color: '#6C47FF' },
+  { name: 'Datadog',      cat: 'Monitoring', color: '#7748F6' },
   { name: 'Prometheus',   cat: 'Monitoring', color: '#F97316' },
   { name: 'Grafana',      cat: 'Monitoring', color: '#F97316' },
   { name: 'PagerDuty',    cat: 'Alerting',   color: '#2DD4BF' },
@@ -20,7 +20,7 @@ const ROW_2 = [
   { name: 'GitHub',    cat: 'DevOps',    color: '#E2E8F0' },
   { name: 'GitLab',    cat: 'DevOps',    color: '#F97316' },
   { name: 'ArgoCD',    cat: 'CI/CD',     color: '#F472B6' },
-  { name: 'Terraform', cat: 'IaC',       color: '#6C47FF' },
+  { name: 'Terraform', cat: 'IaC',       color: '#7748F6' },
   { name: 'Helm',      cat: 'Packaging', color: '#2DD4BF' },
   { name: 'Ansible',   cat: 'Config',    color: '#EF4444' },
 ];
@@ -81,16 +81,16 @@ export default function IntegrationsSection() {
       ref={sectionRef}
       id="integrations"
       className="relative py-16 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Left/right fade masks */}
       <div
         className="absolute inset-y-0 left-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to right, #131316, transparent)' }}
+        style={{ background: 'linear-gradient(to right, #1E1A33, transparent)' }}
       />
       <div
         className="absolute inset-y-0 right-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to left, #131316, transparent)' }}
+        style={{ background: 'linear-gradient(to left, #1E1A33, transparent)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">

@@ -34,7 +34,7 @@ export default function Footer() {
     <footer
       className="relative overflow-hidden"
       style={{
-        backgroundColor: '#0A0A0E',
+        backgroundColor: '#0F0D1F',
         borderTop: '1px solid rgba(255,255,255,0.06)',
       }}
     >
@@ -43,7 +43,7 @@ export default function Footer() {
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(108,71,255,0.05) 0%, transparent 70%)',
+            'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(119,72,246,0.05) 0%, transparent 70%)',
         }}
       />
 
@@ -77,9 +77,9 @@ export default function Footer() {
                     background: 'rgba(255,255,255,0.02)',
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.color = '#6C47FF';
-                    e.currentTarget.style.borderColor = 'rgba(108,71,255,0.35)';
-                    e.currentTarget.style.background = 'rgba(108,71,255,0.08)';
+                    e.currentTarget.style.color = '#7748F6';
+                    e.currentTarget.style.borderColor = 'rgba(119,72,246,0.35)';
+                    e.currentTarget.style.background = 'rgba(119,72,246,0.08)';
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.color = '';
