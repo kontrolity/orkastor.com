@@ -1,38 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Shield, Lock, Server, CheckCircle2, Zap } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1];
-
-/* ── Meteor / Comet Rain (Clerk's hero signature animation) ────── */
-function MeteorRain({ count = 12 }) {
-  const meteors = Array.from({ length: count }, (_, i) => {
-    const delay = (i * 0.4 + Math.random() * 1.5).toFixed(2);
-    const duration = (1.8 + Math.random() * 1.4).toFixed(2);
-    const top = `${(Math.random() * 60).toFixed(1)}%`;
-    const left = `${(Math.random() * 100).toFixed(1)}%`;
-    const size = (60 + Math.random() * 80).toFixed(0);
-    return { delay, duration, top, left, size };
-  });
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {meteors.map((m, i) => (
-        <span
-          key={i}
-          className="meteor-trail"
-          style={{
-            top: m.top,
-            left: m.left,
-            '--meteor-size': `${m.size}px`,
-            '--meteor-delay': `${m.delay}s`,
-            '--meteor-dur': `${m.duration}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
 
 /* ── Circuit / Grid Background ───────────────────────────────── */
 function CircuitBackground() {
@@ -87,37 +57,6 @@ function CircuitBackground() {
         <line x1="50%" y1="0" x2="50%" y2="100%" stroke="url(#vline1)" strokeWidth="1" />
       </svg>
 
-      {/* Center radial purple glow */}
-      <div
-        className="absolute"
-        style={{
-          top: '-5%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '900px',
-          height: '600px',
-          background: 'radial-gradient(ellipse 65% 55% at 50% 5%, rgba(108,71,255,0.14) 0%, rgba(14,165,233,0.04) 50%, transparent 70%)',
-        }}
-      />
-
-      {/* Corner decorative dots */}
-      {[
-        { top: '20%', left: '8%' },
-        { top: '35%', left: '6%' },
-        { top: '20%', right: '8%' },
-        { top: '35%', right: '6%' },
-      ].map((pos, i) => (
-        <div
-          key={i}
-          className="absolute w-1.5 h-1.5 rounded-full"
-          style={{
-            ...pos,
-            background: i % 2 === 0 ? '#6C47FF' : '#0EA5E9',
-            opacity: 0.4,
-            boxShadow: `0 0 8px ${i % 2 === 0 ? '#6C47FF' : '#0EA5E9'}`,
-          }}
-        />
-      ))}
     </div>
   );
 }
@@ -455,7 +394,6 @@ export default function HeroSection() {
       style={{ backgroundColor: '#f9fafb', minHeight: '100vh' }}
     >
       <CircuitBackground />
-      <MeteorRain count={10} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28 w-full">
 
