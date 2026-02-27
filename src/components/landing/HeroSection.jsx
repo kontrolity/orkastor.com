@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Shield, Lock, Server, CheckCircle2, Zap } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1];
+
+/* ── Live stats hook — simulates real-time incident resolution ── */
+function useLiveStats() {
+  const [resolved, setResolved] = useState(142);
+  const [mttr, setMttr]         = useState(18);
+  const [secAgo, setSecAgo]     = useState(4);
+  const timerRef                = useRef(null);
+
+  // Tick "X seconds ago" every second
+  useEffect(() => {
+    const tick = setInterval(() => setSecAgo(s => s + 1), 1000);
+    return () => clearInterval(tick);
+  }, []);
+
+  // Simulate an incident auto-resolved every 8–18 seconds
+  useEffect(() => {
+    const schedule = () => {
+      timerRef.current = setTimeout(() => {
+        setResolved(r => r + 1);
+        setMttr(14 + Math.floor(Math.random() * 8)); // 14–21 s
+        setSecAgo(0);
+        schedule();
+      }, 8000 + Math.random() * 10000);
+    };
+    schedule();
+    return () => clearTimeout(timerRef.current);
+  }, []);
+
+  return { resolved, mttr, secAgo };
+}
 
 /* ── Animated gradient mesh background ───────────────────────── */
 function GradientMeshBackground() {
@@ -281,6 +311,7 @@ function DashboardMockup() {
 
 /* ── Main HeroSection ─────────────────────────────────────────── */
 export default function HeroSection() {
+  const { resolved, mttr, secAgo } = useLiveStats();
   return (
     <section
       className="relative overflow-hidden"
@@ -391,24 +422,41 @@ export default function HeroSection() {
             </a>
           </motion.div>
 
-          {/* Inline stats row */}
+          {/* Inline stats row — live */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.65, delay: 0.3 }}
             className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm"
           >
-            {[
-              '18s avg MTTR',
-              '142+ incidents resolved',
-              'Zero data exfiltration',
-              'SOC 2 ready',
-            ].map((stat, i, arr) => (
-              <React.Fragment key={stat}>
-                <span className="text-slate-500">{stat}</span>
-                {i < arr.length - 1 && <span className="text-slate-700 hidden sm:inline">·</span>}
-              </React.Fragment>
-            ))}
+            {/* MTTR — ticks with each resolution */}
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <span className="font-mono font-semibold text-emerald-400">{mttr}s</span>
+              <span className="text-slate-500">avg MTTR</span>
+            </span>
+
+            <span className="text-slate-700 hidden sm:inline">·</span>
+
+            {/* Resolved count — increments live */}
+            <span className="flex items-center gap-1">
+              <span className="font-mono font-semibold text-white">{resolved}+</span>
+              <span className="text-slate-500">incidents resolved</span>
+            </span>
+
+            <span className="text-slate-700 hidden sm:inline">·</span>
+
+            <span className="flex items-center gap-1 text-slate-500">
+              <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
+              Zero data exfiltration
+            </span>
+
+            <span className="text-slate-700 hidden sm:inline">·</span>
+
+            <span className="flex items-center gap-1 text-slate-500">
+              <Shield className="w-3 h-3 shrink-0" style={{ color: '#524770' }} />
+              SOC 2 ready
+            </span>
           </motion.div>
         </div>
 
@@ -419,7 +467,7 @@ export default function HeroSection() {
           transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
           className="relative max-w-5xl mx-auto"
         >
-          {/* Floating live badge */}
+          {/* Floating live badge — ticking */}
           <div
             className="absolute -top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
             style={{
@@ -429,8 +477,14 @@ export default function HeroSection() {
               backdropFilter: 'blur(8px)',
             }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Live — Production
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span>Live — Production</span>
+            <span style={{ color: 'rgba(52,211,153,0.4)' }}>·</span>
+            <span className="font-mono">
+              {secAgo < 60
+                ? `last fix ${secAgo}s ago`
+                : `last fix ${Math.floor(secAgo / 60)}m ${secAgo % 60}s ago`}
+            </span>
           </div>
 
           {/* Glow under the card */}
