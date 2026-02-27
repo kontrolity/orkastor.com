@@ -9,6 +9,7 @@ const NAV_ITEMS = [
     label: 'Product',
     items: [
       { label: 'Features',      href: '/#features' },
+      { label: 'OrkaAI',        href: '/#platform' },
       { label: 'KubēGraf',      href: '/#kubegraf' },
       { label: 'Integrations',  href: '/#integrations' },
       { label: 'Pricing',       href: '/pricing' },

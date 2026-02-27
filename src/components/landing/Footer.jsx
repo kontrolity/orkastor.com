@@ -5,6 +5,7 @@ import OrkastorLogo from './OrkastorLogo';
 const LINKS = {
   Product: [
     { label: 'Platform',     href: '/#platform' },
+    { label: 'OrkaAI',       href: '/#platform' },
     { label: 'KubēGraf',     href: 'https://kubegraf.io', external: true },
     { label: 'Integrations', href: '/#integrations' },
     { label: 'Pricing',      href: '/pricing' },

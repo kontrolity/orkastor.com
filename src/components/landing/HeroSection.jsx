@@ -613,8 +613,8 @@ export default function HeroSection() {
             transition={{ duration: 0.65, delay: 0.16, ease: EASE }}
             className="text-lg leading-relaxed mb-10 max-w-xl text-slate-400"
           >
-            AI agents that detect, diagnose, and fix Kubernetes incidents —
-            running entirely inside your own environment.
+            Powered by OrkaAI — multi-model reasoning that detects, diagnoses, and fixes
+            Kubernetes incidents. Running entirely inside your own environment.
             Zero data exfiltration.
           </motion.p>
 

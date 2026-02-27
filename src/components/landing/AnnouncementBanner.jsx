@@ -51,7 +51,7 @@ export default function AnnouncementBanner() {
               >
                 New
               </span>
-              <span>KubēGraf v1.0 is live — the first AI SRE for Kubernetes</span>
+              <span>OrkaAI + KubēGraf — AI-powered infrastructure intelligence is here</span>
               <ArrowRight className="w-3.5 h-3.5 opacity-60" />
             </a>
             <button

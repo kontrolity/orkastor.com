@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Activity, DollarSign, Lock, Cloud, GitBranch, Plus } from 'lucide-react';
+import { Activity, Brain, DollarSign, Lock, Cloud, GitBranch, Plus } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -14,6 +14,17 @@ const itemVar = {
 };
 
 const MODULES = [
+  {
+    icon: Brain,
+    name: 'OrkaAI',
+    tag: 'Available Now',
+    tagColor: 'rgba(14,165,233,0.4)',
+    tagBg: 'rgba(14,165,233,0.1)',
+    tagText: '#38BDF8',
+    description: 'Multi-model AI reasoning engine. RAG knowledge base, live cluster analysis, incident RCA, and confidence-scored diagnostics.',
+    accent: '#0EA5E9',
+    active: true,
+  },
   {
     icon: Activity,
     name: 'KubēGraf',
@@ -115,7 +126,7 @@ export default function ModularPlatformSection() {
             <span className="text-gradient-brand">AI DevOps Module</span>
           </h2>
           <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            Orkastor is designed to grow — add AI agents for any part of your infrastructure lifecycle.
+            OrkaAI powers the intelligence layer — add specialized modules for any part of your infrastructure lifecycle.
           </p>
         </motion.div>
 

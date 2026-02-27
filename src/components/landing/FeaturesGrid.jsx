@@ -186,10 +186,11 @@ export default function FeaturesGrid() {
           <BentoCard className="col-span-12 md:col-span-7">
             <IconBadge icon={Search} color="#0EA5E9" />
             <h3 className="relative text-white font-bold text-lg mb-2.5 leading-snug">
-              AI Root Cause Analysis
+              OrkaAI Root Cause Analysis
             </h3>
             <p className="relative text-slate-500 text-sm leading-relaxed mb-5">
-              Correlates signals across services and pinpoints the root cause with a full evidence chain.
+              Powered by OrkaAI's multi-model reasoning engine — correlates signals across services,
+              searches the RAG knowledge base, and pinpoints root cause with confidence-scored evidence chains.
             </p>
             <div
               className="relative space-y-2 p-3 rounded-xl"
