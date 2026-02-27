@@ -331,21 +331,19 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
-            className="font-black tracking-[-0.04em] mb-6 text-white"
-            style={{ fontSize: 'clamp(44px, 7vw, 84px)', lineHeight: 1.02 }}
+            className="font-black tracking-[-0.04em] mb-6"
+            style={{
+              fontSize: 'clamp(44px, 7vw, 84px)',
+              lineHeight: 1.02,
+              background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 45%, #A78BFA 68%, #6C47FF 85%, #38BDF8 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
           >
             The AI DevOps &amp;
             <br />
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #6C47FF 0%, #0EA5E9 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Cloud Orchestrator
-            </span>
+            Cloud Orchestrator
           </motion.h1>
 
           {/* Subtitle */}
