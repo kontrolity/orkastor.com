@@ -67,7 +67,7 @@ function DropdownPanel({ items }) {
 }
 
 /* ── Desktop nav item ────────────────────────────────────────── */
-function NavItem({ navItem }) {
+function NavItem({ navItem, linkCls }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -95,7 +95,7 @@ function NavItem({ navItem }) {
         href={navItem.href}
         target={navItem.external ? '_blank' : undefined}
         rel={navItem.external ? 'noopener noreferrer' : undefined}
-        className="flex items-center gap-1 px-4 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/[0.05] rounded-lg transition-all duration-200"
+        className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all duration-200 ${linkCls}`}
       >
         {navItem.label}
         {navItem.external && <ArrowUpRight className="w-3 h-3 opacity-50" />}
@@ -114,11 +114,7 @@ function NavItem({ navItem }) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="true"
-        className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all duration-200 ${
-          open
-            ? 'text-white bg-white/[0.06]'
-            : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
-        }`}
+        className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all duration-200 ${linkCls}`}
       >
         {navItem.label}
         <ChevronDown
@@ -202,6 +198,10 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible]   = useState(true);
   const lastScrollY              = useRef(0);
+  const linkCls = scrolled
+    ? 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+    : 'text-gray-600 hover:text-gray-900 hover:bg-black/[0.04]';
+  const signInCls = scrolled ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-gray-900';
 
   useEffect(() => {
     const onScroll = () => {
@@ -220,9 +220,11 @@ export default function NavBar() {
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-[400ms] ${
-          scrolled ? 'glass-dark border-b border-white/[0.07]' : 'bg-transparent'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={scrolled
+          ? { background: 'rgba(19,19,22,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }
+          : { background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }
+        }
       >
         {scrolled && (
           <div
@@ -241,13 +243,13 @@ export default function NavBar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
             {NAV_ITEMS.map((item) => (
-              <NavItem key={item.label} navItem={item} />
+              <NavItem key={item.label} navItem={item} linkCls={linkCls} />
             ))}
           </nav>
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <a href="#" className="text-sm text-slate-400 hover:text-white transition-colors px-3 py-2">
+            <a href="#" className={`text-sm transition-colors px-3 py-2 ${signInCls}`}>
               Sign In
             </a>
             <a
