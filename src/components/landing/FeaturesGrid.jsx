@@ -47,14 +47,14 @@ export default function FeaturesGrid() {
       ref={sectionRef}
       id="features"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#1E1A33' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Top purple-sky glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[220px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(119,72,246,0.09) 0%, rgba(14,165,233,0.04) 50%, transparent 70%)',
+            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.09) 0%, rgba(14,165,233,0.04) 50%, transparent 70%)',
         }}
       />
 
@@ -63,7 +63,7 @@ export default function FeaturesGrid() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'radial-gradient(rgba(119,72,246,0.06) 1px, transparent 1px)',
+            'radial-gradient(rgba(108,71,255,0.06) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
           maskImage: 'radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 80%)',
           WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 80%)',
@@ -82,9 +82,9 @@ export default function FeaturesGrid() {
           <span
             className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-5"
             style={{
-              border: '1px solid rgba(119,72,246,0.25)',
+              border: '1px solid rgba(108,71,255,0.25)',
               color: 'rgba(167,139,250,0.7)',
-              background: 'rgba(119,72,246,0.06)',
+              background: 'rgba(108,71,255,0.06)',
             }}
           >
             KubēGraf Features
@@ -109,7 +109,7 @@ export default function FeaturesGrid() {
 
           {/* Zero Exfiltration hero card */}
           <BentoCard className="col-span-12 md:col-span-7">
-            <IconBadge icon={Lock} color="#7748F6" />
+            <IconBadge icon={Lock} color="#6C47FF" />
             <h3 className="relative text-white font-bold text-xl mb-2.5 leading-snug">
               Private AI — Zero Data Exfiltration
             </h3>
@@ -120,8 +120,8 @@ export default function FeaturesGrid() {
             <div
               className="relative inline-flex items-center gap-2 px-3 py-2 rounded-lg font-mono text-[12px]"
               style={{
-                border: '1px solid rgba(119,72,246,0.22)',
-                background: 'rgba(119,72,246,0.06)',
+                border: '1px solid rgba(108,71,255,0.22)',
+                background: 'rgba(108,71,255,0.06)',
                 color: '#A78BFA',
               }}
             >
@@ -139,7 +139,7 @@ export default function FeaturesGrid() {
               <div
                 className="text-[52px] font-black leading-none tracking-[-0.03em] mb-1"
                 style={{
-                  background: 'linear-gradient(135deg, #7748F6, #A78BFA)',
+                  background: 'linear-gradient(135deg, #6C47FF, #A78BFA)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -172,7 +172,7 @@ export default function FeaturesGrid() {
 
           {/* SafeFix card */}
           <BentoCard className="col-span-12 md:col-span-5">
-            <IconBadge icon={Shield} color="#7748F6" />
+            <IconBadge icon={Shield} color="#6C47FF" />
             <h3 className="relative text-white font-bold text-lg mb-2.5 leading-snug">
               SafeFix™ Auto-Remediation
             </h3>
@@ -196,7 +196,7 @@ export default function FeaturesGrid() {
               style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.3)' }}
             >
               {[
-                { label: 'Deploy v2.3.1',     conf: '94%', color: '#7748F6' },
+                { label: 'Deploy v2.3.1',     conf: '94%', color: '#6C47FF' },
                 { label: 'OOMKilled (512Mi)', conf: '91%', color: '#A78BFA' },
                 { label: 'Traffic +40%',      conf: '88%', color: '#0EA5E9' },
               ].map((ev) => (
@@ -211,7 +211,7 @@ export default function FeaturesGrid() {
 
           {/* Row 3 — 3 equal */}
           <BentoCard className="col-span-12 md:col-span-4">
-            <IconBadge icon={CheckCircle2} color="#7748F6" />
+            <IconBadge icon={CheckCircle2} color="#6C47FF" />
             <h3 className="relative text-white font-bold text-base mb-2">Human Approval Gate</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Every AI-proposed fix requires explicit approval. No silent changes, no surprises.
@@ -229,7 +229,7 @@ export default function FeaturesGrid() {
           </BentoCard>
 
           <BentoCard className="col-span-12 md:col-span-4">
-            <IconBadge icon={Server} color="#7748F6" />
+            <IconBadge icon={Server} color="#6C47FF" />
             <h3 className="relative text-white font-bold text-base mb-2">100% In-Environment</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Runs as a Kubernetes operator inside your cluster. Zero external SaaS dependencies.
