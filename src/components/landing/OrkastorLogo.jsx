@@ -194,7 +194,7 @@ export default function OrkastorLogo({
           {/* "stor" — brand violet accent */}
           <span
             style={light ? { color: '#0a0f1a' } : {
-              background: 'linear-gradient(135deg, #6C47FF 0%, #38BDF8 100%)',
+              background: 'linear-gradient(135deg, #A78BFA 0%, #7DD3FC 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
