@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Terminal, Shield, Lock, Zap } from 'lucide-react';
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
+const EASE = [0.16, 1, 0.3, 1];
 
 const TRUST = [
   { icon: Shield, label: 'SOC 2 Type II' },
@@ -26,41 +26,56 @@ export default function CTASection() {
       ref={sectionRef}
       id="cta"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#0a0a0a' }}
+      style={{ backgroundColor: '#131316' }}
     >
-      {/* Top radial glow */}
+      {/* Radial glow */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,0.10) 0%, transparent 65%)' }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 50% -5%, rgba(108,71,255,0.12) 0%, rgba(14,165,233,0.04) 45%, transparent 65%)',
+        }}
+      />
+
+      {/* Grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(108,71,255,0.07) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+          maskImage: 'radial-gradient(ellipse 60% 70% at 50% 0%, black 0%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 60% 70% at 50% 0%, black 0%, transparent 80%)',
+        }}
       />
 
       <div className="relative z-10 max-w-2xl mx-auto px-5 sm:px-6 text-center">
 
-        {/* ── Headline ── */}
+        {/* Headline */}
         <motion.h2
-          className="text-[clamp(32px,5vw,56px)] font-black tracking-[-0.04em] leading-[0.95] text-white mb-4"
+          className="font-black tracking-[-0.04em] leading-[0.95] text-white mb-4"
+          style={{ fontSize: 'clamp(32px,5vw,56px)' }}
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
         >
           Start with KubēGraf Free
         </motion.h2>
 
-        {/* ── Subheadline ── */}
+        {/* Subheadline */}
         <motion.p
           className="text-base text-slate-400 mb-8 leading-relaxed"
           initial={{ opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.14, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.65, delay: 0.14, ease: EASE }}
         >
           Join the waitlist — early adopters get free tier access at launch.
         </motion.p>
 
-        {/* ── Email form ── */}
+        {/* Email form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.65, delay: 0.2, ease: EASE }}
         >
           {!submitted ? (
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-6">
@@ -70,18 +85,36 @@ export default function CTASection() {
                 onChange={e => setEmail(e.target.value)}
                 placeholder="your@company.com"
                 required
-                className="px-4 py-3.5 rounded-xl text-sm bg-white/[0.05] border border-white/[0.1] text-white placeholder:text-slate-600 focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.07] transition-all"
+                className="px-4 py-3.5 rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none transition-all"
+                style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)',
+                }}
+                onFocus={e => {
+                  e.target.style.borderColor = 'rgba(108,71,255,0.5)';
+                  e.target.style.background = 'rgba(255,255,255,0.06)';
+                }}
+                onBlur={e => {
+                  e.target.style.borderColor = 'rgba(255,255,255,0.09)';
+                  e.target.style.background = 'rgba(255,255,255,0.04)';
+                }}
               />
               <button
                 type="submit"
-                className="btn-shimmer inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.01] active:scale-[0.99] transition-transform"
+                className="btn-clerk-primary inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.01] active:scale-[0.99] transition-transform"
               >
                 Get Early Access
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
           ) : (
-            <div className="py-5 px-5 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06] mb-6">
+            <div
+              className="py-5 px-5 rounded-xl mb-6"
+              style={{
+                border: '1px solid rgba(52,211,153,0.25)',
+                background: 'rgba(52,211,153,0.06)',
+              }}
+            >
               <div className="flex items-center justify-center gap-2 text-emerald-400 font-semibold text-sm mb-1">
                 <CheckCircle2 className="w-4 h-4" />
                 You're on the list!
@@ -98,35 +131,35 @@ export default function CTASection() {
               'Runs inside your cluster',
             ].map(p => (
               <span key={p} className="flex items-center gap-1.5 text-slate-600 text-xs">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+                <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#6C47FF' }} />
                 {p}
               </span>
             ))}
           </div>
         </motion.div>
 
-        {/* ── Divider + secondary links ── */}
+        {/* Divider + secondary links */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.32 }}
         >
-          <div className="border-t border-white/[0.06] mb-6" />
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} className="mb-6" />
           <div className="flex items-center justify-center gap-4 text-sm text-slate-500 mb-10">
             <a href="mailto:hello@orkastor.com" className="hover:text-white transition-colors">Book a Demo</a>
-            <span className="text-white/20">·</span>
+            <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
             <a href="/docs" className="hover:text-white transition-colors">View Docs</a>
-            <span className="text-white/20">·</span>
+            <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
             <a href="https://github.com/orkastor" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
           </div>
         </motion.div>
 
-        {/* ── Trust signals ── */}
+        {/* Trust signals */}
         <motion.div
           className="flex flex-wrap justify-center gap-6 mb-8"
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.38, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.5, delay: 0.38, ease: EASE }}
         >
           {TRUST.map(({ icon: Icon, label }) => (
             <div key={label} className="flex items-center gap-2 text-slate-500 text-xs">
@@ -136,19 +169,26 @@ export default function CTASection() {
           ))}
         </motion.div>
 
-        {/* ── Install snippet ── */}
+        {/* Install snippet */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.44 }}
         >
           <div className="flex justify-center">
-            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-3 rounded-xl font-mono text-xs sm:text-sm border border-white/[0.07] bg-black/50 backdrop-blur-sm max-w-[90vw] overflow-x-auto whitespace-nowrap">
+            <div
+              className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-3 rounded-xl font-mono text-xs sm:text-sm max-w-[90vw] overflow-x-auto whitespace-nowrap"
+              style={{
+                border: '1px solid rgba(255,255,255,0.07)',
+                background: 'rgba(0,0,0,0.5)',
+                backdropFilter: 'blur(12px)',
+              }}
+            >
               <Terminal className="w-4 h-4 text-slate-600 shrink-0" />
               <span className="text-slate-500">$</span>
-              <span className="text-blue-300">brew install orkastor</span>
+              <span style={{ color: '#0EA5E9' }}>brew install orkastor</span>
               <span className="text-slate-700">&&</span>
-              <span className="text-teal-400">orkastor init</span>
+              <span style={{ color: '#6C47FF' }}>orkastor init</span>
             </div>
           </div>
         </motion.div>

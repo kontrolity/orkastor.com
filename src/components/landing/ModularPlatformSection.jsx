@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Activity, DollarSign, Lock, Cloud, GitBranch, Plus } from 'lucide-react';
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
+const EASE = [0.16, 1, 0.3, 1];
 
 const container = {
   hidden: {},
@@ -10,7 +10,7 @@ const container = {
 };
 const itemVar = {
   hidden: { opacity: 0, y: 20 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
 const MODULES = [
@@ -18,45 +18,55 @@ const MODULES = [
     icon: Activity,
     name: 'KubēGraf',
     tag: 'Available Now',
-    tagStyle: 'border-purple-500/40 bg-purple-500/10 text-purple-400',
+    tagColor: 'rgba(108,71,255,0.4)',
+    tagBg: 'rgba(108,71,255,0.1)',
+    tagText: '#A78BFA',
     description: 'In-environment AI SRE for Kubernetes. Monitor, diagnose, and auto-remediate — zero exfiltration.',
-    accent: '#7c3aed',
+    accent: '#6C47FF',
     active: true,
   },
   {
     icon: DollarSign,
     name: 'CostAI',
     tag: 'Coming Soon',
-    tagStyle: 'border-white/10 bg-white/[0.04] text-slate-600',
+    tagColor: 'rgba(255,255,255,0.08)',
+    tagBg: 'rgba(255,255,255,0.03)',
+    tagText: '#374151',
     description: 'Cloud cost analysis & optimization. Rightsizing recommendations powered by usage AI.',
-    accent: '#10b981',
+    accent: '#0EA5E9',
     active: false,
   },
   {
     icon: Lock,
     name: 'SecuBot',
     tag: 'Coming Soon',
-    tagStyle: 'border-white/10 bg-white/[0.04] text-slate-600',
+    tagColor: 'rgba(255,255,255,0.08)',
+    tagBg: 'rgba(255,255,255,0.03)',
+    tagText: '#374151',
     description: 'Security enforcement & best practices. Continuous compliance scanning and auto-remediation.',
-    accent: '#f59e0b',
+    accent: '#F59E0B',
     active: false,
   },
   {
     icon: Cloud,
     name: 'InfraPilot',
     tag: 'Coming Soon',
-    tagStyle: 'border-white/10 bg-white/[0.04] text-slate-600',
+    tagColor: 'rgba(255,255,255,0.08)',
+    tagBg: 'rgba(255,255,255,0.03)',
+    tagText: '#374151',
     description: 'Multi-cloud provisioning. Intelligent infrastructure lifecycle management across AWS, GCP, and Azure.',
-    accent: '#7c3aed',
+    accent: '#6C47FF',
     active: false,
   },
   {
     icon: GitBranch,
     name: 'GitOps AI',
     tag: 'Coming Soon',
-    tagStyle: 'border-white/10 bg-white/[0.04] text-slate-600',
+    tagColor: 'rgba(255,255,255,0.08)',
+    tagBg: 'rgba(255,255,255,0.03)',
+    tagText: '#374151',
     description: 'CD/GitOps automation. Smart deployment pipelines with rollback intelligence and drift detection.',
-    accent: '#f59e0b',
+    accent: '#0EA5E9',
     active: false,
   },
 ];
@@ -70,24 +80,34 @@ export default function ModularPlatformSection() {
       ref={sectionRef}
       id="platform"
       className="relative py-24 md:py-28 overflow-hidden"
-      style={{ backgroundColor: '#0a0a0a' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Top glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[240px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,0.07) 0%, transparent 70%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.08) 0%, rgba(14,165,233,0.03) 40%, transparent 70%)',
+        }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
 
-        {/* ── Section header ── */}
+        {/* Section header */}
         <motion.div
-          className="text-center mb-14 md:mb-18"
+          className="text-center mb-14 md:mb-16"
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.65, ease: EASE }}
         >
-          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
+          <span
+            className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-5"
+            style={{
+              border: '1px solid rgba(255,255,255,0.07)',
+              color: 'rgba(255,255,255,0.25)',
+              background: 'rgba(255,255,255,0.03)',
+            }}
+          >
             Platform
           </span>
           <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-5 max-w-4xl mx-auto">
@@ -99,7 +119,7 @@ export default function ModularPlatformSection() {
           </p>
         </motion.div>
 
-        {/* ── Module grid ── */}
+        {/* Module grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"
           variants={container}
@@ -113,15 +133,15 @@ export default function ModularPlatformSection() {
               whileHover={mod.active ? { y: -3, transition: { duration: 0.2 } } : {}}
               className={`bento-card group p-6 ${mod.active ? 'card-glow-border' : 'opacity-50'}`}
             >
-              {/* Hover glow — active only */}
               {mod.active && (
                 <div
                   className="absolute top-0 left-0 w-full h-full rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ background: `radial-gradient(circle at 0% 0%, ${mod.accent}12, transparent 65%)` }}
+                  style={{
+                    background: `radial-gradient(circle at 0% 0%, ${mod.accent}10, transparent 65%)`,
+                  }}
                 />
               )}
 
-              {/* Header row */}
               <div className="relative flex items-start justify-between mb-4">
                 <div
                   className="w-11 h-11 rounded-xl flex items-center justify-center border shrink-0 transition-all duration-300 group-hover:scale-105"
@@ -130,9 +150,19 @@ export default function ModularPlatformSection() {
                     borderColor: `${mod.accent}${mod.active ? '30' : '18'}`,
                   }}
                 >
-                  <mod.icon className="w-5 h-5" style={{ color: mod.active ? mod.accent : `${mod.accent}60` }} />
+                  <mod.icon
+                    className="w-5 h-5"
+                    style={{ color: mod.active ? mod.accent : `${mod.accent}60` }}
+                  />
                 </div>
-                <span className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-full border ${mod.tagStyle}`}>
+                <span
+                  className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-full border"
+                  style={{
+                    borderColor: mod.tagColor,
+                    background: mod.tagBg,
+                    color: mod.tagText,
+                  }}
+                >
                   {mod.tag}
                 </span>
               </div>
@@ -142,25 +172,39 @@ export default function ModularPlatformSection() {
             </motion.div>
           ))}
 
-          {/* Build Your Own placeholder */}
+          {/* Build Your Own */}
           <motion.div
             variants={itemVar}
             className="bento-card p-6 opacity-40"
-            style={{ border: '1px dashed rgba(255,255,255,0.12)' }}
+            style={{ border: '1px dashed rgba(255,255,255,0.10)' }}
           >
             <div className="flex items-start justify-between mb-4">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center border border-dashed border-white/10 bg-white/[0.03]">
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center"
+                style={{
+                  border: '1px dashed rgba(255,255,255,0.08)',
+                  background: 'rgba(255,255,255,0.02)',
+                }}
+              >
                 <Plus className="w-5 h-5 text-slate-600" />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-full border border-white/10 bg-white/[0.04] text-slate-600">
+              <span
+                className="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-full"
+                style={{
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  background: 'rgba(255,255,255,0.03)',
+                  color: '#374151',
+                }}
+              >
                 Coming Soon
               </span>
             </div>
             <h3 className="text-slate-500 font-bold text-base mb-2">Build Your Own</h3>
-            <p className="text-slate-700 text-sm leading-relaxed">Open plugin system — extend Orkastor with custom AI agents for any workflow.</p>
+            <p className="text-slate-700 text-sm leading-relaxed">
+              Open plugin system — extend Orkastor with custom AI agents for any workflow.
+            </p>
           </motion.div>
         </motion.div>
-
       </div>
     </section>
   );

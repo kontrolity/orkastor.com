@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { AlertTriangle, Search, Shield, CheckCircle2, ArrowRight } from 'lucide-react';
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
+const EASE = [0.16, 1, 0.3, 1];
 
 const STEPS = [
   {
@@ -12,7 +12,7 @@ const STEPS = [
     description: 'Orkastor detects unusual patterns across metrics, logs, and traces simultaneously — no alert rules needed.',
     detail: '⚠  api-server-7d4f8 — CrashLoopBackOff · restarts: 7 · namespace: production',
     time: 'T+0s',
-    accent: '#f59e0b',
+    accent: '#F59E0B',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const STEPS = [
     description: 'AI correlates signals across services and pinpoints the likely root cause with an evidence chain and confidence score.',
     detail: '94% confidence: OOMKilled — memory limit 512Mi · peak 498Mi · +40% traffic',
     time: 'T+3s',
-    accent: '#a78bfa',
+    accent: '#A78BFA',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const STEPS = [
     description: 'A remediation is generated from your runbooks and historical fixes, dry-run validated before review.',
     detail: 'Proposed: increase limits → 1Gi · dry-run: PASSED · awaiting approval',
     time: 'T+8s',
-    accent: '#7c3aed',
+    accent: '#6C47FF',
   },
   {
     id: 4,
@@ -39,15 +39,15 @@ const STEPS = [
     description: 'Fix applied in your configured approval mode. Service health confirmed, incident closed with full audit trail.',
     detail: '✓ Approved ops@company.com · ✓ Applied · incident resolved · SLO breach prevented',
     time: 'T+18s',
-    accent: '#34d399',
+    accent: '#34D399',
   },
 ];
 
 const MODES = [
-  { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',     color: '#a78bfa' },
-  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#7c3aed' },
-  { label: 'Auto-Fix (Low Risk)', desc: 'Auto-apply pre-approved safe patterns',       color: '#f59e0b' },
-  { label: 'Full Autopilot',      desc: 'AI handles everything within defined bounds', color: '#34d399' },
+  { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',     color: '#A78BFA' },
+  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#6C47FF' },
+  { label: 'Auto-Fix (Low Risk)', desc: 'Auto-apply pre-approved safe patterns',       color: '#0EA5E9' },
+  { label: 'Full Autopilot',      desc: 'AI handles everything within defined bounds', color: '#34D399' },
 ];
 
 const container = {
@@ -56,7 +56,7 @@ const container = {
 };
 const itemVar = {
   hidden: { opacity: 0, y: 20 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
 export default function SafeFixWorkflow() {
@@ -76,24 +76,34 @@ export default function SafeFixWorkflow() {
       ref={sectionRef}
       id="safefix"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#0a0a0a' }}
+      style={{ backgroundColor: '#131316' }}
     >
-      {/* Single faint purple glow top-right */}
+      {/* Glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(124,58,237,0.07) 0%, transparent 70%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(108,71,255,0.07) 0%, transparent 70%)',
+        }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
 
-        {/* ── Header ── */}
+        {/* Header */}
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.65, ease: EASE }}
         >
-          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-purple-500/20 text-purple-500/60 mb-5">
+          <span
+            className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-5"
+            style={{
+              border: '1px solid rgba(108,71,255,0.2)',
+              color: 'rgba(108,71,255,0.6)',
+              background: 'rgba(108,71,255,0.04)',
+            }}
+          >
             SafeFix Workflow
           </span>
           <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-5 max-w-3xl mx-auto">
@@ -108,7 +118,7 @@ export default function SafeFixWorkflow() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 items-start">
 
-          {/* ── Steps ── */}
+          {/* Steps */}
           <motion.div
             className="lg:col-span-3 space-y-3"
             variants={container}
@@ -123,25 +133,28 @@ export default function SafeFixWorkflow() {
                   key={step.id}
                   variants={itemVar}
                   onClick={() => setActiveStep(step.id)}
-                  className={`relative p-5 rounded-2xl border cursor-pointer transition-all duration-300 overflow-hidden ${
-                    isActive
-                      ? 'border-white/20 bg-white/[0.05]'
-                      : 'border-white/[0.07] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.035]'
-                  }`}
+                  className="relative p-5 rounded-2xl cursor-pointer transition-all duration-300 overflow-hidden"
+                  style={{
+                    border: isActive
+                      ? '1px solid rgba(255,255,255,0.18)'
+                      : '1px solid rgba(255,255,255,0.06)',
+                    background: isActive
+                      ? 'rgba(255,255,255,0.04)'
+                      : 'rgba(255,255,255,0.015)',
+                  }}
                 >
-                  {/* Active left accent */}
                   {isActive && (
                     <div
                       className="absolute left-0 top-4 bottom-4 w-0.5 rounded-full"
                       style={{ background: step.accent }}
                     />
                   )}
-
-                  {/* Hover glow */}
                   {isActive && (
                     <div
                       className="absolute inset-0 pointer-events-none"
-                      style={{ background: `radial-gradient(ellipse 60% 80% at 0% 50%, ${step.accent}08, transparent 70%)` }}
+                      style={{
+                        background: `radial-gradient(ellipse 60% 80% at 0% 50%, ${step.accent}08, transparent 70%)`,
+                      }}
                     />
                   )}
 
@@ -149,11 +162,11 @@ export default function SafeFixWorkflow() {
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5 border transition-all duration-300"
                       style={{
-                        background: isActive ? `${step.accent}18` : 'rgba(255,255,255,0.04)',
-                        borderColor: isActive ? `${step.accent}40` : 'rgba(255,255,255,0.08)',
+                        background: isActive ? `${step.accent}18` : 'rgba(255,255,255,0.03)',
+                        borderColor: isActive ? `${step.accent}40` : 'rgba(255,255,255,0.07)',
                       }}
                     >
-                      <Icon className="w-5 h-5" style={{ color: isActive ? step.accent : '#64748b' }} />
+                      <Icon className="w-5 h-5" style={{ color: isActive ? step.accent : '#374151' }} />
                     </div>
 
                     <div className="flex-1 min-w-0">
@@ -178,8 +191,12 @@ export default function SafeFixWorkflow() {
                             className="overflow-hidden"
                           >
                             <div
-                              className="px-3 py-2.5 rounded-lg font-mono text-[11px] leading-relaxed border"
-                              style={{ background: 'rgba(0,0,0,0.4)', borderColor: `${step.accent}25`, color: step.accent }}
+                              className="px-3 py-2.5 rounded-lg font-mono text-[11px] leading-relaxed"
+                              style={{
+                                background: 'rgba(0,0,0,0.4)',
+                                border: `1px solid ${step.accent}25`,
+                                color: step.accent,
+                              }}
                             >
                               {step.detail}
                             </div>
@@ -192,7 +209,6 @@ export default function SafeFixWorkflow() {
               );
             })}
 
-            {/* Progress dots */}
             <div className="flex items-center gap-2 pt-1 pl-1">
               {STEPS.map(s => (
                 <button
@@ -200,7 +216,7 @@ export default function SafeFixWorkflow() {
                   onClick={() => setActiveStep(s.id)}
                   className="w-1.5 h-1.5 rounded-full transition-all duration-300"
                   style={{
-                    background: activeStep === s.id ? '#7c3aed' : 'rgba(255,255,255,0.15)',
+                    background: activeStep === s.id ? '#6C47FF' : 'rgba(255,255,255,0.15)',
                     transform: activeStep === s.id ? 'scale(1.4)' : 'scale(1)',
                   }}
                 />
@@ -208,12 +224,12 @@ export default function SafeFixWorkflow() {
             </div>
           </motion.div>
 
-          {/* ── Approval modes ── */}
+          {/* Approval modes */}
           <motion.div
             className="lg:col-span-2"
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.2, ease: EASE_OUT_EXPO }}
+            transition={{ duration: 0.65, delay: 0.2, ease: EASE }}
           >
             <div className="bento-card p-6">
               <div className="mb-5">
@@ -222,10 +238,22 @@ export default function SafeFixWorkflow() {
               </div>
 
               <div className="space-y-2.5">
-                {MODES.map((m, i) => (
+                {MODES.map((m) => (
                   <div
                     key={m.label}
-                    className="group flex items-center justify-between p-3.5 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.14] transition-all duration-200 cursor-default"
+                    className="group flex items-center justify-between p-3.5 rounded-xl cursor-default transition-all duration-200"
+                    style={{
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      background: 'rgba(255,255,255,0.02)',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.borderColor = `${m.color}30`;
+                      e.currentTarget.style.background = `${m.color}06`;
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+                    }}
                   >
                     <div className="flex items-center gap-3">
                       <div
@@ -242,8 +270,11 @@ export default function SafeFixWorkflow() {
                 ))}
               </div>
 
-              <div className="mt-5 pt-4 border-t border-white/[0.06] text-xs text-slate-600 leading-relaxed">
-                All modes include full audit logging, OPA policy enforcement, and zero external AI calls — inference stays inside your environment.
+              <div
+                className="mt-5 pt-4 text-xs text-slate-600 leading-relaxed"
+                style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+              >
+                All modes include full audit logging, OPA policy enforcement, and zero external AI calls.
               </div>
             </div>
           </motion.div>

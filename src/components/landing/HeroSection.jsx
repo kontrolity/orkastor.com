@@ -1,295 +1,616 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight, CheckCircle2, Zap } from 'lucide-react';
+import { ArrowRight, ChevronRight, Shield, Lock, Server, CheckCircle2, Zap } from 'lucide-react';
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
+const EASE = [0.16, 1, 0.3, 1];
 
-/* ── Product UI Mockup ──────────────────────────────────────── */
-function ProductMockup() {
+/* ── Meteor / Comet Rain (Clerk's hero signature animation) ────── */
+function MeteorRain({ count = 12 }) {
+  const meteors = Array.from({ length: count }, (_, i) => {
+    const delay = (i * 0.4 + Math.random() * 1.5).toFixed(2);
+    const duration = (1.8 + Math.random() * 1.4).toFixed(2);
+    const top = `${(Math.random() * 60).toFixed(1)}%`;
+    const left = `${(Math.random() * 100).toFixed(1)}%`;
+    const size = (60 + Math.random() * 80).toFixed(0);
+    return { delay, duration, top, left, size };
+  });
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {meteors.map((m, i) => (
+        <span
+          key={i}
+          className="meteor-trail"
+          style={{
+            top: m.top,
+            left: m.left,
+            '--meteor-size': `${m.size}px`,
+            '--meteor-delay': `${m.delay}s`,
+            '--meteor-dur': `${m.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── Circuit / Grid Background ───────────────────────────────── */
+function CircuitBackground() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Fine grid lines */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(108,71,255,0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(108,71,255,0.06) 1px, transparent 1px)
+          `,
+          backgroundSize: '64px 64px',
+        }}
+      />
+      {/* Secondary finer grid */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: '16px 16px',
+        }}
+      />
+
+      {/* Animated horizontal accent lines */}
+      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hline1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="30%" stopColor="#6C47FF" stopOpacity="0.25" />
+            <stop offset="70%" stopColor="#0EA5E9" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+          <linearGradient id="hline2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="40%" stopColor="#0EA5E9" stopOpacity="0.18" />
+            <stop offset="60%" stopColor="#6C47FF" stopOpacity="0.10" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+          <linearGradient id="vline1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="40%" stopColor="#6C47FF" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="38%" x2="100%" y2="38%" stroke="url(#hline1)" strokeWidth="1" />
+        <line x1="0" y1="62%" x2="100%" y2="62%" stroke="url(#hline2)" strokeWidth="1" />
+        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="url(#vline1)" strokeWidth="1" />
+      </svg>
+
+      {/* Center radial purple glow */}
+      <div
+        className="absolute"
+        style={{
+          top: '-5%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '900px',
+          height: '600px',
+          background: 'radial-gradient(ellipse 65% 55% at 50% 5%, rgba(108,71,255,0.14) 0%, rgba(14,165,233,0.04) 50%, transparent 70%)',
+        }}
+      />
+
+      {/* Corner decorative dots */}
+      {[
+        { top: '20%', left: '8%' },
+        { top: '35%', left: '6%' },
+        { top: '20%', right: '8%' },
+        { top: '35%', right: '6%' },
+      ].map((pos, i) => (
+        <div
+          key={i}
+          className="absolute w-1.5 h-1.5 rounded-full"
+          style={{
+            ...pos,
+            background: i % 2 === 0 ? '#6C47FF' : '#0EA5E9',
+            opacity: 0.4,
+            boxShadow: `0 0 8px ${i % 2 === 0 ? '#6C47FF' : '#0EA5E9'}`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── 3-Panel Dashboard Mockup ─────────────────────────────────── */
+function DashboardMockup() {
   return (
     <div
-      className="w-full rounded-2xl overflow-hidden border border-white/[0.09]"
+      className="w-full rounded-2xl overflow-hidden select-none"
       style={{
-        background: '#111111',
-        boxShadow: '0 0 80px rgba(124,58,237,0.15), 0 32px 64px rgba(0,0,0,0.6)',
+        background: '#080C14',
+        border: '1px solid rgba(255,255,255,0.08)',
+        boxShadow:
+          '0 0 0 1px rgba(108,71,255,0.12), 0 60px 120px rgba(0,0,0,0.35), 0 0 100px rgba(108,71,255,0.12)',
       }}
     >
-      {/* Titlebar */}
+      {/* Browser chrome */}
       <div
         className="flex items-center gap-2 px-4 py-3 border-b"
-        style={{ background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(255,255,255,0.07)' }}
+        style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.06)' }}
       >
-        <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
-        <span className="ml-3 text-[11px] font-mono text-slate-600">orkastor / production</span>
-        <span className="ml-auto flex items-center gap-1.5">
+        <span className="w-3 h-3 rounded-full" style={{ background: '#ff5f57' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#ffbd2e' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#28ca41' }} />
+        <div className="flex-1 mx-4">
+          <div
+            className="mx-auto h-5 rounded-md flex items-center px-3"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              maxWidth: '260px',
+            }}
+          >
+            <span className="text-[10px] font-mono text-slate-600">app.orkastor.com / production</span>
+          </div>
+        </div>
+        <span className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          <span className="text-[10px] font-mono text-red-400/80">ACTIVE</span>
+          <span className="text-[10px] font-mono text-red-400/80">INCIDENT ACTIVE</span>
         </span>
       </div>
 
-      <div className="p-4 space-y-3">
-
-        {/* Incident header */}
-        <div
-          className="p-3 rounded-xl border"
-          style={{ background: 'rgba(245,158,11,0.06)', borderColor: 'rgba(245,158,11,0.20)' }}
-        >
-          <div className="flex items-center justify-between mb-1.5">
-            <div className="flex items-center gap-2">
-              <Zap className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-white text-xs font-semibold">Incident #2847</span>
-            </div>
-            <span
-              className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
-              style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}
-            >
-              ACTIVE
-            </span>
-          </div>
-          <div className="text-[11px] font-mono text-slate-400">api-server · CrashLoopBackOff</div>
-          <div className="text-[10px] font-mono text-slate-600 mt-0.5">namespace: production · restarts: 7</div>
-        </div>
-
-        {/* RCA panel */}
-        <div
-          className="p-3 rounded-xl border"
-          style={{ background: 'rgba(255,255,255,0.025)', borderColor: 'rgba(255,255,255,0.07)' }}
-        >
-          <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 mb-2.5">
-            Root Cause Analysis
-          </div>
-          {/* Confidence bar */}
-          <div className="flex items-center gap-2 mb-2.5">
-            <div className="flex-1 h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
-              <div
-                className="h-full rounded-full"
-                style={{ width: '94%', background: 'linear-gradient(90deg, #7c3aed, #a78bfa)' }}
-              />
-            </div>
-            <span className="text-[10px] font-mono text-slate-400">94% conf</span>
-          </div>
-          {/* Causes */}
-          {[
-            { label: 'Deploy v2.3.1',      conf: '94%', width: '94%', color: '#a78bfa' },
-            { label: 'Memory limit 512Mi', conf: '91%', width: '91%', color: '#7c3aed' },
-            { label: 'Traffic +40%',       conf: '88%', width: '88%', color: '#f59e0b' },
-          ].map((c) => (
-            <div key={c.label} className="flex items-center gap-2 mb-1.5 last:mb-0">
-              <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: c.color }} />
-              <div className="flex-1 text-[10px] font-mono text-slate-400">{c.label}</div>
-              <div className="text-[10px] font-mono font-semibold" style={{ color: c.color }}>{c.conf}</div>
-              <div className="w-12 h-1 rounded-full bg-white/[0.07] overflow-hidden">
-                <div className="h-full rounded-full" style={{ width: c.width, background: c.color }} />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* SafeFix panel */}
-        <div
-          className="p-3 rounded-xl border"
-          style={{ background: 'rgba(124,58,237,0.07)', borderColor: 'rgba(124,58,237,0.25)' }}
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-purple-300">SafeFix™ Proposal</span>
-            </div>
-            <span
-              className="text-[9px] font-mono px-1.5 py-0.5 rounded border"
-              style={{ background: 'rgba(52,211,153,0.10)', borderColor: 'rgba(52,211,153,0.20)', color: '#34d399' }}
-            >
-              dry-run ✓
-            </span>
-          </div>
+      {/* Top tab bar */}
+      <div
+        className="flex items-center gap-1 px-4 pt-3 pb-0 border-b"
+        style={{ borderColor: 'rgba(255,255,255,0.05)' }}
+      >
+        {['Overview', 'Incidents', 'RCA', 'SafeFix™'].map((tab, i) => (
           <div
-            className="rounded-lg p-2 mb-2.5 font-mono text-[10px] border"
-            style={{ background: 'rgba(0,0,0,0.35)', borderColor: 'rgba(255,255,255,0.06)', color: '#c4b5fd' }}
+            key={tab}
+            className="px-4 py-2 text-[11px] font-medium rounded-t-lg cursor-pointer transition-all"
+            style={
+              i === 1
+                ? {
+                    background: 'rgba(108,71,255,0.12)',
+                    borderBottom: '2px solid #6C47FF',
+                    color: '#A78BFA',
+                  }
+                : { color: '#4B5563' }
+            }
           >
-            limits.memory: 512Mi → 1Gi
+            {tab}
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-bold transition-all"
-              style={{ background: 'rgba(124,58,237,0.30)', color: '#c4b5fd', border: '1px solid rgba(124,58,237,0.40)' }}
-            >
-              <CheckCircle2 className="w-3 h-3" />
-              Approve Fix
-            </button>
-            <button
-              className="flex-1 py-1.5 rounded-lg text-[10px] font-medium transition-all"
-              style={{ background: 'rgba(255,255,255,0.04)', color: '#64748b', border: '1px solid rgba(255,255,255,0.07)' }}
-            >
-              Dismiss
-            </button>
+        ))}
+        <div className="ml-auto flex items-center gap-2 mb-1">
+          <div
+            className="text-[10px] font-mono px-2 py-1 rounded"
+            style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}
+          >
+            3 Active
           </div>
         </div>
       </div>
 
-      {/* Timeline strip */}
-      <div
-        className="px-4 pb-4 pt-1 flex items-center gap-0"
-      >
-        {[
-          { label: 'T+0s',  active: true  },
-          { label: 'T+3s',  active: true  },
-          { label: 'T+8s',  active: true  },
-          { label: 'T+18s', active: false },
-        ].map((t, i, arr) => (
-          <React.Fragment key={t.label}>
-            <div className="flex flex-col items-center">
+      {/* 3-panel layout */}
+      <div className="grid grid-cols-3" style={{ minHeight: '290px' }}>
+
+        {/* Panel 1: Live Incidents */}
+        <div className="p-4 border-r" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+          <div
+            className="text-[9px] font-bold uppercase tracking-widest mb-3"
+            style={{ color: '#4B5563' }}
+          >
+            Live Incidents
+          </div>
+          {[
+            { svc: 'api-server', ns: 'production', status: 'CrashLoop', color: '#ef4444', active: true },
+            { svc: 'payment-svc', ns: 'checkout', status: 'OOMKilled', color: '#f59e0b', active: false },
+            { svc: 'auth-worker', ns: 'identity', status: 'Degraded', color: '#6C47FF', active: false },
+          ].map((inc, i) => (
+            <div
+              key={i}
+              className="mb-2 p-2.5 rounded-xl cursor-pointer transition-all"
+              style={{
+                background: inc.active ? 'rgba(239,68,68,0.06)' : 'rgba(255,255,255,0.02)',
+                border: `1px solid ${inc.active ? 'rgba(239,68,68,0.18)' : 'rgba(255,255,255,0.05)'}`,
+              }}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <div
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ background: inc.color, boxShadow: `0 0 6px ${inc.color}` }}
+                />
+                <span className="text-[11px] font-mono text-white font-semibold truncate">{inc.svc}</span>
+                {inc.active && (
+                  <span
+                    className="ml-auto text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider"
+                    style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}
+                  >
+                    Live
+                  </span>
+                )}
+              </div>
+              <div className="text-[9px] font-mono" style={{ color: '#4B5563' }}>
+                {inc.ns} · {inc.status}
+              </div>
+            </div>
+          ))}
+
+          {/* Stats strip */}
+          <div className="mt-3 grid grid-cols-2 gap-1.5">
+            {[
+              { label: 'MTTR', val: '18s', color: '#6C47FF' },
+              { label: 'Resolved', val: '142', color: '#0EA5E9' },
+            ].map(s => (
               <div
-                className="w-2 h-2 rounded-full"
-                style={{ background: t.active ? '#f59e0b' : 'rgba(255,255,255,0.15)' }}
-              />
-              <span className="text-[9px] font-mono mt-1" style={{ color: t.active ? '#f59e0b' : '#475569' }}>
-                {t.label}
+                key={s.label}
+                className="p-2 rounded-lg text-center"
+                style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}
+              >
+                <div className="text-base font-black font-mono" style={{ color: s.color }}>{s.val}</div>
+                <div className="text-[8px] uppercase tracking-wider" style={{ color: '#374151' }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Panel 2: Root Cause Analysis */}
+        <div className="p-4 border-r" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+          <div
+            className="text-[9px] font-bold uppercase tracking-widest mb-3"
+            style={{ color: '#4B5563' }}
+          >
+            Root Cause Analysis
+          </div>
+
+          <div
+            className="p-3 rounded-xl mb-3"
+            style={{ background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.15)' }}
+          >
+            <div className="flex items-center gap-2 mb-1.5">
+              <Zap className="w-3 h-3 text-amber-400" />
+              <span className="text-[11px] font-semibold text-white">Incident #2847</span>
+              <span
+                className="ml-auto text-[8px] px-1.5 py-0.5 rounded-full font-bold"
+                style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}
+              >
+                ACTIVE
               </span>
             </div>
-            {i < arr.length - 1 && (
-              <div className="flex-1 h-px mx-1" style={{ background: 'rgba(100,116,139,0.30)' }} />
-            )}
-          </React.Fragment>
-        ))}
+            <div className="text-[10px] font-mono" style={{ color: '#6B7280' }}>
+              api-server · CrashLoopBackOff
+            </div>
+          </div>
+
+          <div className="mb-2">
+            <div className="text-[9px] font-medium mb-2" style={{ color: '#6B7280' }}>
+              Confidence scores
+            </div>
+            {[
+              { label: 'Deploy v2.3.1', conf: '94%', color: '#6C47FF', w: '94%' },
+              { label: 'Memory limit 512Mi', conf: '91%', color: '#8B5CF6', w: '91%' },
+              { label: 'Traffic spike +40%', conf: '88%', color: '#0EA5E9', w: '88%' },
+            ].map(c => (
+              <div key={c.label} className="flex items-center gap-2 mb-2">
+                <div
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ background: c.color }}
+                />
+                <div className="flex-1 text-[9px] font-mono truncate" style={{ color: '#9CA3AF' }}>
+                  {c.label}
+                </div>
+                <span className="text-[9px] font-mono font-semibold" style={{ color: c.color }}>
+                  {c.conf}
+                </span>
+                <div
+                  className="w-10 h-1 rounded-full overflow-hidden"
+                  style={{ background: 'rgba(255,255,255,0.06)' }}
+                >
+                  <div
+                    className="h-full rounded-full"
+                    style={{ width: c.w, background: c.color }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Evidence chain */}
+          <div
+            className="p-2 rounded-lg"
+            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}
+          >
+            <div className="text-[8px] font-mono" style={{ color: '#4B5563' }}>
+              📋 Evidence chain: deploy → OOM → restart loop
+            </div>
+          </div>
+        </div>
+
+        {/* Panel 3: SafeFix */}
+        <div className="p-4">
+          <div
+            className="text-[9px] font-bold uppercase tracking-widest mb-3"
+            style={{ color: '#4B5563' }}
+          >
+            SafeFix™ Proposal
+          </div>
+
+          <div
+            className="p-3 rounded-xl mb-3"
+            style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold" style={{ color: '#A78BFA' }}>
+                Auto-Remediation
+              </span>
+              <span
+                className="text-[8px] px-1.5 py-0.5 rounded font-mono"
+                style={{
+                  background: 'rgba(52,211,153,0.1)',
+                  border: '1px solid rgba(52,211,153,0.2)',
+                  color: '#34d399',
+                }}
+              >
+                dry-run ✓
+              </span>
+            </div>
+            <div
+              className="font-mono text-[10px] p-2 rounded-lg mb-3"
+              style={{
+                background: 'rgba(0,0,0,0.4)',
+                border: '1px solid rgba(255,255,255,0.05)',
+                color: '#A78BFA',
+              }}
+            >
+              limits.memory: 512Mi → 1Gi
+            </div>
+            <div className="flex gap-1.5">
+              <button
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-bold"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(108,71,255,0.4), rgba(79,46,232,0.4))',
+                  color: '#C4B5FD',
+                  border: '1px solid rgba(108,71,255,0.4)',
+                }}
+              >
+                <CheckCircle2 className="w-3 h-3" />
+                Approve
+              </button>
+              <button
+                className="flex-1 py-1.5 rounded-lg text-[10px]"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  color: '#4B5563',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+
+          {/* Resolution timeline */}
+          <div className="mt-2">
+            <div className="text-[9px] mb-2" style={{ color: '#4B5563' }}>Resolution timeline</div>
+            <div className="flex items-center">
+              {[
+                { t: 'T+0s', done: true, label: 'Detect' },
+                { t: 'T+3s', done: true, label: 'RCA' },
+                { t: 'T+8s', done: true, label: 'Fix' },
+                { t: 'T+18s', done: false, label: 'Done' },
+              ].map((item, i, arr) => (
+                <React.Fragment key={item.t}>
+                  <div className="flex flex-col items-center">
+                    <div
+                      className="w-2 h-2 rounded-full"
+                      style={{
+                        background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)',
+                        boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none',
+                      }}
+                    />
+                    <span
+                      className="text-[8px] font-mono mt-1"
+                      style={{ color: item.done ? '#6C47FF' : '#374151' }}
+                    >
+                      {item.t}
+                    </span>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <div
+                      className="flex-1 h-px mx-1"
+                      style={{
+                        background: item.done
+                          ? 'linear-gradient(90deg, #6C47FF, rgba(108,71,255,0.3))'
+                          : 'rgba(255,255,255,0.06)',
+                      }}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom stat */}
+          <div
+            className="mt-3 p-2 rounded-lg flex items-center gap-2"
+            style={{ background: 'rgba(52,211,153,0.05)', border: '1px solid rgba(52,211,153,0.12)' }}
+          >
+            <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
+            <span className="text-[9px] font-mono" style={{ color: '#34d399' }}>
+              142 incidents auto-resolved this month
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-const STATS = [
-  { val: '80%',  label: 'Faster MTTR' },
-  { val: '0',    label: 'Bytes leave your network' },
-  { val: '18s',  label: 'Mean resolution' },
-  { val: '100%', label: 'Human-approved fixes' },
-];
-
+/* ── Main HeroSection ─────────────────────────────────────────── */
 export default function HeroSection() {
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-[76px]"
-      style={{ backgroundColor: '#0a0a0a' }}
+      className="relative overflow-hidden pt-[76px]"
+      style={{ backgroundColor: '#f9fafb', minHeight: '100vh' }}
     >
-      {/* Single purple radial glow — top right */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: '-5%', right: '-5%',
-          width: '700px', height: '600px',
-          background: 'radial-gradient(ellipse 55% 50% at 80% 10%, rgba(124,58,237,0.10) 0%, transparent 65%)',
-        }}
-      />
+      <CircuitBackground />
+      <MeteorRain count={10} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28 w-full">
 
-          {/* ── Left column ── */}
-          <div>
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
-              className="flex mb-8"
-            >
-              <a href="https://kubegraf.io/" target="_blank" rel="noopener noreferrer" className="badge-pill group">
-                <span className="pill-tag">New</span>
-                KubēGraf v1.0 — in-environment AI SRE for Kubernetes
-                <ChevronRight className="w-3.5 h-3.5 text-purple-400/60 group-hover:translate-x-0.5 transition-transform" />
-              </a>
-            </motion.div>
+        {/* ── Centered text block ── */}
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-14">
 
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
-              className="font-black tracking-[-0.04em] leading-[0.88] mb-6"
+          {/* Announcement pill */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="mb-8"
+          >
+            <a
+              href="https://kubegraf.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all hover:opacity-80"
               style={{
-                fontSize: 'clamp(44px, 5.5vw, 72px)',
-                color: '#f5f5f5',
+                background: 'rgba(108,71,255,0.08)',
+                border: '1px solid rgba(108,71,255,0.22)',
+                color: '#6C47FF',
               }}
             >
-              AI-powered incident<br />resolution.
-            </motion.h1>
-
-            {/* Subheadline */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.16, ease: EASE_OUT_EXPO }}
-              className="text-base leading-relaxed mb-10 max-w-sm"
-              style={{ color: '#737373' }}
-            >
-              AI agents that run inside your own environment —
-              no data leaves your network.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.24, ease: EASE_OUT_EXPO }}
-              className="flex flex-col sm:flex-row gap-3 mb-10"
-            >
-              <a
-                href="#cta"
-                className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.02] active:scale-[0.99] transition-transform"
+              <span
+                className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
+                style={{ background: '#6C47FF' }}
               >
-                Get Early Access
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
-                href="https://kubegraf.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-semibold transition-all"
-              >
-                See KubēGraf ↗
-              </a>
-            </motion.div>
-
-            {/* Stats bar */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.36 }}
-              className="flex flex-wrap items-center"
-            >
-              {STATS.map((s, i) => (
-                <React.Fragment key={s.label}>
-                  <div className="text-center px-4 py-2">
-                    <div className="shimmer-stat text-2xl font-black tabular-nums">
-                      {s.val}
-                    </div>
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-600 mt-0.5">
-                      {s.label}
-                    </div>
-                  </div>
-                  {i < STATS.length - 1 && (
-                    <div className="w-px h-7 bg-white/[0.07] hidden sm:block" />
-                  )}
-                </React.Fragment>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* ── Right column — ProductMockup ── */}
-          <motion.div
-            initial={{ opacity: 0, x: 32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.28, ease: EASE_OUT_EXPO }}
-          >
-            <ProductMockup />
+                New
+              </span>
+              KubēGraf v1.0 — AI SRE for Kubernetes
+              <ChevronRight className="w-3.5 h-3.5 opacity-60" />
+            </a>
           </motion.div>
 
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
+            className="font-black tracking-[-0.04em] mb-6"
+            style={{
+              fontSize: 'clamp(44px, 7vw, 84px)',
+              lineHeight: 1.02,
+              color: '#030712',
+            }}
+          >
+            AI-powered incident
+            <br />
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #6C47FF 0%, #0EA5E9 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              resolution.
+            </span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.16, ease: EASE }}
+            className="text-lg leading-relaxed mb-10 max-w-xl"
+            style={{ color: '#6B7280' }}
+          >
+            AI agents that detect, diagnose, and fix Kubernetes incidents —
+            running entirely inside your own environment.
+            Zero data exfiltration.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.22, ease: EASE }}
+            className="flex flex-col sm:flex-row items-center gap-3 mb-10"
+          >
+            <a
+              href="#cta"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.99]"
+              style={{
+                background: 'linear-gradient(135deg, #6C47FF 0%, #4F2EE8 100%)',
+                boxShadow: '0 4px 24px rgba(108,71,255,0.35), 0 1px 0 rgba(255,255,255,0.12) inset',
+              }}
+            >
+              Get Early Access
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="https://kubegraf.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all hover:bg-gray-50"
+              style={{
+                color: '#374151',
+                background: 'white',
+                border: '1px solid rgba(0,0,0,0.10)',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+              }}
+            >
+              See KubēGraf ↗
+            </a>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.65, delay: 0.3 }}
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
+          >
+            {[
+              { icon: Lock, label: 'Zero data exfiltration' },
+              { icon: Shield, label: 'SOC 2 ready' },
+              { icon: Server, label: 'Runs in your VPC' },
+            ].map(({ icon: Icon, label }) => (
+              <span
+                key={label}
+                className="flex items-center gap-1.5 text-xs"
+                style={{ color: '#9CA3AF' }}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                {label}
+              </span>
+            ))}
+          </motion.div>
         </div>
+
+        {/* ── Full-width product mockup ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 56, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
+          className="relative max-w-5xl mx-auto"
+        >
+          {/* Glow under the card */}
+          <div
+            className="absolute -inset-x-8 -bottom-8 h-24 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(ellipse 65% 80% at 50% 100%, rgba(108,71,255,0.18) 0%, transparent 70%)',
+            }}
+          />
+          <DashboardMockup />
+        </motion.div>
       </div>
 
-      {/* Bottom fade */}
+      {/* Bottom fade from light to dark */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #0a0a0a)' }}
+        className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, transparent 0%, #f9fafb 40%, #131316 100%)' }}
       />
     </section>
   );

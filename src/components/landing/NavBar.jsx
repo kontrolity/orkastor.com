@@ -252,7 +252,7 @@ export default function NavBar() {
             </a>
             <a
               href="/pricing"
-              className="btn-shimmer inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="btn-clerk-primary inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm"
             >
               Get Early Access
               <ChevronRight className="w-3.5 h-3.5" />
@@ -297,7 +297,7 @@ export default function NavBar() {
               <a
                 href="/pricing"
                 onClick={() => setMenuOpen(false)}
-                className="btn-shimmer w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold"
+                className="btn-clerk-primary w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold"
               >
                 Get Early Access
               </a>

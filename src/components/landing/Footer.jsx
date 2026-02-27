@@ -23,28 +23,34 @@ const LINKS = {
     { label: 'Status Page',    href: '#' },
   ],
   Legal: [
-    { label: 'Privacy Policy',    href: '#' },
-    { label: 'Terms of Service',  href: '#' },
-    { label: 'Cookie Policy',     href: '#' },
+    { label: 'Privacy Policy',   href: '#' },
+    { label: 'Terms of Service', href: '#' },
+    { label: 'Cookie Policy',    href: '#' },
   ],
 };
 
 export default function Footer() {
   return (
     <footer
-      className="relative border-t border-white/[0.07] overflow-hidden"
-      style={{ backgroundColor: '#000000' }}
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: '#0A0A0E',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
+      }}
     >
       {/* Subtle glow */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(59,130,246,0.04) 0%, transparent 70%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(108,71,255,0.05) 0%, transparent 70%)',
+        }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 mb-14">
 
-          {/* ── Brand col ── */}
+          {/* Brand col */}
           <div className="md:col-span-2">
             <OrkastorLogo size={30} showWordmark className="mb-5" />
             <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-[240px]">
@@ -65,7 +71,21 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-8 h-8 rounded-lg border border-white/[0.08] bg-white/[0.03] flex items-center justify-center text-slate-600 hover:text-white hover:border-white/[0.18] hover:bg-white/[0.07] transition-all duration-200"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-600 transition-all duration-200"
+                  style={{
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    background: 'rgba(255,255,255,0.02)',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.color = '#6C47FF';
+                    e.currentTarget.style.borderColor = 'rgba(108,71,255,0.35)';
+                    e.currentTarget.style.background = 'rgba(108,71,255,0.08)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.color = '';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+                  }}
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -73,10 +93,12 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ── Link columns ── */}
+          {/* Link columns */}
           {Object.entries(LINKS).map(([category, links]) => (
             <div key={category} className="md:col-span-1">
-              <h3 className="text-white text-xs font-semibold uppercase tracking-[0.12em] mb-4">{category}</h3>
+              <h3 className="text-white text-xs font-semibold uppercase tracking-[0.12em] mb-4">
+                {category}
+              </h3>
               <ul className="space-y-2.5">
                 {links.map(link => (
                   <li key={link.label}>
@@ -84,7 +106,10 @@ export default function Footer() {
                       href={link.href}
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
-                      className="text-slate-600 hover:text-slate-300 text-sm transition-colors duration-150"
+                      className="text-sm transition-colors duration-150"
+                      style={{ color: '#4B5563' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#9CA3AF')}
+                      onMouseLeave={e => (e.currentTarget.style.color = '#4B5563')}
                     >
                       {link.label}
                     </a>
@@ -95,15 +120,18 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* ── Bottom bar ── */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Bottom bar */}
+        <div
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+        >
           <div className="flex items-center gap-3">
             <OrkastorLogo size={18} showWordmark={false} />
-            <p className="text-slate-700 text-xs">
+            <p className="text-xs" style={{ color: '#374151' }}>
               © 2025 Orkastor. All rights reserved.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-700">
+          <div className="flex items-center gap-2 text-xs" style={{ color: '#374151' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             All systems operational
           </div>
