@@ -16,7 +16,7 @@ const TERM_LINES = [
   { delay: 3400, text: '   P99 latency: 42ms → 2.3s (+5400%)',    color: '#6B7280' },
   { delay: 3900, text: '   Correlation: deploy v2.3.1 @ 14:03',   color: '#4B5563' },
   { delay: 4500, text: '',                                          color: '' },
-  { delay: 4800, text: '→ Escalating to RCA engine...',           color: '#8D6FDE' },
+  { delay: 4800, text: '→ Escalating to RCA engine...',           color: '#6C47FF' },
   { delay: 5500, text: '✓ Root cause identified (94% conf)',       color: '#34D399' },
 ];
 
@@ -112,7 +112,7 @@ function RCAPanel() {
 
         <div className="text-[11px] font-medium text-slate-500 mb-3">Confidence scores</div>
         {[
-          { label: 'Deploy v2.3.1 introduced OOM',  conf: '94%', color: '#8D6FDE', w: '94%' },
+          { label: 'Deploy v2.3.1 introduced OOM',  conf: '94%', color: '#6C47FF', w: '94%' },
           { label: 'Memory limit too low (512Mi)',   conf: '91%', color: '#8B5CF6', w: '91%' },
           { label: 'Traffic spike +40% at 14:03',   conf: '88%', color: '#0EA5E9', w: '88%' },
           { label: 'Node pressure on prod-node-03', conf: '72%', color: '#34D399', w: '72%' },
@@ -157,7 +157,7 @@ function SafeFixPanel() {
         </div>
       </div>
       <div className="p-5">
-        <div className="p-4 rounded-xl mb-4" style={{ background: 'rgba(141,111,222,0.07)', border: '1px solid rgba(141,111,222,0.2)' }}>
+        <div className="p-4 rounded-xl mb-4" style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}>
           <div className="text-[11px] font-bold text-violet-300 mb-3 uppercase tracking-wider">Proposed remediation</div>
           <div className="font-mono text-sm p-3 rounded-lg mb-4"
             style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.06)', color: '#A78BFA' }}>
@@ -171,9 +171,9 @@ function SafeFixPanel() {
             <button
               className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold"
               style={{
-                background: 'linear-gradient(135deg, rgba(141,111,222,0.5), rgba(106,79,199,0.5))',
+                background: 'linear-gradient(135deg, rgba(108,71,255,0.5), rgba(79,46,232,0.5))',
                 color: '#C4B5FD',
-                border: '1px solid rgba(141,111,222,0.4)',
+                border: '1px solid rgba(108,71,255,0.4)',
               }}
             >
               <CheckCircle2 className="w-4 h-4" />
@@ -198,11 +198,11 @@ function SafeFixPanel() {
             <React.Fragment key={item.t}>
               <div className="flex flex-col items-center">
                 <div className="w-2 h-2 rounded-full"
-                  style={{ background: item.done ? '#8D6FDE' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(141,111,222,0.6)' : 'none' }} />
-                <span className="text-[9px] font-mono mt-1" style={{ color: item.done ? '#8D6FDE' : '#374151' }}>{item.t}</span>
+                  style={{ background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none' }} />
+                <span className="text-[9px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#374151' }}>{item.t}</span>
               </div>
               {i < arr.length - 1 && (
-                <div className="flex-1 h-px" style={{ background: item.done ? 'rgba(141,111,222,0.4)' : 'rgba(255,255,255,0.06)' }} />
+                <div className="flex-1 h-px" style={{ background: item.done ? 'rgba(108,71,255,0.4)' : 'rgba(255,255,255,0.06)' }} />
               )}
             </React.Fragment>
           ))}
@@ -276,13 +276,13 @@ export default function FeatureTabs() {
       ref={sectionRef}
       id="features"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#1E1A33' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Background top glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(141,111,222,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.08) 0%, transparent 70%)',
         }}
       />
 
@@ -298,9 +298,9 @@ export default function FeatureTabs() {
           <span
             className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-6"
             style={{
-              border: '1px solid rgba(141,111,222,0.3)',
+              border: '1px solid rgba(108,71,255,0.3)',
               color: 'rgba(167,139,250,0.8)',
-              background: 'rgba(141,111,222,0.07)',
+              background: 'rgba(108,71,255,0.07)',
             }}
           >
             Platform
@@ -323,7 +323,7 @@ export default function FeatureTabs() {
           <div
             className="flex items-center gap-1 p-1 rounded-2xl"
             style={{
-              background: 'rgba(20,16,42,0.95)',
+              background: 'rgba(10,10,14,0.95)',
               backdropFilter: 'blur(20px)',
               border: '1px solid rgba(255,255,255,0.07)',
             }}
@@ -336,8 +336,8 @@ export default function FeatureTabs() {
                 style={
                   activeTab === id
                     ? {
-                        background: 'rgba(141,111,222,0.15)',
-                        boxShadow: '0 0 0 1px rgba(141,111,222,0.25)',
+                        background: 'rgba(108,71,255,0.15)',
+                        boxShadow: '0 0 0 1px rgba(108,71,255,0.25)',
                         color: '#C4B5FD',
                       }
                     : { color: '#4B5563' }
@@ -374,7 +374,7 @@ export default function FeatureTabs() {
               <ul className="space-y-3">
                 {tab.features.map(f => (
                   <li key={f} className="flex items-center gap-3 text-slate-300 text-sm">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#8D6FDE' }} />
+                    <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#6C47FF' }} />
                     {f}
                   </li>
                 ))}

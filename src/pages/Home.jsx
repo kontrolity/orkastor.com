@@ -15,7 +15,7 @@ import Footer from '@/components/landing/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#1E1A33' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#131316' }}>
       <AnnouncementBanner />
       <NavBar />
       <HeroSection />

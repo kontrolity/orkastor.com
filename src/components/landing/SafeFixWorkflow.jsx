@@ -30,7 +30,7 @@ const STEPS = [
     description: 'A remediation is generated from your runbooks and historical fixes, dry-run validated before review.',
     detail: 'Proposed: increase limits → 1Gi · dry-run: PASSED · awaiting approval',
     time: 'T+8s',
-    accent: '#8D6FDE',
+    accent: '#6C47FF',
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const STEPS = [
 
 const MODES = [
   { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',     color: '#A78BFA' },
-  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#8D6FDE' },
+  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#6C47FF' },
   { label: 'Auto-Fix (Low Risk)', desc: 'Auto-apply pre-approved safe patterns',       color: '#0EA5E9' },
   { label: 'Full Autopilot',      desc: 'AI handles everything within defined bounds', color: '#34D399' },
 ];
@@ -76,14 +76,14 @@ export default function SafeFixWorkflow() {
       ref={sectionRef}
       id="safefix"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#1E1A33' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[500px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(141,111,222,0.07) 0%, transparent 70%)',
+            'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(108,71,255,0.07) 0%, transparent 70%)',
         }}
       />
 
@@ -99,9 +99,9 @@ export default function SafeFixWorkflow() {
           <span
             className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-5"
             style={{
-              border: '1px solid rgba(141,111,222,0.2)',
-              color: 'rgba(141,111,222,0.6)',
-              background: 'rgba(141,111,222,0.04)',
+              border: '1px solid rgba(108,71,255,0.2)',
+              color: 'rgba(108,71,255,0.6)',
+              background: 'rgba(108,71,255,0.04)',
             }}
           >
             SafeFix Workflow
@@ -216,7 +216,7 @@ export default function SafeFixWorkflow() {
                   onClick={() => setActiveStep(s.id)}
                   className="w-1.5 h-1.5 rounded-full transition-all duration-300"
                   style={{
-                    background: activeStep === s.id ? '#8D6FDE' : 'rgba(255,255,255,0.15)',
+                    background: activeStep === s.id ? '#6C47FF' : 'rgba(255,255,255,0.15)',
                     transform: activeStep === s.id ? 'scale(1.4)' : 'scale(1)',
                   }}
                 />

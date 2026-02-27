@@ -26,8 +26,8 @@ const STATS = [
     suffix: 's',
     label: 'Avg MTTR',
     sub: '↓ 80% from industry average',
-    accentColor: '#8D6FDE',
-    gradient: 'linear-gradient(90deg, #8D6FDE, #6A4FC7)',
+    accentColor: '#6C47FF',
+    gradient: 'linear-gradient(90deg, #6C47FF, #4F2EE8)',
   },
   {
     value: 142,
@@ -66,12 +66,12 @@ export default function StatsStrip() {
     <section
       ref={sectionRef}
       className="relative py-16"
-      style={{ backgroundColor: '#1E1A33' }}
+      style={{ backgroundColor: '#131316' }}
     >
       {/* Top separator */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(141,111,222,0.2), transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(108,71,255,0.2), transparent)' }}
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-6">

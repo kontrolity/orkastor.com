@@ -42,7 +42,7 @@ function DropdownPanel({ items }) {
       <div
         className="rounded-xl border border-white/[0.08] py-1.5"
         style={{
-          background: 'rgba(20, 16, 42, 0.97)',
+          background: 'rgba(10, 10, 12, 0.97)',
           backdropFilter: 'blur(20px) saturate(180%)',
           boxShadow: '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03) inset',
         }}
@@ -220,14 +220,14 @@ export default function NavBar() {
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
         className="fixed left-0 right-0 z-50 transition-all duration-300"
         style={scrolled
-          ? { top: 'var(--banner-height, 0px)', background: 'rgba(30,26,51,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }
+          ? { top: 'var(--banner-height, 0px)', background: 'rgba(19,19,22,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }
           : { top: 'var(--banner-height, 0px)', background: 'transparent', backdropFilter: 'none', borderBottom: '1px solid transparent' }
         }
       >
         {scrolled && (
           <div
             className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(141,111,222,0.4) 30%, rgba(141,111,222,0.15) 70%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.3) 30%, rgba(16,185,129,0.2) 70%, transparent 100%)' }}
           />
         )}
 
@@ -281,7 +281,7 @@ export default function NavBar() {
             transition={{ duration: 0.18 }}
             className="fixed top-[76px] left-3 right-3 z-50 rounded-2xl p-2 md:hidden border border-white/[0.08] max-h-[calc(100vh-100px)] overflow-y-auto"
             style={{
-              background: 'rgba(20, 16, 42, 0.97)',
+              background: 'rgba(10, 10, 12, 0.97)',
               backdropFilter: 'blur(20px) saturate(180%)',
               boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
             }}
