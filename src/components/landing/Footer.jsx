@@ -3,10 +3,30 @@ import { Github, Twitter, Linkedin } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const LINKS = {
-  Product:   ['Platform', 'KubēGraf', 'SafeFix', 'CLI', 'Integrations', 'Pricing', 'Changelog'],
-  Company:   ['About', 'Blog', 'Careers', 'Press', 'Contact'],
-  Resources: ['Documentation', 'API Reference', 'GitHub', 'Status Page', 'Community', 'Security'],
-  Legal:     ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'DPA'],
+  Product: [
+    { label: 'Platform',     href: '/#platform' },
+    { label: 'KubēGraf',     href: 'https://kubegraf.io', external: true },
+    { label: 'Integrations', href: '/#integrations' },
+    { label: 'Pricing',      href: '/pricing' },
+    { label: 'Changelog',    href: '/changelog' },
+  ],
+  Company: [
+    { label: 'About',   href: '/about' },
+    { label: 'Blog',    href: '#' },
+    { label: 'Careers', href: '#' },
+    { label: 'Contact', href: 'mailto:hello@orkastor.com' },
+  ],
+  Resources: [
+    { label: 'Documentation', href: '/docs' },
+    { label: 'API Reference',  href: '/docs' },
+    { label: 'GitHub',         href: 'https://github.com/orkastor', external: true },
+    { label: 'Status Page',    href: '#' },
+  ],
+  Legal: [
+    { label: 'Privacy Policy',    href: '#' },
+    { label: 'Terms of Service',  href: '#' },
+    { label: 'Cookie Policy',     href: '#' },
+  ],
 };
 
 export default function Footer() {
@@ -35,13 +55,15 @@ export default function Footer() {
             {/* Social links */}
             <div className="flex items-center gap-3">
               {[
-                { Icon: Github,   href: '#', label: 'GitHub' },
-                { Icon: Twitter,  href: '#', label: 'Twitter' },
-                { Icon: Linkedin, href: '#', label: 'LinkedIn' },
+                { Icon: Github,   href: 'https://github.com/orkastor', label: 'GitHub' },
+                { Icon: Twitter,  href: 'https://twitter.com/orkastor', label: 'Twitter' },
+                { Icon: Linkedin, href: 'https://linkedin.com/company/orkastor', label: 'LinkedIn' },
               ].map(({ Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="w-8 h-8 rounded-lg border border-white/[0.08] bg-white/[0.03] flex items-center justify-center text-slate-600 hover:text-white hover:border-white/[0.18] hover:bg-white/[0.07] transition-all duration-200"
                 >
@@ -57,12 +79,14 @@ export default function Footer() {
               <h3 className="text-white text-xs font-semibold uppercase tracking-[0.12em] mb-4">{category}</h3>
               <ul className="space-y-2.5">
                 {links.map(link => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
+                      target={link.external ? '_blank' : undefined}
+                      rel={link.external ? 'noopener noreferrer' : undefined}
                       className="text-slate-600 hover:text-slate-300 text-sm transition-colors duration-150"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}

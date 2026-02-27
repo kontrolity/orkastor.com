@@ -69,8 +69,8 @@ const container = {
   show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 const itemVar = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
+  hidden: { opacity: 0, y: 20 },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
 };
 
 export default function TestimonialSection() {
@@ -94,8 +94,8 @@ export default function TestimonialSection() {
         {/* ── Header ── */}
         <motion.div
           className="text-center mb-14"
-          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
           <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
@@ -112,8 +112,8 @@ export default function TestimonialSection() {
 
         {/* ── Featured testimonial ── */}
         <motion.div
-          initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.1, ease: EASE_OUT_EXPO }}
           className="bento-card p-8 md:p-10 mb-4 relative"
         >

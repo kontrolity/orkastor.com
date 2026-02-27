@@ -122,11 +122,11 @@ export default function CTASection() {
         >
           <div className="border-t border-white/[0.06] mb-6" />
           <div className="flex items-center justify-center gap-4 text-sm text-slate-500 mb-10">
-            <a href="#" className="hover:text-white transition-colors">Book a Demo</a>
+            <a href="mailto:hello@orkastor.com" className="hover:text-white transition-colors">Book a Demo</a>
             <span className="text-white/20">·</span>
-            <a href="#" className="hover:text-white transition-colors">View Docs</a>
+            <a href="/docs" className="hover:text-white transition-colors">View Docs</a>
             <span className="text-white/20">·</span>
-            <a href="#" className="hover:text-white transition-colors">GitHub</a>
+            <a href="https://github.com/orkastor" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
           </div>
         </motion.div>
 
