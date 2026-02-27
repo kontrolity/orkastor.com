@@ -189,9 +189,9 @@ export default function OrkastorLogo({
             alignItems: 'baseline',
           }}
         >
-          {/* "Orkas" — clean white, like Rootly's solid wordmark */}
-          <span style={{ color: light ? '#0a0f1a' : '#ffffff' }}>Orkas</span>
-          {/* "tor" — brand violet accent */}
+          {/* "Orka" — clean white, like Rootly's solid wordmark */}
+          <span style={{ color: light ? '#0a0f1a' : '#ffffff' }}>Orka</span>
+          {/* "stor" — brand violet accent */}
           <span
             style={light ? { color: '#0a0f1a' } : {
               background: 'linear-gradient(135deg, #6C47FF 0%, #38BDF8 100%)',
@@ -199,7 +199,7 @@ export default function OrkastorLogo({
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}
-          >tor</span>
+          >stor</span>
         </span>
       )}
     </div>
