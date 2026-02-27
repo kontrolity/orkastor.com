@@ -237,7 +237,7 @@ export default function NavBar() {
 
           {/* Logo */}
           <a href="/" aria-label="Orkastor home">
-            <OrkastorLogo size={48} showWordmark={true} light={!scrolled} />
+            <OrkastorLogo size={48} showWordmark={true} />
           </a>
 
           {/* Desktop nav */}
