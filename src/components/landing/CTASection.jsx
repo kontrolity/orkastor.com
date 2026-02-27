@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Terminal, Shield, Lock, Zap } from 'lucide-react';
+import { CheckCircle2, Terminal, Shield, Lock, Zap } from 'lucide-react';
+import WaitlistForm from './WaitlistForm';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -11,15 +12,8 @@ const TRUST = [
 ];
 
 export default function CTASection() {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: '-80px' });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
 
   return (
     <section
@@ -71,60 +65,17 @@ export default function CTASection() {
           Join the waitlist — early adopters get free tier access at launch.
         </motion.p>
 
-        {/* Email form */}
+        {/* Waitlist form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.2, ease: EASE }}
+          className="mb-6"
         >
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-6">
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="your@company.com"
-                required
-                className="px-4 py-3.5 rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none transition-all"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.09)',
-                }}
-                onFocus={e => {
-                  e.target.style.borderColor = 'rgba(108,71,255,0.5)';
-                  e.target.style.background = 'rgba(255,255,255,0.06)';
-                }}
-                onBlur={e => {
-                  e.target.style.borderColor = 'rgba(255,255,255,0.09)';
-                  e.target.style.background = 'rgba(255,255,255,0.04)';
-                }}
-              />
-              <button
-                type="submit"
-                className="btn-clerk-primary inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.01] active:scale-[0.99] transition-transform"
-              >
-                Get Early Access
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
-          ) : (
-            <div
-              className="py-5 px-5 rounded-xl mb-6"
-              style={{
-                border: '1px solid rgba(52,211,153,0.25)',
-                background: 'rgba(52,211,153,0.06)',
-              }}
-            >
-              <div className="flex items-center justify-center gap-2 text-emerald-400 font-semibold text-sm mb-1">
-                <CheckCircle2 className="w-4 h-4" />
-                You're on the list!
-              </div>
-              <p className="text-slate-500 text-xs">We'll reach out with early access details.</p>
-            </div>
-          )}
+          <WaitlistForm size="lg" />
 
           {/* Perks */}
-          <div className="flex flex-wrap justify-center gap-x-5 gap-y-1.5 mb-10">
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-1.5 mt-6 mb-10">
             {[
               'Free tier at launch',
               'No credit card',

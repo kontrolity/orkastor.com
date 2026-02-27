@@ -1,4 +1,5 @@
 import React from 'react';
+import { WaitlistProvider } from '@/components/landing/WaitlistModal';
 import AnnouncementBanner from '@/components/landing/AnnouncementBanner';
 import NavBar from '@/components/landing/NavBar';
 import HeroSection from '@/components/landing/HeroSection';
@@ -15,20 +16,22 @@ import Footer from '@/components/landing/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#131316' }}>
-      <AnnouncementBanner />
-      <NavBar />
-      <HeroSection />
-      <LogoBar />
-      <StatsStrip />
-      <FeatureTabs />
-      <IntegrationsSection />
-      <FeaturesGrid />
-      <SafeFixWorkflow />
-      <TestimonialSection />
-      <ModularPlatformSection />
-      <CTASection />
-      <Footer />
-    </div>
+    <WaitlistProvider>
+      <div className="min-h-screen" style={{ backgroundColor: '#131316' }}>
+        <AnnouncementBanner />
+        <NavBar />
+        <HeroSection />
+        <LogoBar />
+        <StatsStrip />
+        <FeatureTabs />
+        <IntegrationsSection />
+        <FeaturesGrid />
+        <SafeFixWorkflow />
+        <TestimonialSection />
+        <ModularPlatformSection />
+        <CTASection />
+        <Footer />
+      </div>
+    </WaitlistProvider>
   );
 }

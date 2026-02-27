@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronRight, Shield, CheckCircle2, Zap } from 'lucide-react';
+import { useWaitlistModal } from './WaitlistModal';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -544,6 +545,7 @@ function DashboardMockup({ live }) {
 export default function HeroSection() {
   const live = useDashboardLive();
   const { resolved, mttr, secAgo } = live;
+  const { setOpen: openWaitlist } = useWaitlistModal();
   return (
     <section
       className="relative overflow-hidden"
@@ -625,9 +627,9 @@ export default function HeroSection() {
             transition={{ duration: 0.65, delay: 0.22, ease: EASE }}
             className="flex flex-col sm:flex-row items-center gap-3 mb-10"
           >
-            <a
-              href="#cta"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.99]"
+            <button
+              onClick={() => openWaitlist(true)}
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.99] cursor-pointer"
               style={{
                 background: 'linear-gradient(135deg, #6C47FF 0%, #4F2EE8 100%)',
                 boxShadow: '0 4px 24px rgba(108,71,255,0.4), 0 1px 0 rgba(255,255,255,0.12) inset',
@@ -635,7 +637,7 @@ export default function HeroSection() {
             >
               Get Early Access
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
             <a
               href="https://kubegraf.io/"
               target="_blank"

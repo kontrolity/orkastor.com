@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, ChevronRight, ArrowUpRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
+import { useWaitlistModal } from './WaitlistModal';
 
 /* ── Nav structure ───────────────────────────────────────────── */
 const NAV_ITEMS = [
@@ -199,6 +200,7 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible]   = useState(true);
   const lastScrollY              = useRef(0);
+  const { setOpen: openWaitlist } = useWaitlistModal();
   const linkCls  = 'text-slate-400 hover:text-white hover:bg-white/[0.05]';
   const signInCls = 'text-slate-400 hover:text-white';
 
@@ -251,13 +253,13 @@ export default function NavBar() {
             <a href="#" className={`text-sm transition-colors px-3 py-2 ${signInCls}`}>
               Sign In
             </a>
-            <a
-              href="/pricing"
-              className="btn-clerk-primary inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm"
+            <button
+              onClick={() => openWaitlist(true)}
+              className="btn-clerk-primary inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm cursor-pointer"
             >
               Get Early Access
               <ChevronRight className="w-3.5 h-3.5" />
-            </a>
+            </button>
           </div>
 
           {/* Mobile toggle */}
@@ -295,13 +297,12 @@ export default function NavBar() {
               />
             ))}
             <div className="mt-2 pt-2 border-t border-white/[0.06] px-2 pb-1">
-              <a
-                href="/pricing"
-                onClick={() => setMenuOpen(false)}
-                className="btn-clerk-primary w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold"
+              <button
+                onClick={() => { setMenuOpen(false); openWaitlist(true); }}
+                className="btn-clerk-primary w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold cursor-pointer"
               >
                 Get Early Access
-              </a>
+              </button>
             </div>
           </motion.div>
         )}
