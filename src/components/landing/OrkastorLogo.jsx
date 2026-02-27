@@ -182,30 +182,24 @@ export default function OrkastorLogo({
           style={{
             fontSize: `${(size * 0.5625).toFixed(1)}px`,
             fontWeight: 700,
-            fontVariationSettings: "'opsz' 32",
-            letterSpacing: '-0.035em',
+            letterSpacing: '-0.02em',
             fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
             lineHeight: 1,
             display: 'inline-flex',
             alignItems: 'baseline',
           }}
         >
-          {/* "O" — brand gradient accent, echoes the hex logomark */}
+          {/* "Orkas" — clean white, like Rootly's solid wordmark */}
+          <span style={{ color: light ? '#0a0f1a' : '#ffffff' }}>Orkas</span>
+          {/* "tor" — brand violet accent */}
           <span
             style={light ? { color: '#0a0f1a' } : {
-              background: 'linear-gradient(145deg, #60a5fa 0%, #2dd4bf 100%)',
+              background: 'linear-gradient(135deg, #6C47FF 0%, #38BDF8 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}
-          >O</span>
-          {/* "rkastor" — near-white, subtle blue luminance glow */}
-          <span
-            style={{
-              color: light ? '#0a0f1a' : '#f1f5f9',
-              textShadow: light ? 'none' : '0 0 18px rgba(96,165,250,0.18)',
-            }}
-          >rkastor</span>
+          >tor</span>
         </span>
       )}
     </div>
