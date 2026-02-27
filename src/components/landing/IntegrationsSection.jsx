@@ -26,105 +26,6 @@ const ROW_2 = [
   { name: 'Ansible',   cat: 'Config',    color: '#ef4444' },
 ];
 
-/* ── Beam hub integrations ───────────────────────────────────── */
-const LEFT_NODES  = [
-  { name: 'K8s',     color: '#60a5fa' },
-  { name: 'Datadog', color: '#a78bfa' },
-  { name: 'AWS',     color: '#f59e0b' },
-];
-const RIGHT_NODES = [
-  { name: 'Slack',  color: '#34d399' },
-  { name: 'GitHub', color: '#e2e8f0' },
-  { name: 'ArgoCD', color: '#f472b6' },
-];
-
-/* ── Single animated beam line ───────────────────────────────── */
-function BeamLine({ delay = 0, reverse = false }) {
-  return (
-    <div className="relative flex-1 h-px" style={{ background: 'rgba(255,255,255,0.07)' }}>
-      <motion.div
-        className="absolute top-1/2 -translate-y-1/2 h-0.5 rounded-full"
-        style={{
-          width: '45%',
-          background: reverse
-            ? 'linear-gradient(270deg, transparent, rgba(59,130,246,0.9), transparent)'
-            : 'linear-gradient(90deg, transparent, rgba(59,130,246,0.9), transparent)',
-        }}
-        animate={{ x: reverse ? ['200%', '-200%'] : ['-200%', '200%'] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay }}
-      />
-    </div>
-  );
-}
-
-/* ── Integration node circle ─────────────────────────────────── */
-function IntNode({ node }) {
-  return (
-    <div
-      className="w-10 h-10 rounded-xl flex items-center justify-center text-[13px] font-bold border shrink-0"
-      style={{
-        background: `${node.color}15`,
-        borderColor: `${node.color}30`,
-        color: node.color,
-      }}
-    >
-      {node.name.slice(0, 2)}
-    </div>
-  );
-}
-
-/* ── Center Orkastor hub ─────────────────────────────────────── */
-function OrkHub() {
-  return (
-    <div
-      className="relative w-14 h-14 rounded-2xl flex items-center justify-center border-2 shrink-0"
-      style={{
-        background: 'rgba(59,130,246,0.10)',
-        borderColor: 'rgba(59,130,246,0.35)',
-        boxShadow: '0 0 24px rgba(59,130,246,0.18)',
-      }}
-    >
-      <span className="text-blue-400 font-black text-sm tracking-tight">ORK</span>
-      {/* Pulse ring */}
-      <div
-        className="absolute inset-0 rounded-2xl animate-ping"
-        style={{ background: 'rgba(59,130,246,0.06)', animationDuration: '3s' }}
-      />
-    </div>
-  );
-}
-
-/* ── Full beam hub diagram ───────────────────────────────────── */
-function BeamHub({ inView }) {
-  return (
-    <motion.div
-      className="flex items-center justify-center max-w-2xl mx-auto mb-12 px-4"
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT_EXPO }}
-    >
-      {/* Left nodes — reversed so closest to hub is rightmost */}
-      {[...LEFT_NODES].reverse().map((node, i) => (
-        <React.Fragment key={node.name}>
-          <IntNode node={node} />
-          <BeamLine delay={i * 0.5} reverse />
-        </React.Fragment>
-      ))}
-
-      {/* Center hub */}
-      <OrkHub />
-
-      {/* Right nodes */}
-      {RIGHT_NODES.map((node, i) => (
-        <React.Fragment key={node.name}>
-          <BeamLine delay={i * 0.5 + 0.25} />
-          <IntNode node={node} />
-        </React.Fragment>
-      ))}
-    </motion.div>
-  );
-}
-
 /* ── Marquee components ──────────────────────────────────────── */
 function IntegrationPill({ name, cat, color }) {
   return (
@@ -168,16 +69,16 @@ export default function IntegrationsSection() {
       ref={sectionRef}
       id="integrations"
       className="relative py-16 overflow-hidden"
-      style={{ backgroundColor: '#050505' }}
+      style={{ backgroundColor: '#0a0a0a' }}
     >
       {/* Left/right fade masks */}
       <div
         className="absolute inset-y-0 left-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to right, #050505, transparent)' }}
+        style={{ background: 'linear-gradient(to right, #0a0a0a, transparent)' }}
       />
       <div
         className="absolute inset-y-0 right-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to left, #050505, transparent)' }}
+        style={{ background: 'linear-gradient(to left, #0a0a0a, transparent)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
@@ -190,9 +91,6 @@ export default function IntegrationsSection() {
         >
           Works with your entire stack
         </motion.p>
-
-        {/* ── Animated beam hub ── */}
-        <BeamHub inView={inView} />
       </div>
 
       {/* ── Marquee rows — full width ── */}
@@ -200,7 +98,7 @@ export default function IntegrationsSection() {
         className="space-y-3"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.65, delay: 0.25, ease: EASE_OUT_EXPO }}
+        transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT_EXPO }}
       >
         <MarqueeRow items={ROW_1} />
         <MarqueeRow items={ROW_2} reverse />
@@ -211,7 +109,7 @@ export default function IntegrationsSection() {
           className="text-center text-slate-600 text-sm mt-8"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.35 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
         >
           + 40 more integrations via webhooks and custom connectors
         </motion.p>

@@ -26,21 +26,12 @@ export default function CTASection() {
       ref={sectionRef}
       id="cta"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#000000' }}
+      style={{ backgroundColor: '#0a0a0a' }}
     >
       {/* Top radial glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(59,130,246,0.12) 0%, transparent 65%)' }}
-      />
-
-      {/* Dot grid */}
-      <div
-        className="absolute inset-0 bg-dot-grid pointer-events-none opacity-30"
-        style={{
-          maskImage: 'radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 80%)',
-        }}
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,0.10) 0%, transparent 65%)' }}
       />
 
       <div className="relative z-10 max-w-2xl mx-auto px-5 sm:px-6 text-center">
@@ -79,7 +70,7 @@ export default function CTASection() {
                 onChange={e => setEmail(e.target.value)}
                 placeholder="your@company.com"
                 required
-                className="px-4 py-3.5 rounded-xl text-sm bg-white/[0.05] border border-white/[0.1] text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.07] transition-all"
+                className="px-4 py-3.5 rounded-xl text-sm bg-white/[0.05] border border-white/[0.1] text-white placeholder:text-slate-600 focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.07] transition-all"
               />
               <button
                 type="submit"

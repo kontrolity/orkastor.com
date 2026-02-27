@@ -21,7 +21,7 @@ const STEPS = [
     description: 'AI correlates signals across services and pinpoints the likely root cause with an evidence chain and confidence score.',
     detail: '94% confidence: OOMKilled — memory limit 512Mi · peak 498Mi · +40% traffic',
     time: 'T+3s',
-    accent: '#3b82f6',
+    accent: '#a78bfa',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const STEPS = [
     description: 'A remediation is generated from your runbooks and historical fixes, dry-run validated before review.',
     detail: 'Proposed: increase limits → 1Gi · dry-run: PASSED · awaiting approval',
     time: 'T+8s',
-    accent: '#2dd4bf',
+    accent: '#7c3aed',
   },
   {
     id: 4,
@@ -44,8 +44,8 @@ const STEPS = [
 ];
 
 const MODES = [
-  { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',     color: '#3b82f6' },
-  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#2dd4bf' },
+  { label: 'Observe Only',        desc: 'Detect & alert — zero automated actions',     color: '#a78bfa' },
+  { label: 'Suggest & Approve',   desc: 'AI proposes fixes, you click to apply',       color: '#7c3aed' },
   { label: 'Auto-Fix (Low Risk)', desc: 'Auto-apply pre-approved safe patterns',       color: '#f59e0b' },
   { label: 'Full Autopilot',      desc: 'AI handles everything within defined bounds', color: '#34d399' },
 ];
@@ -76,16 +76,12 @@ export default function SafeFixWorkflow() {
       ref={sectionRef}
       id="safefix"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#080808' }}
+      style={{ backgroundColor: '#0a0a0a' }}
     >
-      {/* Glows */}
+      {/* Single faint purple glow top-right */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(16,185,129,0.07) 0%, transparent 70%)' }}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-[500px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 55% 50% at 20% 100%, rgba(59,130,246,0.06) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 60% 55% at 80% 10%, rgba(124,58,237,0.07) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
@@ -97,12 +93,12 @@ export default function SafeFixWorkflow() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
         >
-          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-emerald-500/20 text-emerald-500/60 mb-5">
+          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-purple-500/20 text-purple-500/60 mb-5">
             SafeFix Workflow
           </span>
           <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-5 max-w-3xl mx-auto">
             Not a Black Box.{' '}
-            <span className="text-gradient-violet">A Dimmer Switch.</span>
+            <span className="text-gradient-brand">A Dimmer Switch.</span>
           </h2>
           <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
             Every AI decision is explainable and every fix is dry-run validated before it touches production.
@@ -204,7 +200,7 @@ export default function SafeFixWorkflow() {
                   onClick={() => setActiveStep(s.id)}
                   className="w-1.5 h-1.5 rounded-full transition-all duration-300"
                   style={{
-                    background: activeStep === s.id ? '#3b82f6' : 'rgba(255,255,255,0.15)',
+                    background: activeStep === s.id ? '#7c3aed' : 'rgba(255,255,255,0.15)',
                     transform: activeStep === s.id ? 'scale(1.4)' : 'scale(1)',
                   }}
                 />

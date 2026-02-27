@@ -19,7 +19,7 @@ const OTHERS = [
     role: 'VP Engineering',
     company: 'CloudScale',
     initials: 'MR',
-    accent: '#10b981',
+    accent: '#7c3aed',
   },
   {
     quote: "The runbook automation alone saved us 20+ engineer-hours per week. The CLI is a genuine joy to use — feels like it was designed by someone who actually does on-call.",
@@ -27,7 +27,7 @@ const OTHERS = [
     role: 'Staff Engineer',
     company: 'DataPipe',
     initials: 'AK',
-    accent: '#60a5fa',
+    accent: '#a78bfa',
   },
   {
     quote: "We tried 3 other AIOps tools before Orkastor. None of them ran in our private cluster. The zero-data-exfiltration guarantee made the security review a non-event.",
@@ -35,7 +35,7 @@ const OTHERS = [
     role: 'Head of Platform',
     company: 'HealthStream',
     initials: 'PN',
-    accent: '#34d399',
+    accent: '#f59e0b',
   },
 ];
 
@@ -81,12 +81,12 @@ export default function TestimonialSection() {
     <section
       ref={sectionRef}
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#080808' }}
+      style={{ backgroundColor: '#0a0a0a' }}
     >
-      {/* Emerald glow */}
+      {/* Faint purple glow */}
       <div
         className="absolute top-1/4 right-0 w-[500px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(16,185,129,0.06) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(124,58,237,0.06) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
@@ -120,7 +120,7 @@ export default function TestimonialSection() {
           {/* Glow corner */}
           <div
             className="absolute top-0 right-0 w-72 h-72 pointer-events-none"
-            style={{ background: 'radial-gradient(circle at 100% 0%, rgba(59,130,246,0.06) 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at 100% 0%, rgba(124,58,237,0.06) 0%, transparent 70%)' }}
           />
 
           <Stars />
@@ -130,14 +130,14 @@ export default function TestimonialSection() {
           </blockquote>
 
           <div className="flex items-center gap-4 pt-6 border-t border-white/[0.06]">
-            <InitialAvatar initials={FEATURED.initials} accent="#3b82f6" />
+            <InitialAvatar initials={FEATURED.initials} accent="#7c3aed" />
             <div>
               <div className="text-white font-semibold text-sm">{FEATURED.author}</div>
               <div className="text-slate-500 text-xs mt-0.5">{FEATURED.role} · {FEATURED.company}</div>
             </div>
-            <div className="ml-auto hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/6">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-              <span className="text-[10px] text-blue-400 font-medium">Verified customer</span>
+            <div className="ml-auto hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-500/20 bg-purple-500/[0.06]">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-[10px] text-purple-400 font-medium">Verified customer</span>
             </div>
           </div>
         </motion.div>

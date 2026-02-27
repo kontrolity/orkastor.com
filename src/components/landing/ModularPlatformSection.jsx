@@ -18,9 +18,9 @@ const MODULES = [
     icon: Activity,
     name: 'KubēGraf',
     tag: 'Available Now',
-    tagStyle: 'border-teal-500/40 bg-teal-500/10 text-teal-400',
+    tagStyle: 'border-purple-500/40 bg-purple-500/10 text-purple-400',
     description: 'In-environment AI SRE for Kubernetes. Monitor, diagnose, and auto-remediate — zero exfiltration.',
-    accent: '#2dd4bf',
+    accent: '#7c3aed',
     active: true,
   },
   {
@@ -47,7 +47,7 @@ const MODULES = [
     tag: 'Coming Soon',
     tagStyle: 'border-white/10 bg-white/[0.04] text-slate-600',
     description: 'Multi-cloud provisioning. Intelligent infrastructure lifecycle management across AWS, GCP, and Azure.',
-    accent: '#3b82f6',
+    accent: '#7c3aed',
     active: false,
   },
   {
@@ -56,7 +56,7 @@ const MODULES = [
     tag: 'Coming Soon',
     tagStyle: 'border-white/10 bg-white/[0.04] text-slate-600',
     description: 'CD/GitOps automation. Smart deployment pipelines with rollback intelligence and drift detection.',
-    accent: '#8b5cf6',
+    accent: '#f59e0b',
     active: false,
   },
 ];
@@ -70,12 +70,12 @@ export default function ModularPlatformSection() {
       ref={sectionRef}
       id="platform"
       className="relative py-24 md:py-28 overflow-hidden"
-      style={{ backgroundColor: '#050505' }}
+      style={{ backgroundColor: '#0a0a0a' }}
     >
       {/* Top glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[240px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(59,130,246,0.07) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,0.07) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">

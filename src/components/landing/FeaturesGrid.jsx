@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Lock, Shield, Search, CheckCircle2, Server, Cpu } from 'lucide-react';
 
@@ -13,20 +13,14 @@ const item = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
 };
 
-/* ── Bento card with spotlight ───────────────────────────────── */
-function BentoCard({ className = '', children, accentColor }) {
+/* ── Bento card ──────────────────────────────────────────────── */
+function BentoCard({ className = '', children }) {
   return (
     <motion.div
       variants={item}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className={`bento-card spotlight-card group p-6 ${className}`}
+      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+      className={`bento-card group p-6 ${className}`}
     >
-      {accentColor && (
-        <div
-          className="absolute top-0 left-0 w-full h-full rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ background: `radial-gradient(circle at 0% 0%, ${accentColor}14, transparent 60%)` }}
-        />
-      )}
       {children}
     </motion.div>
   );
@@ -46,38 +40,19 @@ function IconBadge({ icon: Icon, color }) {
 
 export default function FeaturesGrid() {
   const sectionRef = useRef(null);
-  const gridRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: '-60px' });
-
-  /* ── Cursor spotlight ── */
-  const handleMouseMove = useCallback((e) => {
-    const cards = gridRef.current?.querySelectorAll('.spotlight-card');
-    cards?.forEach(card => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    const cards = gridRef.current?.querySelectorAll('.spotlight-card');
-    cards?.forEach(card => {
-      card.style.setProperty('--mouse-x', '-400px');
-      card.style.setProperty('--mouse-y', '-400px');
-    });
-  }, []);
 
   return (
     <section
       ref={sectionRef}
       id="features"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#080808' }}
+      style={{ backgroundColor: '#0a0a0a' }}
     >
-      {/* Top blue glow */}
+      {/* Top purple glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(59,130,246,0.07) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,0.07) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
@@ -102,22 +77,19 @@ export default function FeaturesGrid() {
           </p>
         </motion.div>
 
-        {/* ── 12-col bento grid with cursor spotlight ── */}
+        {/* ── 12-col bento grid ── */}
         <motion.div
-          ref={gridRef}
           className="grid grid-cols-12 gap-4"
           variants={container}
           initial="hidden"
           animate={inView ? 'show' : 'hidden'}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
         >
 
           {/* ── Row 1 ── */}
 
           {/* Zero Exfiltration hero card */}
-          <BentoCard className="col-span-12 md:col-span-7" accentColor="#2dd4bf">
-            <IconBadge icon={Lock} color="#2dd4bf" />
+          <BentoCard className="col-span-12 md:col-span-7">
+            <IconBadge icon={Lock} color="#a78bfa" />
             <h3 className="relative text-white font-bold text-xl mb-2.5 leading-snug">
               Private AI — Zero Data Exfiltration
             </h3>
@@ -125,7 +97,7 @@ export default function FeaturesGrid() {
               AI inference runs inside your own VPC. No calls to OpenAI, Bedrock, or any external LLM.
               SOC 2, HIPAA, and PCI-DSS ready by design.
             </p>
-            <div className="relative inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-teal-500/20 bg-teal-500/[0.06] font-mono text-[12px] text-teal-300">
+            <div className="relative inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-purple-500/20 bg-purple-500/[0.06] font-mono text-[12px] text-purple-300">
               <Server className="w-3.5 h-3.5" />
               Your VPC. Your inference. Your data.
             </div>
@@ -135,7 +107,7 @@ export default function FeaturesGrid() {
           <div className="col-span-12 md:col-span-5 flex flex-col gap-4">
             <motion.div
               variants={item}
-              className="bento-card spotlight-card p-6 flex-1 flex flex-col justify-center"
+              className="bento-card p-6 flex-1 flex flex-col justify-center"
             >
               <div className="shimmer-stat text-[52px] font-black leading-none tracking-[-0.03em] mb-1">
                 80%
@@ -145,7 +117,7 @@ export default function FeaturesGrid() {
             </motion.div>
             <motion.div
               variants={item}
-              className="bento-card spotlight-card p-6 flex-1 flex flex-col justify-center"
+              className="bento-card p-6 flex-1 flex flex-col justify-center"
             >
               <div className="shimmer-stat text-[52px] font-black leading-none tracking-[-0.03em] mb-1">
                 18s
@@ -158,8 +130,8 @@ export default function FeaturesGrid() {
           {/* ── Row 2 ── */}
 
           {/* SafeFix card */}
-          <BentoCard className="col-span-12 md:col-span-5" accentColor="#3b82f6">
-            <IconBadge icon={Shield} color="#3b82f6" />
+          <BentoCard className="col-span-12 md:col-span-5">
+            <IconBadge icon={Shield} color="#7c3aed" />
             <h3 className="relative text-white font-bold text-lg mb-2.5 leading-snug">
               SafeFix™ Auto-Remediation
             </h3>
@@ -170,8 +142,8 @@ export default function FeaturesGrid() {
           </BentoCard>
 
           {/* RCA wide card */}
-          <BentoCard className="col-span-12 md:col-span-7" accentColor="#8b5cf6">
-            <IconBadge icon={Search} color="#8b5cf6" />
+          <BentoCard className="col-span-12 md:col-span-7">
+            <IconBadge icon={Search} color="#f59e0b" />
             <h3 className="relative text-white font-bold text-lg mb-2.5 leading-snug">
               AI Root Cause Analysis
             </h3>
@@ -180,9 +152,9 @@ export default function FeaturesGrid() {
             </p>
             <div className="relative space-y-2 p-3 rounded-xl border border-white/[0.06] bg-black/30">
               {[
-                { label: 'Deploy v2.3.1',     conf: '94%', color: '#ef4444' },
-                { label: 'OOMKilled (512Mi)', conf: '91%', color: '#f59e0b' },
-                { label: 'Traffic +40%',      conf: '88%', color: '#3b82f6' },
+                { label: 'Deploy v2.3.1',     conf: '94%', color: '#a78bfa' },
+                { label: 'OOMKilled (512Mi)', conf: '91%', color: '#7c3aed' },
+                { label: 'Traffic +40%',      conf: '88%', color: '#f59e0b' },
               ].map((ev) => (
                 <div key={ev.label} className="flex items-center gap-2.5">
                   <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ev.color }} />
@@ -195,8 +167,8 @@ export default function FeaturesGrid() {
 
           {/* ── Row 3 — 3 equal ── */}
 
-          <BentoCard className="col-span-12 md:col-span-4" accentColor="#f59e0b">
-            <IconBadge icon={CheckCircle2} color="#f59e0b" />
+          <BentoCard className="col-span-12 md:col-span-4">
+            <IconBadge icon={CheckCircle2} color="#a78bfa" />
             <h3 className="relative text-white font-bold text-base mb-2">Human Approval Gate</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Every AI-proposed fix requires explicit approval. No silent changes, no surprises.
@@ -204,8 +176,8 @@ export default function FeaturesGrid() {
             </p>
           </BentoCard>
 
-          <BentoCard className="col-span-12 md:col-span-4" accentColor="#2dd4bf">
-            <IconBadge icon={Cpu} color="#2dd4bf" />
+          <BentoCard className="col-span-12 md:col-span-4">
+            <IconBadge icon={Cpu} color="#f59e0b" />
             <h3 className="relative text-white font-bold text-base mb-2">Dry-Run Validation</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Every proposed change is validated in dry-run mode before touching production —
@@ -213,8 +185,8 @@ export default function FeaturesGrid() {
             </p>
           </BentoCard>
 
-          <BentoCard className="col-span-12 md:col-span-4" accentColor="#60a5fa">
-            <IconBadge icon={Server} color="#60a5fa" />
+          <BentoCard className="col-span-12 md:col-span-4">
+            <IconBadge icon={Server} color="#a78bfa" />
             <h3 className="relative text-white font-bold text-base mb-2">100% In-Environment</h3>
             <p className="relative text-slate-500 text-xs leading-relaxed">
               Runs as a Kubernetes operator inside your cluster. Zero external SaaS dependencies.
