@@ -31,7 +31,7 @@ const MODULES = [
     tag: 'Coming Soon',
     tagColor: 'rgba(255,255,255,0.08)',
     tagBg: 'rgba(255,255,255,0.03)',
-    tagText: '#374151',
+    tagText: '#3D3460',
     description: 'Cloud cost analysis & optimization. Rightsizing recommendations powered by usage AI.',
     accent: '#0EA5E9',
     active: false,
@@ -42,7 +42,7 @@ const MODULES = [
     tag: 'Coming Soon',
     tagColor: 'rgba(255,255,255,0.08)',
     tagBg: 'rgba(255,255,255,0.03)',
-    tagText: '#374151',
+    tagText: '#3D3460',
     description: 'Security enforcement & best practices. Continuous compliance scanning and auto-remediation.',
     accent: '#F59E0B',
     active: false,
@@ -53,7 +53,7 @@ const MODULES = [
     tag: 'Coming Soon',
     tagColor: 'rgba(255,255,255,0.08)',
     tagBg: 'rgba(255,255,255,0.03)',
-    tagText: '#374151',
+    tagText: '#3D3460',
     description: 'Multi-cloud provisioning. Intelligent infrastructure lifecycle management across AWS, GCP, and Azure.',
     accent: '#6C47FF',
     active: false,
@@ -64,7 +64,7 @@ const MODULES = [
     tag: 'Coming Soon',
     tagColor: 'rgba(255,255,255,0.08)',
     tagBg: 'rgba(255,255,255,0.03)',
-    tagText: '#374151',
+    tagText: '#3D3460',
     description: 'CD/GitOps automation. Smart deployment pipelines with rollback intelligence and drift detection.',
     accent: '#0EA5E9',
     active: false,
@@ -193,7 +193,7 @@ export default function ModularPlatformSection() {
                 style={{
                   border: '1px solid rgba(255,255,255,0.07)',
                   background: 'rgba(255,255,255,0.03)',
-                  color: '#374151',
+                  color: '#3D3460',
                 }}
               >
                 Coming Soon

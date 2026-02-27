@@ -24,17 +24,17 @@ const CHECKLIST = [
 ];
 
 const KUBETERM_LINES = [
-  { delay: 0,    text: '$ orkastor diagnose --namespace production',  color: '#9CA3AF' },
-  { delay: 600,  text: 'Fetching events, logs, metrics...',           color: '#4B5563' },
+  { delay: 0,    text: '$ orkastor diagnose --namespace production',  color: '#9B93C4' },
+  { delay: 600,  text: 'Fetching events, logs, metrics...',           color: '#524770' },
   { delay: 1200, text: '✓ 12 signals correlated across 3 sources',    color: '#2DD4BF' },
   { delay: 1900, text: '',                                             color: '' },
   { delay: 2200, text: '⚠  payment-svc CrashLoopBackOff (94% conf)', color: '#F59E0B' },
-  { delay: 2700, text: '   cause: OOMKill → memory limit 256Mi',      color: '#6B7280' },
-  { delay: 3200, text: '   correlated with: deploy v3.2.1 @ 14:03',   color: '#4B5563' },
+  { delay: 2700, text: '   cause: OOMKill → memory limit 256Mi',      color: '#6B6294' },
+  { delay: 3200, text: '   correlated with: deploy v3.2.1 @ 14:03',   color: '#524770' },
   { delay: 3900, text: '',                                             color: '' },
   { delay: 4200, text: '⟳ SafeFix™ generating patch...',              color: '#0EA5E9' },
   { delay: 5100, text: '  patch: resources.limits.memory → 512Mi',    color: '#E2E8F0' },
-  { delay: 5700, text: '  dry-run: PASSED · no policy violations',    color: '#4B5563' },
+  { delay: 5700, text: '  dry-run: PASSED · no policy violations',    color: '#524770' },
   { delay: 6400, text: '',                                             color: '' },
   { delay: 6700, text: '✓ Approved · applying to production...',      color: '#34D399' },
   { delay: 7400, text: '✓ Resolved · incident closed in 14s',         color: '#34D399' },
@@ -69,7 +69,7 @@ function KubeTerminal() {
         <span className="terminal-dot bg-red-500/80" />
         <span className="terminal-dot bg-amber-500/80" />
         <span className="terminal-dot bg-emerald-500/80" />
-        <div className="ml-3 flex items-center gap-2 text-xs font-mono" style={{ color: '#4B5563' }}>
+        <div className="ml-3 flex items-center gap-2 text-xs font-mono" style={{ color: '#524770' }}>
           <Terminal className="w-3 h-3" />
           kubēgraf — production
         </div>

@@ -100,7 +100,7 @@ export default function LogoBar() {
       <div className="relative z-10">
         <motion.p
           className="text-center text-xs font-mono tracking-[0.22em] uppercase mb-8 px-5"
-          style={{ color: '#374151' }}
+          style={{ color: '#3D3460' }}
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: EASE }}

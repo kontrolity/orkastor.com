@@ -78,7 +78,7 @@ export default function StatsStrip() {
         {/* Section label */}
         <motion.p
           className="text-center text-xs font-mono tracking-[0.2em] uppercase mb-10"
-          style={{ color: '#374151' }}
+          style={{ color: '#3D3460' }}
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: EASE }}

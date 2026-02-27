@@ -6,15 +6,15 @@ const EASE = [0.16, 1, 0.3, 1];
 
 /* ── Terminal animation (adapted from KubeGrafSection) ─────────── */
 const TERM_LINES = [
-  { delay: 0,    text: '$ orkastor monitor --namespace production', color: '#9CA3AF' },
-  { delay: 600,  text: 'Attaching to 14 signal streams...',        color: '#4B5563' },
+  { delay: 0,    text: '$ orkastor monitor --namespace production', color: '#9B93C4' },
+  { delay: 600,  text: 'Attaching to 14 signal streams...',        color: '#524770' },
   { delay: 1100, text: '✓ Metrics (Prometheus): 847 series',       color: '#2DD4BF' },
   { delay: 1600, text: '✓ Logs (Loki): 3 services correlated',     color: '#2DD4BF' },
   { delay: 2100, text: '✓ Events (K8s): namespace production',     color: '#2DD4BF' },
   { delay: 2700, text: '',                                          color: '' },
   { delay: 3000, text: '⚠  Anomaly detected — api-server',        color: '#F59E0B' },
-  { delay: 3400, text: '   P99 latency: 42ms → 2.3s (+5400%)',    color: '#6B7280' },
-  { delay: 3900, text: '   Correlation: deploy v2.3.1 @ 14:03',   color: '#4B5563' },
+  { delay: 3400, text: '   P99 latency: 42ms → 2.3s (+5400%)',    color: '#6B6294' },
+  { delay: 3900, text: '   Correlation: deploy v2.3.1 @ 14:03',   color: '#524770' },
   { delay: 4500, text: '',                                          color: '' },
   { delay: 4800, text: '→ Escalating to RCA engine...',           color: '#6C47FF' },
   { delay: 5500, text: '✓ Root cause identified (94% conf)',       color: '#34D399' },
@@ -49,7 +49,7 @@ function KubeTerminalMini() {
         <span className="terminal-dot bg-red-500/80" />
         <span className="terminal-dot bg-amber-500/80" />
         <span className="terminal-dot bg-emerald-500/80" />
-        <div className="ml-3 flex items-center gap-2 text-xs font-mono" style={{ color: '#4B5563' }}>
+        <div className="ml-3 flex items-center gap-2 text-xs font-mono" style={{ color: '#524770' }}>
           <Terminal className="w-3 h-3" />
           orkastor — production
         </div>
@@ -95,7 +95,7 @@ function RCAPanel() {
         <span className="terminal-dot bg-red-500/80" />
         <span className="terminal-dot bg-amber-500/80" />
         <span className="terminal-dot bg-emerald-500/80" />
-        <div className="ml-3 text-xs font-mono" style={{ color: '#4B5563' }}>Root Cause Analysis</div>
+        <div className="ml-3 text-xs font-mono" style={{ color: '#524770' }}>Root Cause Analysis</div>
         <div className="ml-auto text-[10px] font-mono px-2 py-0.5 rounded"
           style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>
           ACTIVE
@@ -150,7 +150,7 @@ function SafeFixPanel() {
         <span className="terminal-dot bg-red-500/80" />
         <span className="terminal-dot bg-amber-500/80" />
         <span className="terminal-dot bg-emerald-500/80" />
-        <div className="ml-3 text-xs font-mono" style={{ color: '#4B5563' }}>SafeFix™ Proposal</div>
+        <div className="ml-3 text-xs font-mono" style={{ color: '#524770' }}>SafeFix™ Proposal</div>
         <div className="ml-auto text-[10px] font-mono px-2 py-0.5 rounded"
           style={{ background: 'rgba(52,211,153,0.1)', color: '#34d399', border: '1px solid rgba(52,211,153,0.2)' }}>
           dry-run ✓
@@ -181,7 +181,7 @@ function SafeFixPanel() {
             </button>
             <button
               className="px-4 py-2.5 rounded-xl text-sm"
-              style={{ background: 'rgba(255,255,255,0.03)', color: '#4B5563', border: '1px solid rgba(255,255,255,0.06)' }}
+              style={{ background: 'rgba(255,255,255,0.03)', color: '#524770', border: '1px solid rgba(255,255,255,0.06)' }}
             >
               Dismiss
             </button>
@@ -199,7 +199,7 @@ function SafeFixPanel() {
               <div className="flex flex-col items-center">
                 <div className="w-2 h-2 rounded-full"
                   style={{ background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none' }} />
-                <span className="text-[9px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#374151' }}>{item.t}</span>
+                <span className="text-[9px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#3D3460' }}>{item.t}</span>
               </div>
               {i < arr.length - 1 && (
                 <div className="flex-1 h-px" style={{ background: item.done ? 'rgba(108,71,255,0.4)' : 'rgba(255,255,255,0.06)' }} />
@@ -340,7 +340,7 @@ export default function FeatureTabs() {
                         boxShadow: '0 0 0 1px rgba(108,71,255,0.25)',
                         color: '#C4B5FD',
                       }
-                    : { color: '#4B5563' }
+                    : { color: '#524770' }
                 }
               >
                 <Icon className="w-4 h-4" />

@@ -50,7 +50,7 @@ function IntegrationPill({ name, cat, color }) {
       </div>
       <div>
         <div className="text-white text-sm font-semibold leading-tight">{name}</div>
-        <div className="text-[10px] uppercase tracking-wider" style={{ color: '#4B5563' }}>{cat}</div>
+        <div className="text-[10px] uppercase tracking-wider" style={{ color: '#524770' }}>{cat}</div>
       </div>
     </div>
   );
@@ -96,7 +96,7 @@ export default function IntegrationsSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
         <motion.p
           className="text-center text-xs font-mono tracking-[0.18em] uppercase mb-10"
-          style={{ color: '#374151' }}
+          style={{ color: '#3D3460' }}
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: EASE }}
@@ -118,7 +118,7 @@ export default function IntegrationsSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
         <motion.p
           className="text-center text-sm mt-8"
-          style={{ color: '#374151' }}
+          style={{ color: '#3D3460' }}
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.25 }}

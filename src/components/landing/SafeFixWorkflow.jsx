@@ -166,7 +166,7 @@ export default function SafeFixWorkflow() {
                         borderColor: isActive ? `${step.accent}40` : 'rgba(255,255,255,0.07)',
                       }}
                     >
-                      <Icon className="w-5 h-5" style={{ color: isActive ? step.accent : '#374151' }} />
+                      <Icon className="w-5 h-5" style={{ color: isActive ? step.accent : '#3D3460' }} />
                     </div>
 
                     <div className="flex-1 min-w-0">

@@ -107,9 +107,9 @@ export default function Footer() {
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
                       className="text-sm transition-colors duration-150"
-                      style={{ color: '#4B5563' }}
-                      onMouseEnter={e => (e.currentTarget.style.color = '#9CA3AF')}
-                      onMouseLeave={e => (e.currentTarget.style.color = '#4B5563')}
+                      style={{ color: '#524770' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#9B93C4')}
+                      onMouseLeave={e => (e.currentTarget.style.color = '#524770')}
                     >
                       {link.label}
                     </a>
@@ -127,11 +127,11 @@ export default function Footer() {
         >
           <div className="flex items-center gap-3">
             <OrkastorLogo size={18} showWordmark={false} />
-            <p className="text-xs" style={{ color: '#374151' }}>
+            <p className="text-xs" style={{ color: '#3D3460' }}>
               © 2025 Orkastor. All rights reserved.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs" style={{ color: '#374151' }}>
+          <div className="flex items-center gap-2 text-xs" style={{ color: '#3D3460' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             All systems operational
           </div>

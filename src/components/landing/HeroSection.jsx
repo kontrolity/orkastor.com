@@ -114,7 +114,7 @@ function DashboardMockup() {
                     borderBottom: '2px solid #6C47FF',
                     color: '#A78BFA',
                   }
-                : { color: '#4B5563' }
+                : { color: '#524770' }
             }
           >
             {tab}
@@ -135,7 +135,7 @@ function DashboardMockup() {
 
         {/* Panel 1: Live Incidents */}
         <div className="p-4 border-r" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
+          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#524770' }}>
             Live Incidents
           </div>
           {[
@@ -161,7 +161,7 @@ function DashboardMockup() {
                   </span>
                 )}
               </div>
-              <div className="text-[9px] font-mono" style={{ color: '#4B5563' }}>
+              <div className="text-[9px] font-mono" style={{ color: '#524770' }}>
                 {inc.ns} · {inc.status}
               </div>
             </div>
@@ -174,7 +174,7 @@ function DashboardMockup() {
               <div key={s.label} className="p-2 rounded-lg text-center"
                 style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <div className="text-base font-black font-mono" style={{ color: s.color }}>{s.val}</div>
-                <div className="text-[8px] uppercase tracking-wider" style={{ color: '#374151' }}>{s.label}</div>
+                <div className="text-[8px] uppercase tracking-wider" style={{ color: '#3D3460' }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -182,7 +182,7 @@ function DashboardMockup() {
 
         {/* Panel 2: Root Cause Analysis */}
         <div className="p-4 border-r" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
+          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#524770' }}>
             Root Cause Analysis
           </div>
           <div className="p-3 rounded-xl mb-3" style={{ background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.15)' }}>
@@ -192,10 +192,10 @@ function DashboardMockup() {
               <span className="ml-auto text-[8px] px-1.5 py-0.5 rounded-full font-bold"
                 style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171' }}>ACTIVE</span>
             </div>
-            <div className="text-[10px] font-mono" style={{ color: '#6B7280' }}>api-server · CrashLoopBackOff</div>
+            <div className="text-[10px] font-mono" style={{ color: '#6B6294' }}>api-server · CrashLoopBackOff</div>
           </div>
           <div className="mb-2">
-            <div className="text-[9px] font-medium mb-2" style={{ color: '#6B7280' }}>Confidence scores</div>
+            <div className="text-[9px] font-medium mb-2" style={{ color: '#6B6294' }}>Confidence scores</div>
             {[
               { label: 'Deploy v2.3.1',      conf: '94%', color: '#6C47FF', w: '94%' },
               { label: 'Memory limit 512Mi', conf: '91%', color: '#8B5CF6', w: '91%' },
@@ -203,7 +203,7 @@ function DashboardMockup() {
             ].map(c => (
               <div key={c.label} className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: c.color }} />
-                <div className="flex-1 text-[9px] font-mono truncate" style={{ color: '#9CA3AF' }}>{c.label}</div>
+                <div className="flex-1 text-[9px] font-mono truncate" style={{ color: '#9B93C4' }}>{c.label}</div>
                 <span className="text-[9px] font-mono font-semibold" style={{ color: c.color }}>{c.conf}</span>
                 <div className="w-10 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
                   <div className="h-full rounded-full" style={{ width: c.w, background: c.color }} />
@@ -212,13 +212,13 @@ function DashboardMockup() {
             ))}
           </div>
           <div className="p-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <div className="text-[8px] font-mono" style={{ color: '#4B5563' }}>📋 Evidence chain: deploy → OOM → restart loop</div>
+            <div className="text-[8px] font-mono" style={{ color: '#524770' }}>📋 Evidence chain: deploy → OOM → restart loop</div>
           </div>
         </div>
 
         {/* Panel 3: SafeFix */}
         <div className="p-4">
-          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
+          <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#524770' }}>
             SafeFix™ Proposal
           </div>
           <div className="p-3 rounded-xl mb-3" style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}>
@@ -240,13 +240,13 @@ function DashboardMockup() {
                 Approve
               </button>
               <button className="flex-1 py-1.5 rounded-lg text-[10px]"
-                style={{ background: 'rgba(255,255,255,0.03)', color: '#4B5563', border: '1px solid rgba(255,255,255,0.06)' }}>
+                style={{ background: 'rgba(255,255,255,0.03)', color: '#524770', border: '1px solid rgba(255,255,255,0.06)' }}>
                 Dismiss
               </button>
             </div>
           </div>
           <div className="mt-2">
-            <div className="text-[9px] mb-2" style={{ color: '#4B5563' }}>Resolution timeline</div>
+            <div className="text-[9px] mb-2" style={{ color: '#524770' }}>Resolution timeline</div>
             <div className="flex items-center">
               {[
                 { t: 'T+0s',  done: true,  label: 'Detect' },
@@ -258,7 +258,7 @@ function DashboardMockup() {
                   <div className="flex flex-col items-center">
                     <div className="w-2 h-2 rounded-full"
                       style={{ background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none' }} />
-                    <span className="text-[8px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#374151' }}>{item.t}</span>
+                    <span className="text-[8px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#3D3460' }}>{item.t}</span>
                   </div>
                   {i < arr.length - 1 && (
                     <div className="flex-1 h-px mx-1"
