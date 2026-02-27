@@ -114,14 +114,14 @@ export default function KubeGrafSection() {
       ref={sectionRef}
       id="kubegraf"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Top glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[280px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.08) 0%, rgba(14,165,233,0.03) 50%, transparent 70%)',
+            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(141,111,222,0.08) 0%, rgba(14,165,233,0.03) 50%, transparent 70%)',
         }}
       />
 
@@ -137,9 +137,9 @@ export default function KubeGrafSection() {
             <span
               className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-6"
               style={{
-                border: '1px solid rgba(108,71,255,0.3)',
+                border: '1px solid rgba(141,111,222,0.3)',
                 color: 'rgba(167,139,250,0.8)',
-                background: 'rgba(108,71,255,0.07)',
+                background: 'rgba(141,111,222,0.07)',
               }}
             >
               Flagship Module
@@ -161,7 +161,7 @@ export default function KubeGrafSection() {
             <div className="space-y-5 mb-8">
               {CHECKLIST.map((item) => (
                 <div key={item.title} className="flex gap-4">
-                  <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: '#6C47FF' }} />
+                  <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: '#8D6FDE' }} />
                   <div>
                     <p className="text-white font-semibold text-sm">{item.title}</p>
                     <p className="text-slate-500 text-sm">{item.desc}</p>

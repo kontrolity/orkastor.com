@@ -18,11 +18,11 @@ const MODULES = [
     icon: Activity,
     name: 'KubēGraf',
     tag: 'Available Now',
-    tagColor: 'rgba(108,71,255,0.4)',
-    tagBg: 'rgba(108,71,255,0.1)',
+    tagColor: 'rgba(141,111,222,0.4)',
+    tagBg: 'rgba(141,111,222,0.1)',
     tagText: '#A78BFA',
     description: 'In-environment AI SRE for Kubernetes. Monitor, diagnose, and auto-remediate — zero exfiltration.',
-    accent: '#6C47FF',
+    accent: '#8D6FDE',
     active: true,
   },
   {
@@ -55,7 +55,7 @@ const MODULES = [
     tagBg: 'rgba(255,255,255,0.03)',
     tagText: '#374151',
     description: 'Multi-cloud provisioning. Intelligent infrastructure lifecycle management across AWS, GCP, and Azure.',
-    accent: '#6C47FF',
+    accent: '#8D6FDE',
     active: false,
   },
   {
@@ -80,14 +80,14 @@ export default function ModularPlatformSection() {
       ref={sectionRef}
       id="platform"
       className="relative py-24 md:py-28 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Top glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[240px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.08) 0%, rgba(14,165,233,0.03) 40%, transparent 70%)',
+            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(141,111,222,0.08) 0%, rgba(14,165,233,0.03) 40%, transparent 70%)',
         }}
       />
 

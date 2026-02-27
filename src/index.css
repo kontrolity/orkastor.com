@@ -5,11 +5,11 @@
 /* ═══════════════════════════════════════════════════════════════
    CLERK.COM DESIGN SYSTEM — EXACT REPLICATION
    Font:        Geist (Vercel) — Variable woff2
-   Dark bg:     #131316  (Woodsmoke)
-   Card bg:     #1D1D21
+   Dark bg:     #1E1A33  (Woodsmoke)
+   Card bg:     #252040
    Gray-950:    #030712
    Light hero:  #F9FAFB (gray-50)
-   Primary:     #6C47FF (Electric Violet)
+   Primary:     #8D6FDE (Electric Violet)
    Sky accent:  #7DD3FC (sky-300)
    Purple:      #A855F7 (purple-500)
    Borders:     ring-1 ring-inset ring-white/5
@@ -77,8 +77,8 @@
   --sidebar-ring: 217.2 91.2% 59.8%;
 
   /* ── Clerk's exact brand palette ────────────────────────── */
-  --clerk-violet:        #6C47FF;   /* Electric Violet — primary */
-  --clerk-violet-dark:   #4F2EE8;
+  --clerk-violet:        #8D6FDE;   /* Electric Violet — primary */
+  --clerk-violet-dark:   #6A4FC7;
   --clerk-violet-light:  #A78BFA;
   --clerk-sky:           #7DD3FC;   /* sky-300 — feature page accent */
   --clerk-sky-mid:       #38BDF8;   /* sky-400 */
@@ -88,8 +88,8 @@
 
   /* ── Clerk's exact backgrounds ──────────────────────────── */
   --bg-hero:             #F9FAFB;   /* gray-50  — light hero */
-  --bg-dark:             #131316;   /* Woodsmoke — dark sections */
-  --bg-dark-card:        #1D1D21;   /* exact Clerk card bg */
+  --bg-dark:             #1E1A33;   /* Woodsmoke — dark sections */
+  --bg-dark-card:        #252040;   /* exact Clerk card bg */
   --bg-gray950:          #030712;   /* gray-950 — deepest dark */
   --bg-card-glass:       rgba(31,41,55,0.4); /* gray-800/40 */
 
@@ -97,10 +97,10 @@
   --border-dark:         rgba(255,255,255,0.05);
   --border-dark-active:  rgba(255,255,255,0.14);
   --border-light:        rgba(3,7,18,0.05);
-  --border-violet:       rgba(108,71,255,0.35);
+  --border-violet:       rgba(141,111,222,0.35);
 
   /* ── Semantic aliases ────────────────────────────────────── */
-  --purple:              #6C47FF;
+  --purple:              #8D6FDE;
   --purple-light:        #A78BFA;
   --blue:                #7DD3FC;
   --blue-mid:            #0EA5E9;
@@ -109,14 +109,14 @@
   --amber:               #f59e0b;
 
   /* Legacy bg vars for existing components */
-  --bg-base:             #131316;
-  --bg-alt:              #1D1D21;
+  --bg-base:             #1E1A33;
+  --bg-alt:              #252040;
   --bg-card:             rgba(255,255,255,0.025);
-  --bg-card-solid:       #1D1D21;
+  --bg-card-solid:       #252040;
   --border-subtle:       rgba(255,255,255,0.05);
   --border-default:      rgba(255,255,255,0.08);
-  --border-active:       rgba(108,71,255,0.40);
-  --border-light-active: rgba(108,71,255,0.30);
+  --border-active:       rgba(141,111,222,0.40);
+  --border-light-active: rgba(141,111,222,0.30);
 }
 
 .dark {
@@ -152,7 +152,7 @@
     -moz-osx-font-smoothing: grayscale;
     font-synthesis-weight: none;   /* Clerk uses [font-synthesis-weight:none] */
     font-optical-sizing: auto;
-    background-color: #131316;     /* Woodsmoke — Clerk's dark default */
+    background-color: #1E1A33;     /* Woodsmoke — Clerk's dark default */
     color: #F9FAFB;
     @apply border-border outline-ring/50;
   }
@@ -182,15 +182,15 @@ body::after {
 
 /* ─── Scrollbar ───────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #131316; }
+::-webkit-scrollbar-track { background: #1E1A33; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(108,71,255,0.5); }
+::-webkit-scrollbar-thumb:hover { background: rgba(141,111,222,0.5); }
 
 /* ══════════════════════════════════════════════════════════════
    CLERK CARD SYSTEM
    Clerk uses two card variants:
    1. Glass card: bg-gray-800/40 + gradient + ring-1 ring-inset ring-white/5 + backdrop-blur
-   2. Solid card: bg-[#1D1D21] + ring-1 ring-inset ring-white/5
+   2. Solid card: bg-[#252040] + ring-1 ring-inset ring-white/5
 ══════════════════════════════════════════════════════════════ */
 
 /* Primary Clerk card — glass effect (matches bg-gray-800/40 pattern) */
@@ -221,11 +221,11 @@ body::after {
   transform: translateY(-2px);
 }
 
-/* Solid dark card (Clerk's bg-[#1D1D21] variant) */
+/* Solid dark card (Clerk's bg-[#252040] variant) */
 .clerk-card-solid {
   position: relative;
   border-radius: 12px;
-  background: #1D1D21;
+  background: #252040;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
   overflow: hidden;
 }
@@ -233,7 +233,7 @@ body::after {
 /* Top-rounded only variant (Clerk uses rounded-t-xl on component previews) */
 .clerk-card-top {
   border-radius: 12px 12px 0 0;
-  background: #1D1D21;
+  background: #252040;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
@@ -253,15 +253,15 @@ body::after {
   position: relative;
   border-radius: 16px;
   background:
-    linear-gradient(135deg, rgba(19,19,22,0.98) 0%, rgba(29,29,33,0.98) 100%) padding-box,
+    linear-gradient(135deg, rgba(30,26,51,0.98) 0%, rgba(29,29,33,0.98) 100%) padding-box,
     conic-gradient(
       from var(--border-angle),
-      rgba(108,71,255,0.0)  0%,
-      rgba(108,71,255,0.0)  40%,
-      rgba(108,71,255,0.9)  50%,
+      rgba(141,111,222,0.0)  0%,
+      rgba(141,111,222,0.0)  40%,
+      rgba(141,111,222,0.9)  50%,
       rgba(125,211,252,0.5) 56%,
-      rgba(108,71,255,0.0)  65%,
-      rgba(108,71,255,0.0)  100%
+      rgba(141,111,222,0.0)  65%,
+      rgba(141,111,222,0.0)  100%
     ) border-box;
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,0.05),
@@ -279,15 +279,15 @@ body::after {
 }
 .card-glow-border-hover:hover {
   background:
-    linear-gradient(135deg, rgba(19,19,22,0.98) 0%, rgba(29,29,33,0.98) 100%) padding-box,
+    linear-gradient(135deg, rgba(30,26,51,0.98) 0%, rgba(29,29,33,0.98) 100%) padding-box,
     conic-gradient(
       from var(--border-angle),
-      rgba(108,71,255,0.0)  0%,
-      rgba(108,71,255,0.0)  40%,
-      rgba(108,71,255,0.8)  50%,
+      rgba(141,111,222,0.0)  0%,
+      rgba(141,111,222,0.0)  40%,
+      rgba(141,111,222,0.8)  50%,
       rgba(125,211,252,0.4) 56%,
-      rgba(108,71,255,0.0)  65%,
-      rgba(108,71,255,0.0)  100%
+      rgba(141,111,222,0.0)  65%,
+      rgba(141,111,222,0.0)  100%
     ) border-box;
   border: 1px solid transparent;
   animation: border-spin 3s linear infinite;
@@ -301,7 +301,7 @@ body::after {
   border-radius: inherit;
   background: radial-gradient(
     350px circle at var(--mouse-x, -400px) var(--mouse-y, -400px),
-    rgba(108,71,255,0.06),
+    rgba(141,111,222,0.06),
     transparent 40%
   );
   pointer-events: none;
@@ -317,8 +317,8 @@ body::after {
   gap: 8px;
   padding: 4px 14px 4px 5px;
   border-radius: 9999px;
-  border: 1px solid rgba(108,71,255,0.22);
-  background: rgba(108,71,255,0.08);
+  border: 1px solid rgba(141,111,222,0.22);
+  background: rgba(141,111,222,0.08);
   color: #A78BFA;
   font-size: 12px;
   font-weight: 500;
@@ -327,13 +327,13 @@ body::after {
   cursor: default;
 }
 .badge-pill:hover {
-  border-color: rgba(108,71,255,0.40);
-  background: rgba(108,71,255,0.13);
+  border-color: rgba(141,111,222,0.40);
+  background: rgba(141,111,222,0.13);
 }
 .badge-pill .pill-tag {
   padding: 2px 9px;
   border-radius: 9999px;
-  background: #6C47FF;
+  background: #8D6FDE;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -352,23 +352,23 @@ body::after {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #6C47FF 0%, #4F2EE8 100%);
+  background: linear-gradient(135deg, #8D6FDE 0%, #6A4FC7 100%);
   color: #fff;
   font-weight: 600;
   font-size: 0.875rem;
   border: none;
   border-radius: 10px;
   box-shadow:
-    0 0 0 1px rgba(108,71,255,0.5) inset,
-    0 4px 20px rgba(108,71,255,0.35),
+    0 0 0 1px rgba(141,111,222,0.5) inset,
+    0 4px 20px rgba(141,111,222,0.35),
     0 1px 0 rgba(255,255,255,0.12) inset;
   transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
 }
 .btn-clerk-primary:hover {
   transform: translateY(-1px);
   box-shadow:
-    0 0 0 1px rgba(108,71,255,0.6) inset,
-    0 6px 28px rgba(108,71,255,0.50),
+    0 0 0 1px rgba(141,111,222,0.6) inset,
+    0 6px 28px rgba(141,111,222,0.50),
     0 1px 0 rgba(255,255,255,0.15) inset;
 }
 .btn-clerk-primary:active { transform: scale(0.98); opacity: 0.92; }
@@ -421,9 +421,9 @@ body::after {
   background: linear-gradient(
     110deg,
     #2d1680 0%,
-    #6C47FF 30%,
+    #8D6FDE 30%,
     #e2e8f0 50%,
-    #6C47FF 70%,
+    #8D6FDE 70%,
     #2d1680 100%
   );
   background-size: 300% auto;
@@ -440,9 +440,9 @@ body::after {
    Feature labels: sky-300 or purple-500
 ══════════════════════════════════════════════════════════════ */
 
-/* Clerk hero gradient (violet → sky) */
+/* Hero gradient (violet → lime) */
 .text-gradient-brand {
-  background: linear-gradient(135deg, #6C47FF 0%, #7DD3FC 100%);
+  background: linear-gradient(135deg, #8D6FDE 0%, #D4F400 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -467,7 +467,7 @@ body::after {
   background: linear-gradient(
     110deg,
     rgba(255,255,255,0.95) 25%,
-    rgba(108,71,255,0.8)   50%,
+    rgba(141,111,222,0.8)   50%,
     rgba(255,255,255,0.95) 75%
   );
   background-size: 300% auto;
@@ -485,7 +485,7 @@ body::after {
   background-clip: text;
 }
 .text-gradient-violet {
-  background: linear-gradient(135deg, #A78BFA, #6C47FF);
+  background: linear-gradient(135deg, #A78BFA, #8D6FDE);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -510,10 +510,10 @@ body::after {
 }
 
 /* ─── Glow utilities ──────────────────────────────────────────── */
-.shadow-glow-violet { box-shadow: 0 0 28px rgba(108,71,255,0.35), 0 0 70px rgba(108,71,255,0.12); }
+.shadow-glow-violet { box-shadow: 0 0 28px rgba(141,111,222,0.35), 0 0 70px rgba(141,111,222,0.12); }
 .shadow-glow-sky    { box-shadow: 0 0 28px rgba(125,211,252,0.28), 0 0 70px rgba(14,165,233,0.10); }
-.shadow-glow-strong { box-shadow: 0 0 70px rgba(108,71,255,0.5); }
-.text-glow-violet   { text-shadow: 0 0 32px rgba(108,71,255,0.65); }
+.shadow-glow-strong { box-shadow: 0 0 70px rgba(141,111,222,0.5); }
+.text-glow-violet   { text-shadow: 0 0 32px rgba(141,111,222,0.65); }
 .text-glow-sky      { text-shadow: 0 0 40px rgba(125,211,252,0.55); }
 
 /* ─── Glass (Clerk nav / overlay style) ──────────────────────── */
@@ -525,7 +525,7 @@ body::after {
 }
 /* Nav glass — Clerk uses bg-[--root-bg] which on dark = transparent */
 .glass-dark {
-  background: rgba(19,19,22,0.90);           /* #131316 at 90% */
+  background: rgba(30,26,51,0.90);           /* #1E1A33 at 90% */
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
@@ -549,13 +549,13 @@ body::after {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(108,71,255,0.4) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(141,111,222,0.4) 50%, transparent 100%);
   pointer-events: none;
 }
 
 /* ─── Dot Grid (Clerk WebGL dot glow pattern approximation) ──── */
 .bg-dot-grid {
-  background-image: radial-gradient(rgba(108,71,255,0.15) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(141,111,222,0.15) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 /* WebGL-inspired dot pattern for hero (Clerk uses custom WebGL shaders) */
@@ -569,8 +569,8 @@ body::after {
 /* ─── Circuit / Grid (Clerk homepage background pattern) ──────── */
 .bg-circuit-grid {
   background-image:
-    linear-gradient(rgba(108,71,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(108,71,255,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(141,111,222,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(141,111,222,0.05) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 .bg-circuit-grid-light {
@@ -609,7 +609,7 @@ body::after {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(165deg, rgba(108,71,255,0.25) 0%, rgba(255,255,255,0.04) 40%, transparent 70%);
+  background: linear-gradient(165deg, rgba(141,111,222,0.25) 0%, rgba(255,255,255,0.04) 40%, transparent 70%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -682,7 +682,7 @@ body::after {
   position: absolute;
   width: var(--meteor-size, 80px);
   height: 1px;
-  background: linear-gradient(90deg, rgba(108,71,255,0.8) 0%, rgba(108,71,255,0.3) 40%, transparent 100%);
+  background: linear-gradient(90deg, rgba(141,111,222,0.8) 0%, rgba(141,111,222,0.3) 40%, transparent 100%);
   border-radius: 9999px;
   transform-origin: left center;
   opacity: 0;
@@ -699,8 +699,8 @@ body::after {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(108,71,255,0.9);
-  box-shadow: 0 0 6px rgba(108,71,255,0.9), 0 0 12px rgba(108,71,255,0.5);
+  background: rgba(141,111,222,0.9);
+  box-shadow: 0 0 6px rgba(141,111,222,0.9), 0 0 12px rgba(141,111,222,0.5);
 }
 @keyframes meteor-path {
   0%   { transform: rotate(45deg) translateX(-120px); opacity: 0; }

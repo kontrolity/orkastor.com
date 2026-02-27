@@ -16,7 +16,7 @@ function GradientMeshBackground() {
           left: '30%',
           width: '700px',
           height: '700px',
-          background: 'radial-gradient(circle, rgba(108,71,255,0.22) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(141,111,222,0.22) 0%, transparent 70%)',
           filter: 'blur(60px)',
         }}
       />
@@ -56,17 +56,17 @@ function DashboardMockup() {
     <div
       className="w-full rounded-2xl overflow-hidden select-none relative"
       style={{
-        background: '#080C14',
+        background: '#0D0A1E',
         border: '1px solid rgba(255,255,255,0.08)',
         boxShadow:
-          '0 0 0 1px rgba(108,71,255,0.18), 0 80px 160px rgba(0,0,0,0.5), 0 0 120px rgba(108,71,255,0.15)',
+          '0 0 0 1px rgba(141,111,222,0.18), 0 80px 160px rgba(0,0,0,0.5), 0 0 120px rgba(141,111,222,0.15)',
       }}
     >
       {/* Animated top border */}
       <div
         className="absolute top-0 left-0 right-0 h-[1px]"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, #6C47FF 30%, #0EA5E9 70%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, #8D6FDE 30%, #0EA5E9 70%, transparent 100%)',
           backgroundSize: '200% auto',
           animation: 'shimmer-slide 3s linear infinite',
         }}
@@ -110,8 +110,8 @@ function DashboardMockup() {
             style={
               i === 1
                 ? {
-                    background: 'rgba(108,71,255,0.12)',
-                    borderBottom: '2px solid #6C47FF',
+                    background: 'rgba(141,111,222,0.12)',
+                    borderBottom: '2px solid #8D6FDE',
                     color: '#A78BFA',
                   }
                 : { color: '#4B5563' }
@@ -141,7 +141,7 @@ function DashboardMockup() {
           {[
             { svc: 'api-server',   ns: 'production', status: 'CrashLoop', color: '#ef4444', active: true  },
             { svc: 'payment-svc',  ns: 'checkout',   status: 'OOMKilled', color: '#f59e0b', active: false },
-            { svc: 'auth-worker',  ns: 'identity',   status: 'Degraded',  color: '#6C47FF', active: false },
+            { svc: 'auth-worker',  ns: 'identity',   status: 'Degraded',  color: '#8D6FDE', active: false },
           ].map((inc, i) => (
             <div
               key={i}
@@ -168,7 +168,7 @@ function DashboardMockup() {
           ))}
           <div className="mt-3 grid grid-cols-2 gap-1.5">
             {[
-              { label: 'MTTR', val: '18s', color: '#6C47FF' },
+              { label: 'MTTR', val: '18s', color: '#8D6FDE' },
               { label: 'Resolved', val: '142', color: '#0EA5E9' },
             ].map(s => (
               <div key={s.label} className="p-2 rounded-lg text-center"
@@ -197,7 +197,7 @@ function DashboardMockup() {
           <div className="mb-2">
             <div className="text-[9px] font-medium mb-2" style={{ color: '#6B7280' }}>Confidence scores</div>
             {[
-              { label: 'Deploy v2.3.1',      conf: '94%', color: '#6C47FF', w: '94%' },
+              { label: 'Deploy v2.3.1',      conf: '94%', color: '#8D6FDE', w: '94%' },
               { label: 'Memory limit 512Mi', conf: '91%', color: '#8B5CF6', w: '91%' },
               { label: 'Traffic spike +40%', conf: '88%', color: '#0EA5E9', w: '88%' },
             ].map(c => (
@@ -221,7 +221,7 @@ function DashboardMockup() {
           <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: '#4B5563' }}>
             SafeFix™ Proposal
           </div>
-          <div className="p-3 rounded-xl mb-3" style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}>
+          <div className="p-3 rounded-xl mb-3" style={{ background: 'rgba(141,111,222,0.07)', border: '1px solid rgba(141,111,222,0.2)' }}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-bold" style={{ color: '#A78BFA' }}>Auto-Remediation</span>
               <span className="text-[8px] px-1.5 py-0.5 rounded font-mono"
@@ -235,7 +235,7 @@ function DashboardMockup() {
             </div>
             <div className="flex gap-1.5">
               <button className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-bold"
-                style={{ background: 'linear-gradient(135deg, rgba(108,71,255,0.4), rgba(79,46,232,0.4))', color: '#C4B5FD', border: '1px solid rgba(108,71,255,0.4)' }}>
+                style={{ background: 'linear-gradient(135deg, rgba(141,111,222,0.4), rgba(106,79,199,0.4))', color: '#C4B5FD', border: '1px solid rgba(141,111,222,0.4)' }}>
                 <CheckCircle2 className="w-3 h-3" />
                 Approve
               </button>
@@ -257,12 +257,12 @@ function DashboardMockup() {
                 <React.Fragment key={item.t}>
                   <div className="flex flex-col items-center">
                     <div className="w-2 h-2 rounded-full"
-                      style={{ background: item.done ? '#6C47FF' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(108,71,255,0.6)' : 'none' }} />
-                    <span className="text-[8px] font-mono mt-1" style={{ color: item.done ? '#6C47FF' : '#374151' }}>{item.t}</span>
+                      style={{ background: item.done ? '#8D6FDE' : 'rgba(255,255,255,0.1)', boxShadow: item.done ? '0 0 6px rgba(141,111,222,0.6)' : 'none' }} />
+                    <span className="text-[8px] font-mono mt-1" style={{ color: item.done ? '#8D6FDE' : '#374151' }}>{item.t}</span>
                   </div>
                   {i < arr.length - 1 && (
                     <div className="flex-1 h-px mx-1"
-                      style={{ background: item.done ? 'linear-gradient(90deg, #6C47FF, rgba(108,71,255,0.3))' : 'rgba(255,255,255,0.06)' }} />
+                      style={{ background: item.done ? 'linear-gradient(90deg, #8D6FDE, rgba(141,111,222,0.3))' : 'rgba(255,255,255,0.06)' }} />
                   )}
                 </React.Fragment>
               ))}
@@ -285,7 +285,7 @@ export default function HeroSection() {
     <section
       className="relative overflow-hidden"
       style={{
-        backgroundColor: '#0C0C14',
+        backgroundColor: '#161032',
         minHeight: '100vh',
         paddingTop: 'calc(76px + var(--banner-height, 0px))',
       }}
@@ -310,14 +310,14 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all hover:opacity-80"
               style={{
-                background: 'rgba(108,71,255,0.1)',
-                border: '1px solid rgba(108,71,255,0.28)',
+                background: 'rgba(141,111,222,0.1)',
+                border: '1px solid rgba(141,111,222,0.28)',
                 color: '#A78BFA',
               }}
             >
               <span
                 className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
-                style={{ background: '#6C47FF' }}
+                style={{ background: '#8D6FDE' }}
               >
                 New
               </span>
@@ -338,7 +338,7 @@ export default function HeroSection() {
             <br />
             <span
               style={{
-                background: 'linear-gradient(135deg, #6C47FF 0%, #0EA5E9 100%)',
+                background: 'linear-gradient(135deg, #8D6FDE 0%, #0EA5E9 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -371,8 +371,8 @@ export default function HeroSection() {
               href="#cta"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.99]"
               style={{
-                background: 'linear-gradient(135deg, #6C47FF 0%, #4F2EE8 100%)',
-                boxShadow: '0 4px 24px rgba(108,71,255,0.4), 0 1px 0 rgba(255,255,255,0.12) inset',
+                background: 'linear-gradient(135deg, #8D6FDE 0%, #6A4FC7 100%)',
+                boxShadow: '0 4px 24px rgba(141,111,222,0.4), 0 1px 0 rgba(255,255,255,0.12) inset',
               }}
             >
               Get Early Access
@@ -439,7 +439,7 @@ export default function HeroSection() {
           <div
             className="absolute -inset-x-8 -bottom-8 h-24 pointer-events-none"
             style={{
-              background: 'radial-gradient(ellipse 65% 80% at 50% 100%, rgba(108,71,255,0.2) 0%, transparent 70%)',
+              background: 'radial-gradient(ellipse 65% 80% at 50% 100%, rgba(141,111,222,0.2) 0%, transparent 70%)',
             }}
           />
           <DashboardMockup />
@@ -449,7 +449,7 @@ export default function HeroSection() {
       {/* Bottom fade to main bg */}
       <div
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #131316)' }}
+        style={{ background: 'linear-gradient(to bottom, transparent, #1E1A33)' }}
       />
     </section>
   );

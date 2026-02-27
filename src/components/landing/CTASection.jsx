@@ -26,14 +26,14 @@ export default function CTASection() {
       ref={sectionRef}
       id="cta"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: '#1E1A33' }}
     >
       {/* Radial glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 50% -5%, rgba(108,71,255,0.12) 0%, rgba(14,165,233,0.04) 45%, transparent 65%)',
+            'radial-gradient(ellipse 70% 60% at 50% -5%, rgba(141,111,222,0.12) 0%, rgba(14,165,233,0.04) 45%, transparent 65%)',
         }}
       />
 
@@ -41,7 +41,7 @@ export default function CTASection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(rgba(108,71,255,0.07) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(141,111,222,0.07) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
           maskImage: 'radial-gradient(ellipse 60% 70% at 50% 0%, black 0%, transparent 80%)',
           WebkitMaskImage: 'radial-gradient(ellipse 60% 70% at 50% 0%, black 0%, transparent 80%)',
@@ -91,7 +91,7 @@ export default function CTASection() {
                   border: '1px solid rgba(255,255,255,0.09)',
                 }}
                 onFocus={e => {
-                  e.target.style.borderColor = 'rgba(108,71,255,0.5)';
+                  e.target.style.borderColor = 'rgba(141,111,222,0.5)';
                   e.target.style.background = 'rgba(255,255,255,0.06)';
                 }}
                 onBlur={e => {
@@ -131,7 +131,7 @@ export default function CTASection() {
               'Runs inside your cluster',
             ].map(p => (
               <span key={p} className="flex items-center gap-1.5 text-slate-600 text-xs">
-                <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#6C47FF' }} />
+                <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#8D6FDE' }} />
                 {p}
               </span>
             ))}
@@ -188,7 +188,7 @@ export default function CTASection() {
               <span className="text-slate-500">$</span>
               <span style={{ color: '#0EA5E9' }}>brew install orkastor</span>
               <span className="text-slate-700">&&</span>
-              <span style={{ color: '#6C47FF' }}>orkastor init</span>
+              <span style={{ color: '#8D6FDE' }}>orkastor init</span>
             </div>
           </div>
         </motion.div>
