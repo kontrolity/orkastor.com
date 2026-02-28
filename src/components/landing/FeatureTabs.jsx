@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Terminal, Brain, Wrench, CheckCircle2, Zap } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1];
@@ -350,45 +350,51 @@ export default function FeatureTabs() {
           </div>
         </div>
 
-        {/* Tab content panel */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
-          >
-            {/* Left: text content */}
-            <div>
-              <h3
-                className="font-black tracking-[-0.03em] text-white mb-5 leading-tight"
-                style={{ fontSize: 'clamp(26px, 3vw, 38px)' }}
+        {/* Tab content panel — all tabs absolutely positioned, container is fixed height */}
+        <div className="relative h-[500px] sm:h-[520px] lg:h-[480px] xl:h-[460px]">
+          {TABS.map((t) => {
+            const isActive = activeTab === t.id;
+            return (
+              <motion.div
+                key={t.id}
+                initial={false}
+                animate={{ opacity: isActive ? 1 : 0 }}
+                transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start"
+                style={{ pointerEvents: isActive ? 'auto' : 'none' }}
+                aria-hidden={!isActive}
               >
-                {tab.heading}
-              </h3>
-              <p className="text-slate-400 text-base leading-relaxed mb-8">
-                {tab.description}
-              </p>
-              <ul className="space-y-3">
-                {tab.features.map(f => (
-                  <li key={f} className="flex items-center gap-3 text-slate-300 text-sm">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#6C47FF' }} />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                {/* Left: text content */}
+                <div className="pt-2">
+                  <h3
+                    className="font-black tracking-[-0.03em] text-white mb-5 leading-tight"
+                    style={{ fontSize: 'clamp(26px, 3vw, 38px)' }}
+                  >
+                    {t.heading}
+                  </h3>
+                  <p className="text-slate-400 text-base leading-relaxed mb-8">
+                    {t.description}
+                  </p>
+                  <ul className="space-y-3">
+                    {t.features.map(f => (
+                      <li key={f} className="flex items-center gap-3 text-slate-300 text-sm">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#6C47FF' }} />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-            {/* Right: visual */}
-            <div>
-              {tab.visual === 'terminal' && <KubeTerminalMini />}
-              {tab.visual === 'rca'      && <RCAPanel />}
-              {tab.visual === 'safefix'  && <SafeFixPanel />}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                {/* Right: visual */}
+                <div>
+                  {t.visual === 'terminal' && <KubeTerminalMini />}
+                  {t.visual === 'rca'      && <RCAPanel />}
+                  {t.visual === 'safefix'  && <SafeFixPanel />}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

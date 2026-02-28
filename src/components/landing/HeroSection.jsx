@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Shield, CheckCircle2, Zap } from 'lucide-react';
 import { useWaitlistModal } from './WaitlistModal';
 
@@ -524,19 +524,22 @@ function DashboardMockup({ live }) {
         </div>
       </div>
 
-      {/* Tab content */}
-      <AnimatePresence mode="wait">
-        <motion.div key={activeTab}
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}>
-          {activeTab === 0 && <OverviewPanel live={live} />}
-          {activeTab === 1 && <IncidentsPanel live={live} />}
-          {activeTab === 2 && <RCAPanel live={live} />}
-          {activeTab === 3 && <SafeFixPanel live={live} />}
-        </motion.div>
-      </AnimatePresence>
+      {/* Tab content — fixed height, all panels stacked, opacity crossfade */}
+      <div className="relative" style={{ height: '420px', overflow: 'hidden' }}>
+        {[OverviewPanel, IncidentsPanel, RCAPanel, SafeFixPanel].map((Panel, i) => (
+          <motion.div
+            key={i}
+            initial={false}
+            animate={{ opacity: activeTab === i ? 1 : 0 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute inset-0 overflow-y-auto"
+            style={{ pointerEvents: activeTab === i ? 'auto' : 'none' }}
+            aria-hidden={activeTab !== i}
+          >
+            <Panel live={live} />
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
