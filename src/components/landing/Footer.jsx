@@ -24,9 +24,8 @@ const LINKS = {
     { label: 'Status Page',    href: '#' },
   ],
   Legal: [
-    { label: 'Privacy Policy',   href: '#' },
+    { label: 'Privacy Policy',   href: '/privacy' },
     { label: 'Terms of Service', href: '#' },
-    { label: 'Cookie Policy',    href: '#' },
   ],
 };
 

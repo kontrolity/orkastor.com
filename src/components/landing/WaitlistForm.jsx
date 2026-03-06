@@ -127,6 +127,10 @@ export default function WaitlistForm({ size = 'lg', placeholder = 'your@company.
                 </motion.p>
               )}
             </AnimatePresence>
+            <p className="mt-2 text-xs" style={{ color: '#3D3460' }}>
+              By continuing you agree to our{' '}
+              <a href="/privacy" style={{ color: '#524770' }} onMouseEnter={e => (e.currentTarget.style.color = '#9B93C4')} onMouseLeave={e => (e.currentTarget.style.color = '#524770')}>Privacy Policy</a>.
+            </p>
           </motion.form>
         )}
 
@@ -260,6 +264,10 @@ export default function WaitlistForm({ size = 'lg', placeholder = 'your@company.
                 </motion.p>
               )}
             </AnimatePresence>
+            <p className="text-xs text-center" style={{ color: '#3D3460' }}>
+              We'll only use your details to contact you about Orkastor.{' '}
+              <a href="/privacy" style={{ color: '#524770' }} onMouseEnter={e => (e.currentTarget.style.color = '#9B93C4')} onMouseLeave={e => (e.currentTarget.style.color = '#524770')}>Privacy Policy</a>.
+            </p>
           </motion.form>
         )}
 
