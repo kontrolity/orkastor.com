@@ -257,21 +257,21 @@ export default function NavBar() {
               href="https://kubegraf.io"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-              style={{ color: 'rgba(6,182,212,0.85)' }}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
+              style={{ color: '#22d3ee' }}
               onMouseEnter={e => {
-                e.currentTarget.style.color = 'rgba(6,182,212,1)';
-                e.currentTarget.style.background = 'rgba(6,182,212,0.08)';
+                e.currentTarget.style.color = '#67e8f9';
+                e.currentTarget.style.background = 'rgba(34,211,238,0.1)';
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.color = 'rgba(6,182,212,0.85)';
+                e.currentTarget.style.color = '#22d3ee';
                 e.currentTarget.style.background = 'transparent';
               }}
             >
               KubēGraf
               <span
                 className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                style={{ background: 'rgba(6,182,212,0.15)', color: 'rgba(6,182,212,0.9)', letterSpacing: '0.04em' }}
+                style={{ background: 'rgba(34,211,238,0.2)', color: '#22d3ee', letterSpacing: '0.05em' }}
               >
                 NEW
               </span>
@@ -286,21 +286,23 @@ export default function NavBar() {
               href="#"
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
               style={{
-                color: 'rgba(6,182,212,0.9)',
-                border: '1.5px solid rgba(6,182,212,0.45)',
-                background: 'rgba(6,182,212,0.06)',
-                boxShadow: '0 2px 8px rgba(6,182,212,0.1)',
+                color: '#22d3ee',
+                border: '1.5px solid rgba(34,211,238,0.55)',
+                background: 'rgba(34,211,238,0.08)',
+                boxShadow: '0 2px 10px rgba(34,211,238,0.15)',
                 textDecoration: 'none',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.background = 'rgba(6,182,212,0.12)';
-                e.currentTarget.style.borderColor = 'rgba(6,182,212,0.75)';
-                e.currentTarget.style.boxShadow = '0 2px 14px rgba(6,182,212,0.22)';
+                e.currentTarget.style.color = '#67e8f9';
+                e.currentTarget.style.background = 'rgba(34,211,238,0.14)';
+                e.currentTarget.style.borderColor = 'rgba(34,211,238,0.85)';
+                e.currentTarget.style.boxShadow = '0 2px 16px rgba(34,211,238,0.28)';
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.background = 'rgba(6,182,212,0.06)';
-                e.currentTarget.style.borderColor = 'rgba(6,182,212,0.45)';
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(6,182,212,0.1)';
+                e.currentTarget.style.color = '#22d3ee';
+                e.currentTarget.style.background = 'rgba(34,211,238,0.08)';
+                e.currentTarget.style.borderColor = 'rgba(34,211,238,0.55)';
+                e.currentTarget.style.boxShadow = '0 2px 10px rgba(34,211,238,0.15)';
               }}
             >
               Sign In
@@ -368,14 +370,14 @@ export default function NavBar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all"
-              style={{ color: 'rgba(6,182,212,0.85)' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(6,182,212,0.06)'; }}
+              className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all"
+              style={{ color: '#22d3ee' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(34,211,238,0.08)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
             >
               <span className="flex items-center gap-2">
                 KubēGraf
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(6,182,212,0.15)', color: 'rgba(6,182,212,0.9)' }}>NEW</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(34,211,238,0.2)', color: '#22d3ee' }}>NEW</span>
               </span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
             </a>
@@ -387,9 +389,10 @@ export default function NavBar() {
                 onClick={() => setMenuOpen(false)}
                 className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold"
                 style={{
-                  color: 'rgba(6,182,212,0.9)',
-                  border: '1.5px solid rgba(6,182,212,0.4)',
-                  background: 'rgba(6,182,212,0.06)',
+                  color: '#22d3ee',
+                  border: '1.5px solid rgba(34,211,238,0.55)',
+                  background: 'rgba(34,211,238,0.08)',
+                  boxShadow: '0 2px 10px rgba(34,211,238,0.15)',
                   textDecoration: 'none',
                 }}
               >
