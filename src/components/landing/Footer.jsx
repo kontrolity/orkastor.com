@@ -61,24 +61,24 @@ export default function Footer() {
         <div
           className="mb-12 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
           style={{
-            background: 'linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(108,71,255,0.04) 100%)',
-            border: '1px solid rgba(6,182,212,0.15)',
+            background: 'linear-gradient(135deg, rgba(34,211,238,0.07) 0%, rgba(108,71,255,0.05) 100%)',
+            border: '1px solid rgba(34,211,238,0.25)',
           }}
         >
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'rgba(6,182,212,0.7)' }}>
+              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#22d3ee' }}>
                 Flagship Product
               </span>
               <span
                 className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                style={{ background: 'rgba(6,182,212,0.15)', color: 'rgba(6,182,212,0.9)' }}
+                style={{ background: 'rgba(34,211,238,0.2)', color: '#22d3ee' }}
               >
                 v1.0
               </span>
             </div>
             <p className="text-white font-semibold text-sm">KubēGraf — AI SRE Platform for Kubernetes</p>
-            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.5)' }}>
               Automated root cause analysis, incident remediation &amp; SafeFix™ — local-first, no data leaves your cluster.
             </p>
           </div>
@@ -88,18 +88,21 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap"
             style={{
-              color: 'rgba(6,182,212,0.9)',
-              border: '1.5px solid rgba(6,182,212,0.4)',
-              background: 'rgba(6,182,212,0.07)',
+              color: '#22d3ee',
+              border: '1.5px solid rgba(34,211,238,0.55)',
+              background: 'rgba(34,211,238,0.08)',
+              boxShadow: '0 2px 10px rgba(34,211,238,0.15)',
               textDecoration: 'none',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.background = 'rgba(6,182,212,0.14)';
-              e.currentTarget.style.borderColor = 'rgba(6,182,212,0.7)';
+              e.currentTarget.style.background = 'rgba(34,211,238,0.15)';
+              e.currentTarget.style.borderColor = 'rgba(34,211,238,0.85)';
+              e.currentTarget.style.boxShadow = '0 2px 16px rgba(34,211,238,0.28)';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.background = 'rgba(6,182,212,0.07)';
-              e.currentTarget.style.borderColor = 'rgba(6,182,212,0.4)';
+              e.currentTarget.style.background = 'rgba(34,211,238,0.08)';
+              e.currentTarget.style.borderColor = 'rgba(34,211,238,0.55)';
+              e.currentTarget.style.boxShadow = '0 2px 10px rgba(34,211,238,0.15)';
             }}
           >
             Visit kubegraf.io
