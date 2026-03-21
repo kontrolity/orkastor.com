@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Linkedin } from 'lucide-react';
+import { Github, Twitter, Linkedin, ArrowUpRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
@@ -11,10 +11,9 @@ const DiscordIcon = ({ className }) => (
 );
 
 const LINKS = {
-  Product: [
-    { label: 'Platform',     href: '/#platform' },
+  Platform: [
+    { label: 'Features',     href: '/#features' },
     { label: 'OrkaAI',       href: '/#platform' },
-    { label: 'KubēGraf',     href: 'https://kubegraf.io', external: true },
     { label: 'Integrations', href: '/#integrations' },
     { label: 'Pricing',      href: '/pricing' },
     { label: 'Changelog',    href: '/changelog' },
@@ -26,11 +25,11 @@ const LINKS = {
     { label: 'Contact', href: 'mailto:hello@orkastor.com' },
   ],
   Resources: [
-    { label: 'Documentation',      href: '/docs' },
-    { label: 'API Reference',      href: '/docs' },
-    { label: 'GitHub',             href: 'https://github.com/orkastor', external: true },
-    { label: 'Discord Community',  href: DISCORD_URL, external: true },
-    { label: 'Status Page',        href: '#' },
+    { label: 'Documentation',     href: '/docs' },
+    { label: 'API Reference',     href: '/docs' },
+    { label: 'GitHub',            href: 'https://github.com/orkastor', external: true },
+    { label: 'Discord Community', href: DISCORD_URL, external: true },
+    { label: 'Status Page',       href: '#' },
   ],
   Legal: [
     { label: 'Privacy Policy',   href: '/privacy' },
@@ -47,16 +46,68 @@ export default function Footer() {
         borderTop: '1px solid rgba(255,255,255,0.06)',
       }}
     >
-      {/* Subtle glow */}
+      {/* Dual-brand glow — violet (Orkastor) + cyan (KubeGraf) */}
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] pointer-events-none"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[220px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 80% at 50% 100%, rgba(108,71,255,0.05) 0%, transparent 70%)',
+            'radial-gradient(ellipse 60% 80% at 35% 100%, rgba(108,71,255,0.06) 0%, transparent 65%), radial-gradient(ellipse 60% 80% at 65% 100%, rgba(6,182,212,0.05) 0%, transparent 65%)',
         }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-16">
+
+        {/* ── KubeGraf flagship product callout ── */}
+        <div
+          className="mb-12 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          style={{
+            background: 'linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(108,71,255,0.04) 100%)',
+            border: '1px solid rgba(6,182,212,0.15)',
+          }}
+        >
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'rgba(6,182,212,0.7)' }}>
+                Flagship Product
+              </span>
+              <span
+                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                style={{ background: 'rgba(6,182,212,0.15)', color: 'rgba(6,182,212,0.9)' }}
+              >
+                v1.0
+              </span>
+            </div>
+            <p className="text-white font-semibold text-sm">KubēGraf — AI SRE Platform for Kubernetes</p>
+            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              Automated root cause analysis, incident remediation &amp; SafeFix™ — local-first, no data leaves your cluster.
+            </p>
+          </div>
+          <a
+            href="https://kubegraf.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap"
+            style={{
+              color: 'rgba(6,182,212,0.9)',
+              border: '1.5px solid rgba(6,182,212,0.4)',
+              background: 'rgba(6,182,212,0.07)',
+              textDecoration: 'none',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'rgba(6,182,212,0.14)';
+              e.currentTarget.style.borderColor = 'rgba(6,182,212,0.7)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'rgba(6,182,212,0.07)';
+              e.currentTarget.style.borderColor = 'rgba(6,182,212,0.4)';
+            }}
+          >
+            Visit kubegraf.io
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        {/* ── Main link grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 mb-14">
 
           {/* Brand col */}
@@ -70,10 +121,10 @@ export default function Footer() {
             {/* Social links */}
             <div className="flex items-center gap-3">
               {[
-                { Icon: Github,      href: 'https://github.com/orkastor',             label: 'GitHub',    discord: false },
-                { Icon: Twitter,     href: 'https://twitter.com/orkastor',             label: 'Twitter',   discord: false },
-                { Icon: Linkedin,    href: 'https://linkedin.com/company/orkastor',    label: 'LinkedIn',  discord: false },
-                { Icon: DiscordIcon, href: DISCORD_URL,                                label: 'Discord',   discord: true  },
+                { Icon: Github,      href: 'https://github.com/orkastor',           label: 'GitHub',   discord: false },
+                { Icon: Twitter,     href: 'https://twitter.com/orkastor',           label: 'Twitter',  discord: false },
+                { Icon: Linkedin,    href: 'https://linkedin.com/company/orkastor', label: 'LinkedIn', discord: false },
+                { Icon: DiscordIcon, href: DISCORD_URL,                              label: 'Discord',  discord: true  },
               ].map(({ Icon, href, label, discord }) => (
                 <a
                   key={label}
@@ -83,7 +134,7 @@ export default function Footer() {
                   aria-label={label}
                   className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200"
                   style={{
-                    color: discord ? '#fff' : '',
+                    color: discord ? '#fff' : 'rgba(255,255,255,0.35)',
                     background: discord ? '#5865F2' : 'rgba(255,255,255,0.02)',
                     border: discord ? 'none' : '1px solid rgba(255,255,255,0.07)',
                   }}
@@ -91,16 +142,16 @@ export default function Footer() {
                     if (discord) {
                       e.currentTarget.style.background = '#4752c4';
                     } else {
-                      e.currentTarget.style.color = '#6C47FF';
-                      e.currentTarget.style.borderColor = 'rgba(108,71,255,0.35)';
-                      e.currentTarget.style.background = 'rgba(108,71,255,0.08)';
+                      e.currentTarget.style.color = 'rgba(6,182,212,0.9)';
+                      e.currentTarget.style.borderColor = 'rgba(6,182,212,0.3)';
+                      e.currentTarget.style.background = 'rgba(6,182,212,0.08)';
                     }
                   }}
                   onMouseLeave={e => {
                     if (discord) {
                       e.currentTarget.style.background = '#5865F2';
                     } else {
-                      e.currentTarget.style.color = '';
+                      e.currentTarget.style.color = 'rgba(255,255,255,0.35)';
                       e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)';
                       e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
                     }
@@ -125,12 +176,13 @@ export default function Footer() {
                       href={link.href}
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
-                      className="text-sm transition-colors duration-150"
-                      style={{ color: '#524770' }}
-                      onMouseEnter={e => (e.currentTarget.style.color = '#9B93C4')}
-                      onMouseLeave={e => (e.currentTarget.style.color = '#524770')}
+                      className="text-sm transition-colors duration-150 flex items-center gap-1"
+                      style={{ color: 'rgba(255,255,255,0.3)' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
                     >
                       {link.label}
+                      {link.external && <ArrowUpRight className="w-3 h-3 opacity-50" />}
                     </a>
                   </li>
                 ))}
@@ -146,11 +198,11 @@ export default function Footer() {
         >
           <div className="flex items-center gap-3">
             <OrkastorLogo size={18} showWordmark={false} />
-            <p className="text-xs" style={{ color: '#3D3460' }}>
-              © 2025 Orkastor. All rights reserved.
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+              © 2026 Orkastor. All rights reserved.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs" style={{ color: '#3D3460' }}>
+          <div className="flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             All systems operational
           </div>

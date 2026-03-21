@@ -15,11 +15,10 @@ const DiscordIcon = ({ className }) => (
 /* ── Nav structure ───────────────────────────────────────────── */
 const NAV_ITEMS = [
   {
-    label: 'Product',
+    label: 'Platform',
     items: [
       { label: 'Features',      href: '/#features' },
       { label: 'OrkaAI',        href: '/#platform' },
-      { label: 'KubēGraf',      href: '/#kubegraf' },
       { label: 'Integrations',  href: '/#integrations' },
       { label: 'Pricing',       href: '/pricing' },
     ],
@@ -33,10 +32,8 @@ const NAV_ITEMS = [
       { label: 'Changelog',       href: '/changelog' },
     ],
   },
-  // Direct links (no dropdown)
-  { label: 'Pricing',    href: '/pricing' },
-  { label: 'KubēGraf',  href: 'https://kubegraf.io', external: true },
-  { label: 'About',     href: '/about' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'About',   href: '/about' },
 ];
 
 /* ── Desktop dropdown panel ──────────────────────────────────── */
@@ -209,8 +206,7 @@ export default function NavBar() {
   const [visible, setVisible]   = useState(true);
   const lastScrollY              = useRef(0);
   const { setOpen: openWaitlist } = useWaitlistModal();
-  const linkCls  = 'text-slate-400 hover:text-white hover:bg-white/[0.05]';
-  const signInCls = 'text-slate-400 hover:text-white';
+  const linkCls = 'text-slate-400 hover:text-white hover:bg-white/[0.05]';
 
   useEffect(() => {
     const onScroll = () => {
@@ -235,10 +231,11 @@ export default function NavBar() {
           : { top: 'var(--banner-height, 0px)', background: 'transparent', backdropFilter: 'none', borderBottom: '1px solid transparent' }
         }
       >
+        {/* Scroll progress gradient — cyan + violet matching both brand identities */}
         {scrolled && (
           <div
             className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.3) 30%, rgba(16,185,129,0.2) 70%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(6,182,212,0.4) 30%, rgba(108,71,255,0.3) 70%, transparent 100%)' }}
           />
         )}
 
@@ -254,13 +251,61 @@ export default function NavBar() {
             {NAV_ITEMS.map((item) => (
               <NavItem key={item.label} navItem={item} linkCls={linkCls} />
             ))}
+
+            {/* KubeGraf — flagship product link, visually distinct */}
+            <a
+              href="https://kubegraf.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+              style={{ color: 'rgba(6,182,212,0.85)' }}
+              onMouseEnter={e => {
+                e.currentTarget.style.color = 'rgba(6,182,212,1)';
+                e.currentTarget.style.background = 'rgba(6,182,212,0.08)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.color = 'rgba(6,182,212,0.85)';
+                e.currentTarget.style.background = 'transparent';
+              }}
+            >
+              KubēGraf
+              <span
+                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                style={{ background: 'rgba(6,182,212,0.15)', color: 'rgba(6,182,212,0.9)', letterSpacing: '0.04em' }}
+              >
+                NEW
+              </span>
+            </a>
           </nav>
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <a href="#" className={`text-sm transition-colors px-3 py-2 ${signInCls}`}>
+
+            {/* Sign In — cyan border, matching KubeGraf pattern */}
+            <a
+              href="#"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
+              style={{
+                color: 'rgba(6,182,212,0.9)',
+                border: '1.5px solid rgba(6,182,212,0.45)',
+                background: 'rgba(6,182,212,0.06)',
+                boxShadow: '0 2px 8px rgba(6,182,212,0.1)',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'rgba(6,182,212,0.12)';
+                e.currentTarget.style.borderColor = 'rgba(6,182,212,0.75)';
+                e.currentTarget.style.boxShadow = '0 2px 14px rgba(6,182,212,0.22)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'rgba(6,182,212,0.06)';
+                e.currentTarget.style.borderColor = 'rgba(6,182,212,0.45)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(6,182,212,0.1)';
+              }}
+            >
               Sign In
             </a>
+
             <a
               href={DISCORD_URL}
               target="_blank"
@@ -272,6 +317,7 @@ export default function NavBar() {
               <DiscordIcon className="w-4 h-4" />
               Discord
             </a>
+
             <button
               onClick={() => openWaitlist(true)}
               className="btn-clerk-primary inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm cursor-pointer"
@@ -315,7 +361,40 @@ export default function NavBar() {
                 onClose={() => setMenuOpen(false)}
               />
             ))}
+
+            {/* KubeGraf mobile link */}
+            <a
+              href="https://kubegraf.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all"
+              style={{ color: 'rgba(6,182,212,0.85)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(6,182,212,0.06)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+            >
+              <span className="flex items-center gap-2">
+                KubēGraf
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(6,182,212,0.15)', color: 'rgba(6,182,212,0.9)' }}>NEW</span>
+              </span>
+              <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+            </a>
+
             <div className="mt-2 pt-2 border-t border-white/[0.06] px-2 pb-1 space-y-2">
+              {/* Sign In mobile */}
+              <a
+                href="#"
+                onClick={() => setMenuOpen(false)}
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold"
+                style={{
+                  color: 'rgba(6,182,212,0.9)',
+                  border: '1.5px solid rgba(6,182,212,0.4)',
+                  background: 'rgba(6,182,212,0.06)',
+                  textDecoration: 'none',
+                }}
+              >
+                Sign In
+              </a>
               <a
                 href={DISCORD_URL}
                 target="_blank"
