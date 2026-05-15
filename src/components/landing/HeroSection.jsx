@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight, Shield, CheckCircle2, Zap } from 'lucide-react';
-import { useWaitlistModal } from './WaitlistModal';
+import { ChevronRight, CheckCircle2, Zap } from 'lucide-react';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -556,7 +555,6 @@ function DashboardMockup({ live }) {
 export default function HeroSection() {
   const live = useDashboardLive();
   const { resolved, mttr, secAgo } = live;
-  const { setOpen: openWaitlist } = useWaitlistModal();
   return (
     <section
       className="relative overflow-hidden"
@@ -606,7 +604,7 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
             className="font-black tracking-[-0.04em] mb-6"
             style={{
-              fontSize: 'clamp(44px, 7vw, 84px)',
+              fontSize: 'clamp(36px, 5.4vw, 68px)',
               lineHeight: 1.02,
               background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 45%, #A78BFA 68%, #6C47FF 85%, #38BDF8 100%)',
               WebkitBackgroundClip: 'text',
@@ -638,27 +636,12 @@ export default function HeroSection() {
             transition={{ duration: 0.65, delay: 0.22, ease: EASE }}
             className="flex flex-col sm:flex-row items-center gap-3 mb-10"
           >
-            <button
-              onClick={() => openWaitlist(true)}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.99] cursor-pointer"
-              style={{
-                background: 'linear-gradient(135deg, #6C47FF 0%, #4F2EE8 100%)',
-                boxShadow: '0 4px 24px rgba(108,71,255,0.4), 0 1px 0 rgba(255,255,255,0.12) inset',
-              }}
-            >
-              Get Early Access
-              <ArrowRight className="w-4 h-4" />
-            </button>
             <a
               href="https://kubegraf.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all"
-              style={{
-                color: '#CBD5E1',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
+              style={{ background: '#5865F2' }}
             >
               See KubēGraf ↗
             </a>
@@ -671,7 +654,7 @@ export default function HeroSection() {
               style={{ background: '#5865F2' }}
             >
               <DiscordIcon className="w-4 h-4" />
-              Join our Discord Community
+              Discord Community
             </a>
           </motion.div>
 
@@ -696,11 +679,6 @@ export default function HeroSection() {
             <span className="flex items-center gap-1 text-slate-500">
               <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
               Zero data exfiltration
-            </span>
-            <span className="text-slate-700 hidden sm:inline">·</span>
-            <span className="flex items-center gap-1 text-slate-500">
-              <Shield className="w-3 h-3 shrink-0" style={{ color: '#524770' }} />
-              SOC 2 ready
             </span>
           </motion.div>
         </div>
