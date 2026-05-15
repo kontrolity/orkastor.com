@@ -147,7 +147,7 @@ export default function KubeGrafSection() {
 
             <h2
               className="font-black tracking-[-0.03em] text-white mb-4 leading-[1.05]"
-              style={{ fontSize: 'clamp(32px,4.5vw,52px)' }}
+              style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}
             >
               KubēGraf —<br />
               <span className="text-gradient-brand">AI SRE for Kubernetes</span>

@@ -255,46 +255,6 @@ export default function NavBar() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3">
-
-            {/* Sign In — cyan border, matching KubeGraf pattern */}
-            <a
-              href="#"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
-              style={{
-                color: '#22d3ee',
-                border: '1.5px solid rgba(34,211,238,0.55)',
-                background: 'rgba(34,211,238,0.08)',
-                boxShadow: '0 2px 10px rgba(34,211,238,0.15)',
-                textDecoration: 'none',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = '#67e8f9';
-                e.currentTarget.style.background = 'rgba(34,211,238,0.14)';
-                e.currentTarget.style.borderColor = 'rgba(34,211,238,0.85)';
-                e.currentTarget.style.boxShadow = '0 2px 16px rgba(34,211,238,0.28)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = '#22d3ee';
-                e.currentTarget.style.background = 'rgba(34,211,238,0.08)';
-                e.currentTarget.style.borderColor = 'rgba(34,211,238,0.55)';
-                e.currentTarget.style.boxShadow = '0 2px 10px rgba(34,211,238,0.15)';
-              }}
-            >
-              Sign In
-            </a>
-
-            <a
-              href={DISCORD_URL}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Join Orkastor Discord Community"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
-              style={{ background: '#5865F2' }}
-            >
-              <DiscordIcon className="w-4 h-4" />
-              Discord
-            </a>
-
             <button
               onClick={() => openWaitlist(true)}
               className="btn-clerk-primary inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm cursor-pointer"
@@ -340,21 +300,6 @@ export default function NavBar() {
             ))}
 
             <div className="mt-2 pt-2 border-t border-white/[0.06] px-2 pb-1 space-y-2">
-              {/* Sign In mobile */}
-              <a
-                href="#"
-                onClick={() => setMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold"
-                style={{
-                  color: '#22d3ee',
-                  border: '1.5px solid rgba(34,211,238,0.55)',
-                  background: 'rgba(34,211,238,0.08)',
-                  boxShadow: '0 2px 10px rgba(34,211,238,0.15)',
-                  textDecoration: 'none',
-                }}
-              >
-                Sign In
-              </a>
               <a
                 href={DISCORD_URL}
                 target="_blank"

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { CheckCircle2, Terminal, Shield, Lock, Zap } from 'lucide-react';
+import { CheckCircle2, Terminal, Lock, Zap } from 'lucide-react';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -14,9 +14,8 @@ import WaitlistForm from './WaitlistForm';
 const EASE = [0.16, 1, 0.3, 1];
 
 const TRUST = [
-  { icon: Shield, label: 'SOC 2 Type II' },
-  { icon: Lock,   label: 'Zero Exfiltration' },
-  { icon: Zap,    label: '18s Mean Resolution' },
+  { icon: Lock, label: 'Zero Exfiltration' },
+  { icon: Zap,  label: '18s Mean Resolution' },
 ];
 
 export default function CTASection() {
@@ -55,7 +54,7 @@ export default function CTASection() {
         {/* Headline */}
         <motion.h2
           className="font-black tracking-[-0.04em] leading-[0.95] text-white mb-4"
-          style={{ fontSize: 'clamp(32px,5vw,56px)' }}
+          style={{ fontSize: 'clamp(26px,4vw,44px)' }}
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE }}

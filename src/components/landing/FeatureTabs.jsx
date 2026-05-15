@@ -307,7 +307,7 @@ export default function FeatureTabs() {
           </span>
           <h2
             className="font-black tracking-[-0.03em] text-white mb-4 leading-[1.05]"
-            style={{ fontSize: 'clamp(32px, 4.5vw, 52px)' }}
+            style={{ fontSize: 'clamp(26px, 3.6vw, 42px)' }}
           >
             Everything you need to{' '}
             <span className="text-gradient-brand">resolve faster</span>
@@ -368,7 +368,7 @@ export default function FeatureTabs() {
                 <div className="pt-2">
                   <h3
                     className="font-black tracking-[-0.03em] text-white mb-5 leading-tight"
-                    style={{ fontSize: 'clamp(26px, 3vw, 38px)' }}
+                    style={{ fontSize: 'clamp(22px, 2.4vw, 30px)' }}
                   >
                     {t.heading}
                   </h3>
