@@ -251,31 +251,6 @@ export default function NavBar() {
             {NAV_ITEMS.map((item) => (
               <NavItem key={item.label} navItem={item} linkCls={linkCls} />
             ))}
-
-            {/* KubeGraf — flagship product link, visually distinct */}
-            <a
-              href="https://kubegraf.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
-              style={{ color: '#22d3ee' }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = '#67e8f9';
-                e.currentTarget.style.background = 'rgba(34,211,238,0.1)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = '#22d3ee';
-                e.currentTarget.style.background = 'transparent';
-              }}
-            >
-              KubēGraf
-              <span
-                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                style={{ background: 'rgba(34,211,238,0.2)', color: '#22d3ee', letterSpacing: '0.05em' }}
-              >
-                NEW
-              </span>
-            </a>
           </nav>
 
           {/* Desktop CTAs */}
@@ -363,24 +338,6 @@ export default function NavBar() {
                 onClose={() => setMenuOpen(false)}
               />
             ))}
-
-            {/* KubeGraf mobile link */}
-            <a
-              href="https://kubegraf.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all"
-              style={{ color: '#22d3ee' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(34,211,238,0.08)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
-            >
-              <span className="flex items-center gap-2">
-                KubēGraf
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(34,211,238,0.2)', color: '#22d3ee' }}>NEW</span>
-              </span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
-            </a>
 
             <div className="mt-2 pt-2 border-t border-white/[0.06] px-2 pb-1 space-y-2">
               {/* Sign In mobile */}
