@@ -83,14 +83,21 @@ export default function IntegrationsSection() {
       className="relative py-16 overflow-hidden"
       style={{ backgroundColor: 'var(--void-base)' }}
     >
+      {/* Cyan ambient wash */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(56,189,248,0.10) 0%, transparent 60%)' }}
+        />
+      </div>
+
       {/* Left/right fade masks */}
       <div
         className="absolute inset-y-0 left-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to right, #131316, transparent)' }}
+        style={{ background: 'linear-gradient(to right, var(--void-base), transparent)' }}
       />
       <div
         className="absolute inset-y-0 right-0 w-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to left, #131316, transparent)' }}
+        style={{ background: 'linear-gradient(to left, var(--void-base), transparent)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">

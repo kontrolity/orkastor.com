@@ -83,14 +83,15 @@ export default function TestimonialSection() {
       className="relative py-24 md:py-32 overflow-hidden"
       style={{ backgroundColor: 'var(--void-base)' }}
     >
-      {/* Faint glow */}
-      <div
-        className="absolute top-1/4 right-0 w-[500px] h-[400px] pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 55% 50% at 90% 30%, rgba(108,71,255,0.06) 0%, transparent 70%)',
-        }}
-      />
+      {/* Warm rose ambient wash — emotional / human moment */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 right-0 w-[600px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 80% 20%, rgba(255,93,143,0.11) 0%, transparent 65%)' }}
+        />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 20% 80%, rgba(255,138,61,0.08) 0%, transparent 65%)' }}
+        />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
 

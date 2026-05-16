@@ -45,9 +45,9 @@ export default function Footer() {
         backgroundColor: 'var(--void-deep)',
       }}
     >
-      {/* Top spectral seam */}
+      {/* Top seam */}
       <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.25) 22%, rgba(123,77,255,0.40) 50%, rgba(56,189,248,0.30) 78%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 22%, rgba(255,255,255,0.32) 50%, rgba(125,211,252,0.22) 78%, transparent 100%)' }}
       />
 
       {/* Spectral floor wash */}
@@ -68,27 +68,25 @@ export default function Footer() {
         <div
           className="mb-12 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden"
           style={{
-            background:
-              'linear-gradient(135deg, rgba(255,138,61,0.06) 0%, rgba(123,77,255,0.08) 50%, rgba(56,189,248,0.06) 100%)',
+            background: 'rgba(255,255,255,0.03)',
             boxShadow:
-              'inset 0 0 0 1px rgba(123,77,255,0.30),' +
-              'inset 0 1px 0 rgba(255,255,255,0.08),' +
-              '0 4px 32px rgba(123,77,255,0.10)',
+              'inset 0 0 0 1px rgba(255,255,255,0.10),' +
+              'inset 0 1px 0 rgba(255,255,255,0.06)',
             backdropFilter: 'blur(10px)',
           }}
         >
-          {/* Top hairline — spectral */}
+          {/* Top hairline */}
           <div className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,138,61,0.6), rgba(123,77,255,0.7), rgba(56,189,248,0.6), transparent)' }}
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.45), rgba(125,211,252,0.35), transparent)' }}
           />
           <div className="relative">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-bold uppercase tracking-widest text-purple-label">
+              <span className="text-xs font-bold uppercase tracking-widest text-white/55">
                 Flagship Product
               </span>
               <span
-                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full text-white"
-                style={{ background: 'linear-gradient(135deg, #FF8A3D, #E14EFF 50%, #7B4DFF)' }}
+                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                style={{ background: '#FFFFFF', color: '#000' }}
               >
                 v1.0
               </span>

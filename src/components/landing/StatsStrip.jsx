@@ -71,10 +71,10 @@ export default function StatsStrip() {
       {/* Quiet spectral wash behind cards */}
       <div className="absolute inset-0 pointer-events-none bg-spectral-ambient opacity-60" />
 
-      {/* Top separator — spectral seam */}
+      {/* Top separator */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.25) 25%, rgba(123,77,255,0.30) 50%, rgba(56,189,248,0.25) 75%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 25%, rgba(255,255,255,0.26) 50%, rgba(125,211,252,0.18) 75%, transparent 100%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">

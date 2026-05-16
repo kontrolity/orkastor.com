@@ -43,7 +43,7 @@ export default function CTASection() {
 
       {/* Top horizon line */}
       <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.30) 25%, rgba(123,77,255,0.45) 50%, rgba(56,189,248,0.30) 75%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 25%, rgba(255,255,255,0.40) 50%, rgba(125,211,252,0.25) 75%, transparent 100%)' }}
       />
 
       {/* Dot grid masked */}
