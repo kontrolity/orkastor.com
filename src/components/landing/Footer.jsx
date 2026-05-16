@@ -114,7 +114,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 mb-14">
 
           {/* Brand col */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex flex-col items-center text-center md:items-start md:text-left">
             <OrkastorLogo size={30} showWordmark className="mb-5" />
             <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-[240px]">
               The AI DevOps &amp; Cloud Orchestration platform. Modular AI agents for
@@ -122,7 +122,7 @@ export default function Footer() {
             </p>
 
             {/* Social links */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center md:justify-start gap-3">
               {[
                 { Icon: Github,      href: 'https://github.com/orkastor',           label: 'GitHub',   discord: false },
                 { Icon: Twitter,     href: 'https://twitter.com/orkastor',           label: 'Twitter',  discord: false },
@@ -168,7 +168,7 @@ export default function Footer() {
 
           {/* Link columns */}
           {Object.entries(LINKS).map(([category, links]) => (
-            <div key={category} className="md:col-span-1">
+            <div key={category} className="md:col-span-1 text-center md:text-left">
               <h3 className="text-white text-xs font-semibold uppercase tracking-[0.12em] mb-4">
                 {category}
               </h3>
@@ -179,7 +179,7 @@ export default function Footer() {
                       href={link.href}
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
-                      className="text-sm transition-colors duration-150 flex items-center gap-1"
+                      className="text-sm transition-colors duration-150 inline-flex items-center gap-1"
                       style={{ color: 'rgba(255,255,255,0.3)' }}
                       onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
