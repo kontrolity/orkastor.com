@@ -14,14 +14,19 @@
                in the new spectral palette.
 ════════════════════════════════════════════════════════════════ */
 
-/* ─── Geist font ─────────────────────────────────────────────── */
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/geist/Geist-Variable.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
+/* ─── Typography ──────────────────────────────────────────────────
+   Primary stack:
+     - Cabinet Grotesk (Fontshare) → display headings (.h-display, h1, h2)
+       Wide, geometric grotesque with dramatic 700/800/900 weights.
+       Picked over Geist for stronger futuristic character on hero text.
+     - General Sans (Fontshare) → body, UI, paragraphs
+       Modern variable, slightly warmer than Inter/Geist, very readable.
+       Same foundry as Cabinet — they share design DNA.
+     - Geist Mono (local woff2) → code, terminal, monospace numerals
+       Retained — sharp, established, no reason to swap.
+   Cabinet + General Sans are loaded via <link> in index.html with
+   display=swap to avoid render-blocking. Local Geist Mono only for code.
+══════════════════════════════════════════════════════════════════ */
 @font-face {
   font-family: 'Geist Mono';
   src: url('/fonts/geist/GeistMono-Variable.woff2') format('woff2-variations');
@@ -179,14 +184,28 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Geist', system-ui, -apple-system, sans-serif;
+    font-family: 'General Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-synthesis-weight: none;
     font-optical-sizing: auto;
+    letter-spacing: -0.005em;
     background-color: var(--void-base);
     color: var(--ink-primary);
     @apply border-border outline-ring/50;
+  }
+
+  /* Display family takes over on h1/h2 by default for cohesion */
+  h1, h2 {
+    font-family: 'Cabinet Grotesk', 'General Sans', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  h3, h4, h5, h6 {
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.015em;
   }
 
   code, kbd, samp, pre {
@@ -986,12 +1005,18 @@ body::before {
 .tracking-tighter-2 { letter-spacing: -0.03em; }
 .tracking-tightest  { letter-spacing: -0.05em; }
 
-/* Display headline — spectral feel */
+/* Display headline — Cabinet Grotesk for that wide, futuristic, premium feel */
 .h-display {
-  font-family: 'Geist', system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.045em;
+  font-family: 'Cabinet Grotesk', 'General Sans', system-ui, sans-serif;
+  font-weight: 800;            /* Extrabold — dramatic at large sizes */
+  letter-spacing: -0.038em;
   line-height: 0.96;
+}
+.h-display-heavy {
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-weight: 900;            /* Black — for true hero moments */
+  letter-spacing: -0.042em;
+  line-height: 0.94;
 }
 
 /* ═══════════════════════════════════════════════════════════════
