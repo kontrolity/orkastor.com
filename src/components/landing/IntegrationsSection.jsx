@@ -81,7 +81,7 @@ export default function IntegrationsSection() {
       ref={sectionRef}
       id="integrations"
       className="relative py-16 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: 'var(--void-base)' }}
     >
       {/* Left/right fade masks */}
       <div

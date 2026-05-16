@@ -42,16 +42,23 @@ export default function Footer() {
     <footer
       className="relative overflow-hidden"
       style={{
-        backgroundColor: '#0A0A0E',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        backgroundColor: 'var(--void-deep)',
       }}
     >
-      {/* Dual-brand glow — violet (Orkastor) + cyan (KubeGraf) */}
+      {/* Top spectral seam */}
+      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.25) 22%, rgba(123,77,255,0.40) 50%, rgba(56,189,248,0.30) 78%, transparent 100%)' }}
+      />
+
+      {/* Spectral floor wash */}
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[220px] pointer-events-none"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1400px] h-[400px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 80% at 35% 100%, rgba(108,71,255,0.06) 0%, transparent 65%), radial-gradient(ellipse 60% 80% at 65% 100%, rgba(6,182,212,0.05) 0%, transparent 65%)',
+            'radial-gradient(ellipse 45% 90% at 25% 100%, rgba(255,138,61,0.10) 0%, transparent 65%),' +
+            'radial-gradient(ellipse 40% 90% at 50% 100%, rgba(123,77,255,0.14) 0%, transparent 65%),' +
+            'radial-gradient(ellipse 45% 90% at 75% 100%, rgba(56,189,248,0.10) 0%, transparent 65%)',
+          filter: 'blur(20px)',
         }}
       />
 
@@ -59,20 +66,29 @@ export default function Footer() {
 
         {/* ── KubeGraf flagship product callout ── */}
         <div
-          className="mb-12 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          className="mb-12 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden"
           style={{
-            background: 'linear-gradient(135deg, rgba(34,211,238,0.07) 0%, rgba(108,71,255,0.05) 100%)',
-            border: '1px solid rgba(34,211,238,0.25)',
+            background:
+              'linear-gradient(135deg, rgba(255,138,61,0.06) 0%, rgba(123,77,255,0.08) 50%, rgba(56,189,248,0.06) 100%)',
+            boxShadow:
+              'inset 0 0 0 1px rgba(123,77,255,0.30),' +
+              'inset 0 1px 0 rgba(255,255,255,0.08),' +
+              '0 4px 32px rgba(123,77,255,0.10)',
+            backdropFilter: 'blur(10px)',
           }}
         >
-          <div>
+          {/* Top hairline — spectral */}
+          <div className="absolute top-0 left-0 right-0 h-px"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,138,61,0.6), rgba(123,77,255,0.7), rgba(56,189,248,0.6), transparent)' }}
+          />
+          <div className="relative">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#22d3ee' }}>
+              <span className="text-xs font-bold uppercase tracking-widest text-purple-label">
                 Flagship Product
               </span>
               <span
-                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                style={{ background: 'rgba(34,211,238,0.2)', color: '#22d3ee' }}
+                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full text-white"
+                style={{ background: 'linear-gradient(135deg, #FF8A3D, #E14EFF 50%, #7B4DFF)' }}
               >
                 v1.0
               </span>
@@ -86,27 +102,10 @@ export default function Footer() {
             href="https://kubegraf.io"
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap"
-            style={{
-              color: '#22d3ee',
-              border: '1.5px solid rgba(34,211,238,0.55)',
-              background: 'rgba(34,211,238,0.08)',
-              boxShadow: '0 2px 10px rgba(34,211,238,0.15)',
-              textDecoration: 'none',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'rgba(34,211,238,0.15)';
-              e.currentTarget.style.borderColor = 'rgba(34,211,238,0.85)';
-              e.currentTarget.style.boxShadow = '0 2px 16px rgba(34,211,238,0.28)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'rgba(34,211,238,0.08)';
-              e.currentTarget.style.borderColor = 'rgba(34,211,238,0.55)';
-              e.currentTarget.style.boxShadow = '0 2px 10px rgba(34,211,238,0.15)';
-            }}
+            className="btn-clerk-primary shrink-0 group"
           >
             Visit kubegraf.io
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
 

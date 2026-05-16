@@ -276,7 +276,7 @@ export default function FeatureTabs() {
       ref={sectionRef}
       id="features"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: 'var(--void-base)' }}
     >
       {/* Background top glow */}
       <div

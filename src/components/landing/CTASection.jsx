@@ -27,22 +27,30 @@ export default function CTASection() {
       ref={sectionRef}
       id="cta"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: 'var(--void-base)' }}
     >
-      {/* Radial glow */}
+      {/* Spectral wash — warm above, cool toward base */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[700px] pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 50% -5%, rgba(108,71,255,0.12) 0%, rgba(14,165,233,0.04) 45%, transparent 65%)',
+            'radial-gradient(ellipse 40% 60% at 30% 0%, rgba(255,138,61,0.16) 0%, transparent 60%),' +
+            'radial-gradient(ellipse 40% 60% at 70% 0%, rgba(123,77,255,0.18) 0%, transparent 60%),' +
+            'radial-gradient(ellipse 60% 70% at 50% 35%, rgba(56,189,248,0.10) 0%, transparent 70%)',
+          filter: 'blur(20px)',
         }}
       />
 
-      {/* Grid */}
+      {/* Top horizon line */}
+      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.30) 25%, rgba(123,77,255,0.45) 50%, rgba(56,189,248,0.30) 75%, transparent 100%)' }}
+      />
+
+      {/* Dot grid masked */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(rgba(108,71,255,0.07) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
           maskImage: 'radial-gradient(ellipse 60% 70% at 50% 0%, black 0%, transparent 80%)',
           WebkitMaskImage: 'radial-gradient(ellipse 60% 70% at 50% 0%, black 0%, transparent 80%)',
@@ -53,13 +61,14 @@ export default function CTASection() {
 
         {/* Headline */}
         <motion.h2
-          className="font-black tracking-[-0.04em] leading-[0.95] text-white mb-4"
-          style={{ fontSize: 'clamp(26px,4vw,44px)' }}
+          className="h-display mb-4"
+          style={{ fontSize: 'clamp(28px,4.4vw,52px)' }}
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
+          transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
         >
-          Start with KubēGraf Free
+          <span className="text-gradient-hero">Start with </span>
+          <span className="text-spectral">KubēGraf Free</span>
         </motion.h2>
 
         {/* Subheadline */}
@@ -88,8 +97,8 @@ export default function CTASection() {
               'No credit card',
               'Runs inside your cluster',
             ].map(p => (
-              <span key={p} className="flex items-center gap-1.5 text-slate-600 text-xs">
-                <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#6C47FF' }} />
+              <span key={p} className="flex items-center gap-1.5 text-slate-500 text-xs">
+                <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#FF8A3D' }} />
                 {p}
               </span>
             ))}
@@ -155,9 +164,9 @@ export default function CTASection() {
             >
               <Terminal className="w-4 h-4 text-slate-600 shrink-0" />
               <span className="text-slate-500">$</span>
-              <span style={{ color: '#0EA5E9' }}>brew install orkastor</span>
+              <span style={{ color: '#2DD4BF' }}>brew install orkastor</span>
               <span className="text-slate-700">&&</span>
-              <span style={{ color: '#6C47FF' }}>orkastor init</span>
+              <span style={{ color: '#FF8A3D' }}>orkastor init</span>
             </div>
           </div>
         </motion.div>
