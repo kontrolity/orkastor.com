@@ -93,14 +93,15 @@ export default function ModularPlatformSection() {
       className="relative py-24 md:py-28 overflow-hidden"
       style={{ backgroundColor: 'var(--void-base)' }}
     >
-      {/* Top glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[240px] pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.08) 0%, rgba(14,165,233,0.03) 40%, transparent 70%)',
-        }}
-      />
+      {/* Teal/cyan ambient wash — system / architecture moment */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-0 w-[700px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 25% 25%, rgba(45,212,191,0.11) 0%, transparent 65%)' }}
+        />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 80% 80%, rgba(56,189,248,0.09) 0%, transparent 65%)' }}
+        />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
 

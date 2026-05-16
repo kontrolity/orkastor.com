@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Zap, ArrowUpRight, Sparkles } from 'lucide-react';
-import SpectralVortex from './SpectralVortex';
+import WarpStarfield from './WarpStarfield';
 import GrainOverlay from './GrainOverlay';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
@@ -205,33 +205,38 @@ function useDashboardLive() {
 function VortexHeroBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {/* The vortex fills the entire hero */}
+      {/* Hyperspace starfield — the hero atmosphere */}
       <div className="absolute inset-0">
-        <SpectralVortex />
+        <WarpStarfield intensity={0.95} speed={18} />
       </div>
 
-      {/* Soft vignette — biased toward the text area for readability */}
+      {/* Readability wash over the text area (left half on desktop, center on mobile) */}
       <div className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 70% 70% at 20% 50%, rgba(6,6,10,0.65) 0%, rgba(6,6,10,0.30) 35%, transparent 65%)',
+            'radial-gradient(ellipse 60% 75% at 18% 55%, rgba(6,6,10,0.55) 0%, rgba(6,6,10,0.25) 45%, transparent 70%)',
         }}
+      />
+
+      {/* Slight overall darken — keeps the streaks from washing out the page */}
+      <div className="absolute inset-0"
+        style={{ background: 'rgba(6,6,10,0.18)' }}
       />
 
       {/* Edge fade — keep page edges grounded in void */}
       <div className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(6,6,10,0.55) 100%)',
+            'radial-gradient(ellipse 110% 110% at 50% 50%, transparent 60%, rgba(6,6,10,0.55) 100%)',
         }}
       />
 
       {/* Grain — cinematic finish */}
-      <GrainOverlay opacity={0.12} blendMode="overlay" />
+      <GrainOverlay opacity={0.10} blendMode="overlay" />
 
-      {/* Bottom horizon line — spectral seam */}
+      {/* Bottom horizon line */}
       <div className="absolute bottom-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.4) 25%, rgba(123,77,255,0.5) 50%, rgba(56,189,248,0.4) 75%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.30) 25%, rgba(255,255,255,0.45) 50%, rgba(125,211,252,0.30) 75%, transparent 100%)' }}
       />
     </div>
   );

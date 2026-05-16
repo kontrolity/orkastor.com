@@ -49,14 +49,15 @@ export default function FeaturesGrid() {
       className="relative py-24 md:py-32 overflow-hidden"
       style={{ backgroundColor: 'var(--void-base)' }}
     >
-      {/* Top purple-sky glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[220px] pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.09) 0%, rgba(14,165,233,0.04) 50%, transparent 70%)',
-        }}
-      />
+      {/* Violet → magenta ambient wash */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-0 w-[700px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 20% 20%, rgba(123,77,255,0.14) 0%, transparent 65%)' }}
+        />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 85% 85%, rgba(225,78,255,0.10) 0%, transparent 65%)' }}
+        />
+      </div>
 
       {/* Subtle grid overlay */}
       <div

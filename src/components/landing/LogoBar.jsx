@@ -89,11 +89,13 @@ export default function LogoBar() {
         borderBottom: '1px solid rgba(255,255,255,0.05)',
       }}
     >
-      {/* Subtle center glow */}
+      {/* Cool ambient wash — intro between hero and stats */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 100% at 50% 50%, rgba(108,71,255,0.04) 0%, transparent 70%)',
+          background:
+            'radial-gradient(ellipse 50% 100% at 30% 50%, rgba(56,189,248,0.10) 0%, transparent 60%),' +
+            'radial-gradient(ellipse 50% 100% at 70% 50%, rgba(125,211,252,0.08) 0%, transparent 60%)',
         }}
       />
 

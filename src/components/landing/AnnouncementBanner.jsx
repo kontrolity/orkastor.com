@@ -34,17 +34,15 @@ export default function AnnouncementBanner() {
           className="fixed left-0 right-0 z-[60] h-12 flex items-center overflow-hidden"
           style={{
             top: 0,
-            background:
-              'linear-gradient(90deg, rgba(255,138,61,0.08) 0%, rgba(225,78,255,0.08) 30%, rgba(123,77,255,0.08) 55%, rgba(56,189,248,0.08) 80%, rgba(45,212,191,0.06) 100%),' +
-              'rgba(8,8,12,0.92)',
+            background: 'rgba(8,8,12,0.92)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}
         >
-          {/* Spectral seam at bottom of banner */}
+          {/* Bottom seam */}
           <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.4) 20%, rgba(123,77,255,0.5) 50%, rgba(56,189,248,0.4) 80%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.30) 20%, rgba(255,255,255,0.45) 50%, rgba(125,211,252,0.30) 80%, transparent 100%)' }}
           />
           <div className="flex items-center justify-between w-full px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
             <a
@@ -54,10 +52,10 @@ export default function AnnouncementBanner() {
               className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
             >
               <span
-                className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white shrink-0"
+                className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0"
                 style={{
-                  background: 'linear-gradient(135deg, #FF8A3D, #E14EFF 50%, #7B4DFF)',
-                  boxShadow: '0 0 12px rgba(225,78,255,0.45)',
+                  background: '#FFFFFF',
+                  color: '#000',
                 }}
               >
                 New

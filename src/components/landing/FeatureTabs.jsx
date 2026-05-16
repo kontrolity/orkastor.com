@@ -278,13 +278,15 @@ export default function FeatureTabs() {
       className="relative py-24 md:py-32 overflow-hidden"
       style={{ backgroundColor: 'var(--void-base)' }}
     >
-      {/* Background top glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(108,71,255,0.08) 0%, transparent 70%)',
-        }}
-      />
+      {/* Warm amber/rose wash */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-1/4 w-[700px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 30% 10%, rgba(255,138,61,0.13) 0%, transparent 65%)' }}
+        />
+        <div className="absolute top-1/3 right-0 w-[600px] h-[500px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 80% 50%, rgba(255,93,143,0.10) 0%, transparent 65%)' }}
+        />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
 

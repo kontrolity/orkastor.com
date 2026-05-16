@@ -231,11 +231,11 @@ export default function NavBar() {
           : { top: 'var(--banner-height, 0px)', background: 'transparent', backdropFilter: 'none', borderBottom: '1px solid transparent' }
         }
       >
-        {/* Spectral seam — appears on scroll */}
+        {/* Seam — appears on scroll */}
         {scrolled && (
           <div
             className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.35) 22%, rgba(225,78,255,0.45) 45%, rgba(123,77,255,0.45) 60%, rgba(56,189,248,0.40) 80%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 22%, rgba(255,255,255,0.40) 45%, rgba(255,255,255,0.40) 60%, rgba(125,211,252,0.28) 80%, transparent 100%)' }}
           />
         )}
 

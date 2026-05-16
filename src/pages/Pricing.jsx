@@ -173,7 +173,7 @@ function PricingHero({ annual, setAnnual }) {
           }}
         />
         <div className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,138,61,0.30) 25%, rgba(123,77,255,0.45) 50%, rgba(56,189,248,0.30) 75%, transparent)' }}
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.22) 25%, rgba(255,255,255,0.40) 50%, rgba(125,211,252,0.25) 75%, transparent)' }}
         />
         <GrainOverlay opacity={0.10} blendMode="overlay" />
       </div>
@@ -233,15 +233,15 @@ function PricingHero({ annual, setAnnual }) {
                 key={opt.id}
                 onClick={() => setAnnual(opt.id === 'annual')}
                 className="relative px-5 py-2 rounded-full text-sm font-medium transition-colors"
-                style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.55)' }}
+                style={{ color: isActive ? '#000' : 'rgba(255,255,255,0.55)' }}
               >
                 {isActive && (
                   <motion.span
                     layoutId="billing-toggle-bg"
                     className="absolute inset-0 rounded-full"
                     style={{
-                      background: 'linear-gradient(135deg, #FF8A3D, #E14EFF 50%, #7B4DFF)',
-                      boxShadow: '0 0 24px rgba(123,77,255,0.45)',
+                      background: '#FFFFFF',
+                      boxShadow: '0 4px 14px rgba(0,0,0,0.30), 0 0 24px rgba(255,255,255,0.18)',
                     }}
                     transition={{ duration: 0.4, ease: EASE }}
                   />
@@ -249,7 +249,7 @@ function PricingHero({ annual, setAnnual }) {
                 <span className="relative">
                   {opt.label}
                   {opt.save && (
-                    <span className={`ml-1.5 text-xs font-semibold ${isActive ? 'text-white/85' : 'text-teal-300'}`}>
+                    <span className={`ml-1.5 text-xs font-semibold ${isActive ? 'text-black/65' : 'text-sky-300'}`}>
                       {opt.save}
                     </span>
                   )}
@@ -332,10 +332,11 @@ function PlanCard({ plan, annual, index, inView }) {
             </div>
             {plan.badge && (
               <span
-                className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full text-white"
+                className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full"
                 style={{
-                  background: 'linear-gradient(135deg, #FF8A3D, #E14EFF 50%, #7B4DFF)',
-                  boxShadow: '0 0 16px rgba(225,78,255,0.45)',
+                  background: '#FFFFFF',
+                  color: '#000',
+                  boxShadow: '0 0 0 1px rgba(0,0,0,0.05) inset, 0 6px 20px rgba(255,255,255,0.18)',
                 }}
               >
                 {plan.badge}
@@ -405,8 +406,21 @@ function PlansGrid({ annual }) {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="relative py-8 sm:py-12">
-      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+    <section ref={ref} className="relative py-8 sm:py-12 overflow-hidden">
+      {/* Per-plan tinted washes — teal / violet / cyan to match plan accents */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-0 w-1/3 h-full"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 30% 40%, rgba(45,212,191,0.08) 0%, transparent 65%)' }}
+        />
+        <div className="absolute top-0 left-1/3 w-1/3 h-full"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(123,77,255,0.14) 0%, transparent 65%)' }}
+        />
+        <div className="absolute top-0 right-0 w-1/3 h-full"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 70% 40%, rgba(56,189,248,0.08) 0%, transparent 65%)' }}
+        />
+      </div>
+
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {PLANS.map((plan, i) => (
             <PlanCard key={plan.id} plan={plan} annual={annual} index={i} inView={inView} />
@@ -594,8 +608,18 @@ function PricingFAQ() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="relative py-20 sm:py-28">
-      <div className="max-w-3xl mx-auto px-5 sm:px-6">
+    <section ref={ref} className="relative py-20 sm:py-28 overflow-hidden">
+      {/* Cool ambient wash */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[400px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 30% 20%, rgba(56,189,248,0.08) 0%, transparent 65%)' }}
+        />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[400px]"
+          style={{ background: 'radial-gradient(ellipse 55% 60% at 80% 80%, rgba(123,77,255,0.08) 0%, transparent 65%)' }}
+        />
+      </div>
+
+      <div className="relative max-w-3xl mx-auto px-5 sm:px-6">
         <motion.div
           className="text-center mb-10"
           initial={{ opacity: 0, y: 18 }}
