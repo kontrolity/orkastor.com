@@ -70,6 +70,9 @@ const itemVar = {
 
 const TOTAL_ELAPSED = STEPS[STEPS.length - 1].elapsed; // 18s — used to scale the timeline
 
+const TIMELINE_RAIL_TOP_OFFSET_PX = 36;
+const TIMELINE_RAIL_BOTTOM_OFFSET_PX = 56;
+
 export default function SafeFixWorkflow() {
   const [activeStep, setActiveStep] = useState(1);
   const sectionRef = useRef(null);
@@ -88,6 +91,9 @@ export default function SafeFixWorkflow() {
   const elapsedPct = (activeData.elapsed / TOTAL_ELAPSED) * 100;
   // Vertical fill stops at the centre of the active step's icon row.
   const stepFillPct = ((activeStep - 1) / (STEPS.length - 1)) * 100;
+  const stepFillHeight = stepFillPct === 0
+    ? '0px'
+    : `max(0px, calc(${stepFillPct}% - ${(stepFillPct / 100) * (TIMELINE_RAIL_TOP_OFFSET_PX + TIMELINE_RAIL_BOTTOM_OFFSET_PX)}px))`;
 
   return (
     <section
@@ -202,18 +208,23 @@ export default function SafeFixWorkflow() {
             <div className="relative space-y-3">
               {/* Background rail — runs through the centre of every icon */}
               <div
-                className="absolute left-[33px] top-9 bottom-9 w-px"
-                style={{ background: 'rgba(255,255,255,0.06)' }}
+                className="absolute left-[33px] z-0 w-px"
+                style={{
+                  top: `${TIMELINE_RAIL_TOP_OFFSET_PX}px`,
+                  bottom: `${TIMELINE_RAIL_BOTTOM_OFFSET_PX}px`,
+                  background: 'rgba(255,255,255,0.06)',
+                }}
                 aria-hidden="true"
               />
               {/* Foreground gradient fill — height tracks the active step */}
               <motion.div
-                className="absolute left-[33px] top-9 w-px"
+                className="absolute left-[33px] z-0 w-px"
                 style={{
+                  top: `${TIMELINE_RAIL_TOP_OFFSET_PX}px`,
                   background: `linear-gradient(180deg, ${STEPS[0].accent} 0%, ${STEPS[1].accent} 33%, ${STEPS[2].accent} 66%, ${STEPS[3].accent} 100%)`,
                   boxShadow: `0 0 8px ${activeData.accent}80`,
                 }}
-                animate={{ height: `calc(${stepFillPct}% + 0px)` }}
+                animate={{ height: stepFillHeight }}
                 transition={{ duration: 0.8, ease: EASE }}
                 aria-hidden="true"
               />
@@ -222,6 +233,7 @@ export default function SafeFixWorkflow() {
                 const Icon = step.icon;
                 const isActive = activeStep === step.id;
                 const isPast = activeStep > step.id;
+                const iconBackdrop = isActive ? 'rgba(28,28,34,0.98)' : 'rgba(24,24,27,0.98)';
                 return (
                   <motion.div
                     key={step.id}
@@ -249,7 +261,12 @@ export default function SafeFixWorkflow() {
 
                     <div className="relative flex items-start gap-4 pl-1">
                       {/* Icon + pulsing sonar rings on the active step */}
-                      <div className="relative shrink-0 mt-0.5">
+                      <div className="relative z-10 shrink-0 mt-0.5">
+                        <div
+                          className="absolute inset-[-6px] rounded-2xl pointer-events-none"
+                          style={{ background: iconBackdrop }}
+                          aria-hidden="true"
+                        />
                         {isActive && (
                           <>
                             <motion.span

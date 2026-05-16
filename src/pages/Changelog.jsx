@@ -65,16 +65,16 @@ export default function Changelog() {
     <div className="min-h-screen" style={{ backgroundColor: '#050505' }}>
       <NavBar />
 
-      <main className="relative pt-32 pb-24 px-5 sm:px-6 overflow-hidden">
+      <main className="relative pt-32 pb-24 px-5 sm:px-6 lg:px-10 overflow-hidden">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] pointer-events-none"
           style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 70%)' }}
         />
 
-        <div className="relative z-10 max-w-2xl mx-auto">
+        <div className="relative z-10 max-w-7xl mx-auto">
 
           {/* Header */}
-          <div className="mb-14">
+          <div className="mb-14 max-w-3xl">
             <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-5">
               Changelog
             </span>
@@ -87,9 +87,12 @@ export default function Changelog() {
           </div>
 
           {/* Entries */}
-          <div className="space-y-12">
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-10">
             {ENTRIES.map((entry) => (
-              <div key={entry.version} className="relative pl-6 border-l border-white/[0.06]">
+              <article
+                key={entry.version}
+                className="relative h-full border-l border-white/[0.06] rounded-3xl bg-white/[0.02] px-6 py-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]"
+              >
                 {/* Timeline dot */}
                 <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full border-2 border-slate-700 bg-[#050505]" />
 
@@ -118,7 +121,7 @@ export default function Changelog() {
                     );
                   })}
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>

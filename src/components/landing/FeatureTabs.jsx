@@ -167,7 +167,7 @@ function SafeFixPanel() {
             <div className="pl-8 line-through opacity-40">memory: 512Mi</div>
             <div className="pl-8 text-emerald-400">memory: 1Gi</div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <button
               className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold"
               style={{
@@ -351,7 +351,7 @@ export default function FeatureTabs() {
         </div>
 
         {/* Tab content panel — all tabs absolutely positioned, container is fixed height */}
-        <div className="relative h-[500px] sm:h-[520px] lg:h-[480px] xl:h-[460px]">
+        <div className="relative min-h-[1px] sm:h-[520px] lg:h-[480px] xl:h-[460px]">
           {TABS.map((t) => {
             const isActive = activeTab === t.id;
             return (
@@ -360,7 +360,9 @@ export default function FeatureTabs() {
                 initial={false}
                 animate={{ opacity: isActive ? 1 : 0 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start"
+                className={isActive
+                  ? "relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start sm:absolute sm:inset-0"
+                  : "hidden sm:absolute sm:inset-0 sm:grid sm:grid-cols-1 lg:grid-cols-2 sm:gap-10 lg:gap-16 sm:items-start"}
                 style={{ pointerEvents: isActive ? 'auto' : 'none' }}
                 aria-hidden={!isActive}
               >

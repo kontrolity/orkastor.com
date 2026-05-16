@@ -419,9 +419,9 @@ function SafeFixPanel({ live }) {
     <div className="p-4" style={{ minHeight: '290px' }}>
       <div className="p-3 rounded-xl mb-3"
         style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.2)' }}>
-        <div className="flex items-center justify-between mb-2.5">
+        <div className="flex flex-col gap-2 mb-2.5 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-sm font-bold" style={{ color: '#A78BFA' }}>Auto-Remediation</span>
-          <div className="flex gap-1.5">
+          <div className="flex flex-wrap gap-1.5">
             <span className="text-[8px] px-1.5 py-0.5 rounded font-mono"
               style={{ background: rca.risk === 'Low' ? 'rgba(52,211,153,0.1)' : 'rgba(245,158,11,0.1)', border: `1px solid ${rca.risk === 'Low' ? 'rgba(52,211,153,0.2)' : 'rgba(245,158,11,0.2)'}`, color: rca.risk === 'Low' ? '#34d399' : '#fbbf24' }}>
               {rca.risk} risk
@@ -442,7 +442,7 @@ function SafeFixPanel({ live }) {
             </div>
           ))}
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-bold"
             style={{ background: 'linear-gradient(135deg, rgba(108,71,255,0.5), rgba(79,46,232,0.5))', color: '#C4B5FD', border: '1px solid rgba(108,71,255,0.4)' }}>
             <CheckCircle2 className="w-3 h-3" /> Approve
@@ -542,17 +542,19 @@ function DashboardMockup({ live }) {
       </div>
 
       {/* Tab bar */}
-      <div className="flex items-center gap-0.5 px-4 pt-2 pb-0 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-        {TABS.map((tab, i) => (
-          <button key={tab} onClick={() => handleTabClick(i)}
-            className="px-4 py-2 text-[11px] font-medium rounded-t-lg cursor-pointer transition-all"
-            style={i === activeTab
-              ? { background: 'rgba(108,71,255,0.12)', borderBottom: '2px solid #6C47FF', color: '#A78BFA', marginBottom: '-1px' }
-              : { color: '#524770', borderBottom: '2px solid transparent', marginBottom: '-1px' }}>
-            {tab}
-          </button>
-        ))}
-        <div className="ml-auto flex items-center gap-2 mb-1">
+      <div className="flex items-center gap-2 px-3 sm:px-4 pt-2 pb-0 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+        <div className="flex items-center gap-0.5 min-w-0 flex-1 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {TABS.map((tab, i) => (
+            <button key={tab} onClick={() => handleTabClick(i)}
+              className="shrink-0 px-2.5 sm:px-4 py-2 text-[10px] sm:text-[11px] font-medium rounded-t-lg cursor-pointer transition-all"
+              style={i === activeTab
+                ? { background: 'rgba(108,71,255,0.12)', borderBottom: '2px solid #6C47FF', color: '#A78BFA', marginBottom: '-1px' }
+                : { color: '#524770', borderBottom: '2px solid transparent', marginBottom: '-1px' }}>
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="shrink-0 flex items-center justify-end gap-2 mb-1">
           <div className="text-[10px] font-mono px-2 py-1 rounded transition-all"
             style={{ background: isResolving ? 'rgba(52,211,153,0.1)' : 'rgba(239,68,68,0.1)', color: isResolving ? '#34d399' : '#f87171', border: `1px solid ${isResolving ? 'rgba(52,211,153,0.2)' : 'rgba(239,68,68,0.2)'}` }}>
             {isResolving ? '✓ Fixing' : `${incidents.length} Active`}
