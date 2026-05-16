@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowUpRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
-import { useWaitlistModal } from './WaitlistModal';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -205,7 +204,6 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible]   = useState(true);
   const lastScrollY              = useRef(0);
-  const { setOpen: openWaitlist } = useWaitlistModal();
   const linkCls = 'text-slate-400 hover:text-white hover:bg-white/[0.05]';
 
   useEffect(() => {
@@ -252,17 +250,6 @@ export default function NavBar() {
               <NavItem key={item.label} navItem={item} linkCls={linkCls} />
             ))}
           </nav>
-
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={() => openWaitlist(true)}
-              className="btn-clerk-primary inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm cursor-pointer"
-            >
-              Get Early Access
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
 
           {/* Mobile toggle */}
           <button
@@ -311,12 +298,6 @@ export default function NavBar() {
                 <DiscordIcon className="w-4 h-4" />
                 Join Discord Community
               </a>
-              <button
-                onClick={() => { setMenuOpen(false); openWaitlist(true); }}
-                className="btn-clerk-primary w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold cursor-pointer"
-              >
-                Get Early Access
-              </button>
             </div>
           </motion.div>
         )}

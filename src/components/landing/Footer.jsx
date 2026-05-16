@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Linkedin, ArrowUpRight } from 'lucide-react';
+import { Twitter, Linkedin, ArrowUpRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
@@ -27,7 +27,6 @@ const LINKS = {
   Resources: [
     { label: 'Documentation',     href: '/docs' },
     { label: 'API Reference',     href: '/docs' },
-    { label: 'GitHub',            href: 'https://github.com/orkastor', external: true },
     { label: 'Discord Community', href: DISCORD_URL, external: true },
     { label: 'Status Page',       href: '#' },
   ],
@@ -121,7 +120,6 @@ export default function Footer() {
             {/* Social links */}
             <div className="flex items-center justify-center md:justify-start gap-3">
               {[
-                { Icon: Github,      href: 'https://github.com/orkastor',           label: 'GitHub',   discord: false },
                 { Icon: Twitter,     href: 'https://twitter.com/orkastor',           label: 'Twitter',  discord: false },
                 { Icon: Linkedin,    href: 'https://linkedin.com/company/orkastor', label: 'LinkedIn', discord: false },
                 { Icon: DiscordIcon, href: DISCORD_URL,                              label: 'Discord',  discord: true  },

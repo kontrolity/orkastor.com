@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Zap, ArrowUpRight, Sparkles } from 'lucide-react';
-import ChromeFigure from './ChromeFigure';
+import { CheckCircle2, Zap, ArrowUpRight } from 'lucide-react';
 import GrainOverlay from './GrainOverlay';
+import LiveOpsConsole from './LiveOpsConsole';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -203,12 +203,12 @@ function useDashboardLive() {
 
 /* ── Background ──────────────────────────────────────────────── */
 function HeroFigureMedia() {
-  // Tries to load the static image first; falls back to the 3D chrome figure
-  // if `/hero-figure.png` (or .webp/.jpg) isn't present in /public.
+  // Static image only. On error → render nothing (pure black background
+  // remains visible). No 3D fallback — we don't want a half-baked blob
+  // shape to ever be seen.
   const [imgFailed, setImgFailed] = useState(false);
-  return imgFailed ? (
-    <ChromeFigure />
-  ) : (
+  if (imgFailed) return null;
+  return (
     <picture>
       <source srcSet="/hero-figure.webp" type="image/webp" />
       <source srcSet="/hero-figure.jpg"  type="image/jpeg" />
@@ -619,16 +619,19 @@ export default function HeroSection() {
       {/* Vortex fills the entire hero as the atmospheric background */}
       <VortexHeroBackground />
 
-      {/* Content overlay — left-aligned on desktop, centered on mobile */}
+      {/* Content overlay — split column on desktop, stacked on mobile */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-10 sm:py-16 w-full">
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_minmax(0,1fr)] gap-10 lg:gap-14 items-center">
+
+        {/* ── LEFT: text column ─────────────────────────────── */}
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
 
           {/* Announcement pill */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="mb-8"
+            className="mb-7"
           >
             <a
               href="https://kubegraf.io/"
@@ -686,7 +689,6 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="btn-clerk-primary group"
             >
-              <Sparkles className="w-4 h-4 opacity-80" />
               See KubēGraf
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
@@ -725,6 +727,18 @@ export default function HeroSection() {
               Zero data exfiltration
             </span>
           </motion.div>
+        </div>
+
+        {/* ── RIGHT: live ops console, vertically beside headline ─── */}
+        <motion.div
+          initial={{ opacity: 0, x: 12, scale: 0.97 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.30, ease: EASE }}
+          className="w-full flex justify-center lg:justify-end"
+        >
+          <LiveOpsConsole />
+        </motion.div>
+
         </div>
       </div>
 

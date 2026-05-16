@@ -113,11 +113,7 @@ export default function CTASection() {
         >
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} className="mb-6" />
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500 mb-10">
-            <a href="mailto:hello@orkastor.com" className="hover:text-white transition-colors">Book a Demo</a>
-            <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
-            <a href="/docs" className="hover:text-white transition-colors">View Docs</a>
-            <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
-            <a href="https://github.com/orkastor" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+            <a href="https://kubegraf.io/book-demo" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Book a Demo</a>
             <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
             <a
               href={DISCORD_URL}
