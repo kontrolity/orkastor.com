@@ -5,8 +5,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
+        sans:    ['General Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Cabinet Grotesk', 'General Sans', 'system-ui', 'sans-serif'],
+        mono:    ['Geist Mono', 'JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',

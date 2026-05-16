@@ -100,7 +100,7 @@ export default function SafeFixWorkflow() {
       ref={sectionRef}
       id="safefix"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: 'var(--void-base)' }}
     >
       {/* Ambient glow — accent colour drifts with the active step */}
       <motion.div

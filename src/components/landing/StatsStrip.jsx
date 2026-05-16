@@ -26,16 +26,16 @@ const STATS = [
     suffix: 's',
     label: 'Avg MTTR',
     sub: '↓ 80% from industry average',
-    accentColor: '#6C47FF',
-    gradient: 'linear-gradient(90deg, #6C47FF, #4F2EE8)',
+    accentColor: '#FF8A3D',
+    gradient: 'linear-gradient(90deg, #FF8A3D, #FF5D8F)',
   },
   {
     value: 142,
     suffix: '+',
     label: 'Incidents resolved',
     sub: 'per month, automatically',
-    accentColor: '#0EA5E9',
-    gradient: 'linear-gradient(90deg, #0EA5E9, #0284C7)',
+    accentColor: '#E14EFF',
+    gradient: 'linear-gradient(90deg, #E14EFF, #7B4DFF)',
   },
   {
     value: 99.9,
@@ -43,8 +43,8 @@ const STATS = [
     label: 'Uptime maintained',
     sub: 'across all monitored clusters',
     decimal: true,
-    accentColor: '#34D399',
-    gradient: 'linear-gradient(90deg, #34D399, #059669)',
+    accentColor: '#38BDF8',
+    gradient: 'linear-gradient(90deg, #38BDF8, #2DD4BF)',
   },
   {
     value: 2.4,
@@ -53,8 +53,8 @@ const STATS = [
     label: 'Avg saved / year',
     sub: 'in engineering toil costs',
     decimal: true,
-    accentColor: '#F59E0B',
-    gradient: 'linear-gradient(90deg, #F59E0B, #D97706)',
+    accentColor: '#2DD4BF',
+    gradient: 'linear-gradient(90deg, #2DD4BF, #5EEAD4)',
   },
 ];
 
@@ -65,20 +65,23 @@ export default function StatsStrip() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-16"
-      style={{ backgroundColor: '#131316' }}
+      className="relative py-16 overflow-hidden"
+      style={{ backgroundColor: 'var(--void-base)' }}
     >
-      {/* Top separator */}
+      {/* Quiet spectral wash behind cards */}
+      <div className="absolute inset-0 pointer-events-none bg-spectral-ambient opacity-60" />
+
+      {/* Top separator — spectral seam */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(108,71,255,0.2), transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.25) 25%, rgba(123,77,255,0.30) 50%, rgba(56,189,248,0.25) 75%, transparent 100%)' }}
       />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6">
         {/* Section label */}
         <motion.p
           className="text-center text-xs font-mono tracking-[0.2em] uppercase mb-10"
-          style={{ color: '#3D3460' }}
+          style={{ color: 'rgba(245,245,247,0.40)' }}
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: EASE }}

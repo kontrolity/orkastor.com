@@ -31,23 +31,34 @@ export default function AnnouncementBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -48, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed left-0 right-0 z-[60] h-12 flex items-center"
+          className="fixed left-0 right-0 z-[60] h-12 flex items-center overflow-hidden"
           style={{
             top: 0,
-            background: '#0C0C14',
+            background:
+              'linear-gradient(90deg, rgba(255,138,61,0.08) 0%, rgba(225,78,255,0.08) 30%, rgba(123,77,255,0.08) 55%, rgba(56,189,248,0.08) 80%, rgba(45,212,191,0.06) 100%),' +
+              'rgba(8,8,12,0.92)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}
         >
-          <div className="flex items-center justify-between w-full px-4 sm:px-6 max-w-7xl mx-auto">
+          {/* Spectral seam at bottom of banner */}
+          <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.4) 20%, rgba(123,77,255,0.5) 50%, rgba(56,189,248,0.4) 80%, transparent 100%)' }}
+          />
+          <div className="flex items-center justify-between w-full px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
             <a
               href="https://kubegraf.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+              className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
             >
               <span
-                className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
-                style={{ background: '#6C47FF' }}
+                className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white shrink-0"
+                style={{
+                  background: 'linear-gradient(135deg, #FF8A3D, #E14EFF 50%, #7B4DFF)',
+                  boxShadow: '0 0 12px rgba(225,78,255,0.45)',
+                }}
               >
                 New
               </span>

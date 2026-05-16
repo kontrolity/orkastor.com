@@ -91,7 +91,7 @@ export default function ModularPlatformSection() {
       ref={sectionRef}
       id="platform"
       className="relative py-24 md:py-28 overflow-hidden"
-      style={{ backgroundColor: '#131316' }}
+      style={{ backgroundColor: 'var(--void-base)' }}
     >
       {/* Top glow */}
       <div

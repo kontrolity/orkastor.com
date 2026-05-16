@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, CheckCircle2, Zap } from 'lucide-react';
+import { CheckCircle2, Zap, ArrowUpRight, Sparkles } from 'lucide-react';
+import SpectralVortex from './SpectralVortex';
+import GrainOverlay from './GrainOverlay';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -200,13 +202,37 @@ function useDashboardLive() {
 }
 
 /* ── Background ──────────────────────────────────────────────── */
-function GradientMeshBackground() {
+function VortexHeroBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div className="blob-1 absolute rounded-full" style={{ top: '-20%', left: '30%', width: '700px', height: '700px', background: 'radial-gradient(circle, rgba(108,71,255,0.22) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-      <div className="blob-2 absolute rounded-full" style={{ bottom: '-10%', right: '-5%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
-      <div className="blob-3 absolute rounded-full" style={{ top: '40%', left: '-10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-      <div className="absolute inset-0 bg-dot-grid opacity-20" />
+      {/* The vortex fills the entire hero */}
+      <div className="absolute inset-0">
+        <SpectralVortex />
+      </div>
+
+      {/* Soft vignette — biased toward the text area for readability */}
+      <div className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 70% at 20% 50%, rgba(6,6,10,0.65) 0%, rgba(6,6,10,0.30) 35%, transparent 65%)',
+        }}
+      />
+
+      {/* Edge fade — keep page edges grounded in void */}
+      <div className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(6,6,10,0.55) 100%)',
+        }}
+      />
+
+      {/* Grain — cinematic finish */}
+      <GrainOverlay opacity={0.12} blendMode="overlay" />
+
+      {/* Bottom horizon line — spectral seam */}
+      <div className="absolute bottom-0 left-0 right-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.4) 25%, rgba(123,77,255,0.5) 50%, rgba(56,189,248,0.4) 75%, transparent 100%)' }}
+      />
     </div>
   );
 }
@@ -487,10 +513,13 @@ function DashboardMockup({ live }) {
   };
 
   return (
-    <div className="w-full rounded-2xl overflow-hidden select-none relative"
-      style={{ background: '#080C14', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 0 0 1px rgba(108,71,255,0.18), 0 80px 160px rgba(0,0,0,0.5), 0 0 120px rgba(108,71,255,0.15)' }}>
-      <div className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, #6C47FF 30%, #0EA5E9 70%, transparent 100%)', backgroundSize: '200% auto', animation: 'shimmer-slide 3s linear infinite' }} />
+    <div className="w-full rounded-[16px] overflow-hidden select-none relative"
+      style={{
+        background: 'linear-gradient(180deg, #08080E 0%, #0B0B12 100%)',
+        boxShadow: '0 80px 160px rgba(0,0,0,0.55), 0 0 120px rgba(123,77,255,0.18)',
+      }}>
+      <div className="absolute top-0 left-0 right-0 h-[1px] z-20"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, #FF8A3D 20%, #E14EFF 40%, #7B4DFF 60%, #38BDF8 80%, transparent 100%)', backgroundSize: '200% auto', animation: 'shimmer-slide 4s linear infinite' }} />
 
       {/* Browser chrome */}
       <div className="flex items-center gap-2 px-4 py-3 border-b"
@@ -556,104 +585,97 @@ function DashboardMockup({ live }) {
 /* ── Main HeroSection ─────────────────────────────────────────── */
 export default function HeroSection() {
   const live = useDashboardLive();
-  const { resolved, mttr, secAgo } = live;
+  const { resolved, mttr } = live;
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden flex items-center"
       style={{
-        backgroundColor: '#0C0C14',
+        backgroundColor: 'var(--void-base)',
         minHeight: '100vh',
         paddingTop: 'calc(76px + var(--banner-height, 0px))',
+        paddingBottom: '4rem',
       }}
     >
-      <GradientMeshBackground />
+      {/* Vortex fills the entire hero as the atmospheric background */}
+      <VortexHeroBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24 w-full">
-
-        {/* ── Centered text block ── */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-14">
+      {/* Content overlay — left-aligned on desktop, centered on mobile */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-10 sm:py-16 w-full">
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl">
 
           {/* Announcement pill */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
+            transition={{ duration: 0.7, ease: EASE }}
             className="mb-8"
           >
             <a
               href="https://kubegraf.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all hover:opacity-80"
-              style={{
-                background: 'rgba(108,71,255,0.1)',
-                border: '1px solid rgba(108,71,255,0.28)',
-                color: '#A78BFA',
-              }}
+              className="badge-pill group"
             >
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white" style={{ background: '#6C47FF' }}>
-                New
+              <span className="pill-tag">New</span>
+              <span className="text-white/80 group-hover:text-white transition-colors">
+                KubēGraf v1.0 — AI SRE for Kubernetes
               </span>
-              KubēGraf v1.0 — AI SRE for Kubernetes
-              <ChevronRight className="w-3.5 h-3.5 opacity-60" />
+              <ArrowUpRight className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </a>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline — spectral gradient */}
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
-            className="font-black tracking-[-0.04em] mb-6"
+            transition={{ duration: 0.9, delay: 0.10, ease: EASE }}
+            className="h-display mb-6"
             style={{
-              fontSize: 'clamp(36px, 5.4vw, 68px)',
-              lineHeight: 1.02,
-              background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 45%, #A78BFA 68%, #6C47FF 85%, #38BDF8 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              fontSize: 'clamp(36px, 5.6vw, 80px)',
+              lineHeight: 0.96,
             }}
           >
-            The AI DevOps &amp;
+            <span className="text-gradient-hero">The AI DevOps &amp;</span>
             <br />
-            Cloud Orchestrator
+            <span className="text-spectral">Cloud Orchestrator</span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.16, ease: EASE }}
-            className="text-lg leading-relaxed mb-10 max-w-xl text-slate-400"
+            transition={{ duration: 0.8, delay: 0.20, ease: EASE }}
+            className="text-base sm:text-lg leading-relaxed mb-9 max-w-xl"
+            style={{ color: 'var(--ink-secondary)' }}
           >
-            Powered by OrkaAI — multi-model reasoning that detects, diagnoses, and fixes
-            Kubernetes incidents. Running entirely inside your own environment.
-            Zero data exfiltration.
+            Powered by <span className="text-white font-medium">OrkaAI</span> — multi-model
+            reasoning that detects, diagnoses, and fixes Kubernetes incidents.
+            Running entirely inside your own environment. Zero data exfiltration.
           </motion.p>
 
           {/* CTA Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.22, ease: EASE }}
-            className="flex flex-col sm:flex-row items-center gap-3 mb-10"
+            transition={{ duration: 0.8, delay: 0.28, ease: EASE }}
+            className="flex flex-col sm:flex-row items-center gap-3 mb-9"
           >
             <a
               href="https://kubegraf.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-              style={{ background: '#5865F2' }}
+              className="btn-clerk-primary group"
             >
-              See KubēGraf ↗
+              <Sparkles className="w-4 h-4 opacity-80" />
+              See KubēGraf
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
             <a
               href={DISCORD_URL}
               target="_blank"
               rel="noreferrer"
               aria-label="Join Orkastor Discord Community"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-              style={{ background: '#5865F2' }}
+              className="btn-ghost"
             >
               <DiscordIcon className="w-4 h-4" />
               Discord Community
@@ -664,12 +686,12 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.65, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm"
+            transition={{ duration: 0.65, delay: 0.36 }}
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-sm"
           >
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="font-mono font-semibold text-emerald-400">{mttr}s</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse shrink-0" />
+              <span className="font-mono font-semibold text-teal-300">{mttr}s</span>
               <span className="text-slate-500">avg MTTR</span>
             </span>
             <span className="text-slate-700 hidden sm:inline">·</span>
@@ -679,48 +701,16 @@ export default function HeroSection() {
             </span>
             <span className="text-slate-700 hidden sm:inline">·</span>
             <span className="flex items-center gap-1 text-slate-500">
-              <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
+              <CheckCircle2 className="w-3 h-3 text-teal-400 shrink-0" />
               Zero data exfiltration
             </span>
           </motion.div>
         </div>
-
-        {/* ── Full-width product mockup ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 56, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
-          className="relative max-w-5xl mx-auto"
-        >
-          {/* Floating live badge */}
-          <div
-            className="absolute -top-4 left-4 right-4 sm:left-auto sm:right-4 z-10 flex items-center justify-center sm:justify-start gap-1.5 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-medium"
-            style={{
-              background: 'rgba(16,185,129,0.1)',
-              border: '1px solid rgba(16,185,129,0.25)',
-              color: '#34d399',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-            <span>Live — Production</span>
-            <span style={{ color: 'rgba(52,211,153,0.4)' }}>·</span>
-            <span className="font-mono truncate">
-              {secAgo < 60 ? `last fix ${secAgo}s ago` : `last fix ${Math.floor(secAgo / 60)}m ${secAgo % 60}s ago`}
-            </span>
-          </div>
-
-          {/* Glow under card */}
-          <div className="absolute -inset-x-8 -bottom-8 h-24 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 65% 80% at 50% 100%, rgba(108,71,255,0.2) 0%, transparent 70%)' }} />
-
-          <DashboardMockup live={live} />
-        </motion.div>
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #131316)' }} />
+      {/* Bottom fade — to void */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-[5]"
+        style={{ background: 'linear-gradient(to bottom, transparent, var(--void-base))' }} />
     </section>
   );
 }

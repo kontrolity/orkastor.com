@@ -225,17 +225,17 @@ export default function NavBar() {
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        className="fixed left-0 right-0 z-50 transition-all duration-300"
+        className="fixed left-0 right-0 z-50 transition-all duration-500"
         style={scrolled
-          ? { top: 'var(--banner-height, 0px)', background: 'rgba(19,19,22,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }
+          ? { top: 'var(--banner-height, 0px)', background: 'rgba(10,10,14,0.75)', backdropFilter: 'blur(28px) saturate(200%)', WebkitBackdropFilter: 'blur(28px) saturate(200%)', borderBottom: '1px solid rgba(255,255,255,0.06)' }
           : { top: 'var(--banner-height, 0px)', background: 'transparent', backdropFilter: 'none', borderBottom: '1px solid transparent' }
         }
       >
-        {/* Scroll progress gradient — cyan + violet matching both brand identities */}
+        {/* Spectral seam — appears on scroll */}
         {scrolled && (
           <div
             className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(6,182,212,0.4) 30%, rgba(108,71,255,0.3) 70%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,138,61,0.35) 22%, rgba(225,78,255,0.45) 45%, rgba(123,77,255,0.45) 60%, rgba(56,189,248,0.40) 80%, transparent 100%)' }}
           />
         )}
 
