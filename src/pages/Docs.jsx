@@ -116,7 +116,13 @@ export default function Docs() {
               return (
                 <div
                   key={section.title}
-                  id={section.title === 'Getting Started' ? 'getting-started' : undefined}
+                  id={
+                    section.title === 'Getting Started'
+                      ? 'getting-started'
+                      : section.title === 'API Reference'
+                        ? 'api-reference'
+                        : undefined
+                  }
                   className="bento-card p-6 group hover:border-white/[0.12] transition-colors"
                 >
                   <div
