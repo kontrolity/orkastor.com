@@ -1,38 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
 
-const KEY = 'orkastor-banner-dismissed';
-const OFFER_URL = 'https://kubegraf.io/pricing';
+const APPLY_EMAIL = 'support@kubegraf.io';
+const APPLY_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(APPLY_EMAIL)}`;
 
 export default function AnnouncementBanner() {
   const [visible, setVisible] = useState(false);
+  const bannerRef = useRef(null);
 
   useEffect(() => {
-    const dismissed = localStorage.getItem(KEY);
-    if (!dismissed) {
-      setVisible(true);
-      document.documentElement.style.setProperty('--banner-height', '48px');
-    }
+    setVisible(true);
   }, []);
+
+  useEffect(() => {
+    if (!visible || !bannerRef.current) {
+      return undefined;
+    }
+
+    const syncHeight = () => {
+      const height = bannerRef.current?.offsetHeight ?? 0;
+      document.documentElement.style.setProperty('--banner-height', `${height}px`);
+    };
+
+    syncHeight();
+
+    const resizeObserver = new ResizeObserver(syncHeight);
+    resizeObserver.observe(bannerRef.current);
+    window.addEventListener('resize', syncHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', syncHeight);
+    };
+  }, [visible]);
 
   const dismiss = () => {
     setVisible(false);
-    localStorage.setItem(KEY, '1');
     document.documentElement.style.setProperty('--banner-height', '0px');
     window.dispatchEvent(new CustomEvent('banner-dismissed'));
+  };
+
+  const openApplyEmail = () => {
+    window.open(APPLY_COMPOSE_URL, '_blank', 'noopener,noreferrer');
   };
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
+          ref={bannerRef}
           key="banner"
-          initial={{ y: -48, opacity: 0 }}
+          initial={{ y: -72, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -48, opacity: 0 }}
+          exit={{ y: -72, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed left-0 right-0 z-[60] h-12 flex items-center overflow-hidden"
+          className="fixed left-0 right-0 z-[60] overflow-hidden"
           style={{
             top: 0,
             background:
@@ -59,15 +82,10 @@ export default function AnnouncementBanner() {
                 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 22%, rgba(255,255,255,0.4) 48%, rgba(125,211,252,0.28) 80%, transparent 100%)',
             }}
           />
-          <div className="w-full px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
-            <a
-              href={OFFER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full justify-center min-w-0 items-center gap-3 pr-10 sm:pr-12 text-[13px] sm:text-base text-slate-200 hover:text-white transition-colors font-medium"
-            >
+          <div className="w-full px-4 sm:px-6 max-w-7xl mx-auto relative z-10 py-2 sm:py-0 sm:min-h-12 flex items-center">
+            <div className="flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 pr-10 sm:pr-12 text-center sm:text-left text-[12px] sm:text-sm md:text-base text-slate-200 font-medium">
               <span
-                className="hidden sm:inline-flex items-center text-[10px] font-extrabold uppercase tracking-[0.18em] px-3 py-1 rounded-full shrink-0"
+                className="inline-flex items-center text-[10px] font-extrabold uppercase tracking-[0.18em] px-3 py-1 rounded-full shrink-0"
                 style={{
                   color: '#ffffff',
                   background: 'linear-gradient(135deg, #6C47FF 0%, #38BDF8 100%)',
@@ -76,14 +94,18 @@ export default function AnnouncementBanner() {
               >
                 Early-Stage
               </span>
-              <span className="truncate">
+              <span className="max-w-full">
                 Startup Program for <strong className="text-white">$49/mo for your first 6 months</strong> - quick 24-hour verification.
               </span>
-              <span className="hidden md:inline-flex items-center gap-1 font-semibold text-[#7DD3FC] underline underline-offset-4 decoration-[1.5px] shrink-0">
+              <button
+                type="button"
+                onClick={openApplyEmail}
+                className="inline-flex items-center gap-1 font-semibold text-[#7DD3FC] underline underline-offset-4 decoration-[1.5px] shrink-0 hover:text-white transition-colors"
+              >
                 Apply now
                 <ArrowRight className="w-3.5 h-3.5" />
-              </span>
-            </a>
+              </button>
+            </div>
             <button
               onClick={dismiss}
               className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 p-1.5 text-slate-500 hover:text-slate-200 transition-colors rounded-md hover:bg-white/[0.05]"
