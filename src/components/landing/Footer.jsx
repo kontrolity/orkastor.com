@@ -14,21 +14,17 @@ const LINKS = {
   Platform: [
     { label: 'Features',     href: '/#features' },
     { label: 'OrkaAI',       href: '/#platform' },
-    { label: 'Integrations', href: '/#integrations' },
     { label: 'Pricing',      href: '/pricing' },
-    { label: 'Changelog',    href: '/changelog' },
   ],
   Company: [
     { label: 'About',   href: '/about' },
     { label: 'Blog',    href: '#' },
-    { label: 'Careers', href: '#' },
     { label: 'Contact', href: 'mailto:hello@orkastor.com' },
   ],
   Resources: [
     { label: 'Documentation',     href: '/docs' },
     { label: 'API Reference',     href: '/docs#api-reference' },
     { label: 'Discord Community', href: DISCORD_URL, external: true },
-    { label: 'Status Page',       href: '#' },
   ],
   Legal: [
     { label: 'Privacy Policy',   href: '/privacy' },
