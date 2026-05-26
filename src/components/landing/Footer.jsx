@@ -26,7 +26,7 @@ const LINKS = {
   ],
   Resources: [
     { label: 'Documentation',     href: '/docs' },
-    { label: 'API Reference',     href: '/docs' },
+    { label: 'API Reference',     href: '/docs#api-reference' },
     { label: 'Discord Community', href: DISCORD_URL, external: true },
     { label: 'Status Page',       href: '#' },
   ],
