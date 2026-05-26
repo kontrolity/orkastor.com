@@ -101,7 +101,7 @@ export default function Docs() {
               </div>
             </div>
             <a
-              href="#"
+              href="#getting-started"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white border border-white/[0.09] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all whitespace-nowrap"
             >
               Read the Quickstart
@@ -114,7 +114,11 @@ export default function Docs() {
             {SECTIONS.map((section) => {
               const Icon = section.icon;
               return (
-                <div key={section.title} className="bento-card p-6 group hover:border-white/[0.12] transition-colors">
+                <div
+                  key={section.title}
+                  id={section.title === 'Getting Started' ? 'getting-started' : undefined}
+                  className="bento-card p-6 group hover:border-white/[0.12] transition-colors"
+                >
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center border mb-4"
                     style={{ background: `${section.color}12`, borderColor: `${section.color}25`, color: section.color }}
