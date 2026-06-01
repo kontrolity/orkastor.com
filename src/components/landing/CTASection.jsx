@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { CheckCircle2, Terminal, Lock, Zap } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Terminal, Lock, Zap } from 'lucide-react';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -112,9 +112,21 @@ export default function CTASection() {
           transition={{ duration: 0.5, delay: 0.32 }}
         >
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} className="mb-6" />
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500 mb-10">
-            <a href="https://kubegraf.io/book-demo" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Book a Demo</a>
-            <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-slate-500 mb-10">
+            <a
+              href="https://kubegraf.io/book-demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-semibold text-slate-200 transition-all hover:text-white hover:border-white/35 hover:bg-white/[0.04]"
+              style={{
+                border: '1px solid rgba(255,255,255,0.16)',
+                background: 'rgba(255,255,255,0.015)',
+                fontSize: '0.8125rem',
+              }}
+            >
+              Book a Demo
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
             <a
               href={DISCORD_URL}
               target="_blank"
