@@ -202,26 +202,53 @@ function MobileNavItem({ navItem, onClose }) {
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [visible, setVisible]   = useState(true);
-  const lastScrollY              = useRef(0);
+  const mobileMenuRef = useRef(null);
+  const mobileToggleRef = useRef(null);
   const linkCls = 'text-slate-400 hover:text-white hover:bg-white/[0.05]';
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 24);
-      setVisible(y < lastScrollY.current || y < 80);
-      lastScrollY.current = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+
+    const onPointerDown = (event) => {
+      const target = event.target;
+      if (
+        mobileMenuRef.current?.contains(target) ||
+        mobileToggleRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setMenuOpen(false);
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [menuOpen]);
 
   return (
     <>
       <motion.header
         initial={{ y: -8, opacity: 0 }}
-        animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
         className="fixed left-0 right-0 z-50 transition-all duration-500"
         style={scrolled
@@ -253,6 +280,7 @@ export default function NavBar() {
 
           {/* Mobile toggle */}
           <button
+            ref={mobileToggleRef}
             className="md:hidden text-slate-400 hover:text-white transition-colors p-2 -mr-2"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
@@ -266,13 +294,16 @@ export default function NavBar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            ref={mobileMenuRef}
             key="mobile-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.18 }}
-            className="fixed top-[76px] left-3 right-3 z-50 rounded-2xl p-2 md:hidden border border-white/[0.08] max-h-[calc(100vh-100px)] overflow-y-auto"
+            className="fixed left-3 right-3 z-50 rounded-2xl p-2 md:hidden border border-white/[0.08] overflow-y-auto"
             style={{
+              top: 'calc(var(--banner-height, 0px) + 76px)',
+              maxHeight: 'calc(100vh - var(--banner-height, 0px) - 100px)',
               background: 'rgba(10, 10, 12, 0.97)',
               backdropFilter: 'blur(20px) saturate(180%)',
               boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
