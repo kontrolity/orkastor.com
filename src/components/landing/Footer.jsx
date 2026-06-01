@@ -3,6 +3,8 @@ import { Twitter, Linkedin, ArrowUpRight } from 'lucide-react';
 import OrkastorLogo from './OrkastorLogo';
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
+const CONTACT_EMAIL = 'hello@orkastor.com';
+const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`;
 
 const DiscordIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -19,7 +21,7 @@ const LINKS = {
   Company: [
     { label: 'About',   href: '/about' },
     { label: 'Blog',    href: '#' },
-    { label: 'Contact', href: 'mailto:hello@orkastor.com' },
+    { label: 'Contact', href: GMAIL_COMPOSE_URL, external: true },
   ],
   Resources: [
     { label: 'Documentation',     href: '/docs' },
