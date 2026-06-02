@@ -192,16 +192,40 @@ export default function Footer() {
           className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"
           style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
         >
-          <div className="flex items-center gap-3">
-            <OrkastorLogo size={18} showWordmark={false} />
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
-              © 2026 Orkastor. All rights reserved.
-            </p>
+          {/* Left: copyright + system status */}
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-2">
+            <div className="flex items-center gap-3">
+              <OrkastorLogo size={18} showWordmark={false} />
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                © 2026 Orkastor. All rights reserved.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              All systems operational
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            All systems operational
-          </div>
+
+          {/* Right: registered-trademark notice */}
+          <p
+            className="text-xs sm:text-[13px] text-center sm:text-right px-4 py-2 rounded-full shrink-0"
+            style={{
+              background: 'rgba(255,138,61,0.07)',
+              border: '1px solid rgba(255,138,61,0.22)',
+              color: 'rgba(255,255,255,0.62)',
+            }}
+          >
+            <a
+              href="https://kubegraf.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold hover:underline"
+              style={{ color: '#ff8a3d' }}
+            >
+              KubeGraf<sup style={{ fontSize: '0.6em', verticalAlign: 'super' }}>&reg;</sup>
+            </a>{' '}
+            is a registered trademark of ORKASTOR LIMITED.
+          </p>
         </div>
       </div>
     </footer>
