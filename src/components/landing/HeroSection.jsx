@@ -202,38 +202,10 @@ function useDashboardLive() {
 }
 
 /* ── Background ──────────────────────────────────────────────── */
-function HeroFigureMedia() {
-  // Static image only. On error → render nothing (pure black background
-  // remains visible). No 3D fallback — we don't want a half-baked blob
-  // shape to ever be seen.
-  const [imgFailed, setImgFailed] = useState(false);
-  if (imgFailed) return null;
-  return (
-    <picture>
-      <source srcSet="/hero-figure.webp" type="image/webp" />
-      <source srcSet="/hero-figure.jpg"  type="image/jpeg" />
-      <img
-        src="/hero-figure.png"
-        alt=""
-        aria-hidden="true"
-        onError={() => setImgFailed(true)}
-        draggable={false}
-        className="absolute inset-0 w-full h-full object-cover object-center select-none"
-        style={{ objectPosition: '50% 50%' }}
-      />
-    </picture>
-  );
-}
-
 function VortexHeroBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ background: '#000' }}>
-      {/* Hero figure — positioned to the right so text on the left stays on pure black */}
-      <div className="absolute inset-y-0 right-0 w-full lg:w-[60%] overflow-hidden">
-        <HeroFigureMedia />
-      </div>
-
-      {/* Left fade — guarantees text is on pure black, no figure bleed */}
+      {/* Left fade — keeps the hero text on pure black */}
       <div className="absolute inset-0 hidden lg:block"
         style={{
           background:
