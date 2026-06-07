@@ -184,7 +184,7 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'General Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Instrument Sans', 'Inter', system-ui, -apple-system, sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -198,18 +198,18 @@
 
   /* Display family takes over on h1/h2 by default for cohesion */
   h1, h2 {
-    font-family: 'Cabinet Grotesk', 'General Sans', system-ui, sans-serif;
+    font-family: 'Instrument Sans', 'Instrument Sans', system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: -0.035em;
   }
   h3, h4, h5, h6 {
-    font-family: 'General Sans', system-ui, sans-serif;
+    font-family: 'Instrument Sans', system-ui, sans-serif;
     font-weight: 600;
     letter-spacing: -0.015em;
   }
 
   code, kbd, samp, pre {
-    font-family: 'Geist Mono', 'JetBrains Mono', 'Menlo', 'Monaco', monospace;
+    font-family: 'IBM Plex Mono', 'JetBrains Mono', 'Menlo', 'Monaco', monospace;
   }
 
   ::selection {
@@ -1043,13 +1043,13 @@ body::before {
 
 /* Display headline — Cabinet Grotesk for that wide, futuristic, premium feel */
 .h-display {
-  font-family: 'Cabinet Grotesk', 'General Sans', system-ui, sans-serif;
+  font-family: 'Instrument Sans', 'Instrument Sans', system-ui, sans-serif;
   font-weight: 800;            /* Extrabold — dramatic at large sizes */
   letter-spacing: -0.038em;
   line-height: 0.96;
 }
 .h-display-heavy {
-  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-family: 'Instrument Sans', system-ui, sans-serif;
   font-weight: 900;            /* Black — for true hero moments */
   letter-spacing: -0.042em;
   line-height: 0.94;

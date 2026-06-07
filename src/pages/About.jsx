@@ -131,13 +131,15 @@ export default function About() {
               Ready to close the loop?
             </h2>
             <p className="text-slate-500 text-base leading-relaxed mb-8 max-w-md mx-auto">
-              Join the waitlist and be among the first to run Orkastor inside your cluster.
+              Book a demo and see Orkastor run inside your own cluster.
             </p>
             <a
-              href="/#cta"
+              href="https://kubegraf.io/book-demo"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.02] active:scale-[0.99] transition-transform"
             >
-              Join the waitlist
+              Book a Demo
             </a>
           </div>
         </section>
