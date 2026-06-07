@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans:    ['General Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Cabinet Grotesk', 'General Sans', 'system-ui', 'sans-serif'],
-        mono:    ['Geist Mono', 'JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
+        sans:    ['Instrument Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Instrument Sans', 'Instrument Sans', 'system-ui', 'sans-serif'],
+        mono:    ['IBM Plex Mono', 'JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',

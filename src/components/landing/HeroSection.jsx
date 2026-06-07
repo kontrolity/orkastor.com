@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Zap, ArrowUpRight } from 'lucide-react';
 import GrainOverlay from './GrainOverlay';
-import LiveOpsConsole from './LiveOpsConsole';
+// Heavy animated terminal — lazy so the hero text/CTAs paint instantly.
+const LiveOpsConsole = lazy(() => import('./LiveOpsConsole'));
 
 const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 
@@ -708,7 +709,9 @@ export default function HeroSection() {
           transition={{ duration: 0.9, delay: 0.30, ease: EASE }}
           className="w-full flex justify-center lg:justify-end"
         >
-          <LiveOpsConsole />
+          <Suspense fallback={<div className="w-full max-w-xl rounded-2xl" style={{ minHeight: 360, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }} aria-hidden="true" />}>
+            <LiveOpsConsole />
+          </Suspense>
         </motion.div>
 
         </div>

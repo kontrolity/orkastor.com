@@ -11,4 +11,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Split big, stable libraries into their own long-cached chunks so the
+    // app shell downloads fast and repeat visits are near-instant.
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'motion': ['framer-motion'],
+        },
+      },
+    },
+  },
 })

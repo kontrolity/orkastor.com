@@ -114,7 +114,7 @@ export default function TestimonialSection() {
           </span>
           <h2 className="text-[clamp(32px,5vw,60px)] font-black tracking-[-0.03em] text-white mb-4 max-w-3xl mx-auto">
             Trusted by{' '}
-            <span className="text-gradient-brand">Engineering Teams</span>
+            <span className="text-gradient-brand">SRE &amp; Platform Teams</span>
           </h2>
           <p className="text-slate-500 text-base max-w-lg mx-auto">
             From fintech to healthtech — teams that can't compromise on data privacy.
