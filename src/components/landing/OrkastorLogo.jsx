@@ -31,9 +31,9 @@ const HEX_PTS = Array.from({ length: 6 }, (_, i) => pt(i * 60, R_HEX));
 const hexPath = 'M ' + HEX_PTS.map(([x, y]) => `${x},${y}`).join(' L ') + ' Z';
 
 const NODES = [
-  { angle: 0,   color: '#60a5fa', label: 'Monitor' },  // blue-400   – top
-  { angle: 120, color: '#2dd4bf', label: 'Analyze' },  // teal-400   – lower-right
-  { angle: 240, color: '#34d399', label: 'Fix'     },  // emerald-400– lower-left
+  { angle: 0,   color: '#60a5fa', lightColor: '#2563eb', label: 'Monitor' },  // blue   – top
+  { angle: 120, color: '#2dd4bf', lightColor: '#0d9488', label: 'Analyze' },  // teal   – lower-right
+  { angle: 240, color: '#34d399', lightColor: '#059669', label: 'Fix'     },  // emerald– lower-left
 ];
 const nodePts = NODES.map(n => pt(n.angle, R_NODE));
 const triPath = 'M ' + nodePts.map(([x, y]) => `${x},${y}`).join(' L ') + ' Z';
@@ -46,6 +46,10 @@ export default function OrkastorLogo({
 }) {
   const uid = React.useId().replace(/:/g, '');
   const textColor = light ? '#0a0f1a' : '#f8fafc';
+  // On light backgrounds the pale strokes/white core disappear — swap to
+  // deeper node colors, slate spokes, and an ink core.
+  const nodeColor = (n) => (light ? n.lightColor : n.color);
+  const spokeStart = light ? '#475569' : '#bfdbfe';
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
@@ -69,8 +73,8 @@ export default function OrkastorLogo({
                 cx={nx} cy={ny} r="10"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0%"   stopColor={n.color} stopOpacity="0.5" />
-                <stop offset="100%" stopColor={n.color} stopOpacity="0"   />
+                <stop offset="0%"   stopColor={nodeColor(n)} stopOpacity={light ? 0.30 : 0.5} />
+                <stop offset="100%" stopColor={nodeColor(n)} stopOpacity="0" />
               </radialGradient>
             );
           })}
@@ -85,8 +89,8 @@ export default function OrkastorLogo({
                 x1="32" y1="32" x2={nx} y2={ny}
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0%"   stopColor="#bfdbfe" stopOpacity="0.7" />
-                <stop offset="100%" stopColor={n.color}  stopOpacity="0.4" />
+                <stop offset="0%"   stopColor={spokeStart}   stopOpacity={light ? 0.55 : 0.7} />
+                <stop offset="100%" stopColor={nodeColor(n)} stopOpacity={light ? 0.65 : 0.4} />
               </linearGradient>
             );
           })}
@@ -98,9 +102,9 @@ export default function OrkastorLogo({
             x2={nodePts[1][0]} y2={nodePts[1][1]}
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%"   stopColor="#60a5fa" />
-            <stop offset="50%"  stopColor="#2dd4bf" />
-            <stop offset="100%" stopColor="#34d399" />
+            <stop offset="0%"   stopColor={nodeColor(NODES[0])} />
+            <stop offset="50%"  stopColor={nodeColor(NODES[1])} />
+            <stop offset="100%" stopColor={nodeColor(NODES[2])} />
           </linearGradient>
 
           {/* Node glow */}
@@ -121,24 +125,34 @@ export default function OrkastorLogo({
             </feMerge>
           </filter>
 
-          {/* Center radial: white → blue → teal */}
+          {/* Center radial: white core on dark, ink core on light */}
           <radialGradient id={`${uid}cd`} cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stopColor="#ffffff"  stopOpacity="1"   />
-            <stop offset="55%"  stopColor="#60a5fa"  stopOpacity="0.85"/>
-            <stop offset="100%" stopColor="#2dd4bf"  stopOpacity="0"   />
+            {light ? (
+              <>
+                <stop offset="0%"   stopColor="#16181D" stopOpacity="1"    />
+                <stop offset="55%"  stopColor="#2563eb" stopOpacity="0.75" />
+                <stop offset="100%" stopColor="#0d9488" stopOpacity="0"    />
+              </>
+            ) : (
+              <>
+                <stop offset="0%"   stopColor="#ffffff" stopOpacity="1"    />
+                <stop offset="55%"  stopColor="#60a5fa" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0"    />
+              </>
+            )}
           </radialGradient>
         </defs>
 
         {/* ── ① Outer hexagon frame ── */}
-        <path d={hexPath} stroke={`url(#${uid}tri)`} strokeWidth="1.4" strokeOpacity="0.75" />
+        <path d={hexPath} stroke={`url(#${uid}tri)`} strokeWidth="1.4" strokeOpacity={light ? 0.95 : 0.75} />
 
         {/* ── ③ Internal AI workflow triangle ── */}
         <path
           d={triPath}
-          fill="rgba(96,165,250,0.04)"
+          fill={light ? 'rgba(37,99,235,0.05)' : 'rgba(96,165,250,0.04)'}
           stroke={`url(#${uid}tri)`}
           strokeWidth="0.9"
-          strokeOpacity="0.6"
+          strokeOpacity={light ? 0.8 : 0.6}
         />
 
         {/* ── ④ Radial spokes: center → nodes ── */}
@@ -165,16 +179,16 @@ export default function OrkastorLogo({
         {NODES.map((n, i) => {
           const [nx, ny] = nodePts[i];
           return (
-            <g key={i} filter={`url(#${uid}glow)`}>
-              <circle cx={nx} cy={ny} r="4.5" fill={`${n.color}20`} stroke={n.color} strokeWidth="1.25" />
-              <circle cx={nx} cy={ny} r="1.8" fill={n.color} />
+            <g key={i} filter={light ? undefined : `url(#${uid}glow)`}>
+              <circle cx={nx} cy={ny} r="4.5" fill={`${nodeColor(n)}20`} stroke={nodeColor(n)} strokeWidth="1.25" />
+              <circle cx={nx} cy={ny} r="1.8" fill={nodeColor(n)} />
             </g>
           );
         })}
 
         {/* ── ⑤ Central AI core ── */}
-        <circle cx="32" cy="32" r="5.5" fill={`url(#${uid}cd)`} filter={`url(#${uid}cg)`} />
-        <circle cx="32" cy="32" r="2" fill="white" fillOpacity="0.96" />
+        <circle cx="32" cy="32" r="5.5" fill={`url(#${uid}cd)`} filter={light ? undefined : `url(#${uid}cg)`} />
+        <circle cx="32" cy="32" r="2" fill={light ? '#16181D' : 'white'} fillOpacity="0.96" />
       </svg>
 
       {showWordmark && (
@@ -183,7 +197,7 @@ export default function OrkastorLogo({
             fontSize: `${(size * 0.5625).toFixed(1)}px`,
             fontWeight: 700,
             letterSpacing: '-0.02em',
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+            fontFamily: "'Geist', 'Inter', system-ui, -apple-system, sans-serif",
             lineHeight: 1,
             display: 'inline-flex',
             alignItems: 'baseline',
