@@ -1066,3 +1066,267 @@ body::before {
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ORKASTOR LANDING 2026 — "WARM SIGNAL" DESIGN SYSTEM  (.lp scope)
+   Brand-aligned with KubeGraf (flagship product, kubegraf.io):
+     Surface:  warm paper  #FAF8F4 · alt #F3EFE7
+     Ink:      #16181D  ·  muted #5A6070
+     Primary:  KubeGraf orange  #FF7A1F  (hsl 21 100% 56%)
+     Type:     Geist (local variable) + Instrument Serif italic accents
+               + Geist Mono for code
+   Scoped under .lp so the legacy dark pages keep working untouched.
+════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.lp {
+  /* tokens */
+  --lp-bg:          #FAF8F4;
+  --lp-bg-alt:      #F3EFE7;
+  --lp-surface:     #FFFFFF;
+  --lp-ink:         #16181D;
+  --lp-ink-2:       #4B5162;
+  --lp-ink-3:       #878D9C;
+  --lp-line:        rgba(22,24,29,0.10);
+  --lp-line-soft:   rgba(22,24,29,0.06);
+  --lp-orange:      #FF7A1F;
+  --lp-orange-deep: #EA6410;
+  --lp-orange-soft: rgba(255,122,31,0.10);
+  --lp-amber:       #F59F0A;
+  --lp-green:       #17A34A;
+  --lp-red:         #DC2828;
+  --lp-dark:        #16181D;   /* dark panel bg (CTA / console) */
+  --lp-dark-2:      #1E212A;
+
+  font-family: 'Geist', 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--lp-bg);
+  color: var(--lp-ink);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Landing pages hide the legacy site-wide grain + vignette */
+body:has(.lp)::after,
+body:has(.lp)::before { display: none; }
+
+.lp ::selection { background: rgba(255,122,31,0.25); color: var(--lp-ink); }
+
+.lp h1, .lp h2, .lp h3, .lp h4 {
+  font-family: 'Geist', system-ui, sans-serif;
+  color: var(--lp-ink);
+}
+
+/* Display headline */
+.lp-display {
+  font-weight: 640;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+/* Instrument Serif italic accent inside headlines */
+.lp-serif {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+.lp-mono {
+  font-family: 'Geist Mono', 'JetBrains Mono', 'IBM Plex Mono', monospace;
+}
+
+/* ─── Eyebrow / labels ─────────────────────────────────────────── */
+.lp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lp-orange-deep);
+}
+.lp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 7px;
+  border-radius: 9999px;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-line);
+  box-shadow: 0 1px 2px rgba(22,24,29,0.04);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--lp-ink-2);
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.lp-pill:hover {
+  border-color: rgba(255,122,31,0.45);
+  box-shadow: 0 2px 10px rgba(255,122,31,0.12);
+  transform: translateY(-1px);
+}
+.lp-pill .lp-pill-tag {
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: var(--lp-orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── Buttons ──────────────────────────────────────────────────── */
+.lp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 12px;
+  background: var(--lp-orange);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 1px 2px rgba(234,100,16,0.35),
+    0 8px 24px rgba(255,122,31,0.28);
+  transition: background .25s, transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s;
+}
+.lp-btn-primary:hover {
+  background: var(--lp-orange-deep);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 2px 4px rgba(234,100,16,0.35),
+    0 12px 32px rgba(255,122,31,0.38);
+}
+.lp-btn-primary:active { transform: scale(0.98); }
+
+.lp-btn-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 12px;
+  background: var(--lp-ink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 24px rgba(22,24,29,0.22);
+  transition: background .25s, transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s;
+}
+.lp-btn-dark:hover { background: #23262E; transform: translateY(-1px); }
+
+.lp-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: var(--lp-surface);
+  color: var(--lp-ink);
+  font-size: 15px;
+  font-weight: 550;
+  border: 1px solid var(--lp-line);
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(22,24,29,0.04);
+  transition: border-color .25s, background .25s, transform .25s;
+}
+.lp-btn-ghost:hover {
+  border-color: rgba(22,24,29,0.22);
+  background: #FFFDFA;
+  transform: translateY(-1px);
+}
+.lp .lp-btn-sm { height: 38px; padding: 0 16px; font-size: 14px; border-radius: 10px; }
+
+/* ─── Cards ────────────────────────────────────────────────────── */
+.lp-card {
+  position: relative;
+  border-radius: 16px;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-line-soft);
+  box-shadow: 0 1px 2px rgba(22,24,29,0.04), 0 8px 24px rgba(22,24,29,0.04);
+  transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s, border-color .35s;
+}
+.lp-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,122,31,0.30);
+  box-shadow: 0 2px 4px rgba(22,24,29,0.05), 0 18px 44px rgba(22,24,29,0.09);
+}
+
+/* Product window chrome */
+.lp-window {
+  border-radius: 18px;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-line);
+  box-shadow:
+    0 1px 2px rgba(22,24,29,0.06),
+    0 24px 64px rgba(22,24,29,0.13),
+    0 64px 120px rgba(22,24,29,0.10);
+  overflow: hidden;
+}
+.lp-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  background: #FBFAF7;
+  border-bottom: 1px solid var(--lp-line-soft);
+}
+
+/* Dark console tile (used inside light sections) */
+.lp-console {
+  border-radius: 14px;
+  background: var(--lp-dark);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 16px 48px rgba(22,24,29,0.28);
+  overflow: hidden;
+  color: #E6E8EE;
+}
+
+/* ─── Backgrounds ─────────────────────────────────────────────── */
+.lp-dot-grid {
+  background-image: radial-gradient(rgba(22,24,29,0.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.lp-hero-wash {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -10%, rgba(255,122,31,0.10), transparent 60%),
+    radial-gradient(ellipse 45% 40% at 85% 8%, rgba(245,159,10,0.08), transparent 60%),
+    var(--lp-bg);
+}
+.lp-hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lp-line) 20%, var(--lp-line) 80%, transparent);
+}
+
+/* ─── Scroll reveal ───────────────────────────────────────────── */
+.lp-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+.lp-reveal.is-in { opacity: 1; transform: none; }
+
+/* ─── Marquee (reuses legacy keyframes) ───────────────────────── */
+.lp-marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+}
