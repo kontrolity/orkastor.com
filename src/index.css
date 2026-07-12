@@ -1368,3 +1368,40 @@ button:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   LUXURY PASS 2 — visible layer: reveals, edges, type, grain
+════════════════════════════════════════════════════════════════ */
+
+/* ── Site-wide scroll reveals (progressive enhancement, Chromium).
+      Sections rise 20px and focus in as they enter the viewport —
+      short travel + fast settle reads expensive. Hero excluded
+      (already in view at load). ── */
+@supports (animation-timeline: view()) {
+  main section:not(:first-of-type) {
+    animation: lux-reveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 24%;
+  }
+  @keyframes lux-reveal {
+    from { opacity: 0; transform: translateY(20px); filter: blur(6px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+  @media (max-width: 860px) {
+    main section:not(:first-of-type) { animation-name: lux-reveal-nb; }
+    @keyframes lux-reveal-nb {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+}
+
+/* ── Edges: cards join buttons at the machined radius ── */
+.bento-card { border-radius: 12px; }
+
+/* ── Display type: tighter, balanced ── */
+h1 { letter-spacing: -0.04em; }
+h1, h2 { text-wrap: balance; }
+
+/* ── Grain: from loud to felt (identity kept, noise reduced) ── */
+body::after { opacity: 0.055; }
