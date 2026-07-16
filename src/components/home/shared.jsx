@@ -31,14 +31,16 @@ export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' })
     return () => io.disconnect();
   }, []);
 
-  return (
-    <Tag
-      ref={ref}
-      className={`lp-reveal ${inView ? 'is-in' : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
-    >
-      {children}
-    </Tag>
+  // createElement instead of <Tag>: tsc can't map a dynamic string tag to
+  // its intrinsic props and rejects the JSX form under checkJs.
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      className: `lp-reveal ${inView ? 'is-in' : ''} ${className}`,
+      style: delay ? { transitionDelay: `${delay}ms` } : undefined,
+    },
+    children
   );
 }
 
