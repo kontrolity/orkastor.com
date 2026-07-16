@@ -312,41 +312,45 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-[140px] sm:pt-[164px] pb-16 sm:pb-24">
-        <div className="flex flex-col items-center text-center">
-          {/* Announcement pill */}
-          <motion.a
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            href={KUBEGRAF_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="lp-pill group mb-8"
-          >
-            <span className="lp-pill-tag">Live</span>
-            KubeGraf v1.0 — our flagship AI SRE platform for Kubernetes
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
-          </motion.a>
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-[130px] sm:pt-[158px] pb-16 sm:pb-24">
+        {/* Announcement pill */}
+        <motion.a
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          href={KUBEGRAF_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="lp-pill group mb-9 inline-flex"
+        >
+          <span className="lp-pill-tag">Live</span>
+          KubeGraf v1.0 — our flagship AI SRE platform
+          <ArrowUpRight className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+        </motion.a>
 
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-            className="lp-display text-[clamp(42px,7vw,86px)] max-w-4xl"
-          >
-            Infrastructure that
-            <br />
-            <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>heals itself.</span>
-          </motion.h1>
+        {/* Headline — editorial scale, left-aligned */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
+          className="lp-display text-[clamp(46px,8.4vw,108px)]"
+          style={{ lineHeight: 0.99 }}
+        >
+          Infrastructure that
+          <br />
+          <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>heals itself.</span>
+        </motion.h1>
 
-          {/* Sub */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
-            className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed"
+        {/* Hairline-divided row: manifesto left, actions right */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+          className="mt-12 sm:mt-14 pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8"
+          style={{ borderTop: '1px solid var(--lp-line)' }}
+        >
+          <p
+            className="lg:col-span-6 max-w-xl text-base sm:text-lg leading-relaxed"
             style={{ color: 'var(--lp-ink-2)' }}
           >
             Orkastor builds AI agents for infrastructure operations. Our flagship product,{' '}
@@ -355,48 +359,36 @@ export default function Hero() {
             </a>
             , detects, diagnoses, and fixes Kubernetes incidents in minutes — not hours.
             With AI that runs inside your environment and never exfiltrates your data.
-          </motion.p>
+          </p>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.26, ease: EASE }}
-            className="mt-9 flex flex-col sm:flex-row items-center gap-3"
-          >
-            <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-primary group">
-              Try KubeGraf free
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-ghost">
-              <DiscordIcon className="w-4 h-4" style={{ color: '#5865F2' }} />
-              Join the community
-            </a>
-          </motion.div>
-
-          {/* Trust row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.36 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px]"
-            style={{ color: 'var(--lp-ink-3)' }}
-          >
-            {['Root cause in seconds', 'SafeFix™ signed patches', 'Zero data exfiltration'].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5" style={{ color: 'var(--lp-green)' }} />
-                {t}
-              </span>
-            ))}
-          </motion.div>
-        </div>
+          <div className="lg:col-span-5 lg:col-start-8 flex flex-col items-start gap-5">
+            <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
+              <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-primary group">
+                Try KubeGraf free
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-ghost">
+                <DiscordIcon className="w-4 h-4" style={{ color: 'var(--lp-ink-3)' }} />
+                Join the community
+              </a>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[12.5px]" style={{ color: 'var(--lp-ink-3)' }}>
+              {['Root cause in seconds', 'SafeFix™ signed patches', 'Zero data exfiltration'].map((t, i) => (
+                <React.Fragment key={t}>
+                  {i > 0 && <span aria-hidden="true" className="w-3 h-px" style={{ background: 'var(--lp-line)' }} />}
+                  <span>{t}</span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </motion.div>
 
         {/* Product console */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.42, ease: EASE }}
-          className="mt-14 sm:mt-20 max-w-5xl mx-auto"
+          transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
+          className="mt-16 sm:mt-20"
         >
           <KubeGrafConsole />
         </motion.div>

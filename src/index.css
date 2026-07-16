@@ -1123,11 +1123,12 @@ body:has(.lp)::before { display: none; }
   color: var(--lp-ink);
 }
 
-/* Display headline */
+/* Display headline — lighter than startup-bold, tighter, more air */
 .lp-display {
-  font-weight: 640;
-  letter-spacing: -0.045em;
-  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.048em;
+  line-height: 1.04;
+  text-wrap: balance;
 }
 /* Instrument Serif italic accent inside headlines */
 .lp-serif {
@@ -1144,12 +1145,29 @@ body:has(.lp)::before { display: none; }
 .lp-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 10px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lp-orange-deep);
+}
+/* editorial rule before the label */
+.lp-eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+/* Mono index numeral for editorial section numbering */
+.lp-index {
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--lp-ink-3);
 }
 .lp-pill {
   display: inline-flex;
@@ -1198,18 +1216,18 @@ body:has(.lp)::before { display: none; }
   border: none;
   cursor: pointer;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.25),
-    0 1px 2px rgba(234,100,16,0.35),
-    0 8px 24px rgba(255,122,31,0.28);
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 1px 2px rgba(234,100,16,0.28),
+    0 6px 16px rgba(255,122,31,0.18);
   transition: background .25s, transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s;
 }
 .lp-btn-primary:hover {
   background: var(--lp-orange-deep);
   transform: translateY(-1px);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.25),
-    0 2px 4px rgba(234,100,16,0.35),
-    0 12px 32px rgba(255,122,31,0.38);
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 2px 4px rgba(234,100,16,0.28),
+    0 10px 24px rgba(255,122,31,0.24);
 }
 .lp-btn-primary:active { transform: scale(0.98); }
 
@@ -1256,19 +1274,19 @@ body:has(.lp)::before { display: none; }
 }
 .lp .lp-btn-sm { height: 38px; padding: 0 16px; font-size: 14px; border-radius: 10px; }
 
-/* ─── Cards ────────────────────────────────────────────────────── */
+/* ─── Cards — hairline over shadow: machined, not floating ─────── */
 .lp-card {
   position: relative;
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--lp-surface);
-  border: 1px solid var(--lp-line-soft);
-  box-shadow: 0 1px 2px rgba(22,24,29,0.04), 0 8px 24px rgba(22,24,29,0.04);
+  border: 1px solid var(--lp-line);
+  box-shadow: 0 1px 2px rgba(22,24,29,0.03);
   transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s, border-color .35s;
 }
 .lp-card-hover:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255,122,31,0.30);
-  box-shadow: 0 2px 4px rgba(22,24,29,0.05), 0 18px 44px rgba(22,24,29,0.09);
+  transform: translateY(-2px);
+  border-color: rgba(22,24,29,0.20);
+  box-shadow: 0 1px 2px rgba(22,24,29,0.04), 0 12px 32px rgba(22,24,29,0.07);
 }
 
 /* Product window chrome */
@@ -1329,6 +1347,63 @@ body:has(.lp)::before { display: none; }
 .lp-marquee-mask {
   mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+}
+
+/* ─── Editorial section marker rule ───────────────────────────── */
+.lp-section-marker { border-top: 1px solid var(--lp-line); }
+
+/* ─── Nav links: sliding hairline underline ───────────────────── */
+.lp-navlink {
+  position: relative;
+  color: var(--lp-ink-2);
+  transition: color .25s;
+}
+.lp-navlink::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 5px;
+  height: 1px;
+  background: var(--lp-ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.lp-navlink:hover { color: var(--lp-ink); }
+.lp-navlink:hover::after { transform: scaleX(1); }
+
+/* ─── Paper grain: barely-there tactile texture over the page ─── */
+.lp::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* ─── Footer ghost wordmark — the quiet signature ─────────────── */
+.lp-ghost-wordmark {
+  font-weight: 640;
+  font-size: clamp(72px, 14.5vw, 210px);
+  letter-spacing: -0.055em;
+  line-height: 0.78;
+  color: rgba(22,24,29,0.045);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ─── Focus ring tuned for the light page ─────────────────────── */
+.lp a:focus-visible,
+.lp button:focus-visible,
+.lp [role="button"]:focus-visible {
+  outline: 2px solid rgba(234,100,16,0.55);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 /* ═══════════════════════════════════════════════════════════════

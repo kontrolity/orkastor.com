@@ -1,6 +1,8 @@
-import React from 'react';
-import NavBar from '@/components/landing/NavBar';
-import Footer from '@/components/landing/Footer';
+import React, { useEffect } from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import Nav from '@/components/home/Nav';
+import Footer from '@/components/home/Footer';
+import { Reveal } from '@/components/home/shared';
 
 const VALUES = [
   {
@@ -22,128 +24,156 @@ const VALUES = [
 ];
 
 const STATS = [
-  { value: '500+',  label: 'Beta users' },
-  { value: '18s',   label: 'Mean resolution time' },
-  { value: '80%',   label: 'Faster MTTR' },
-  { value: '0',     label: 'Bytes leave your network' },
+  { value: '500+', label: 'Beta users' },
+  { value: '18s', label: 'Mean resolution time' },
+  { value: '80%', label: 'Faster MTTR' },
+  { value: '0', label: 'Bytes leave your network' },
 ];
 
 export default function About() {
+  useEffect(() => {
+    document.title = 'About – Orkastor';
+  }, []);
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#050505' }}>
-      <NavBar />
+    <div className="lp min-h-screen">
+      <Nav />
 
       <main className="relative overflow-hidden">
-
-        {/* ── Hero ── */}
-        <section className="relative pt-36 pb-24 px-5 sm:px-6">
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 60% 55% at 50% 0%, rgba(59,130,246,0.10) 0%, transparent 70%)' }}
-          />
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.12em] border border-white/[0.09] text-white/[0.28] mb-6">
-              About Orkastor
-            </span>
-            <h1 className="text-[clamp(38px,5.5vw,64px)] font-black tracking-[-0.03em] leading-[1.02] text-white mb-6">
-              The AI platform for<br />
-              <span className="text-gradient-brand">modern infrastructure.</span>
-            </h1>
-            <p className="text-slate-400 text-lg leading-relaxed max-w-xl mx-auto">
-              Orkastor is a modular AI DevOps platform that runs entirely inside your own
-              environment — detecting, diagnosing and resolving infrastructure incidents
-              automatically, with full human oversight at every step.
-            </p>
+        {/* Hero */}
+        <section className="relative pt-[140px] sm:pt-[164px] pb-16 sm:pb-20 lp-hero-wash">
+          <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
+            <Reveal>
+              <div className="lp-eyebrow mb-5 justify-center">About Orkastor</div>
+              <h1 className="lp-display text-[clamp(36px,5.4vw,68px)]">
+                The AI platform for{' '}
+                <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>modern infrastructure.</span>
+              </h1>
+              <p className="mt-6 text-base sm:text-lg leading-relaxed max-w-xl mx-auto" style={{ color: 'var(--lp-ink-2)' }}>
+                Orkastor is a modular AI DevOps platform that runs entirely inside your own
+                environment — detecting, diagnosing and resolving infrastructure incidents
+                automatically, with full human oversight at every step.
+              </p>
+            </Reveal>
           </div>
         </section>
 
-        {/* ── Stats ── */}
-        <section className="border-y border-white/[0.05]" style={{ backgroundColor: '#070707' }}>
-          <div className="max-w-4xl mx-auto px-5 sm:px-6 py-12">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {STATS.map((s) => (
-                <div key={s.label} className="text-center">
-                  <div className="shimmer-stat text-[36px] sm:text-[42px] font-black tracking-[-0.03em] leading-none mb-2">
-                    {s.value}
+        {/* Stats */}
+        <section className="relative">
+          <div className="max-w-6xl mx-auto px-5 sm:px-8">
+            <div className="lp-hairline" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 py-12 sm:py-14">
+              {STATS.map((s, i) => (
+                <Reveal key={s.label} delay={i * 80} className="flex flex-col items-center text-center px-4">
+                  <div
+                    className="w-full flex flex-col items-center"
+                    style={i > 0 ? { borderLeft: '1px solid var(--lp-line-soft)' } : undefined}
+                  >
+                    <span
+                      className="lp-display text-[clamp(34px,4.2vw,52px)]"
+                      style={{ color: 'var(--lp-ink)', fontVariantNumeric: 'tabular-nums' }}
+                    >
+                      {s.value}
+                    </span>
+                    <span
+                      className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] max-w-[200px] leading-relaxed"
+                      style={{ color: 'var(--lp-ink-3)' }}
+                    >
+                      {s.label}
+                    </span>
                   </div>
-                  <div className="text-slate-500 text-sm">{s.label}</div>
-                </div>
+                </Reveal>
               ))}
             </div>
+            <div className="lp-hairline" />
           </div>
         </section>
 
-        {/* ── Mission ── */}
-        <section className="py-24 px-5 sm:px-6">
-          <div className="max-w-3xl mx-auto">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600">
-              Our Mission
-            </span>
-            <h2 className="text-[clamp(28px,4vw,44px)] font-black tracking-[-0.03em] text-white mt-4 mb-6 leading-[1.1]">
-              Make production incidents a solved problem.
-            </h2>
-            <div className="space-y-5 text-slate-400 text-base leading-relaxed">
-              <p>
-                The average SRE team spends 30% of their time responding to incidents they have
-                already seen before. The tools exist to monitor, alert and even diagnose — but
-                nothing closes the loop automatically, safely, and inside your own environment.
-              </p>
-              <p>
-                We are building a modular AI platform where each agent handles a specific domain
-                of ops work: Kubernetes reliability, cloud cost, security posture and beyond.
-                Every agent runs as an operator inside your cluster. No data leaves. No black box.
-                Every fix requires your approval.
-              </p>
-              <p>
-                KubēGraf is the first module. It is available today. The rest are coming.
-              </p>
+        {/* Mission — editorial two-column */}
+        <section className="relative py-20 sm:py-28">
+          <div className="max-w-6xl mx-auto px-5 sm:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              <Reveal className="lg:col-span-4">
+                <div className="lg:sticky lg:top-28">
+                  <div className="lp-eyebrow mb-4">Our mission</div>
+                  <h2 className="lp-display text-[clamp(26px,3.4vw,40px)]">
+                    Make production incidents{' '}
+                    <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>a solved problem.</span>
+                  </h2>
+                </div>
+              </Reveal>
+              <Reveal delay={100} className="lg:col-span-7 lg:col-start-6">
+                <div className="space-y-6 text-[15.5px] sm:text-base leading-[1.75]" style={{ color: 'var(--lp-ink-2)' }}>
+                  <p>
+                    The average SRE team spends 30% of their time responding to incidents they
+                    have already seen before. The tools exist to monitor, alert and even
+                    diagnose — but nothing closes the loop automatically, safely, and inside
+                    your own environment.
+                  </p>
+                  <p>
+                    We are building a modular AI platform where each agent handles a specific
+                    domain of ops work: Kubernetes reliability, cloud cost, security posture
+                    and beyond. Every agent runs as an operator inside your cluster. No data
+                    leaves. No black box. Every fix requires your approval.
+                  </p>
+                  <p>
+                    KubeGraf is the first module. It is available today. The rest are coming.
+                  </p>
+                </div>
+              </Reveal>
             </div>
           </div>
         </section>
 
-        {/* ── Values ── */}
-        <section className="py-20 px-5 sm:px-6 border-t border-white/[0.05]" style={{ backgroundColor: '#070707' }}>
-          <div className="max-w-5xl mx-auto">
-            <div className="mb-12">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600">
-                What we believe
-              </span>
-              <h2 className="text-[clamp(28px,4vw,40px)] font-black tracking-[-0.03em] text-white mt-4">
-                Principles we won't compromise on.
+        {/* Values */}
+        <section className="relative py-20 sm:py-28" style={{ background: 'var(--lp-bg-alt)' }}>
+          <div className="max-w-6xl mx-auto px-5 sm:px-8">
+            <Reveal className="mb-12">
+              <div className="lp-eyebrow mb-4">What we believe</div>
+              <h2 className="lp-display text-[clamp(26px,3.6vw,42px)]">
+                Principles we won&apos;t{' '}
+                <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>compromise on.</span>
               </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            </Reveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {VALUES.map((v, i) => (
-                <div key={v.title} className="bento-card p-7">
-                  <div className="text-[11px] font-mono text-slate-700 mb-3">0{i + 1}</div>
-                  <h3 className="text-white font-semibold text-[15px] mb-2">{v.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{v.desc}</p>
-                </div>
+                <Reveal key={v.title} delay={(i % 2) * 90}>
+                  <div className="lp-card lp-card-hover p-7 h-full">
+                    <div className="lp-index mb-4">0{i + 1}</div>
+                    <h3 className="text-[16px] font-semibold mb-2" style={{ letterSpacing: '-0.015em' }}>{v.title}</h3>
+                    <p className="text-[14px] leading-relaxed" style={{ color: 'var(--lp-ink-2)' }}>{v.desc}</p>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="py-24 px-5 sm:px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-[clamp(28px,4vw,44px)] font-black tracking-[-0.03em] text-white mb-4">
-              Ready to close the loop?
-            </h2>
-            <p className="text-slate-500 text-base leading-relaxed mb-8 max-w-md mx-auto">
-              Book a demo and see Orkastor run inside your own cluster.
-            </p>
-            <a
-              href="https://kubegraf.io/book-demo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-shimmer inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[15px] font-bold hover:scale-[1.02] active:scale-[0.99] transition-transform"
-            >
-              Book a Demo
-            </a>
+        {/* CTA */}
+        <section className="relative py-20 sm:py-28">
+          <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
+            <Reveal>
+              <h2 className="lp-display text-[clamp(28px,4vw,46px)]">
+                Ready to{' '}
+                <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>close the loop?</span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed max-w-md mx-auto" style={{ color: 'var(--lp-ink-2)' }}>
+                Book a demo and see Orkastor run inside your own cluster.
+              </p>
+              <div className="mt-8 flex justify-center">
+                <a
+                  href="https://kubegraf.io/book-demo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lp-btn-dark group"
+                >
+                  Book a demo
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </div>
+            </Reveal>
           </div>
         </section>
-
       </main>
 
       <Footer />

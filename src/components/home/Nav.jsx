@@ -64,10 +64,7 @@ export default function Nav() {
               <a
                 key={l.label}
                 href={l.href}
-                className="px-3.5 py-2 text-[14px] font-medium rounded-lg transition-colors"
-                style={{ color: 'var(--lp-ink-2)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--lp-ink)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--lp-ink-2)'; }}
+                className="lp-navlink px-3.5 py-2 text-[14px] font-medium"
               >
                 {l.label}
               </a>
@@ -79,7 +76,7 @@ export default function Nav() {
               href={KUBEGRAF_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="lp-btn-primary lp-btn-sm group"
+              className="lp-btn-dark lp-btn-sm group"
             >
               Launch KubeGraf
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -132,7 +129,7 @@ export default function Nav() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="lp-btn-primary w-full"
+                className="lp-btn-dark w-full"
               >
                 Launch KubeGraf
                 <ArrowUpRight className="w-4 h-4" />
