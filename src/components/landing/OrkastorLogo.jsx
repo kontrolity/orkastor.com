@@ -38,18 +38,27 @@ const NODES = [
 const nodePts = NODES.map(n => pt(n.angle, R_NODE));
 const triPath = 'M ' + nodePts.map(([x, y]) => `${x},${y}`).join(' L ') + ' Z';
 
+/* Orange (inverted-brand) node palette: amber → orange → ember */
+const ORANGE_LIGHT = ['#F59F0A', '#EA6410', '#C2410C']; // on light backgrounds
+const ORANGE_DARK  = ['#FBBF24', '#FF8A3D', '#FF6B35']; // on dark backgrounds
+
 export default function OrkastorLogo({
   size         = 32,
   showWordmark = true,
   className    = '',
   light        = false,
+  theme        = 'default',   // 'default' (blue-teal-emerald) | 'orange'
 }) {
   const uid = React.useId().replace(/:/g, '');
-  const textColor = light ? '#0a0f1a' : '#f8fafc';
+  const orange = theme === 'orange';
   // On light backgrounds the pale strokes/white core disappear — swap to
   // deeper node colors, slate spokes, and an ink core.
-  const nodeColor = (n) => (light ? n.lightColor : n.color);
-  const spokeStart = light ? '#475569' : '#bfdbfe';
+  const nodeColor = (n, i) => (orange
+    ? (light ? ORANGE_LIGHT[i] : ORANGE_DARK[i])
+    : (light ? n.lightColor : n.color));
+  const spokeStart = orange
+    ? (light ? '#B45309' : '#FDE68A')
+    : (light ? '#475569' : '#bfdbfe');
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
@@ -73,8 +82,8 @@ export default function OrkastorLogo({
                 cx={nx} cy={ny} r="10"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0%"   stopColor={nodeColor(n)} stopOpacity={light ? 0.30 : 0.5} />
-                <stop offset="100%" stopColor={nodeColor(n)} stopOpacity="0" />
+                <stop offset="0%"   stopColor={nodeColor(n, i)} stopOpacity={light ? 0.30 : 0.5} />
+                <stop offset="100%" stopColor={nodeColor(n, i)} stopOpacity="0" />
               </radialGradient>
             );
           })}
@@ -89,8 +98,8 @@ export default function OrkastorLogo({
                 x1="32" y1="32" x2={nx} y2={ny}
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0%"   stopColor={spokeStart}   stopOpacity={light ? 0.55 : 0.7} />
-                <stop offset="100%" stopColor={nodeColor(n)} stopOpacity={light ? 0.65 : 0.4} />
+                <stop offset="0%"   stopColor={spokeStart}      stopOpacity={light ? 0.55 : 0.7} />
+                <stop offset="100%" stopColor={nodeColor(n, i)} stopOpacity={light ? 0.65 : 0.4} />
               </linearGradient>
             );
           })}
@@ -102,9 +111,9 @@ export default function OrkastorLogo({
             x2={nodePts[1][0]} y2={nodePts[1][1]}
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%"   stopColor={nodeColor(NODES[0])} />
-            <stop offset="50%"  stopColor={nodeColor(NODES[1])} />
-            <stop offset="100%" stopColor={nodeColor(NODES[2])} />
+            <stop offset="0%"   stopColor={nodeColor(NODES[0], 0)} />
+            <stop offset="50%"  stopColor={nodeColor(NODES[1], 1)} />
+            <stop offset="100%" stopColor={nodeColor(NODES[2], 2)} />
           </linearGradient>
 
           {/* Node glow */}
@@ -129,15 +138,15 @@ export default function OrkastorLogo({
           <radialGradient id={`${uid}cd`} cx="50%" cy="50%" r="50%">
             {light ? (
               <>
-                <stop offset="0%"   stopColor="#16181D" stopOpacity="1"    />
-                <stop offset="55%"  stopColor="#2563eb" stopOpacity="0.75" />
-                <stop offset="100%" stopColor="#0d9488" stopOpacity="0"    />
+                <stop offset="0%"   stopColor="#16181D" stopOpacity="1" />
+                <stop offset="55%"  stopColor={orange ? '#EA6410' : '#2563eb'} stopOpacity="0.75" />
+                <stop offset="100%" stopColor={orange ? '#F59F0A' : '#0d9488'} stopOpacity="0" />
               </>
             ) : (
               <>
-                <stop offset="0%"   stopColor="#ffffff" stopOpacity="1"    />
-                <stop offset="55%"  stopColor="#60a5fa" stopOpacity="0.85" />
-                <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0"    />
+                <stop offset="0%"   stopColor="#ffffff" stopOpacity="1" />
+                <stop offset="55%"  stopColor={orange ? '#FF8A3D' : '#60a5fa'} stopOpacity="0.85" />
+                <stop offset="100%" stopColor={orange ? '#FBBF24' : '#2dd4bf'} stopOpacity="0" />
               </>
             )}
           </radialGradient>
@@ -149,7 +158,9 @@ export default function OrkastorLogo({
         {/* ── ③ Internal AI workflow triangle ── */}
         <path
           d={triPath}
-          fill={light ? 'rgba(37,99,235,0.05)' : 'rgba(96,165,250,0.04)'}
+          fill={orange
+            ? (light ? 'rgba(234,100,16,0.05)' : 'rgba(255,138,61,0.05)')
+            : (light ? 'rgba(37,99,235,0.05)' : 'rgba(96,165,250,0.04)')}
           stroke={`url(#${uid}tri)`}
           strokeWidth="0.9"
           strokeOpacity={light ? 0.8 : 0.6}
@@ -205,14 +216,21 @@ export default function OrkastorLogo({
         >
           {/* "Orka" — clean white, like Rootly's solid wordmark */}
           <span style={{ color: light ? '#0a0f1a' : '#ffffff' }}>Orka</span>
-          {/* "stor" — brand violet accent */}
+          {/* "stor" — brand accent (orange theme: amber→ember gradient) */}
           <span
-            style={light ? { color: '#0a0f1a' } : {
-              background: 'linear-gradient(135deg, #A78BFA 0%, #7DD3FC 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+            style={orange
+              ? {
+                  background: 'linear-gradient(135deg, #FF8A3D 0%, #EA6410 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }
+              : light ? { color: '#0a0f1a' } : {
+                  background: 'linear-gradient(135deg, #A78BFA 0%, #7DD3FC 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
           >stor</span>
         </span>
       )}

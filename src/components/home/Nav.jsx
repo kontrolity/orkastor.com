@@ -56,7 +56,7 @@ export default function Nav() {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorLogo size={38} showWordmark light />
+            <OrkastorLogo size={38} showWordmark light theme="orange" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -76,7 +76,7 @@ export default function Nav() {
               href={KUBEGRAF_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="lp-btn-dark lp-btn-sm group"
+              className="lp-btn-primary lp-btn-sm group"
             >
               Launch KubeGraf
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -129,7 +129,7 @@ export default function Nav() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="lp-btn-dark w-full"
+                className="lp-btn-primary w-full"
               >
                 Launch KubeGraf
                 <ArrowUpRight className="w-4 h-4" />

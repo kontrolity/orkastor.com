@@ -10,10 +10,19 @@ const STATS = [
 
 export default function StatsBar() {
   return (
-    <section className="relative">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="lp-hairline" />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 py-12 sm:py-16">
+    <section className="relative lp-inverted overflow-hidden">
+      {/* quiet texture: faint dot grid fading out */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.14]"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.55) 1px, transparent 1px)',
+          backgroundSize: '22px 22px',
+          maskImage: 'radial-gradient(ellipse 80% 90% at 50% 0%, black, transparent 85%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 90% at 50% 0%, black, transparent 85%)',
+        }}
+      />
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 py-14 sm:py-16">
           {STATS.map((s, i) => (
             <Reveal
               key={s.label}
@@ -22,17 +31,17 @@ export default function StatsBar() {
             >
               <div
                 className="w-full flex flex-col items-center"
-                style={i > 0 ? { borderLeft: '1px solid var(--lp-line-soft)' } : undefined}
+                style={i > 0 ? { borderLeft: '1px solid rgba(255,255,255,0.22)' } : undefined}
               >
                 <span
                   className="lp-display text-[clamp(36px,4.5vw,56px)]"
-                  style={{ color: 'var(--lp-ink)', fontVariantNumeric: 'tabular-nums' }}
+                  style={{ color: '#fff', fontVariantNumeric: 'tabular-nums' }}
                 >
                   {s.value}
                 </span>
                 <span
                   className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] max-w-[200px] leading-relaxed"
-                  style={{ color: 'var(--lp-ink-3)' }}
+                  style={{ color: 'rgba(255,244,235,0.78)' }}
                 >
                   {s.label}
                 </span>
@@ -40,7 +49,6 @@ export default function StatsBar() {
             </Reveal>
           ))}
         </div>
-        <div className="lp-hairline" />
       </div>
     </section>
   );
