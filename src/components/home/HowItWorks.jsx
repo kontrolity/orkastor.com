@@ -1,5 +1,5 @@
 import React from 'react';
-import { Reveal, SectionHead } from './shared';
+import { Reveal, SectionMarker } from './shared';
 
 const STEPS = [
   {
@@ -38,13 +38,19 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="relative py-20 sm:py-28 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <SectionHead
-          eyebrow="How it works"
-          title={<>From page to post-mortem in <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>18 seconds.</span></>}
-          sub="A real incident, the way KubeGraf runs it."
-        />
+        <SectionMarker index="04" label="How it works" />
 
-        <div className="max-w-3xl mx-auto">
+        <Reveal className="max-w-3xl mb-14 sm:mb-16">
+          <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">
+            From page to post-mortem in{' '}
+            <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>18 seconds.</span>
+          </h2>
+          <p className="mt-5 text-base sm:text-lg leading-relaxed" style={{ color: 'var(--lp-ink-2)' }}>
+            A real incident, the way KubeGraf runs it.
+          </p>
+        </Reveal>
+
+        <div className="max-w-3xl">
           {STEPS.map((s, i) => (
             <Reveal key={s.title} delay={i * 70}>
               <div className="relative flex gap-5 sm:gap-8 pb-10 last:pb-0">

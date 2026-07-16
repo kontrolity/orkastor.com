@@ -42,6 +42,16 @@ export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' })
   );
 }
 
+/** Editorial section marker: full-width hairline rule, eyebrow left, mono index right. */
+export function SectionMarker({ index, label }) {
+  return (
+    <Reveal className="lp-section-marker flex items-center justify-between pt-6 mb-10 sm:mb-12">
+      <div className="lp-eyebrow">{label}</div>
+      {index && <span className="lp-index">{index}</span>}
+    </Reveal>
+  );
+}
+
 /** Section header: eyebrow + headline + optional sub. */
 export function SectionHead({ eyebrow, title, sub, center = true }) {
   return (

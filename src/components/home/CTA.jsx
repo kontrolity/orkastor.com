@@ -9,7 +9,11 @@ export default function CTA() {
         <Reveal>
           <div
             className="relative overflow-hidden rounded-3xl px-6 py-16 sm:px-16 sm:py-20 text-center"
-            style={{ background: 'var(--lp-dark)', boxShadow: '0 32px 80px rgba(22,24,29,0.30)' }}
+            style={{
+              background: 'var(--lp-dark)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 24px 64px rgba(22,24,29,0.22)',
+            }}
           >
             {/* warm glow */}
             <div

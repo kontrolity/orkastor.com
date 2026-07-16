@@ -117,6 +117,13 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      {/* Ghost wordmark — quiet signature closing the page */}
+      <div aria-hidden="true" className="overflow-hidden select-none pointer-events-none">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+          <div className="lp-ghost-wordmark text-center translate-y-[18%]">Orkastor</div>
+        </div>
+      </div>
     </footer>
   );
 }

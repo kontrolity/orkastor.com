@@ -15,13 +15,28 @@ export default function StatsBar() {
         <div className="lp-hairline" />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 py-12 sm:py-16">
           {STATS.map((s, i) => (
-            <Reveal key={s.label} delay={i * 80} className="flex flex-col items-center text-center px-4">
-              <span className="lp-display text-[clamp(36px,4.5vw,56px)]" style={{ color: 'var(--lp-ink)' }}>
-                {s.value}
-              </span>
-              <span className="mt-2 text-[13px] max-w-[180px] leading-snug" style={{ color: 'var(--lp-ink-3)' }}>
-                {s.label}
-              </span>
+            <Reveal
+              key={s.label}
+              delay={i * 80}
+              className="flex flex-col items-center text-center px-4"
+            >
+              <div
+                className="w-full flex flex-col items-center"
+                style={i > 0 ? { borderLeft: '1px solid var(--lp-line-soft)' } : undefined}
+              >
+                <span
+                  className="lp-display text-[clamp(36px,4.5vw,56px)]"
+                  style={{ color: 'var(--lp-ink)', fontVariantNumeric: 'tabular-nums' }}
+                >
+                  {s.value}
+                </span>
+                <span
+                  className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] max-w-[200px] leading-relaxed"
+                  style={{ color: 'var(--lp-ink-3)' }}
+                >
+                  {s.label}
+                </span>
+              </div>
             </Reveal>
           ))}
         </div>

@@ -1,24 +1,21 @@
 import React from 'react';
-import { ArrowUpRight, Radar, Search, Wrench } from 'lucide-react';
-import { KUBEGRAF_URL, Reveal } from './shared';
+import { ArrowUpRight } from 'lucide-react';
+import { KUBEGRAF_URL, Reveal, SectionMarker } from './shared';
 
 const STEPS = [
   {
-    icon: Radar,
     step: '01',
     title: 'Detect',
     text: 'KubeGraf watches events, logs, metrics, and deploys across your clusters — catching CrashLoops, OOMKills, and degradations the moment they start.',
     chip: 'kubectl get events --watch',
   },
   {
-    icon: Search,
     step: '02',
     title: 'Diagnose',
     text: 'Multi-source signals are fused into a single causal timeline. Every root cause comes with an evidence chain and a confidence score — not a guess.',
     chip: 'root cause: memory limit · 96%',
   },
   {
-    icon: Wrench,
     step: '03',
     title: 'Fix',
     text: 'SafeFix™ generates a signed patch, validates it in dry-run, and waits for your approval before touching production. One click, verified rollout.',
@@ -30,12 +27,10 @@ export default function Flagship() {
   return (
     <section id="kubegraf" className="relative py-20 sm:py-28 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <SectionMarker index="02" label="Flagship product · Live" />
+
         {/* Header */}
         <Reveal className="max-w-3xl">
-          <div className="lp-eyebrow mb-4">
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--lp-green)' }} />
-            Flagship product · Live
-          </div>
           <h2 className="lp-display text-[clamp(30px,4.6vw,52px)]">
             Meet <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>KubeGraf</span> —
             the AI SRE platform for Kubernetes.
@@ -53,24 +48,25 @@ export default function Flagship() {
           </div>
         </Reveal>
 
-        {/* Step cards */}
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* Steps — hairline-divided columns, no boxes */}
+        <div
+          className="mt-14 sm:mt-16 pt-10 grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-y-0"
+          style={{ borderTop: '1px solid var(--lp-line)' }}
+        >
           {STEPS.map((s, i) => (
-            <Reveal key={s.title} delay={i * 100}>
-              <div className="lp-card lp-card-hover p-6 sm:p-7 h-full flex flex-col">
-                <div className="flex items-center justify-between mb-5">
-                  <span
-                    className="w-11 h-11 rounded-xl inline-flex items-center justify-center"
-                    style={{ background: 'var(--lp-orange-soft)', color: 'var(--lp-orange-deep)' }}
-                  >
-                    <s.icon className="w-5 h-5" />
-                  </span>
-                  <span className="lp-mono text-[13px] font-medium" style={{ color: 'var(--lp-ink-3)' }}>{s.step}</span>
-                </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ letterSpacing: '-0.02em' }}>{s.title}</h3>
+            <Reveal key={s.title} delay={i * 90}>
+              <div
+                className="h-full flex flex-col md:px-8"
+                style={{
+                  borderLeft: i > 0 ? '1px solid var(--lp-line-soft)' : 'none',
+                  paddingLeft: i === 0 ? 0 : undefined,
+                }}
+              >
+                <div className="lp-index mb-5">{s.step}</div>
+                <h3 className="text-[19px] font-semibold mb-2.5" style={{ letterSpacing: '-0.02em' }}>{s.title}</h3>
                 <p className="text-[14px] leading-relaxed flex-1" style={{ color: 'var(--lp-ink-2)' }}>{s.text}</p>
                 <div
-                  className="mt-5 lp-mono text-[11.5px] px-3 py-2 rounded-lg"
+                  className="mt-6 self-start lp-mono text-[11.5px] px-3 py-2 rounded-lg"
                   style={{ background: 'rgba(22,24,29,0.04)', color: 'var(--lp-ink-2)', border: '1px solid var(--lp-line-soft)' }}
                 >
                   <span style={{ color: 'var(--lp-orange-deep)' }}>›</span> {s.chip}
