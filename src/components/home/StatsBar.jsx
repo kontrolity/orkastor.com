@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Reveal } from './shared';
 
 const STATS = [
-  { value: '18s',  label: 'median time to root cause' },
-  { value: '80%',  label: 'reduction in MTTR' },
-  { value: '100%', label: 'AI inference in your environment' },
-  { value: '0',    label: 'bytes of data exfiltrated' },
+  { end: 18, suffix: 's', label: 'median time to root cause' },
+  { end: 80, suffix: '%', label: 'reduction in MTTR' },
+  { end: 100, suffix: '%', label: 'AI inference in your environment' },
+  { end: 0, suffix: '', label: 'bytes of data exfiltrated' },
 ];
+
+/** Counts from 0 to `end` when scrolled into view; honors reduced motion. */
+function CountUp({ end, suffix }) {
+  const ref = useRef(null);
+  const [val, setVal] = useState(end === 0 ? 0 : null); // null = not started
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || end === 0) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setVal(end);
+      return undefined;
+    }
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      const t0 = performance.now();
+      const dur = 1100;
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setVal(Math.round(end * eased));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [end]);
+
+  return (
+    <span ref={ref}>
+      {val === null ? 0 : val}
+      {suffix}
+    </span>
+  );
+}
 
 export default function StatsBar() {
   return (
@@ -37,7 +74,7 @@ export default function StatsBar() {
                   className="lp-display text-[clamp(36px,4.5vw,56px)]"
                   style={{ color: '#fff', fontVariantNumeric: 'tabular-nums' }}
                 >
-                  {s.value}
+                  <CountUp end={s.end} suffix={s.suffix} />
                 </span>
                 <span
                   className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] max-w-[200px] leading-relaxed"

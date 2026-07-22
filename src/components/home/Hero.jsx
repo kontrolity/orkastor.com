@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2, Lock, ShieldCheck, Zap } from 'lucide-react';
 import { DiscordIcon, DISCORD_URL, KUBEGRAF_URL } from './shared';
@@ -298,6 +298,189 @@ function KubeGrafConsole() {
   );
 }
 
+/* ── Slack surface — the agent where your team already works ── */
+function SlackView() {
+  return (
+    <div className="lp-window select-none" aria-hidden="true">
+      <div className="lp-window-bar">
+        <span className="w-3 h-3 rounded-full" style={{ background: '#FF5F57' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#FEBC2E' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#28C840' }} />
+        <div className="flex-1 flex justify-center px-2">
+          <span className="lp-mono text-[11px]" style={{ color: 'var(--lp-ink-3)' }}># incidents — Slack</span>
+        </div>
+        <span className="w-16" />
+      </div>
+
+      <div className="p-4 sm:p-6 space-y-4">
+        {/* Bot: detection */}
+        <div className="flex gap-3">
+          <span className="w-8 h-8 rounded-lg shrink-0 inline-flex items-center justify-center text-[11px] font-bold"
+            style={{ background: 'var(--lp-orange)', color: '#fff' }}>KG</span>
+          <div className="min-w-0">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>KubeGraf</span>
+              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'rgba(22,24,29,0.07)', color: 'var(--lp-ink-3)' }}>app</span>
+              <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:02</span>
+            </div>
+            <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
+              🔴 <span className="font-semibold" style={{ color: 'var(--lp-ink)' }}>P1 · payments-api</span> is
+              crash-looping in <span className="lp-mono text-[12.5px]">production</span> — investigating…
+            </p>
+            {/* RCA reply */}
+            <p className="text-[13.5px] mt-2" style={{ color: 'var(--lp-ink-2)' }}>
+              Root cause <span className="font-semibold" style={{ color: 'var(--lp-ink)' }}>(96% confidence)</span>:
+              memory limit 512Mi exceeded after deploy <span className="lp-mono text-[12.5px]">v2.3.1</span>.
+              Evidence: deploy → heap growth → OOMKill → restart loop.
+            </p>
+            {/* SafeFix attachment */}
+            <div className="mt-3 pl-3 py-2.5 pr-3 rounded-r-xl max-w-md"
+              style={{ borderLeft: '3px solid var(--lp-orange)', background: 'var(--lp-orange-soft)' }}>
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <span className="text-[12px] font-bold" style={{ color: 'var(--lp-ink)' }}>SafeFix™ patch ready</span>
+                <span className="text-[10px] font-semibold inline-flex items-center gap-1" style={{ color: 'var(--lp-green)' }}>
+                  <ShieldCheck className="w-3 h-3" /> signed · dry-run ✓
+                </span>
+              </div>
+              <div className="lp-mono text-[12px] mb-2.5" style={{ color: 'var(--lp-ink-2)' }}>
+                limits.memory: <span style={{ color: 'var(--lp-red)' }}>512Mi</span> → <span style={{ color: 'var(--lp-green)' }}>1Gi</span> · rolling restart
+              </div>
+              <div className="flex gap-2">
+                <span className="h-8 px-3.5 rounded-lg inline-flex items-center text-[12px] font-semibold"
+                  style={{ background: 'var(--lp-green)', color: '#fff' }}>Approve</span>
+                <span className="h-8 px-3.5 rounded-lg inline-flex items-center text-[12px] font-medium"
+                  style={{ background: '#fff', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}>Dismiss</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Human approval */}
+        <div className="flex gap-3">
+          <span className="w-8 h-8 rounded-lg shrink-0 inline-flex items-center justify-center text-[11px] font-bold"
+            style={{ background: 'rgba(22,24,29,0.08)', color: 'var(--lp-ink-2)' }}>DR</span>
+          <div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>dana</span>
+              <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:03</span>
+            </div>
+            <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>approved ✅ — thanks KubeGraf</p>
+          </div>
+        </div>
+
+        {/* Bot: resolution */}
+        <div className="flex gap-3">
+          <span className="w-8 h-8 rounded-lg shrink-0 inline-flex items-center justify-center text-[11px] font-bold"
+            style={{ background: 'var(--lp-orange)', color: '#fff' }}>KG</span>
+          <div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>KubeGraf</span>
+              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'rgba(22,24,29,0.07)', color: 'var(--lp-ink-3)' }}>app</span>
+              <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:03</span>
+            </div>
+            <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
+              ✅ Applied — rollout 3/3 healthy. <span className="font-semibold" style={{ color: 'var(--lp-ink)' }}>Resolved in 18s.</span> Post-mortem timeline drafted.
+            </p>
+            <div className="flex gap-1.5 mt-2">
+              {['🎉 3', '🙌 2', '⚡ 1'].map((r) => (
+                <span key={r} className="text-[11px] px-2 py-0.5 rounded-full"
+                  style={{ background: 'rgba(22,24,29,0.05)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}>{r}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── CLI surface ─────────────────────────────────────────────── */
+function CliView() {
+  const LINES = [
+    { c: '#E6E8EE', t: '$ kubegraf investigate payments-api -n production' },
+    { c: 'rgba(230,232,238,0.55)', t: '▸ correlating events, logs, metrics, rollouts…' },
+    { c: '#4ADE80', t: '✓ root cause: memory limit 512Mi exceeded after deploy v2.3.1  (confidence 96%)' },
+    { c: 'rgba(230,232,238,0.55)', t: '▸ generating SafeFix™ patch… signed sha256:9f2c…e81a' },
+    { c: '#4ADE80', t: '✓ dry-run passed · blast radius: 1 deployment · rollback ready' },
+    { c: '#FBBF24', t: '? apply patch to production — approve in Slack or press [y]  y' },
+    { c: '#4ADE80', t: '✓ applied · rollout 3/3 healthy · resolved in 18s' },
+  ];
+  return (
+    <div className="lp-window select-none" aria-hidden="true">
+      <div className="lp-window-bar">
+        <span className="w-3 h-3 rounded-full" style={{ background: '#FF5F57' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#FEBC2E' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#28C840' }} />
+        <div className="flex-1 flex justify-center px-2">
+          <span className="lp-mono text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>kubegraf — zsh</span>
+        </div>
+        <span className="w-16" />
+      </div>
+      <div className="p-5 sm:p-7 lp-mono text-[12px] sm:text-[13px] leading-[1.9]" style={{ background: 'var(--lp-dark)' }}>
+        {LINES.map((l, i) => (
+          <div key={i} style={{ color: l.c }}>{l.t}</div>
+        ))}
+        <div className="flex items-center gap-0.5" style={{ color: '#E6E8EE' }}>
+          $ <span className="inline-block w-2 h-4 ml-1 animate-cursor-blink" style={{ background: 'var(--lp-orange)' }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Tabbed demo: Console / Slack / CLI ──────────────────────── */
+const DEMO_TABS = [
+  { key: 'console', label: 'Console' },
+  { key: 'slack', label: 'Slack' },
+  { key: 'cli', label: 'CLI' },
+];
+
+function DemoTabs() {
+  const [active, setActive] = useState(0);
+  const pausedRef = useRef(false);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      if (!pausedRef.current) setActive((a) => (a + 1) % DEMO_TABS.length);
+    }, 8000);
+    return () => clearInterval(t);
+  }, []);
+
+  const select = (i) => {
+    pausedRef.current = true; // manual choice wins; stop auto-rotation
+    setActive(i);
+  };
+
+  return (
+    <div>
+      <div role="tablist" aria-label="KubeGraf demo surfaces" className="flex items-center gap-1.5 mb-4">
+        {DEMO_TABS.map((t, i) => (
+          <button
+            key={t.key}
+            role="tab"
+            aria-selected={active === i}
+            onClick={() => select(i)}
+            className="h-9 px-4 rounded-full text-[13px] font-semibold transition-all"
+            style={active === i
+              ? { background: 'var(--lp-ink)', color: '#fff' }
+              : { background: 'var(--lp-surface)', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}
+          >
+            {t.label}
+          </button>
+        ))}
+        <span className="ml-auto hidden sm:block lp-mono text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>
+          same agent, every surface
+        </span>
+      </div>
+      <div role="tabpanel">
+        {active === 0 && <KubeGrafConsole />}
+        {active === 1 && <SlackView />}
+        {active === 2 && <CliView />}
+      </div>
+    </div>
+  );
+}
+
 /* ── Hero ────────────────────────────────────────────────────── */
 export default function Hero() {
   return (
@@ -390,7 +573,7 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
           className="mt-16 sm:mt-20"
         >
-          <KubeGrafConsole />
+          <DemoTabs />
         </motion.div>
       </div>
     </section>
