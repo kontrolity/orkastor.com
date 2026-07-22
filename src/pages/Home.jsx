@@ -18,7 +18,7 @@ const Footer = lazy(() => import('@/components/home/Footer'));
 export default function Home() {
   return (
     <div className="lp min-h-screen">
-      <Nav />
+      <Nav darkHero />
       <main>
         <Hero />
         <Integrations />
