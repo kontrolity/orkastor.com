@@ -1080,7 +1080,9 @@ body::before {
 
 @font-face {
   font-family: 'Geist';
-  src: url('/fonts/geist/Geist-Variable.woff2') format('woff2-variations');
+  src:
+    url('/fonts/geist/Geist-Variable.woff2') format('woff2-variations'),
+    url('/fonts/geist/Geist-Variable.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -1108,8 +1110,12 @@ body::before {
   font-family: 'Geist', 'Instrument Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--lp-bg);
   color: var(--lp-ink);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.008em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;               /* never fake bold/italic */
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
 }
 
 /* Landing pages hide the legacy site-wide grain + vignette */
@@ -1125,19 +1131,22 @@ body:has(.lp) { background-color: #FAF8F4; }
   color: var(--lp-ink);
 }
 
-/* Display headline — lighter than startup-bold, tighter, more air */
+/* Display headline — restrained production scale, SF/Inter-class tightness */
 .lp-display {
-  font-weight: 600;
-  letter-spacing: -0.048em;
-  line-height: 1.04;
+  font-weight: 650;
+  letter-spacing: -0.032em;
+  line-height: 1.06;
   text-wrap: balance;
+  font-variant-numeric: tabular-nums;
 }
-/* Instrument Serif italic accent inside headlines */
+/* Headline emphasis — clean weighted sans, colored by context.
+   (Previously Instrument Serif italic; retired as too decorative
+   for a production-grade type system.) */
 .lp-serif {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  font-family: 'Geist', system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 720;
+  letter-spacing: -0.034em;
 }
 .lp-mono {
   font-family: 'Geist Mono', 'JetBrains Mono', 'IBM Plex Mono', monospace;
