@@ -519,8 +519,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-          className="lp-display text-[clamp(46px,8.4vw,108px)]"
-          style={{ lineHeight: 0.99, color: '#FAF8F4' }}
+          className="lp-display text-[clamp(42px,6.8vw,88px)]"
+          style={{ color: '#FAF8F4' }}
         >
           Infrastructure that
           <br />
