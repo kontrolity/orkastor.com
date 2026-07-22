@@ -81,7 +81,7 @@ export default function Platform() {
   return (
     <section id="platform" className="relative py-20 sm:py-28 scroll-mt-20" style={{ background: 'var(--lp-bg-alt)' }}>
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <SectionMarker index="05" label="The Orkastor platform" />
+        <SectionMarker index="07" label="The Orkastor platform" />
 
         <Reveal className="max-w-3xl mb-14 sm:mb-16">
           <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">

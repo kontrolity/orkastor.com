@@ -11,7 +11,7 @@ export const DiscordIcon = ({ className, ...props }) => (
 );
 
 /** Adds .is-in when the element scrolls into view (drives .lp-reveal). */
-export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' }) {
+export function Reveal({ children, className = '', delay = 0, as: Tag = 'div', style }) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
 
@@ -38,7 +38,7 @@ export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' })
     {
       ref,
       className: `lp-reveal ${inView ? 'is-in' : ''} ${className}`,
-      style: delay ? { transitionDelay: `${delay}ms` } : undefined,
+      style: delay ? { ...style, transitionDelay: `${delay}ms` } : style,
     },
     children
   );
