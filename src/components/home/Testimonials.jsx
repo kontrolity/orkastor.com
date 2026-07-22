@@ -1,6 +1,6 @@
 import React from 'react';
 import { Star } from 'lucide-react';
-import { Reveal, SectionHead } from './shared';
+import { Reveal, SectionMarker } from './shared';
 
 const FEATURED = {
   quote: "Orkastor reduced our P0 response time from 45 minutes to under 2 minutes. The AI's root cause analysis is eerily accurate — it caught a memory leak we'd been chasing for months within 8 seconds. Our on-call rotation is finally sustainable.",
@@ -49,10 +49,12 @@ export default function Testimonials() {
   return (
     <section className="relative py-20 sm:py-28">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <SectionHead
-          eyebrow="What engineers say"
-          title={<>On-call, but <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>sustainable.</span></>}
-        />
+        <SectionMarker index="06" label="What engineers say" />
+        <Reveal className="max-w-3xl mb-12 sm:mb-14">
+          <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">
+            On-call, but <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>sustainable.</span>
+          </h2>
+        </Reveal>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Featured */}
           <Reveal>

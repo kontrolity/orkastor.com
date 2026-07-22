@@ -11,7 +11,7 @@ export const DiscordIcon = ({ className, ...props }) => (
 );
 
 /** Adds .is-in when the element scrolls into view (drives .lp-reveal). */
-export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' }) {
+export function Reveal({ children, className = '', delay = 0, as: Tag = 'div', style }) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
 
@@ -31,14 +31,26 @@ export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' })
     return () => io.disconnect();
   }, []);
 
+  // createElement instead of <Tag>: tsc can't map a dynamic string tag to
+  // its intrinsic props and rejects the JSX form under checkJs.
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      className: `lp-reveal ${inView ? 'is-in' : ''} ${className}`,
+      style: delay ? { ...style, transitionDelay: `${delay}ms` } : style,
+    },
+    children
+  );
+}
+
+/** Editorial section marker: full-width hairline rule, eyebrow left, mono index right. */
+export function SectionMarker({ index, label }) {
   return (
-    <Tag
-      ref={ref}
-      className={`lp-reveal ${inView ? 'is-in' : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
-    >
-      {children}
-    </Tag>
+    <Reveal className="lp-section-marker flex items-center justify-between pt-6 mb-10 sm:mb-12">
+      <div className="lp-eyebrow">{label}</div>
+      {index && <span className="lp-index">{index}</span>}
+    </Reveal>
   );
 }
 

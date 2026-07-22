@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { Reveal, SectionHead } from './shared';
+import { Reveal, SectionMarker } from './shared';
 
 const ITEMS = [
   {
@@ -60,10 +60,12 @@ export default function Faq() {
   return (
     <section id="faq" className="relative py-20 sm:py-28 scroll-mt-20" style={{ background: 'var(--lp-bg-alt)' }}>
       <div className="max-w-3xl mx-auto px-5 sm:px-8">
-        <SectionHead
-          eyebrow="FAQ"
-          title={<>Questions, <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>answered.</span></>}
-        />
+        <SectionMarker index="08" label="FAQ" />
+        <Reveal className="mb-10 sm:mb-12">
+          <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">
+            Questions, <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>answered.</span>
+          </h2>
+        </Reveal>
         <Reveal>
           <div className="space-y-3">
             {ITEMS.map((item, i) => (

@@ -32,7 +32,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-10 mb-12">
           {/* Brand */}
           <div className="col-span-2 flex flex-col items-start">
-            <OrkastorLogo size={34} showWordmark light className="mb-4" />
+            <OrkastorLogo size={34} showWordmark light theme="orange" className="mb-4" />
             <p className="text-[13.5px] leading-relaxed max-w-[250px] mb-5" style={{ color: 'var(--lp-ink-2)' }}>
               AI agents for infrastructure operations — starting with KubeGraf,
               the AI SRE platform for Kubernetes.
@@ -115,6 +115,13 @@ export default function Footer() {
             </a>{' '}
             is a registered trademark of ORKASTOR LIMITED.
           </p>
+        </div>
+      </div>
+
+      {/* Ghost wordmark — quiet signature closing the page */}
+      <div aria-hidden="true" className="overflow-hidden select-none pointer-events-none">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+          <div className="lp-ghost-wordmark text-center translate-y-[18%]">Orkastor</div>
         </div>
       </div>
     </footer>

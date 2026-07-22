@@ -24,13 +24,18 @@ export default function Security() {
         }}
       />
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
+        {/* Editorial marker (dark variant) */}
+        <Reveal className="flex items-center justify-between pt-6 mb-10 sm:mb-12" style={{ borderTop: '1px solid rgba(255,255,255,0.14)' }}>
+          <div className="lp-eyebrow" style={{ color: 'var(--lp-amber)' }}>
+            <ShieldCheck className="w-4 h-4" />
+            Security &amp; privacy
+          </div>
+          <span className="lp-index" style={{ color: 'rgba(230,232,238,0.45)' }}>05</span>
+        </Reveal>
+
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-start">
           {/* Left: headline + quote */}
           <Reveal>
-            <div className="lp-eyebrow mb-4" style={{ color: 'var(--lp-amber)' }}>
-              <ShieldCheck className="w-4 h-4" />
-              Security &amp; privacy
-            </div>
             <h2 className="lp-display text-[clamp(28px,4.2vw,46px)]" style={{ color: '#fff' }}>
               Your data never leaves your network.{' '}
               <span className="lp-serif" style={{ color: 'var(--lp-orange)' }}>Period.</span>

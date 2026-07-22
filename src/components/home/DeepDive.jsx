@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { KUBEGRAF_URL, Reveal } from './shared';
+import { KUBEGRAF_URL, Reveal, SectionMarker } from './shared';
 
 /* ── Visual panels ───────────────────────────────────────────── */
 
@@ -175,16 +175,14 @@ export default function DeepDive() {
   return (
     <section id="kubegraf" className="relative py-20 sm:py-28 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <SectionMarker index="02" label="Flagship product · Live" />
+
         {/* Section header */}
         <Reveal className="max-w-3xl mb-16 sm:mb-20">
-          <div className="lp-eyebrow mb-4">
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--lp-green)' }} />
-            Flagship product · Live
-          </div>
           <h2 className="lp-display text-[clamp(30px,4.6vw,52px)]">
             Things break. <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>All the time.</span>
             <br />
-            Meet KubeGraf — the AI SRE that handles it.
+            Meet <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>KubeGraf</span> — the AI SRE that handles it.
           </h2>
           <p className="mt-5 text-base sm:text-lg leading-relaxed max-w-2xl" style={{ color: 'var(--lp-ink-2)' }}>
             The 3 a.m. page, answered by an agent that already knows your cluster.
