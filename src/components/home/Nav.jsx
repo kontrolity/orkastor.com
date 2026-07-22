@@ -7,7 +7,7 @@ import { KUBEGRAF_URL } from './shared';
 const LINKS = [
   { label: 'KubeGraf', href: '/#kubegraf' },
   { label: 'Features', href: '/#features' },
-  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'Security', href: '/#security' },
   { label: 'Platform', href: '/#platform' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },

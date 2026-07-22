@@ -5,10 +5,13 @@ import Integrations from '@/components/home/Integrations';
 import StatsBar from '@/components/home/StatsBar';
 
 // Below-the-fold sections are code-split so the hero paints with a small bundle.
-const Flagship = lazy(() => import('@/components/home/Flagship'));
+const DeepDive = lazy(() => import('@/components/home/DeepDive'));
 const Features = lazy(() => import('@/components/home/Features'));
 const HowItWorks = lazy(() => import('@/components/home/HowItWorks'));
+const Security = lazy(() => import('@/components/home/Security'));
+const Testimonials = lazy(() => import('@/components/home/Testimonials'));
 const Platform = lazy(() => import('@/components/home/Platform'));
+const Faq = lazy(() => import('@/components/home/Faq'));
 const CTA = lazy(() => import('@/components/home/CTA'));
 const Footer = lazy(() => import('@/components/home/Footer'));
 
@@ -21,10 +24,13 @@ export default function Home() {
         <Integrations />
         <StatsBar />
         <Suspense fallback={null}>
-          <Flagship />
+          <DeepDive />
           <Features />
           <HowItWorks />
+          <Security />
+          <Testimonials />
           <Platform />
+          <Faq />
           <CTA />
         </Suspense>
       </main>
