@@ -196,6 +196,49 @@ export default function DeepDive() {
           </div>
         </Reveal>
 
+        {/* Before / after — the outcome in one glance */}
+        <Reveal className="mb-20 sm:mb-28">
+          <div className="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden"
+            style={{ border: '1px solid var(--lp-line)' }}>
+            <div className="p-6 sm:p-8" style={{ background: 'rgba(22,24,29,0.03)' }}>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-4" style={{ color: 'var(--lp-ink-3)' }}>
+                On-call without KubeGraf
+              </div>
+              <ul className="space-y-3">
+                {[
+                  '40 alerts firing for one root cause',
+                  'Dashboard archaeology across five tools',
+                  'kubectl in one hand, runbook in the other',
+                  '45 minutes to a fix — if you get lucky',
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-2.5 text-[14px]" style={{ color: 'var(--lp-ink-3)' }}>
+                    <span className="mt-[9px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'rgba(22,24,29,0.25)' }} />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-6 sm:p-8" style={{ background: 'var(--lp-surface)', borderLeft: '1px solid var(--lp-line-soft)' }}>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-4" style={{ color: 'var(--lp-orange-deep)' }}>
+                On-call with KubeGraf
+              </div>
+              <ul className="space-y-3">
+                {[
+                  'One incident, signals already correlated',
+                  'Root cause with evidence chain — 96% confidence',
+                  'A signed SafeFix™ patch, dry-run validated',
+                  '18 seconds to root cause. One click to fix.',
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-2.5 text-[14px] font-medium" style={{ color: 'var(--lp-ink)' }}>
+                    <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--lp-orange-deep)' }} />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Reveal>
+
         {/* Alternating deep-dive rows */}
         <div className="space-y-20 sm:space-y-28">
           {BLOCKS.map((b, i) => (
