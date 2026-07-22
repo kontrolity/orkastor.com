@@ -13,7 +13,7 @@ const LINKS = [
   { label: 'About', href: '/about' },
 ];
 
-export default function Nav() {
+export default function Nav({ darkHero = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
@@ -41,6 +41,10 @@ export default function Nav() {
     };
   }, [open]);
 
+  // Over the dark hero the nav floats transparent with light text,
+  // then flips to the light glass bar once the page scrolls.
+  const overDark = darkHero && !scrolled;
+
   return (
     <>
       <header
@@ -56,7 +60,7 @@ export default function Nav() {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorLogo size={38} showWordmark light theme="orange" />
+            <OrkastorLogo size={38} showWordmark light={!overDark} theme="orange" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -64,7 +68,7 @@ export default function Nav() {
               <a
                 key={l.label}
                 href={l.href}
-                className="lp-navlink px-3.5 py-2 text-[14px] font-medium"
+                className={`${overDark ? 'lp-navlink-dark' : 'lp-navlink'} px-3.5 py-2 text-[14px] font-medium`}
               >
                 {l.label}
               </a>
@@ -86,7 +90,7 @@ export default function Nav() {
           <button
             ref={toggleRef}
             className="lg:hidden p-2 -mr-2 rounded-lg"
-            style={{ color: 'var(--lp-ink)' }}
+            style={{ color: overDark ? '#fff' : 'var(--lp-ink)' }}
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}

@@ -1413,6 +1413,83 @@ body:has(.lp) { background-color: #FAF8F4; }
 .lp-navlink:hover { color: var(--lp-ink); }
 .lp-navlink:hover::after { transform: scaleX(1); }
 
+/* Dark variant — used while the nav floats over the dark hero */
+.lp-navlink-dark {
+  position: relative;
+  color: rgba(230,232,238,0.75);
+  transition: color .25s;
+}
+.lp-navlink-dark::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 5px;
+  height: 1px;
+  background: var(--lp-orange);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.lp-navlink-dark:hover { color: #fff; }
+.lp-navlink-dark:hover::after { transform: scaleX(1); }
+
+/* ─── Dark cinematic hero ─────────────────────────────────────── */
+.lp-hero-dark {
+  background:
+    radial-gradient(ellipse 75% 55% at 72% -12%, rgba(255,122,31,0.22), transparent 58%),
+    radial-gradient(ellipse 55% 45% at 8% 105%, rgba(234,100,16,0.15), transparent 60%),
+    radial-gradient(ellipse 45% 40% at 92% 82%, rgba(245,159,10,0.10), transparent 60%),
+    linear-gradient(180deg, #0C0D11 0%, #101116 70%, #14151B 100%);
+}
+.lp-hero-dark .lp-dot-grid-dark {
+  background-image: radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.lp-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 7px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(230,232,238,0.82);
+  transition: border-color .25s, background .25s, transform .25s;
+}
+.lp-pill-dark:hover {
+  border-color: rgba(255,122,31,0.55);
+  background: rgba(255,255,255,0.09);
+  transform: translateY(-1px);
+}
+.lp-btn-ghost-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 550;
+  border: 1px solid rgba(255,255,255,0.22);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color .25s, background .25s, transform .25s;
+}
+.lp-btn-ghost-dark:hover {
+  border-color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.09);
+  transform: translateY(-1px);
+}
+
 /* ─── Paper grain: barely-there tactile texture over the page ─── */
 .lp::before {
   content: '';
