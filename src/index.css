@@ -1115,6 +1115,8 @@ body::before {
 /* Landing pages hide the legacy site-wide grain + vignette */
 body:has(.lp)::after,
 body:has(.lp)::before { display: none; }
+/* Match the page bg so overscroll / fast-scroll never flashes the dark legacy body */
+body:has(.lp) { background-color: #FAF8F4; }
 
 .lp ::selection { background: rgba(255,122,31,0.25); color: var(--lp-ink); }
 
