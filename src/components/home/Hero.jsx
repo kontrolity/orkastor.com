@@ -543,7 +543,7 @@ export default function Hero() {
             With AI that runs inside your environment and never exfiltrates your data.
           </p>
 
-          <div className="lg:col-span-5 lg:col-start-8 flex flex-col items-start gap-5">
+          <div className="lg:col-span-5 lg:col-start-8 flex flex-col items-start gap-4">
             <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
               <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-primary group">
                 Try KubeGraf free
@@ -554,14 +554,15 @@ export default function Hero() {
                 Join the community
               </a>
             </div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[12.5px]" style={{ color: 'var(--lp-ink-3)' }}>
-              {['Root cause in seconds', 'SafeFix™ signed patches', 'Zero data exfiltration'].map((t, i) => (
-                <React.Fragment key={t}>
-                  {i > 0 && <span aria-hidden="true" className="w-3 h-px" style={{ background: 'var(--lp-line)' }} />}
-                  <span>{t}</span>
-                </React.Fragment>
+            {/* Friction reducers + proof, scannable checks */}
+            <ul className="flex flex-col gap-1.5 text-[13px]" style={{ color: 'var(--lp-ink-2)' }}>
+              {['Free to start — no credit card', 'Set up in your cluster in minutes', 'Zero data exfiltration, guaranteed'].map((t) => (
+                <li key={t} className="inline-flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--lp-green)' }} />
+                  {t}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </motion.div>
 
@@ -570,9 +571,20 @@ export default function Hero() {
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.38, ease: EASE }}
-          className="mt-16 sm:mt-20"
+          className="relative mt-16 sm:mt-20"
         >
-          <DemoTabs />
+          {/* Warm bloom anchors the console and draws the eye down from the CTAs */}
+          <div
+            aria-hidden="true"
+            className="absolute -inset-x-10 -top-12 -bottom-16 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 55% 45% at 50% 42%, rgba(255,122,31,0.10), transparent 65%)',
+              filter: 'blur(6px)',
+            }}
+          />
+          <div className="relative">
+            <DemoTabs />
+          </div>
         </motion.div>
       </div>
     </section>
