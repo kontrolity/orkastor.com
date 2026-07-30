@@ -20,13 +20,13 @@ const CELL = 13;
 const GAP = 1;
 const FPS = 30;
 
-/* palette (brand mapping of the reference's blue/black/yellow/red/lime) */
-const C_BASE = '#F0E8DB';   // sand base field
-const C_INK = '#1E212A';    // speckle clusters
-const C_AMBER = '#F5A623';  // plume mass
-const C_ORANGE = '#FF7A1F'; // plume ridge
-const C_RED = '#DC2828';    // hot chains / hotspot core
-const C_GREEN = '#7ED957';  // rim accents
+/* palette — exact colors sampled from the reference video */
+const C_BASE = '#394BD1';   // blue base field
+const C_INK = '#1C1E35';    // black speckle clusters
+const C_AMBER = '#ECC31D';  // yellow plume mass
+const C_ORANGE = '#ECC31D'; // ridge (reference uses the same yellow)
+const C_RED = '#CC2E2B';    // red chains / hotspot core
+const C_GREEN = '#D6FF07';  // lime rim accents
 
 function makeNoise() {
   const hash = (x, y) => {
@@ -106,10 +106,10 @@ export default function PixelField({ className = '' }) {
 
           // color decision, reference structure:
           let color;
-          if (p < 0.46) {
+          if (p < 0.52) {
             color = s > 0.64 ? C_INK : C_BASE;            // calm zone + speckle
-          } else if (p < 0.60) {
-            color = s > 0.46 ? C_AMBER : C_BASE;          // dithered plume edge
+          } else if (p < 0.64) {
+            color = s > 0.48 ? C_AMBER : C_BASE;          // dithered plume edge
           } else {
             if (s > 0.90 && p > 0.72) color = C_GREEN;    // rare rim sparks
             else if (s > 0.70) color = C_RED;             // hot chains on spine
