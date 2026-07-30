@@ -59,7 +59,7 @@ function AgentRow({ agent, index }) {
           className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full inline-flex items-center gap-1.5"
           style={agent.live
             ? { background: 'rgba(23,163,74,0.10)', color: 'var(--lp-green)' }
-            : { background: 'rgba(22,24,29,0.05)', color: 'var(--lp-ink-3)' }}
+            : { background: 'var(--lp-fill)', color: 'var(--lp-ink-3)' }}
         >
           {agent.live && <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--lp-green)' }} />}
           {agent.tag}

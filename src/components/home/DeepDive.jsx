@@ -88,12 +88,12 @@ function DiagnoseVisual() {
                 {c.conf}%
               </span>
             </div>
-            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(22,24,29,0.06)' }}>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--lp-fill-2)' }}>
               <div
                 className="h-full rounded-full"
                 style={{
                   width: `${c.conf}%`,
-                  background: c.top ? 'linear-gradient(90deg, var(--lp-orange), var(--lp-amber))' : 'rgba(22,24,29,0.18)',
+                  background: c.top ? 'linear-gradient(90deg, var(--lp-orange), var(--lp-amber))' : 'var(--lp-ink-3)',
                 }}
               />
             </div>
@@ -200,7 +200,7 @@ export default function DeepDive() {
         <Reveal className="mb-20 sm:mb-28">
           <div className="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden"
             style={{ border: '1px solid var(--lp-line)' }}>
-            <div className="p-6 sm:p-8" style={{ background: 'rgba(22,24,29,0.03)' }}>
+            <div className="p-6 sm:p-8" style={{ background: 'var(--lp-fill)' }}>
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-4" style={{ color: 'var(--lp-ink-3)' }}>
                 On-call without KubeGraf
               </div>
@@ -212,7 +212,7 @@ export default function DeepDive() {
                   '45 minutes to a fix — if you get lucky',
                 ].map((t) => (
                   <li key={t} className="flex items-start gap-2.5 text-[14px]" style={{ color: 'var(--lp-ink-3)' }}>
-                    <span className="mt-[9px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'rgba(22,24,29,0.25)' }} />
+                    <span className="mt-[9px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'var(--lp-ink-3)' }} />
                     {t}
                   </li>
                 ))}

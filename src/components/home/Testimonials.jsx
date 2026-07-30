@@ -60,7 +60,7 @@ export default function Testimonials() {
           <Reveal>
             <figure
               className="lp-card p-7 sm:p-9 h-full flex flex-col"
-              style={{ borderColor: 'rgba(255,122,31,0.30)', boxShadow: '0 1px 2px rgba(22,24,29,0.04), 0 16px 44px rgba(255,122,31,0.10)' }}
+              style={{ borderColor: 'rgba(255,122,31,0.30)', boxShadow: '0 1px 2px var(--lp-fill), 0 16px 44px rgba(255,122,31,0.10)' }}
             >
               <Stars />
               <blockquote className="text-[17px] sm:text-[19px] leading-relaxed flex-1" style={{ color: 'var(--lp-ink)', letterSpacing: '-0.01em' }}>

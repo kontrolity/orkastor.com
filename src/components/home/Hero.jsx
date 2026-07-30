@@ -107,7 +107,7 @@ function IncidentPane({ incident, step }) {
               <span
                 className="lp-mono text-[11px] px-2 py-1 rounded-md"
                 style={{
-                  background: i <= step ? 'var(--lp-orange-soft)' : 'rgba(22,24,29,0.04)',
+                  background: i <= step ? 'var(--lp-orange-soft)' : 'var(--lp-fill)',
                   color: i <= step ? 'var(--lp-orange-deep)' : 'var(--lp-ink-3)',
                   transition: 'all .4s',
                 }}
@@ -143,14 +143,14 @@ function RcaPane({ incident, step }) {
                 {step >= 1 ? `${c.conf}%` : '—'}
               </span>
             </div>
-            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(22,24,29,0.06)' }}>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--lp-fill-2)' }}>
               <div
                 className="h-full rounded-full"
                 style={{
                   width: step >= 1 ? `${c.conf}%` : '4%',
                   background: i === 0
                     ? 'linear-gradient(90deg, var(--lp-orange), var(--lp-amber))'
-                    : 'rgba(22,24,29,0.18)',
+                    : 'var(--lp-ink-3)',
                   transition: 'width .9s cubic-bezier(.16,1,.3,1)',
                 }}
               />
@@ -239,7 +239,7 @@ function KubeGrafConsole() {
         <div className="flex-1 flex justify-center px-2">
           <div
             className="h-6 px-3 rounded-md inline-flex items-center gap-1.5 max-w-[280px] w-full justify-center"
-            style={{ background: 'rgba(22,24,29,0.04)', border: '1px solid var(--lp-line-soft)' }}
+            style={{ background: 'var(--lp-fill)', border: '1px solid var(--lp-line-soft)' }}
           >
             <Lock className="w-3 h-3" style={{ color: 'var(--lp-ink-3)' }} />
             <span className="lp-mono text-[11px] truncate" style={{ color: 'var(--lp-ink-3)' }}>
@@ -263,7 +263,7 @@ function KubeGrafConsole() {
       {/* Timeline footer */}
       <div
         className="flex items-center gap-2 px-4 sm:px-6 py-3"
-        style={{ borderTop: '1px solid var(--lp-line-soft)', background: '#FBFAF7' }}
+        style={{ borderTop: '1px solid var(--lp-line-soft)', background: 'var(--lp-window-bar)' }}
       >
         {STEPS.map((label, i) => {
           const active = i <= step;
@@ -273,7 +273,7 @@ function KubeGrafConsole() {
                 <span
                   className="w-2 h-2 rounded-full transition-all duration-500"
                   style={{
-                    background: active ? (i === 3 ? 'var(--lp-green)' : 'var(--lp-orange)') : 'rgba(22,24,29,0.12)',
+                    background: active ? (i === 3 ? 'var(--lp-green)' : 'var(--lp-orange)') : 'var(--lp-fill-2)',
                     boxShadow: i === step ? '0 0 0 4px rgba(255,122,31,0.15)' : 'none',
                   }}
                 />
@@ -320,7 +320,7 @@ function SlackView() {
           <div className="min-w-0">
             <div className="flex items-baseline gap-2">
               <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>KubeGraf</span>
-              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'rgba(22,24,29,0.07)', color: 'var(--lp-ink-3)' }}>app</span>
+              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'var(--lp-fill-2)', color: 'var(--lp-ink-3)' }}>app</span>
               <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:02</span>
             </div>
             <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
@@ -349,7 +349,7 @@ function SlackView() {
                 <span className="h-8 px-3.5 rounded-lg inline-flex items-center text-[12px] font-semibold"
                   style={{ background: 'var(--lp-green)', color: '#fff' }}>Approve</span>
                 <span className="h-8 px-3.5 rounded-lg inline-flex items-center text-[12px] font-medium"
-                  style={{ background: '#fff', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}>Dismiss</span>
+                  style={{ background: 'var(--lp-surface)', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}>Dismiss</span>
               </div>
             </div>
           </div>
@@ -358,7 +358,7 @@ function SlackView() {
         {/* Human approval */}
         <div className="flex gap-3">
           <span className="w-8 h-8 rounded-lg shrink-0 inline-flex items-center justify-center text-[11px] font-bold"
-            style={{ background: 'rgba(22,24,29,0.08)', color: 'var(--lp-ink-2)' }}>DR</span>
+            style={{ background: 'var(--lp-fill-2)', color: 'var(--lp-ink-2)' }}>DR</span>
           <div>
             <div className="flex items-baseline gap-2">
               <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>dana</span>
@@ -375,7 +375,7 @@ function SlackView() {
           <div>
             <div className="flex items-baseline gap-2">
               <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>KubeGraf</span>
-              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'rgba(22,24,29,0.07)', color: 'var(--lp-ink-3)' }}>app</span>
+              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'var(--lp-fill-2)', color: 'var(--lp-ink-3)' }}>app</span>
               <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:03</span>
             </div>
             <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
@@ -384,7 +384,7 @@ function SlackView() {
             <div className="flex gap-1.5 mt-2">
               {['🎉 3', '🙌 2', '⚡ 1'].map((r) => (
                 <span key={r} className="text-[11px] px-2 py-0.5 rounded-full"
-                  style={{ background: 'rgba(22,24,29,0.05)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}>{r}</span>
+                  style={{ background: 'var(--lp-fill)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}>{r}</span>
               ))}
             </div>
           </div>
@@ -462,7 +462,7 @@ function DemoTabs() {
             onClick={() => select(i)}
             className="h-9 px-4 rounded-full text-[13px] font-semibold transition-all"
             style={active === i
-              ? { background: '#FAF8F4', color: 'var(--lp-ink)' }
+              ? { background: 'var(--lp-paper)', color: '#16181D' }
               : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', color: 'rgba(230,232,238,0.75)' }}
           >
             {t.label}
