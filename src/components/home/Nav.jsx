@@ -56,7 +56,7 @@ export default function Nav() {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorLogo size={38} showWordmark light theme="orange" />
+            <OrkastorLogo size={40} showWordmark light theme="mosaic" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">

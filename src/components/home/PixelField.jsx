@@ -54,8 +54,10 @@ function cellJitter(i, j) {
   return ((((h ^ (h >> 15)) >>> 0) % 1000) / 1000 - 0.5);
 }
 
-export default function PixelField({ className = '' }) {
+export default function PixelField({ className = '', clearing = null, clearingNarrow = null, topFade = 0 }) {
   const canvasRef = useRef(null);
+  const cfgRef = useRef({ clearing, clearingNarrow, topFade });
+  cfgRef.current = { clearing, clearingNarrow, topFade };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,12 +86,34 @@ export default function PixelField({ className = '' }) {
       const T = now * 0.001; // seconds
       ctx.clearRect(0, 0, W, H);
 
+      const cfg = cfgRef.current;
+      const clr = W < 640 && cfg.clearingNarrow ? cfg.clearingNarrow : cfg.clearing;
+      const fade = cfg.topFade;
+
       for (let j = 0; j < rows; j++) {
         const yNorm = j / rows;
         for (let i = 0; i < cols; i++) {
           // ragged bottom teeth (transparent below a wobbling boundary)
           const edge = 0.68 + 0.28 * noise(i * 0.11 + 31.7, T * 0.35);
           if (yNorm > edge) continue;
+
+          // dithered fade-in from the top (keeps the nav zone quiet)
+          if (fade > 0 && yNorm < fade) {
+            if (cellJitter(i, j + 77) + 0.5 > yNorm / fade) continue;
+          }
+
+          // dithered clearing — a calm void where the hero copy sits
+          if (clr) {
+            const nx = (i + 0.5) / cols;
+            const ny = (j + 0.5) / rows;
+            const dx = (nx - clr.cx) / clr.rx;
+            const dy = (ny - clr.cy) / clr.ry;
+            const d = dx * dx + dy * dy;
+            if (d < 1) {
+              const rim = (d - 0.55) / 0.45; // 0 at core … 1 at rim
+              if (rim <= 0 || cellJitter(i, j) + 0.5 > rim) continue;
+            }
+          }
 
           // 45° flow coordinates: u along the up-right diagonal
           const u = (i + j) * 0.5;
@@ -176,7 +200,7 @@ export default function PixelField({ className = '' }) {
   }, []);
 
   return (
-    <div className={`relative overflow-hidden ${className}`} aria-hidden="true">
+    <div className={`overflow-hidden ${className}`} aria-hidden="true">
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );

@@ -42,23 +42,31 @@ const triPath = 'M ' + nodePts.map(([x, y]) => `${x},${y}`).join(' L ') + ' Z';
 const ORANGE_LIGHT = ['#F59F0A', '#EA6410', '#C2410C']; // on light backgrounds
 const ORANGE_DARK  = ['#FBBF24', '#FF8A3D', '#FF6B35']; // on dark backgrounds
 
+/* Mosaic palette — matches the hero pixel-field artwork */
+const MOSAIC = ['#394BD1', '#ECC31D', '#CC2E2B']; // blue · yellow · red
+
 export default function OrkastorLogo({
   size         = 32,
   showWordmark = true,
   className    = '',
   light        = false,
-  theme        = 'default',   // 'default' (blue-teal-emerald) | 'orange'
+  theme        = 'default',   // 'default' (blue-teal-emerald) | 'orange' | 'mosaic'
 }) {
   const uid = React.useId().replace(/:/g, '');
   const orange = theme === 'orange';
+  const mosaic = theme === 'mosaic';
   // On light backgrounds the pale strokes/white core disappear — swap to
   // deeper node colors, slate spokes, and an ink core.
-  const nodeColor = (n, i) => (orange
-    ? (light ? ORANGE_LIGHT[i] : ORANGE_DARK[i])
-    : (light ? n.lightColor : n.color));
-  const spokeStart = orange
-    ? (light ? '#B45309' : '#FDE68A')
-    : (light ? '#475569' : '#bfdbfe');
+  const nodeColor = (n, i) => (mosaic
+    ? MOSAIC[i]
+    : orange
+      ? (light ? ORANGE_LIGHT[i] : ORANGE_DARK[i])
+      : (light ? n.lightColor : n.color));
+  const spokeStart = mosaic
+    ? (light ? '#475569' : '#C7D2FE')
+    : orange
+      ? (light ? '#B45309' : '#FDE68A')
+      : (light ? '#475569' : '#bfdbfe');
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
@@ -218,7 +226,14 @@ export default function OrkastorLogo({
           <span style={{ color: light ? '#0a0f1a' : '#ffffff' }}>Orka</span>
           {/* "stor" — brand accent (orange theme: amber→ember gradient) */}
           <span
-            style={orange
+            style={mosaic
+              ? {
+                  background: 'linear-gradient(110deg, #394BD1 0%, #ECC31D 58%, #CC2E2B 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }
+              : orange
               ? {
                   background: 'linear-gradient(135deg, #FF8A3D 0%, #EA6410 100%)',
                   WebkitBackgroundClip: 'text',
