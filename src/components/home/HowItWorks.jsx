@@ -77,7 +77,7 @@ export default function HowItWorks() {
                   <p className="text-[14px] leading-relaxed mb-3" style={{ color: 'var(--lp-ink-2)' }}>{s.text}</p>
                   <div
                     className="inline-block lp-mono text-[11.5px] px-3 py-1.5 rounded-lg max-w-full truncate"
-                    style={{ background: 'var(--lp-fill)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}
+                    style={{ background: 'rgba(22,24,29,0.04)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}
                   >
                     {s.mono}
                   </div>

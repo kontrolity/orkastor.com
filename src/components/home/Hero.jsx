@@ -107,7 +107,7 @@ function IncidentPane({ incident, step }) {
               <span
                 className="lp-mono text-[11px] px-2 py-1 rounded-md"
                 style={{
-                  background: i <= step ? 'var(--lp-orange-soft)' : 'var(--lp-fill)',
+                  background: i <= step ? 'var(--lp-orange-soft)' : 'rgba(22,24,29,0.04)',
                   color: i <= step ? 'var(--lp-orange-deep)' : 'var(--lp-ink-3)',
                   transition: 'all .4s',
                 }}
@@ -143,14 +143,14 @@ function RcaPane({ incident, step }) {
                 {step >= 1 ? `${c.conf}%` : '—'}
               </span>
             </div>
-            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--lp-fill-2)' }}>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(22,24,29,0.06)' }}>
               <div
                 className="h-full rounded-full"
                 style={{
                   width: step >= 1 ? `${c.conf}%` : '4%',
                   background: i === 0
                     ? 'linear-gradient(90deg, var(--lp-orange), var(--lp-amber))'
-                    : 'var(--lp-ink-3)',
+                    : 'rgba(22,24,29,0.18)',
                   transition: 'width .9s cubic-bezier(.16,1,.3,1)',
                 }}
               />
@@ -239,7 +239,7 @@ function KubeGrafConsole() {
         <div className="flex-1 flex justify-center px-2">
           <div
             className="h-6 px-3 rounded-md inline-flex items-center gap-1.5 max-w-[280px] w-full justify-center"
-            style={{ background: 'var(--lp-fill)', border: '1px solid var(--lp-line-soft)' }}
+            style={{ background: 'rgba(22,24,29,0.04)', border: '1px solid var(--lp-line-soft)' }}
           >
             <Lock className="w-3 h-3" style={{ color: 'var(--lp-ink-3)' }} />
             <span className="lp-mono text-[11px] truncate" style={{ color: 'var(--lp-ink-3)' }}>
@@ -263,7 +263,7 @@ function KubeGrafConsole() {
       {/* Timeline footer */}
       <div
         className="flex items-center gap-2 px-4 sm:px-6 py-3"
-        style={{ borderTop: '1px solid var(--lp-line-soft)', background: 'var(--lp-window-bar)' }}
+        style={{ borderTop: '1px solid var(--lp-line-soft)', background: '#FBFAF7' }}
       >
         {STEPS.map((label, i) => {
           const active = i <= step;
@@ -273,7 +273,7 @@ function KubeGrafConsole() {
                 <span
                   className="w-2 h-2 rounded-full transition-all duration-500"
                   style={{
-                    background: active ? (i === 3 ? 'var(--lp-green)' : 'var(--lp-orange)') : 'var(--lp-fill-2)',
+                    background: active ? (i === 3 ? 'var(--lp-green)' : 'var(--lp-orange)') : 'rgba(22,24,29,0.12)',
                     boxShadow: i === step ? '0 0 0 4px rgba(255,122,31,0.15)' : 'none',
                   }}
                 />
@@ -320,7 +320,7 @@ function SlackView() {
           <div className="min-w-0">
             <div className="flex items-baseline gap-2">
               <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>KubeGraf</span>
-              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'var(--lp-fill-2)', color: 'var(--lp-ink-3)' }}>app</span>
+              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'rgba(22,24,29,0.07)', color: 'var(--lp-ink-3)' }}>app</span>
               <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:02</span>
             </div>
             <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
@@ -349,7 +349,7 @@ function SlackView() {
                 <span className="h-8 px-3.5 rounded-lg inline-flex items-center text-[12px] font-semibold"
                   style={{ background: 'var(--lp-green)', color: '#fff' }}>Approve</span>
                 <span className="h-8 px-3.5 rounded-lg inline-flex items-center text-[12px] font-medium"
-                  style={{ background: 'var(--lp-surface)', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}>Dismiss</span>
+                  style={{ background: '#fff', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}>Dismiss</span>
               </div>
             </div>
           </div>
@@ -358,7 +358,7 @@ function SlackView() {
         {/* Human approval */}
         <div className="flex gap-3">
           <span className="w-8 h-8 rounded-lg shrink-0 inline-flex items-center justify-center text-[11px] font-bold"
-            style={{ background: 'var(--lp-fill-2)', color: 'var(--lp-ink-2)' }}>DR</span>
+            style={{ background: 'rgba(22,24,29,0.08)', color: 'var(--lp-ink-2)' }}>DR</span>
           <div>
             <div className="flex items-baseline gap-2">
               <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>dana</span>
@@ -375,7 +375,7 @@ function SlackView() {
           <div>
             <div className="flex items-baseline gap-2">
               <span className="text-[13.5px] font-bold" style={{ color: 'var(--lp-ink)' }}>KubeGraf</span>
-              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'var(--lp-fill-2)', color: 'var(--lp-ink-3)' }}>app</span>
+              <span className="text-[9px] font-bold px-1 rounded uppercase" style={{ background: 'rgba(22,24,29,0.07)', color: 'var(--lp-ink-3)' }}>app</span>
               <span className="text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>03:03</span>
             </div>
             <p className="text-[13.5px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
@@ -384,7 +384,7 @@ function SlackView() {
             <div className="flex gap-1.5 mt-2">
               {['🎉 3', '🙌 2', '⚡ 1'].map((r) => (
                 <span key={r} className="text-[11px] px-2 py-0.5 rounded-full"
-                  style={{ background: 'var(--lp-fill)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}>{r}</span>
+                  style={{ background: 'rgba(22,24,29,0.05)', border: '1px solid var(--lp-line-soft)', color: 'var(--lp-ink-2)' }}>{r}</span>
               ))}
             </div>
           </div>
@@ -462,13 +462,13 @@ function DemoTabs() {
             onClick={() => select(i)}
             className="h-9 px-4 rounded-full text-[13px] font-semibold transition-all"
             style={active === i
-              ? { background: 'var(--lp-paper)', color: '#16181D' }
-              : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', color: 'rgba(230,232,238,0.75)' }}
+              ? { background: 'var(--lp-ink)', color: '#fff' }
+              : { background: 'var(--lp-surface)', border: '1px solid var(--lp-line)', color: 'var(--lp-ink-2)' }}
           >
             {t.label}
           </button>
         ))}
-        <span className="ml-auto hidden sm:block lp-mono text-[11px]" style={{ color: 'rgba(230,232,238,0.5)' }}>
+        <span className="ml-auto hidden sm:block lp-mono text-[11px]" style={{ color: 'var(--lp-ink-3)' }}>
           same agent, every surface
         </span>
       </div>
@@ -484,19 +484,16 @@ function DemoTabs() {
 /* ── Hero ────────────────────────────────────────────────────── */
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden lp-hero-dark">
+    <section className="relative overflow-hidden lp-hero-wash">
       {/* faded dot grid */}
       <div
-        className="absolute inset-0 lp-dot-grid-dark pointer-events-none"
+        className="absolute inset-0 lp-dot-grid pointer-events-none"
         style={{
           maskImage: 'radial-gradient(ellipse 75% 60% at 50% 0%, black 20%, transparent 75%)',
           WebkitMaskImage: 'radial-gradient(ellipse 75% 60% at 50% 0%, black 20%, transparent 75%)',
-          opacity: 0.5,
+          opacity: 0.55,
         }}
       />
-      {/* horizon hairline above the light page below */}
-      <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,122,31,0.45) 30%, rgba(255,122,31,0.45) 70%, transparent)' }} />
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-[130px] sm:pt-[158px] pb-16 sm:pb-24">
         {/* Announcement pill */}
@@ -507,7 +504,7 @@ export default function Hero() {
           href={KUBEGRAF_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="lp-pill-dark group mb-9 inline-flex"
+          className="lp-pill group mb-9 inline-flex"
         >
           <span className="lp-pill-tag">Live</span>
           KubeGraf v1.0 — our flagship AI SRE platform
@@ -520,11 +517,10 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
           className="lp-display text-[clamp(42px,6.8vw,88px)]"
-          style={{ color: '#FAF8F4' }}
         >
           Infrastructure that
           <br />
-          <span className="lp-serif" style={{ color: 'var(--lp-orange)' }}>heals itself.</span>
+          <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>heals itself.</span>
         </motion.h1>
 
         {/* Hairline-divided row: manifesto left, actions right */}
@@ -533,14 +529,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
           className="mt-12 sm:mt-14 pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.14)' }}
+          style={{ borderTop: '1px solid var(--lp-line)' }}
         >
           <p
             className="lg:col-span-6 max-w-xl text-base sm:text-lg leading-relaxed"
-            style={{ color: 'rgba(230,232,238,0.72)' }}
+            style={{ color: 'var(--lp-ink-2)' }}
           >
             Orkastor builds AI agents for infrastructure operations. Our flagship product,{' '}
-            <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="font-semibold underline decoration-2 underline-offset-2" style={{ color: '#fff', textDecorationColor: 'var(--lp-orange)' }}>
+            <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="font-semibold underline decoration-2 underline-offset-2" style={{ color: 'var(--lp-ink)', textDecorationColor: 'var(--lp-orange)' }}>
               KubeGraf
             </a>
             , detects, diagnoses, and fixes Kubernetes incidents in minutes — not hours.
@@ -553,15 +549,15 @@ export default function Hero() {
                 Try KubeGraf free
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
-              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-ghost-dark">
-                <DiscordIcon className="w-4 h-4" style={{ color: 'rgba(230,232,238,0.7)' }} />
+              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-ghost">
+                <DiscordIcon className="w-4 h-4" style={{ color: 'var(--lp-ink-3)' }} />
                 Join the community
               </a>
             </div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[12.5px]" style={{ color: 'rgba(230,232,238,0.55)' }}>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[12.5px]" style={{ color: 'var(--lp-ink-3)' }}>
               {['Root cause in seconds', 'SafeFix™ signed patches', 'Zero data exfiltration'].map((t, i) => (
                 <React.Fragment key={t}>
-                  {i > 0 && <span aria-hidden="true" className="w-3 h-px" style={{ background: 'rgba(255,255,255,0.2)' }} />}
+                  {i > 0 && <span aria-hidden="true" className="w-3 h-px" style={{ background: 'var(--lp-line)' }} />}
                   <span>{t}</span>
                 </React.Fragment>
               ))}
