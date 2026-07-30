@@ -41,34 +41,26 @@ export default function Nav({ darkHero = false }) {
     };
   }, [open]);
 
-  // On night pages (darkHero) the nav is dark throughout: transparent
-  // over the hero, dark glass once scrolled. Light pages keep the
-  // transparent → light-glass behavior.
-  const dark = darkHero;
-
-  const scrolledStyle = dark
-    ? {
-        background: 'rgba(12,13,17,0.80)',
-        backdropFilter: 'blur(18px) saturate(160%)',
-        WebkitBackdropFilter: 'blur(18px) saturate(160%)',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
-      }
-    : {
-        background: 'rgba(250,248,244,0.82)',
-        backdropFilter: 'blur(18px) saturate(160%)',
-        WebkitBackdropFilter: 'blur(18px) saturate(160%)',
-        borderBottom: '1px solid var(--lp-line-soft)',
-      };
+  // Over the dark hero the nav floats transparent with light text,
+  // then flips to the light glass bar once the page scrolls.
+  const overDark = darkHero && !scrolled;
 
   return (
     <>
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={scrolled ? scrolledStyle : { background: 'transparent', borderBottom: '1px solid transparent' }}
+        style={scrolled
+          ? {
+              background: 'rgba(250,248,244,0.82)',
+              backdropFilter: 'blur(18px) saturate(160%)',
+              WebkitBackdropFilter: 'blur(18px) saturate(160%)',
+              borderBottom: '1px solid var(--lp-line-soft)',
+            }
+          : { background: 'transparent', borderBottom: '1px solid transparent' }}
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorLogo size={38} showWordmark light={!dark} theme="orange" />
+            <OrkastorLogo size={38} showWordmark light={!overDark} theme="orange" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -76,7 +68,7 @@ export default function Nav({ darkHero = false }) {
               <a
                 key={l.label}
                 href={l.href}
-                className={`${dark ? 'lp-navlink-dark' : 'lp-navlink'} px-3.5 py-2 text-[14px] font-medium`}
+                className={`${overDark ? 'lp-navlink-dark' : 'lp-navlink'} px-3.5 py-2 text-[14px] font-medium`}
               >
                 {l.label}
               </a>
@@ -98,7 +90,7 @@ export default function Nav({ darkHero = false }) {
           <button
             ref={toggleRef}
             className="lg:hidden p-2 -mr-2 rounded-lg"
-            style={{ color: dark ? '#fff' : 'var(--lp-ink)' }}
+            style={{ color: overDark ? '#fff' : 'var(--lp-ink)' }}
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -117,32 +109,25 @@ export default function Nav({ darkHero = false }) {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.16 }}
             className="fixed left-3 right-3 top-[76px] z-50 rounded-2xl p-2 lg:hidden"
-            style={dark
-              ? {
-                  background: 'rgba(16,17,22,0.97)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                  backdropFilter: 'blur(16px)',
-                }
-              : {
-                  background: 'rgba(255,255,255,0.97)',
-                  border: '1px solid var(--lp-line)',
-                  boxShadow: '0 20px 60px rgba(22,24,29,0.16)',
-                  backdropFilter: 'blur(16px)',
-                }}
+            style={{
+              background: 'rgba(255,255,255,0.97)',
+              border: '1px solid var(--lp-line)',
+              boxShadow: '0 20px 60px rgba(22,24,29,0.16)',
+              backdropFilter: 'blur(16px)',
+            }}
           >
             {LINKS.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`block px-4 py-3 text-[15px] font-medium rounded-xl transition-colors ${dark ? 'hover:bg-white/[0.06]' : 'hover:bg-black/[0.04]'}`}
-                style={{ color: dark ? '#F2F3F7' : 'var(--lp-ink)' }}
+                className="block px-4 py-3 text-[15px] font-medium rounded-xl transition-colors hover:bg-black/[0.04]"
+                style={{ color: 'var(--lp-ink)' }}
               >
                 {l.label}
               </a>
             ))}
-            <div className="p-2 pt-3" style={{ borderTop: dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid var(--lp-line-soft)' }}>
+            <div className="p-2 pt-3" style={{ borderTop: '1px solid var(--lp-line-soft)' }}>
               <a
                 href={KUBEGRAF_URL}
                 target="_blank"
