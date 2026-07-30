@@ -1107,6 +1107,12 @@ body::before {
   --lp-dark:        #16181D;   /* dark panel bg (CTA / console) */
   --lp-dark-2:      #1E212A;
 
+  /* Subtle fills + chrome surfaces (theme-aware) */
+  --lp-fill:       rgba(22,24,29,0.04);
+  --lp-fill-2:     rgba(22,24,29,0.07);
+  --lp-window-bar: #FBFAF7;
+  --lp-paper:      #FAF8F4;
+
   font-family: 'Geist', 'Instrument Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--lp-bg);
   color: var(--lp-ink);
@@ -1123,6 +1129,66 @@ body:has(.lp)::after,
 body:has(.lp)::before { display: none; }
 /* Match the page bg so overscroll / fast-scroll never flashes the dark legacy body */
 body:has(.lp) { background-color: #FAF8F4; }
+body:has(.lp-night) { background-color: #0C0D11; }
+
+/* ═══ NIGHT THEME — full-dark "mission control" skin ════════════
+   Scoped: add .lp-night beside .lp on a page root to flip the whole
+   design system dark. Interior pages that omit it stay light.      */
+.lp-night {
+  --lp-bg:          #0C0D11;
+  --lp-bg-alt:      #101116;
+  --lp-surface:     #15161C;
+  --lp-ink:         #F2F3F7;
+  --lp-ink-2:       rgba(226,229,238,0.68);
+  --lp-ink-3:       rgba(226,229,238,0.42);
+  --lp-line:        rgba(255,255,255,0.12);
+  --lp-line-soft:   rgba(255,255,255,0.07);
+  --lp-orange-soft: rgba(255,122,31,0.13);
+  --lp-fill:        rgba(255,255,255,0.05);
+  --lp-fill-2:      rgba(255,255,255,0.09);
+  --lp-window-bar:  #101116;
+}
+.lp-night .lp-card {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.35);
+  border-color: rgba(255,255,255,0.09);
+}
+.lp-night .lp-card-hover:hover {
+  border-color: rgba(255,122,31,0.40);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.45), 0 18px 48px rgba(0,0,0,0.5);
+}
+.lp-night .lp-window {
+  border-color: rgba(255,255,255,0.12);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.5),
+    0 24px 64px rgba(0,0,0,0.55),
+    0 0 80px rgba(255,122,31,0.07);
+}
+.lp-night .lp-pill {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.16);
+  color: rgba(226,229,238,0.82);
+  box-shadow: none;
+}
+.lp-night .lp-btn-ghost {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.22);
+  color: #fff;
+  box-shadow: none;
+}
+.lp-night .lp-btn-ghost:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.45);
+}
+.lp-night .lp-console {
+  border-color: rgba(255,255,255,0.12);
+}
+.lp-night ::selection { background: rgba(255,122,31,0.35); color: #fff; }
+.lp-night .lp-btn-dark {
+  background: #F2F3F7;
+  color: #16181D;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 8px 24px rgba(0,0,0,0.4);
+}
+.lp-night .lp-btn-dark:hover { background: #fff; }
 
 .lp ::selection { background: rgba(255,122,31,0.25); color: var(--lp-ink); }
 
@@ -1316,7 +1382,7 @@ body:has(.lp) { background-color: #FAF8F4; }
   align-items: center;
   gap: 8px;
   padding: 11px 16px;
-  background: #FBFAF7;
+  background: var(--lp-window-bar);
   border-bottom: 1px solid var(--lp-line-soft);
 }
 
