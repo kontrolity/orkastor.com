@@ -501,17 +501,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Field zone — the mosaic runs behind the hero copy; a dithered
-          clearing in the field keeps the text legible on top of it */}
-      <div className="relative">
-        <PixelField
-          className="absolute inset-0"
-          topFade={0.16}
-          clearing={{ cx: 0.5, cy: 0.55, rx: 0.46, ry: 0.62 }}
-          clearingNarrow={{ cx: 0.5, cy: 0.52, rx: 0.92, ry: 0.58 }}
-        />
-
-        <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pt-[128px] sm:pt-[150px] pb-16 sm:pb-24">
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-[128px] sm:pt-[150px]">
         <div className="flex flex-col items-center text-center">
           {/* Announcement pill */}
           <motion.a
@@ -592,8 +582,16 @@ export default function Hero() {
             ))}
           </motion.div>
         </div>
-        </div>
       </div>
+
+      {/* Signal field — the motion band, separate from the copy */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.1, delay: 0.5 }}
+      >
+        <PixelField className="mt-12 sm:mt-14 h-[220px] sm:h-[300px] w-full" />
+      </motion.div>
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
         {/* Product demo — the hero's anchor */}
