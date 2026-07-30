@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2, Lock, ShieldCheck, Zap } from 'lucide-react';
-import { DiscordIcon, DISCORD_URL, KUBEGRAF_URL } from './shared';
+import { KUBEGRAF_URL } from './shared';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -551,10 +551,6 @@ export default function Hero() {
             <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-primary lp-btn-lg group">
               Try KubeGraf free
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="lp-btn-ghost lp-btn-lg">
-              <DiscordIcon className="w-4 h-4" style={{ color: 'var(--lp-ink-3)' }} />
-              Join the community
             </a>
           </motion.div>
 
