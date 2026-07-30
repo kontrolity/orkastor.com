@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2, Lock, ShieldCheck, Zap } from 'lucide-react';
 import { KUBEGRAF_URL } from './shared';
+import PixelField from './PixelField';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -500,7 +501,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-[128px] sm:pt-[150px] pb-16 sm:pb-24">
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-[128px] sm:pt-[150px]">
         <div className="flex flex-col items-center text-center">
           {/* Announcement pill */}
           <motion.a
@@ -581,13 +582,24 @@ export default function Hero() {
             ))}
           </motion.div>
         </div>
+      </div>
 
+      {/* Signal field — generative telemetry mosaic, full bleed */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.1, delay: 0.5 }}
+      >
+        <PixelField className="mt-12 sm:mt-14 h-[220px] sm:h-[300px] w-full" />
+      </motion.div>
+
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
         {/* Product demo — the hero's anchor */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.46, ease: EASE }}
-          className="relative mt-14 sm:mt-16 max-w-5xl mx-auto"
+          className="relative -mt-6 sm:-mt-4 max-w-5xl mx-auto"
         >
           {/* Warm bloom anchors the console and draws the eye down from the CTAs */}
           <div
