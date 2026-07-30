@@ -1148,6 +1148,22 @@ body:has(.lp) { background-color: #FAF8F4; }
   font-weight: 720;
   letter-spacing: -0.034em;
 }
+
+/* Hero display — reserved for the H1. Bricolage Grotesque at display
+   optical size: sleek geometry with rich, characterful details that
+   Geist deliberately avoids. */
+.lp-hero-display {
+  font-family: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
+  font-weight: 640;
+  font-variation-settings: 'opsz' 96;
+  letter-spacing: -0.026em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.lp-hero-display .lp-hero-accent {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
 .lp-mono {
   font-family: 'Geist Mono', 'JetBrains Mono', 'IBM Plex Mono', monospace;
 }
