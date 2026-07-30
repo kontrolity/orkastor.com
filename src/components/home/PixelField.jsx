@@ -1,40 +1,33 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * PixelField — generative pixel-mosaic band (inspired by dithered
- * heatmap art). A grid of cells colored by layered value noise that
- * drifts over time, with a ragged dissolving bottom edge and a
- * cursor-reactive hotspot. Rendered in brand colors so it reads as
- * cluster telemetry: ink field, warm signal ridges, red incident
- * hotspots, rare green "resolved" sparks.
+ * PixelField — generative pixel-mosaic band, motion-matched to the
+ * reference capture: a turbulent plume streaming diagonally up-right
+ * with hot chains along its spine, streak-aligned speckle in the calm
+ * zone, a persistent cursor hotspot (core → rim → halo), and a ragged
+ * dissolving bottom edge over a fully covered field.
  *
- * Perf: single canvas, ~2–3k fillRects/frame at 24fps, paused when
- * offscreen. prefers-reduced-motion renders one static frame.
+ * Two anisotropic noise fields drive it:
+ *   plume  — low-frequency mass that defines the warm region
+ *   streak — high-frequency, advected faster along the same diagonal;
+ *            carves speckle clusters and the hot chains
+ *
+ * Perf: single canvas at 30fps, pauses offscreen; reduced motion
+ * renders one static frame.
  */
 
-const CELL = 13;      // cell pitch (px)
-const GAP = 1;        // gap between cells
-const FPS = 24;
+const CELL = 13;
+const GAP = 1;
+const FPS = 30;
 
-// value → color ramp (paper stays transparent below the floor)
-function ramp(v) {
-  if (v < 0.40) return null;
-  if (v < 0.58) return '#1E212A';   // ink
-  if (v < 0.74) return '#F5A623';   // amber
-  if (v < 0.88) return '#FF7A1F';   // orange
-  if (v < 0.95) return '#DC2828';   // red hotspot
-  return '#4ADE80';                 // green core — the fix landing
-}
+/* palette (brand mapping of the reference's blue/black/yellow/red/lime) */
+const C_BASE = '#F0E8DB';   // sand base field
+const C_INK = '#1E212A';    // speckle clusters
+const C_AMBER = '#F5A623';  // plume mass
+const C_ORANGE = '#FF7A1F'; // plume ridge
+const C_RED = '#DC2828';    // hot chains / hotspot core
+const C_GREEN = '#7ED957';  // rim accents
 
-/* Static per-cell hash for dither jitter — granular color mixing at
-   band boundaries, like classic ordered dithering. */
-function cellJitter(i, j) {
-  let h = (i * 7349 + j * 9151) | 0;
-  h = (h ^ (h >> 11)) * 2654435761;
-  return ((((h ^ (h >> 15)) >>> 0) % 1000) / 1000 - 0.5) * 0.16;
-}
-
-/* Cheap deterministic value noise: hash → smooth bilinear, 3 octaves */
 function makeNoise() {
   const hash = (x, y) => {
     let h = (x * 374761393 + y * 668265263) | 0;
@@ -50,9 +43,15 @@ function makeNoise() {
     return a + (b - a) * xf + (c - a) * yf + (a - b - c + d) * xf * yf;
   };
   return (x, y) =>
-    0.55 * layer(x, y) +
-    0.30 * layer(x * 2.1 + 40, y * 2.1 + 40) +
-    0.15 * layer(x * 4.3 + 90, y * 4.3 + 90);
+    0.60 * layer(x, y) +
+    0.28 * layer(x * 2.03 + 40, y * 2.03 + 40) +
+    0.12 * layer(x * 4.1 + 90, y * 4.1 + 90);
+}
+
+function cellJitter(i, j) {
+  let h = (i * 7349 + j * 9151) | 0;
+  h = (h ^ (h >> 11)) * 2654435761;
+  return ((((h ^ (h >> 15)) >>> 0) % 1000) / 1000 - 0.5);
 }
 
 export default function PixelField({ className = '' }) {
@@ -69,7 +68,7 @@ export default function PixelField({ className = '' }) {
     let running = false;
     let last = 0;
     let W = 0; let H = 0; let cols = 0; let rows = 0;
-    const pointer = { x: -1, y: -1, heat: 0 };
+    const pointer = { x: -1e5, y: -1e5, heat: 0 };
 
     const resize = () => {
       const rect = canvas.parentElement.getBoundingClientRect();
@@ -81,33 +80,58 @@ export default function PixelField({ className = '' }) {
       cols = Math.ceil(W / CELL); rows = Math.ceil(H / CELL);
     };
 
-    const draw = (t) => {
+    const draw = (now) => {
+      const T = now * 0.001; // seconds
       ctx.clearRect(0, 0, W, H);
-      const tz = t * 0.000045;
+
       for (let j = 0; j < rows; j++) {
         const yNorm = j / rows;
         for (let i = 0; i < cols; i++) {
-          // drifting field, sheared so ridges travel diagonally
-          let v = noise(i * 0.055 + tz * 14, j * 0.11 - tz * 5 + i * 0.012);
-          v += cellJitter(i, j);                 // dither grain
-          v += (1 - yNorm) * 0.11;               // fuller toward the top edge
-          // ragged bottom: fade with a noise-modulated boundary
-          const edge = 0.62 + 0.33 * noise(i * 0.09 + 31.7, tz * 8);
+          // ragged bottom teeth (transparent below a wobbling boundary)
+          const edge = 0.68 + 0.28 * noise(i * 0.11 + 31.7, T * 0.35);
           if (yNorm > edge) continue;
-          v *= 1 - Math.max(0, (yNorm - (edge - 0.28)) / 0.28) * 0.75;
-          // cursor heat
-          if (pointer.heat > 0.01) {
-            const dx = i * CELL - pointer.x; const dy = j * CELL - pointer.y;
-            const d2 = dx * dx + dy * dy;
-            v += pointer.heat * Math.exp(-d2 / 5200) * 0.55;
+
+          // 45° flow coordinates: u along the up-right diagonal
+          const u = (i + j) * 0.5;
+          const w = (j - i) * 0.5;
+          const jit = cellJitter(i, j);
+
+          // plume mass — drifts along the diagonal, slowly evolving
+          let p = noise(u * 0.085 - T * 0.55, w * 0.19 + T * 0.06);
+          p += (i / cols) * 0.14 - 0.04 + jit * 0.10;
+
+          // streak field — same direction, advected ~2.5× faster,
+          // squashed across-flow so features elongate into streaks
+          const s = noise(u * 0.20 - T * 1.35, w * 0.55 + 7.3) + jit * 0.14;
+
+          // color decision, reference structure:
+          let color;
+          if (p < 0.46) {
+            color = s > 0.64 ? C_INK : C_BASE;            // calm zone + speckle
+          } else if (p < 0.60) {
+            color = s > 0.46 ? C_AMBER : C_BASE;          // dithered plume edge
+          } else {
+            if (s > 0.90 && p > 0.72) color = C_GREEN;    // rare rim sparks
+            else if (s > 0.70) color = C_RED;             // hot chains on spine
+            else if (s > 0.56) color = C_ORANGE;          // ridge
+            else color = C_AMBER;                          // plume body
           }
-          const color = ramp(v);
-          if (!color) continue;
+
+          // cursor hotspot — persistent rings: core / rim / halo
+          if (pointer.heat > 0.02) {
+            const dx = i * CELL + CELL / 2 - pointer.x;
+            const dy = j * CELL + CELL / 2 - pointer.y;
+            const h = pointer.heat * Math.exp(-(dx * dx + dy * dy) / 7000);
+            if (h > 0.62) color = C_RED;
+            else if (h > 0.42) color = C_GREEN;
+            else if (h > 0.22) color = C_AMBER;
+          }
+
           ctx.fillStyle = color;
           ctx.fillRect(i * CELL, j * CELL, CELL - GAP, CELL - GAP);
         }
       }
-      pointer.heat *= 0.96;
+      if (pointer.heat > 0 && pointer.heat < 1) pointer.heat *= 0.94;
     };
 
     const loop = (now) => {
@@ -118,7 +142,7 @@ export default function PixelField({ className = '' }) {
     };
 
     resize();
-    draw(1); // first paint (also the only paint under reduced motion)
+    draw(400); // first paint (only paint under reduced motion)
 
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !reduced) {
@@ -133,13 +157,13 @@ export default function PixelField({ className = '' }) {
       const rect = canvas.getBoundingClientRect();
       pointer.x = e.clientX - rect.left;
       pointer.y = e.clientY - rect.top;
-      pointer.heat = 1;
+      pointer.heat = 1;             // held at full strength while hovering
     };
-    const onLeave = () => { pointer.heat = 0.4; };
+    const onLeave = () => { pointer.heat = 0.99; }; // start decay
     canvas.addEventListener('pointermove', onMove, { passive: true });
     canvas.addEventListener('pointerleave', onLeave, { passive: true });
 
-    const ro = new ResizeObserver(() => { resize(); draw(last || 1); });
+    const ro = new ResizeObserver(() => { resize(); draw(last || 400); });
     ro.observe(canvas.parentElement);
 
     return () => {
