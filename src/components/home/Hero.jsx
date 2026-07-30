@@ -522,10 +522,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-            className="lp-display text-[clamp(40px,6.2vw,80px)] max-w-4xl"
+            className="lp-hero-display text-[clamp(42px,6.6vw,92px)] max-w-4xl"
           >
             Infrastructure that{' '}
-            <span className="lp-serif block" style={{ color: 'var(--lp-orange-deep)' }}>heals itself.</span>
+            <span className="lp-hero-accent block" style={{ color: 'var(--lp-orange-deep)' }}>heals itself.</span>
           </motion.h1>
 
           {/* Subhead — one idea per line, no link detours */}
