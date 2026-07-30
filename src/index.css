@@ -1284,6 +1284,7 @@ body:has(.lp) { background-color: #FAF8F4; }
   transform: translateY(-1px);
 }
 .lp .lp-btn-sm { height: 38px; padding: 0 16px; font-size: 14px; border-radius: 10px; }
+.lp .lp-btn-lg { height: 52px; padding: 0 28px; font-size: 16px; border-radius: 14px; }
 
 /* ─── Cards — hairline over shadow: machined, not floating ─────── */
 .lp-card {
