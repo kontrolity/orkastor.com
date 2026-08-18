@@ -87,7 +87,13 @@ export default function CTA() {
 
               {/* Friction reducers — answer the last objections at the button */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12.5px]" style={{ color: 'rgba(255,248,240,0.85)' }}>
-                {['No credit card required', 'Free tier included', 'Your data stays in your network'].map((t) => (
+                {/* Scoped to KubeGraf. These three are true of KubeGraf and none of them is
+                  true of Orkastor Cloud, which has no free tier and no published price at
+                  all — and since the Cloud section now sits on this page, an unscoped
+                  "free tier included" reads as covering both. That is the one claim here
+                  most likely to produce a real support ticket: someone clicks expecting
+                  it covers Cloud. */}
+                {['No credit card for KubeGraf', 'KubeGraf free tier included', 'Your cluster, your data'].map((t) => (
                   <span key={t} className="inline-flex items-center gap-1.5">
                     <Check className="w-3.5 h-3.5" strokeWidth={3} style={{ color: '#fff' }} />
                     {t}

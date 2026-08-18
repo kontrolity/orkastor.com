@@ -66,28 +66,6 @@ export default function Security() {
               reason it needs no agent.
             </p>
 
-            {/* Pull quote (from our published testimonials) */}
-            <figure
-              className="mt-8 p-5 rounded-2xl max-w-xl"
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)' }}
-            >
-              <blockquote className="text-[15px] leading-relaxed" style={{ color: 'rgba(230,232,238,0.88)' }}>
-                “We tried 3 other AIOps tools before Orkastor. None of them ran in our
-                private cluster. The zero-data-exfiltration guarantee made the security
-                review a non-event.”
-              </blockquote>
-              <figcaption className="mt-3 flex items-center gap-3">
-                <span
-                  className="w-8 h-8 rounded-full inline-flex items-center justify-center text-[11px] font-bold shrink-0"
-                  style={{ background: 'rgba(255,122,31,0.15)', color: 'var(--lp-orange)', border: '1px solid rgba(255,122,31,0.30)' }}
-                >
-                  PN
-                </span>
-                <span className="text-[13px]" style={{ color: 'rgba(230,232,238,0.60)' }}>
-                  <span className="font-semibold" style={{ color: '#fff' }}>Priya Nair</span> · Head of Platform, HealthStream
-                </span>
-              </figcaption>
-            </figure>
           </Reveal>
 
           {/* Right: checklist */}

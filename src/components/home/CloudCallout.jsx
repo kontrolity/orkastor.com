@@ -44,7 +44,7 @@ export default function CloudCallout() {
       style={{ background: 'var(--lp-bg)' }}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <SectionMarker index="08" label="Orkastor Cloud · In development" />
+        <SectionMarker index="07" label="Orkastor Cloud · In development" />
 
         <Reveal className="max-w-3xl mb-12 sm:mb-14">
           <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">

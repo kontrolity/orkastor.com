@@ -9,7 +9,6 @@ const DeepDive = lazy(() => import('@/components/home/DeepDive'));
 const Features = lazy(() => import('@/components/home/Features'));
 const HowItWorks = lazy(() => import('@/components/home/HowItWorks'));
 const Security = lazy(() => import('@/components/home/Security'));
-const Testimonials = lazy(() => import('@/components/home/Testimonials'));
 const Platform = lazy(() => import('@/components/home/Platform'));
 const CloudCallout = lazy(() => import('@/components/home/CloudCallout'));
 const Faq = lazy(() => import('@/components/home/Faq'));
@@ -29,7 +28,6 @@ export default function Home() {
           <Features />
           <HowItWorks />
           <Security />
-          <Testimonials />
           <Platform />
           <CloudCallout />
           <Faq />
