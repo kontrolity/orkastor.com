@@ -1,0 +1,291 @@
+/* ============================================================================
+   orkastor.cloud — the tenant domain's front door.
+   ============================================================================
+
+   Design register follows the luxury layer already shipped on orkastor.com and
+   kubegraf.io: one accent at ~5% of pixels, machined radii (never pills), a
+   single grain overlay, one radial glow per section, asymmetric easing, and all
+   metadata in neutral mono. Anti-patterns deliberately avoided: multiple coloured
+   glows, gradient text everywhere, emoji icons, scale-up hovers, second-long fades.
+
+   TWO HARD CONSTRAINTS THAT SHAPED THIS FILE, both from the platform design:
+
+   1. NO COOKIES. NONE. Not analytics, not preferences, not a consent banner.
+      This page is served from orkastor.cloud, and until that domain is on the
+      Public Suffix List a cookie set here is scoped to the registrable domain —
+      which means every tenant environment at <env>-<slug>-<hash>.orkastor.cloud
+      would receive it, and could set one back. A marketing cookie on this host is
+      a cross-tenant channel. There is no third-party script on this page for the
+      same reason.
+
+   2. NO CLAIM THAT OUTRUNS THE BUILD. gates §2.5 of the design docs: marketing
+      copy is updated to match what exists, and NOT before it exists. So: no
+      pricing (the rates are unmeasured and an earlier published set was 21% below
+      cost), no uptime or SLA, no customer logos, no benchmark numbers. The status
+      line is the same one orkastor.com already uses.
+
+   Self-contained: system-stack fonts with the brand faces used when present, no
+   webfont fetch, no build step. It is one HTML file and this stylesheet.
+============================================================================ */
+
+:root {
+  --ink: #0B0B0C;
+  --ink-raised: #101012;
+  --paper: #FAF8F4;
+  --text: rgba(250, 248, 244, 0.92);
+  --text-dim: rgba(250, 248, 244, 0.58);
+  --meta: rgba(250, 248, 244, 0.42); /* all metadata lives here — never the accent */
+  --hairline: rgba(250, 248, 244, 0.10);
+  --hairline-bright: rgba(250, 248, 244, 0.18);
+  --accent: #FF7A1F;
+  --accent-soft: rgba(255, 122, 31, 0.14);
+
+  --ease-in: cubic-bezier(0.16, 1, 0.3, 1);   /* entrances */
+  --ease-out: cubic-bezier(0.4, 0, 1, 1);      /* exits — deliberately not symmetric */
+
+  --measure: 68ch;
+  --radius: 10px;
+  --radius-sm: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: 'Instrument Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: 'cv01' 1, 'ss03' 1, 'zero' 1;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent); color: #17110A; } /* the accent's one ambient use */
+
+/* One grain overlay for the whole page — felt, not seen. It also de-bands the
+   radial glows, which is the real reason it is here. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap { position: relative; z-index: 2; }
+.container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+/* ---------- type ---------- */
+h1, h2, h3 { margin: 0; font-weight: 500; text-wrap: balance; }
+
+h1 {
+  font-size: clamp(2.6rem, 6.2vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+}
+h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+h3 { font-size: 1.02rem; line-height: 1.35; letter-spacing: -0.015em; }
+
+p { margin: 0; max-width: var(--measure); }
+.lede { font-size: clamp(1.06rem, 1.7vw, 1.24rem); color: var(--text-dim); line-height: 1.62; }
+
+.eyebrow {
+  font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--meta);
+}
+
+/* ---------- status chip. Machined, not a pill. ---------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 13px;
+  border: 1px solid var(--hairline-bright);
+  border-radius: var(--radius-sm);
+  background: rgba(250, 248, 244, 0.03);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.status .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ---------- sections ---------- */
+section { padding: clamp(76px, 11vw, 124px) 0; position: relative; }
+.rule { height: 1px; background: var(--hairline); border: 0; margin: 0; }
+
+/* One radial glow per section, one hue, low and wide. */
+.glow::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 0;
+  width: min(900px, 110vw);
+  height: 460px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 122, 31, 0.10), transparent 68%);
+  pointer-events: none;
+}
+
+/* ---------- hero ---------- */
+.hero { padding-top: clamp(84px, 12vw, 150px); }
+.hero h1 { margin: 22px 0 0; }
+.hero .lede { margin-top: 24px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+/* ---------- buttons: physicality, not glow ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 19px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-in), background-color 200ms var(--ease-in),
+              border-color 200ms var(--ease-in);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.btn-primary { background: var(--accent); color: #17110A; }
+.btn-primary:hover { background: #FF8A3D; }
+
+.btn-ghost {
+  color: var(--text);
+  border-color: var(--hairline-bright);
+  background: rgba(250, 248, 244, 0.02);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.btn-ghost:hover { border-color: rgba(250, 248, 244, 0.32); } /* brighten, never glow */
+
+/* ---------- the boundary diagram ---------- */
+.stack {
+  margin-top: 44px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(250,248,244,0.035), rgba(250,248,244,0.012));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.layer {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+.layer:last-child { border-bottom: 0; }
+.layer .n {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  color: var(--meta);
+  min-width: 2ch;
+}
+.layer .what { font-size: 0.95rem; color: var(--text); }
+.layer .note { font-size: 0.87rem; color: var(--text-dim); margin-left: auto; text-align: right; }
+.layer.is-boundary {
+  background: rgba(255, 122, 31, 0.055);
+  border-top: 1px solid rgba(255, 122, 31, 0.28);
+  border-bottom: 1px solid rgba(255, 122, 31, 0.28);
+}
+.layer.is-boundary .what { color: #FFB781; }
+
+/* ---------- cards ---------- */
+.grid { display: grid; gap: 14px; margin-top: 40px; }
+@media (min-width: 720px) { .grid.cols-2 { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .grid.cols-3 { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  padding: 22px;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: rgba(250, 248, 244, 0.022);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 220ms var(--ease-in);
+}
+.card:hover { border-color: var(--hairline-bright); }
+.card h3 { margin-bottom: 9px; }
+.card p { font-size: 0.93rem; color: var(--text-dim); }
+
+/* ---------- the honest list ---------- */
+.not-for { margin-top: 34px; display: grid; gap: 0; border-top: 1px solid var(--hairline); }
+.not-for div {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  padding: 14px 2px;
+  border-bottom: 1px solid var(--hairline);
+}
+.not-for .item { font-size: 0.95rem; min-width: 200px; }
+.not-for .why { font-size: 0.9rem; color: var(--text-dim); }
+
+/* ---------- code ---------- */
+.code {
+  margin-top: 30px;
+  padding: 18px 20px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--ink-raised);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.83rem;
+  line-height: 1.75;
+  color: var(--text-dim);
+  overflow-x: auto;
+}
+.code .c { color: var(--meta); }
+.code .a { color: #FFB781; }
+
+/* ---------- footer ---------- */
+footer { padding: 46px 0 62px; border-top: 1px solid var(--hairline); }
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 26px;
+  align-items: center;
+  justify-content: space-between;
+}
+.foot a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; }
+.foot a:hover { color: var(--text); }
+.foot .legal { font-size: 0.82rem; color: var(--meta); }
+
+/* ---------- scroll reveal: 18px rise + blur, asymmetric easing ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(6px);
+  transition: opacity 560ms var(--ease-in), transform 560ms var(--ease-in), filter 560ms var(--ease-in);
+}
+.reveal.in { opacity: 1; transform: none; filter: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .btn { transition: none; }
+  .btn:hover, .btn:active { transform: none; }
+}

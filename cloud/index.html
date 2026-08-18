@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Orkastor Cloud — ephemeral environments with a kernel boundary</title>
+<meta name="description" content="Dev and test environments that run in their own microVM with their own guest kernel, on dedicated bare metal. In development — waitlist open, not intended for production workloads." />
+
+<!--
+  orkastor.cloud is the TENANT domain. Customer applications are served from
+  <env>-<slug>-<hash>.orkastor.cloud; this page is the apex, and it is the only
+  first-party content that will ever live on this host.
+
+  Deliberately absent, and none of it is an oversight:
+    * cookies — any cookie set here is scoped to the registrable domain, so until
+      orkastor.cloud is listed on the Public Suffix List every tenant environment
+      would receive it. A marketing cookie on this host is a cross-tenant channel.
+    * third-party scripts, analytics, tag managers, fonts — same reason, plus each
+      is a script we do not control running on the tenant domain.
+    * pricing, SLA, uptime figures, customer logos, benchmarks — the product is not
+      built, the density inputs behind any rate are unmeasured, and an earlier
+      published set of rates turned out to be 21% below cost. gates §2.5: copy is
+      updated to match what exists, and not before it exists.
+-->
+
+<meta name="robots" content="index, follow" />
+<meta property="og:title" content="Orkastor Cloud — ephemeral environments with a kernel boundary" />
+<meta property="og:description" content="Environments that run in their own microVM with their own guest kernel. In development — waitlist open." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://orkastor.cloud/" />
+<link rel="canonical" href="https://orkastor.cloud/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B0B0C'/%3E%3Crect x='9' y='9' width='14' height='14' rx='3' fill='none' stroke='%23FF7A1F' stroke-width='2'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===================== hero ===================== -->
+  <section class="hero glow">
+    <div class="container">
+      <span class="status"><span class="dot"></span>In development · waitlist open · not intended for production workloads</span>
+
+      <h1>Environments with a kernel<br />boundary, not a namespace.</h1>
+
+      <p class="lede">
+        Orkastor Cloud runs each dev and test environment inside its own microVM,
+        with its own guest kernel, on dedicated bare metal. The isolation is the
+        hardware boundary — not a shared kernel with the sharp edges filed off.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://orkastor.com/cloud">Join the waitlist</a>
+        <a class="btn btn-ghost" href="#boundary">How the boundary works</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ===================== the boundary ===================== -->
+  <section id="boundary">
+    <div class="container">
+      <span class="eyebrow">The boundary</span>
+      <h2 class="reveal" style="margin-top:14px">Every environment gets its own kernel.</h2>
+      <p class="lede reveal" style="margin-top:18px">
+        Most platforms in this space put your code in a container next to everyone
+        else's, sharing one host kernel. That is a namespace, and a namespace is a
+        scheduling construct — it was never designed to hold against code that is
+        actively trying to leave.
+      </p>
+
+      <div class="stack reveal">
+        <div class="layer">
+          <span class="n">01</span><span class="what">Your process</span>
+          <span class="note">your image, unchanged</span>
+        </div>
+        <div class="layer">
+          <span class="n">02</span><span class="what">Guest kernel — yours alone</span>
+          <span class="note">not shared with any other tenant</span>
+        </div>
+        <div class="layer is-boundary">
+          <span class="n">03</span><span class="what">microVM boundary</span>
+          <span class="note">hardware virtualisation</span>
+        </div>
+        <div class="layer">
+          <span class="n">04</span><span class="what">Host kernel</span>
+          <span class="note">never reachable from 01</span>
+        </div>
+        <div class="layer">
+          <span class="n">05</span><span class="what">Dedicated bare metal</span>
+          <span class="note">no hypervisor tenancy underneath</span>
+        </div>
+      </div>
+
+      <p class="reveal" style="margin-top:26px; color:var(--text-dim); font-size:0.93rem">
+        Everything else follows from that line. Your ephemeral Postgres is isolated by
+        the same boundary as your web process — not by a second mechanism bolted on
+        for databases.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ===================== what you run ===================== -->
+  <section class="glow">
+    <div class="container">
+      <span class="eyebrow">What you run</span>
+      <h2 class="reveal" style="margin-top:14px">A whole environment, not a container.</h2>
+
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <h3>Multi-service, one hostname</h3>
+          <p>Frontend, API and a real datastore together. Paths route to services on a
+             single hostname, so your frontend calls <code>/api</code> relative — no CORS,
+             no build-time URL, and the same image works in every environment.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Ephemeral datastores</h3>
+          <p>Postgres, Redis and friends as first-class parts of the environment.
+             Internal-only by default and reachable over a port-forward, because
+             default-credential Postgres on the public internet is the classic incident.</p>
+        </div>
+        <div class="card reveal">
+          <h3>A link you can post</h3>
+          <p>Every environment gets an HTTPS URL, returned immediately so it can go on
+             the pull request before the environment has finished starting. Unlisted and
+             <code>noindex</code> by default.</p>
+        </div>
+      </div>
+
+      <div class="code reveal">
+        <span class="c"># bring the image you already build in CI — we never run your build</span><br />
+        $ orkastor up <span class="a">--image</span> ghcr.io/acme/web:$GIT_SHA <span class="a">--port</span> 8080<br />
+        <br />
+        <span class="c">→ https://pr-482-acme-7f3a9c.orkastor.cloud</span><br />
+        <span class="c">→ ttl 8h · standard · eu-north-1</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ===================== what it is not for ===================== -->
+  <section>
+    <div class="container">
+      <span class="eyebrow">What it is not for</span>
+      <h2 class="reveal" style="margin-top:14px">The limits, before you hit them.</h2>
+      <p class="lede reveal" style="margin-top:18px">
+        These are design decisions, not gaps waiting to be filled. Knowing them now is
+        worth more than discovering them at the wrong moment.
+      </p>
+
+      <div class="not-for reveal">
+        <div><span class="item">Production traffic</span>
+             <span class="why">Environments are ephemeral and expire on a TTL. That is the product, not a limitation of it.</span></div>
+        <div><span class="item">Regulated data</span>
+             <span class="why">Use synthetic or scrubbed fixtures. Nothing here is scoped for personal or regulated records.</span></div>
+        <div><span class="item">Durable storage</span>
+             <span class="why">A microVM's memory is its state, and reclamation takes both. Anything you need to keep, keep elsewhere.</span></div>
+        <div><span class="item">Custom domains &amp; GPU</span>
+             <span class="why">Not in the first version. Environments live on <code>orkastor.cloud</code> subdomains.</span></div>
+        <div><span class="item">Privileged or host access</span>
+             <span class="why">Refused at admission. It is the boundary the whole product rests on.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ===================== status ===================== -->
+  <section class="glow">
+    <div class="container">
+      <span class="eyebrow">Status</span>
+      <h2 class="reveal" style="margin-top:14px">Being built in the open, and not finished.</h2>
+      <p class="lede reveal" style="margin-top:18px">
+        Orkastor Cloud is in development. There is no pricing on this page because the
+        measurements the pricing depends on are not finished, and we would rather publish
+        nothing than publish a number twice. There is no availability commitment because
+        there is not yet a service to commit to.
+      </p>
+      <p class="reveal" style="margin-top:20px; color:var(--text-dim)">
+        Join the waitlist and we will get in touch when there is something real to try —
+        with its limits stated as plainly as they are here.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-primary" href="https://orkastor.com/cloud">Join the waitlist</a>
+        <a class="btn btn-ghost" href="https://orkastor.com">Orkastor</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container foot">
+      <span class="legal">© Orkastor. Environments run at <code>*.orkastor.cloud</code>; the Console lives on orkastor.com.</span>
+      <span>
+        <a href="https://orkastor.com/cloud">Waitlist</a> &nbsp;·&nbsp;
+        <a href="https://orkastor.com/cloud/how-it-works">How it works</a> &nbsp;·&nbsp;
+        <a href="https://kubegraf.io">KubeGraf</a>
+      </span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="./reveal.js" defer></script>
+</body>
+</html>
