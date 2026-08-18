@@ -6,8 +6,9 @@ import { CONTACT_EMAIL, DiscordIcon, DISCORD_URL, KUBEGRAF_URL } from './shared'
 const LINKS = {
   Product: [
     { label: 'KubeGraf', href: KUBEGRAF_URL, external: true },
+    { label: 'Orkastor Cloud', href: '/cloud' },
+    { label: 'Cloud: how it works', href: '/cloud/how-it-works' },
     { label: 'Features', href: '/#features' },
-    { label: 'How it works', href: '/#how-it-works' },
     { label: 'Pricing', href: '/pricing' },
   ],
   Company: [
@@ -95,10 +96,9 @@ export default function Footer() {
         >
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12.5px]" style={{ color: 'var(--lp-ink-3)' }}>
             <span>© 2026 Orkastor. All rights reserved.</span>
-            <span className="inline-flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--lp-green)' }} />
-              All systems operational
-            </span>
+            {/* An "All systems operational" indicator used to sit here. Removed:
+                there is no status page behind it, and it read as an availability
+                claim on pages for a product that is not generally available. */}
           </div>
           <p
             className="text-[12.5px] px-4 py-1.5 rounded-full text-center"

@@ -7,6 +7,8 @@ import Home from '@/pages/Home';
 
 // Home stays eager (the landing page — no extra round-trip on first paint).
 // Every other route is code-split so its JS only loads when visited.
+const Cloud = lazy(() => import('@/pages/Cloud'));
+const CloudHowItWorks = lazy(() => import('@/pages/CloudHowItWorks'));
 const Pricing = lazy(() => import('@/pages/Pricing'));
 const Docs = lazy(() => import('@/pages/Docs'));
 const Changelog = lazy(() => import('@/pages/Changelog'));
@@ -22,6 +24,8 @@ export default function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
+              <Route path="/cloud" element={<Cloud />} />
+              <Route path="/cloud/how-it-works" element={<CloudHowItWorks />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/docs" element={<Docs />} />
               <Route path="/changelog" element={<Changelog />} />

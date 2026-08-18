@@ -1562,3 +1562,137 @@ h1, h2 { text-wrap: balance; }
 
 /* ── Grain: from loud to felt (identity kept, noise reduced) ── */
 body::after { opacity: 0.055; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ORKASTOR CLOUD — extension of the .lp system, not a new one
+   Every value below resolves to an existing --lp-* token. These are
+   the four primitives the Cloud pages need and the landing did not:
+   a scroll-safe container for wide technical content, a mono code
+   block, a neutral "limits" callout (deliberately NOT alarm-red —
+   the non-goals are product decisions, not warnings), and the
+   microVM / TTL figure parts.
+════════════════════════════════════════════════════════════════ */
+
+/* Wide content (tables, diagrams, code) scrolls inside itself so the
+   page body never scrolls horizontally at any viewport width. */
+.lpc-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.lpc-scroll:focus-visible { outline: 2px solid rgba(234, 100, 16, 0.55); outline-offset: 2px; }
+
+.lpc-code {
+  font-family: 'Geist Mono', 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: #E6E8EE;
+  background: var(--lp-dark);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 0;
+  tab-size: 2;
+}
+.lpc-code .lpc-c { color: #8A93A6; }             /* comment */
+.lpc-code .lpc-k { color: #FFAE6E; }             /* key / keyword */
+.lpc-code .lpc-v { color: #9FE0B0; }             /* value */
+
+/* Neutral limits callout — hairline rule on the left, paper surface. */
+.lpc-note {
+  border-left: 2px solid var(--lp-ink-3);
+  background: rgba(22, 24, 29, 0.025);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 18px;
+}
+.lpc-note-accent { border-left-color: var(--lp-orange); background: var(--lp-orange-soft); }
+
+/* Mono metadata chip (region, image ref, runtime class). */
+.lpc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(22, 24, 29, 0.045);
+  border: 1px solid var(--lp-line-soft);
+  color: var(--lp-ink-2);
+  white-space: nowrap;
+}
+
+/* Isolation figure: one box per microVM, hairline-drawn like the cards. */
+.lpc-vm {
+  border: 1px solid var(--lp-line);
+  border-radius: 10px;
+  background: var(--lp-surface);
+  padding: 10px;
+}
+.lpc-vm-guest {
+  border: 1px dashed rgba(255, 122, 31, 0.45);
+  border-radius: 7px;
+  background: var(--lp-orange-soft);
+  padding: 7px 8px;
+}
+/* The host below the boundary: hatched, to read as "not yours". */
+.lpc-host {
+  border: 1px solid var(--lp-line);
+  border-radius: 10px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(22, 24, 29, 0.05) 0 1px,
+      transparent 1px 7px
+    ),
+    var(--lp-bg-alt);
+}
+
+/* TTL meter — a static representation of remaining lifetime. */
+.lpc-ttl-track {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(22, 24, 29, 0.08);
+  overflow: hidden;
+}
+.lpc-ttl-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--lp-orange) 0%, var(--lp-amber) 100%);
+}
+
+/* In-page table of contents on the technical page. */
+.lpc-toc-link {
+  display: block;
+  padding: 6px 0 6px 12px;
+  font-size: 13.5px;
+  color: var(--lp-ink-2);
+  border-left: 1px solid var(--lp-line);
+  transition: color .2s, border-color .2s;
+}
+.lpc-toc-link:hover { color: var(--lp-ink); border-left-color: var(--lp-orange); }
+
+/* Definition rows used by the isolation-layer list. */
+.lpc-row { border-top: 1px solid var(--lp-line-soft); }
+.lpc-row:first-child { border-top: none; }
+
+/* Skip link — the first focusable element on the Cloud pages. Off-screen until
+   focused, so keyboard users can jump past the fixed nav. */
+.lp-skip {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 100;
+  transform: translateY(-160%);
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-line);
+  box-shadow: 0 8px 24px rgba(22, 24, 29, 0.16);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lp-ink);
+  transition: transform .18s ease;
+}
+.lp-skip:focus { transform: translateY(0); }
