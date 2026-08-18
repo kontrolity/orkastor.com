@@ -21,7 +21,7 @@ const ITEMS = [
   },
   {
     q: 'How is it priced?',
-    a: 'KubeGraf is free to start. Business and Custom tiers for larger teams are detailed on the pricing page — both run entirely inside your own environment.',
+    a: 'KubeGraf is free to start, with Business and Custom tiers for larger teams detailed on the pricing page — all of them run entirely inside your own environment. Orkastor Cloud is priced separately and is not yet generally available; it runs on infrastructure we operate, so the in-your-environment guarantee does not apply to it.',
   },
 ];
 
@@ -60,7 +60,7 @@ export default function Faq() {
   return (
     <section id="faq" className="relative py-20 sm:py-28 scroll-mt-20" style={{ background: 'var(--lp-bg-alt)' }}>
       <div className="max-w-3xl mx-auto px-5 sm:px-8">
-        <SectionMarker index="09" label="FAQ" />
+        <SectionMarker index="08" label="FAQ" />
         <Reveal className="mb-10 sm:mb-12">
           <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">
             Questions, <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>answered.</span>

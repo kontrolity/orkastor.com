@@ -1,11 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Reveal } from './shared';
 
+/**
+ * Structural claims only — each follows from how KubeGraf is built, so each is
+ * checkable by a reader who reads the architecture.
+ *
+ * "18s median time to root cause" and "80% reduction in MTTR" used to sit here.
+ * Both were removed rather than rephrased: they are performance claims with no
+ * measurement behind them, and an unsourced number on a commercial page is the
+ * kind of thing a security or procurement reviewer asks to see evidence for.
+ * If those figures are ever measured, they belong here with the basis stated.
+ *
+ * All three are scoped to KubeGraf-in-your-cluster, which is what makes them
+ * true — Orkastor Cloud runs on infrastructure we operate, so a blanket
+ * "nothing leaves your network" would not cover it. Same reason section 05
+ * names that exception explicitly.
+ */
 const STATS = [
-  { end: 18, suffix: 's', label: 'median time to root cause' },
-  { end: 80, suffix: '%', label: 'reduction in MTTR' },
-  { end: 100, suffix: '%', label: 'AI inference in your environment' },
-  { end: 0, suffix: '', label: 'bytes of data exfiltrated' },
+  { end: 100, suffix: '%', label: 'AI inference in your own cluster' },
+  { end: 0, suffix: '', label: 'bytes of telemetry sent to us' },
+  { end: 0, suffix: '', label: 'inbound ports opened' },
 ];
 
 /** Counts from 0 to `end` when scrolled into view; honors reduced motion. */
@@ -59,7 +73,7 @@ export default function StatsBar() {
         }}
       />
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 py-14 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-10 py-14 sm:py-16">
           {STATS.map((s, i) => (
             <Reveal
               key={s.label}
