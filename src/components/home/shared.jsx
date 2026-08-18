@@ -11,7 +11,11 @@ export const DiscordIcon = ({ className, ...props }) => (
 );
 
 /** Adds .is-in when the element scrolls into view (drives .lp-reveal). */
-export function Reveal({ children, className = '', delay = 0, as: Tag = 'div', style }) {
+// `style` gets a default so the checker infers it OPTIONAL. Without one, tsc
+// treats it as required and every caller that omits it — which is most of them —
+// fails typecheck. Fixing the signature is right; adding `style={undefined}` at
+// dozens of call sites would be noise papering over a wrong type.
+export function Reveal({ children, className = '', delay = 0, as: Tag = 'div', style = undefined }) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
 

@@ -11,6 +11,7 @@ const HowItWorks = lazy(() => import('@/components/home/HowItWorks'));
 const Security = lazy(() => import('@/components/home/Security'));
 const Testimonials = lazy(() => import('@/components/home/Testimonials'));
 const Platform = lazy(() => import('@/components/home/Platform'));
+const CloudCallout = lazy(() => import('@/components/home/CloudCallout'));
 const Faq = lazy(() => import('@/components/home/Faq'));
 const CTA = lazy(() => import('@/components/home/CTA'));
 const Footer = lazy(() => import('@/components/home/Footer'));
@@ -30,6 +31,7 @@ export default function Home() {
           <Security />
           <Testimonials />
           <Platform />
+          <CloudCallout />
           <Faq />
           <CTA />
         </Suspense>
