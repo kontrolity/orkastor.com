@@ -37,13 +37,33 @@ export default function Security() {
           {/* Left: headline + quote */}
           <Reveal>
             <h2 className="lp-display text-[clamp(28px,4.2vw,46px)]" style={{ color: '#fff' }}>
-              Your data never leaves your network.{' '}
+              Your data never leaves your cluster.{' '}
               <span className="lp-serif" style={{ color: 'var(--lp-orange)' }}>Period.</span>
             </h2>
             <p className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl" style={{ color: 'rgba(230,232,238,0.70)' }}>
               Most AI ops tools ship your telemetry to someone else's cloud.
               Orkastor took the opposite bet: the AI comes to your environment,
               runs there, and stays there.
+            </p>
+            {/* Scoped deliberately — "your cluster", not "your network", and named
+                as KubeGraf rather than Orkastor-wide.
+                
+                This section is an absolute data-residency guarantee, and it is true
+                of KubeGraf: the agent runs in the customer's cluster and inference
+                happens there. It is structurally NOT true of Orkastor Cloud, where we
+                operate the infrastructure and therefore hold the telemetry — the
+                Cloud section three below says exactly that ("because we run it,
+                KubeGraf can investigate your workloads … with nothing to install").
+                
+                Leaving the promise unqualified once a second product exists would
+                make the page contradict itself, and a data-residency claim is the
+                worst possible place for that. One sentence costs nothing and keeps
+                both statements true. */}
+            <p className="mt-4 text-sm leading-relaxed max-w-xl" style={{ color: 'rgba(230,232,238,0.55)' }}>
+              This is how KubeGraf works wherever you install it — your cluster, your
+              rules. Orkastor Cloud is the deliberate exception: we operate that
+              infrastructure, so we hold its telemetry. That difference is the whole
+              reason it needs no agent.
             </p>
 
             {/* Pull quote (from our published testimonials) */}
