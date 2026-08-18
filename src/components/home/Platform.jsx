@@ -92,7 +92,7 @@ export default function Platform() {
             Every Orkastor agent runs on{' '}
             <span className="font-semibold" style={{ color: 'var(--lp-ink)' }}>OrkaAI</span> —
             our multi-model reasoning engine that plans, investigates, and acts inside your
-            environment. KubeGraf is the first. More are on the way.
+            environment. KubeGraf is the first. Orkastor Cloud is next.
           </p>
         </Reveal>
 
