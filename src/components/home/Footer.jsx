@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, Linkedin, Twitter } from 'lucide-react';
-import OrkastorLogo from '@/components/landing/OrkastorLogo';
+import OrkastorMark from '@/components/landing/OrkastorMark';
 import { CONTACT_EMAIL, DiscordIcon, DISCORD_URL, KUBEGRAF_URL } from './shared';
 
 const LINKS = {
@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-10 mb-12">
           {/* Brand */}
           <div className="col-span-2 flex flex-col items-start">
-            <OrkastorLogo size={34} showWordmark light theme="orange" className="mb-4" />
+            <OrkastorMark size={34} showWordmark light className="mb-4" />
             <p className="text-[13.5px] leading-relaxed max-w-[250px] mb-5" style={{ color: 'var(--lp-ink-2)' }}>
               AI agents for infrastructure operations — starting with KubeGraf,
               the AI SRE platform for Kubernetes.
