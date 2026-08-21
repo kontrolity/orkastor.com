@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
-import OrkastorLogo from '@/components/landing/OrkastorLogo';
+import OrkastorMark from '@/components/landing/OrkastorMark';
 import { KUBEGRAF_URL } from './shared';
 
 const LINKS = [
@@ -57,7 +57,7 @@ export default function Nav() {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorLogo size={40} showWordmark light theme="mosaic" />
+            <OrkastorMark size={40} showWordmark light />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
