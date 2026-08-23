@@ -44,8 +44,8 @@ This has already caused one production revert and one outage.
 
 | Live source of truth | Stale copy. Do not apply | Status |
 |---|---|---|
-| `kubegraf-helm/charts/orkastor-registry` | `orkastor-helm/charts/orkastor-registry` | Same version number `0.1.4`. The copy still has the old brand mark and the old Istio gateway values |
-| `kubegraf-helm/charts/orkastor-runtime` | `orkastor-helm/charts/orkastor-runtime` | Byte-identical as of 2026-08-23. It will drift the moment one side is edited, and nothing checks that it has not |
+| `orkastor-helm/charts/orkastor-registry` | ~~`kubegraf-helm/charts/orkastor-registry`~~ | Resolved 2026-08-23. `orkastor-helm` is canonical, kubegraf-helm's copy deleted |
+| `orkastor-helm/charts/orkastor-runtime` | ~~`kubegraf-helm/charts/orkastor-runtime`~~ | Resolved 2026-08-23, same way |
 | `kubegraf.io/apps/orkastor` | `orkastor-console` | The copy ships nowhere. Its CI has typecheck, test and build, and no deploy step at all |
 | `kubegraf-deploy/orkastor-site` | ~~`orkastor-deploy/orkastor-site`~~ | Deleted 2026-08-23 |
 
@@ -57,6 +57,12 @@ CLUSTER. Some Orkastor surfaces run on `kubegraf-prod`, so they stayed in
 `kubegraf-*` repos and their copies went to a repo that deploys to the wrong
 cluster.
 
+The two resolved rows went opposite ways, and the rule is the cluster. The apex
+site runs on kubegraf-prod, so the `orkastor-deploy` copy was deleted. The
+registry runs on orkastor-prod, so `orkastor-helm` became canonical and the
+`kubegraf-helm` copy was deleted. Ask which cluster the thing runs on, not what
+the repo is called.
+
 ## Orkastor-shaped things that live in `kubegraf-*` repos on purpose
 
 Do not "finish the split" by moving these. Moving a resource between Terraform
@@ -66,8 +72,6 @@ states or Helm releases is a live migration, not a file move.
   console.orkastor.cloud from here, via Vercel.
 - `kubegraf-deploy/orkastor-site` is the orkastor.cloud apex site. It runs on
   kubegraf-prod.
-- `kubegraf-helm/charts/orkastor-registry` is the registry. It deploys to
-  orkastor-prod from here.
 - `kubegraf-infra/terraform/aws/shared/cloudflare-dns` holds DNS for both zones,
   in one state.
 - `kubegraf-infra/terraform/aws/envs/prod/workload-iam/kubegraf-api-orkastor-object-storage.tf`
@@ -80,7 +84,7 @@ There is no single deploy mechanism. Check before you assume.
 |---|---|---|
 | console.orkastor.cloud | Vercel, from `kubegraf.io/.github/workflows/frontend.yml`, triggered by a change under `apps/orkastor/` | Yes |
 | orkastor.cloud | `kubectl --context kgprod apply -f kubegraf-deploy/orkastor-site/prod/site.yaml` | **No.** By hand |
-| registry.orkastor.cloud | `helm upgrade --install orkastor-registry charts/orkastor-registry -n orkastor-registry -f charts/orkastor-registry/values-orkastor-prod.yaml` | **No.** By hand |
+| registry.orkastor.cloud | `helm upgrade --install orkastor-registry charts/orkastor-registry -n orkastor-registry -f charts/orkastor-registry/values-orkastor-prod.yaml`, run from **orkastor-helm** | **No.** By hand |
 | orkastor.com | Vercel git integration on push. No CI in the repo at all | Yes |
 
 The apex site is a documented exception to kubegraf-deploy's "merge here and it
