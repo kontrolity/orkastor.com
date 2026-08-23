@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 export const KUBEGRAF_URL = 'https://kubegraf.io';
 export const DISCORD_URL = 'https://discord.gg/GKpbU3pQ';
 export const CONTACT_EMAIL = 'hello@orkastor.com';
+export const CONSOLE_URL = 'https://console.orkastor.cloud';
+export const LOGIN_URL = `${CONSOLE_URL}/login`;
+export const SIGNUP_URL = `${CONSOLE_URL}/signup`;
 
 export const DiscordIcon = ({ className, ...props }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>

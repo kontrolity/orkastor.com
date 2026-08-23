@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import OrkastorMark from '@/components/landing/OrkastorMark';
-import { KUBEGRAF_URL } from './shared';
+import { KUBEGRAF_URL, LOGIN_URL, SIGNUP_URL } from './shared';
 
 const LINKS = [
   { label: 'KubeGraf', href: '/#kubegraf' },
@@ -12,6 +12,7 @@ const LINKS = [
   { label: 'Platform', href: '/#platform' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
+  { label: 'Launch KubeGraf', href: KUBEGRAF_URL, external: true },
 ];
 
 export default function Nav() {
@@ -65,21 +66,24 @@ export default function Nav() {
               <a
                 key={l.label}
                 href={l.href}
-                className="lp-navlink px-3.5 py-2 text-[14px] font-medium"
+                target={l.external ? '_blank' : undefined}
+                rel={l.external ? 'noopener noreferrer' : undefined}
+                className="lp-navlink px-3.5 py-2 text-[14px] font-medium whitespace-nowrap"
               >
                 {l.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            <a href={LOGIN_URL} className="lp-navlink px-3.5 py-2 text-[14px] font-medium">
+              Log in
+            </a>
             <a
-              href={KUBEGRAF_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={SIGNUP_URL}
               className="lp-btn-primary lp-btn-sm group"
             >
-              Launch KubeGraf
+              Sign up
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </div>
@@ -117,6 +121,8 @@ export default function Nav() {
               <a
                 key={l.label}
                 href={l.href}
+                target={l.external ? '_blank' : undefined}
+                rel={l.external ? 'noopener noreferrer' : undefined}
                 onClick={() => setOpen(false)}
                 className="block px-4 py-3 text-[15px] font-medium rounded-xl transition-colors hover:bg-black/[0.04]"
                 style={{ color: 'var(--lp-ink)' }}
@@ -124,16 +130,22 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
-            <div className="p-2 pt-3" style={{ borderTop: '1px solid var(--lp-line-soft)' }}>
+            <div className="p-2 pt-3 flex flex-col gap-2" style={{ borderTop: '1px solid var(--lp-line-soft)' }}>
               <a
-                href={KUBEGRAF_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={SIGNUP_URL}
                 onClick={() => setOpen(false)}
                 className="lp-btn-primary w-full"
               >
-                Launch KubeGraf
+                Sign up
                 <ArrowUpRight className="w-4 h-4" />
+              </a>
+              <a
+                href={LOGIN_URL}
+                onClick={() => setOpen(false)}
+                className="block px-4 py-3 text-[15px] font-medium rounded-xl text-center transition-colors hover:bg-black/[0.04]"
+                style={{ color: 'var(--lp-ink)' }}
+              >
+                Log in
               </a>
             </div>
           </motion.div>
