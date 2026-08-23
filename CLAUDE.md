@@ -132,18 +132,26 @@ instance, disjoint tables". That is now out of date.
 `api.orkastor.cloud` moved to orkastor-prod once Orkastor had its own database.
 It used to point at kubegraf-prod, because that is where its data was.
 
-## The constant registry lives in three places
+## The constant registry is vendored into six repos
 
 Canonical: `kubegraf-api/api/_lib/orkastor/constants.json`.
 
-Copies that must move with it:
-- `orkastor-api/api/_lib/orkastor/constants.json`
-- `kubegraf-helm/tests/orkastor/constants.json` (vendored. CI compares against
-  this file, not against the canonical one)
+Copies that must move with it. Every one of these is asserted byte-identical by
+some CI job, and each job reads its OWN copy rather than the canonical one:
 
-Adding an `orkastor.cloud/*` label key means changing all three, plus
-`kubegraf-api/docs/orkastor-cloud-implementation.md` §3. The invariants job fails
-if you miss one. It also fails if you skip its `--canonical` flag, on purpose,
+- `orkastor-api/api/_lib/orkastor/constants.json`
+- `kubegraf-controller/internal/orkastor/constants.json`
+- `orkastor-controller/internal/orkastor/constants.json`
+- `kubegraf-helm/tests/orkastor/constants.json`
+- `orkastor-helm/tests/orkastor/constants.json`
+- `kubegraf-infra/tests/orkastor/constants.json`
+
+Adding one `orkastor.cloud/*` label key therefore means editing seven files, plus
+`kubegraf-api/docs/orkastor-cloud-implementation.md` §3. Miss one and that repo's
+CI goes red on its next unrelated pull request, which is how this list was found:
+a docs-only change reddened two repos that had nothing to do with it.
+
+The freshness jobs also fail if you skip the `--canonical` flag, on purpose,
 because a drift check that passes when it cannot see the other repo is the bug it
 exists to prevent.
 
