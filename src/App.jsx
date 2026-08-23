@@ -4,6 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/query-client';
 import Layout from '@/Layout';
 import Home from '@/pages/Home';
+import CookieConsent from '@/components/CookieConsent';
 
 // Home stays eager (the landing page — no extra round-trip on first paint).
 // Every other route is code-split so its JS only loads when visited.
@@ -35,6 +36,7 @@ export default function App() {
             </Route>
           </Routes>
         </Suspense>
+        <CookieConsent />
       </Router>
     </QueryClientProvider>
   );

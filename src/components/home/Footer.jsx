@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, Linkedin, Twitter } from 'lucide-react';
 import OrkastorMark from '@/components/landing/OrkastorMark';
 import { CONTACT_EMAIL, DiscordIcon, DISCORD_URL, KUBEGRAF_URL } from './shared';
+import { openCookiePreferences } from '@/components/CookieConsent';
 
 const LINKS = {
   Product: [
@@ -23,6 +24,7 @@ const LINKS = {
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Cookie Preferences', onClick: openCookiePreferences },
   ],
 };
 
@@ -68,22 +70,42 @@ export default function Footer() {
                 {category}
               </h3>
               <ul className="space-y-2.5">
-                {links.map((l) => (
-                  <li key={l.label}>
-                    <a
-                      href={l.href}
-                      target={l.external ? '_blank' : undefined}
-                      rel={l.external ? 'noopener noreferrer' : undefined}
-                      className="text-[14px] inline-flex items-center gap-1 transition-colors"
-                      style={{ color: 'var(--lp-ink-2)' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--lp-ink)'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--lp-ink-2)'; }}
-                    >
-                      {l.label}
-                      {l.external && <ArrowUpRight className="w-3 h-3 opacity-50" />}
-                    </a>
-                  </li>
-                ))}
+                {links.map((l) => {
+                  const linkStyle = {
+                    color: 'var(--lp-ink-2)',
+                    onMouseEnter: (e) => { e.currentTarget.style.color = 'var(--lp-ink)'; },
+                    onMouseLeave: (e) => { e.currentTarget.style.color = 'var(--lp-ink-2)'; },
+                  };
+                  return (
+                    <li key={l.label}>
+                      {l.onClick ? (
+                        <button
+                          type="button"
+                          onClick={l.onClick}
+                          className="text-[14px] inline-flex items-center gap-1 transition-colors"
+                          style={{ color: linkStyle.color }}
+                          onMouseEnter={linkStyle.onMouseEnter}
+                          onMouseLeave={linkStyle.onMouseLeave}
+                        >
+                          {l.label}
+                        </button>
+                      ) : (
+                        <a
+                          href={l.href}
+                          target={l.external ? '_blank' : undefined}
+                          rel={l.external ? 'noopener noreferrer' : undefined}
+                          className="text-[14px] inline-flex items-center gap-1 transition-colors"
+                          style={{ color: linkStyle.color }}
+                          onMouseEnter={linkStyle.onMouseEnter}
+                          onMouseLeave={linkStyle.onMouseLeave}
+                        >
+                          {l.label}
+                          {l.external && <ArrowUpRight className="w-3 h-3 opacity-50" />}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
