@@ -118,6 +118,14 @@ Two facts about orkastor-prod that have each caused an outage:
    points at a load balancer that does not exist. Nothing in Kubernetes notices,
    because every in-cluster signal stays green. This has happened twice. There is
    now a daily `orkastor-dns-liveness` workflow in kubegraf-infra.
+3. **The `vpc-cni` and `kube-proxy` EKS addons were removed out-of-band during
+   the Cilium cutover, not through Terraform.** `kubegraf-infra`'s EKS stack kept
+   declaring both as managed addons, so an unrelated `terraform apply` against
+   that stack silently recreated them (caught and removed again 2026-08-23; the
+   Terraform config was then fixed to stop declaring them). Cilium's own
+   protections meant this never actually took traffic, but the failure mode it
+   risked is exactly #1's `kubeProxyReplacement` conflict. Before touching that
+   Terraform stack, confirm the addons map still excludes `vpc-cni`/`kube-proxy`.
 
 ## What the two products still share
 
