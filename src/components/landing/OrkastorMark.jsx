@@ -1,19 +1,41 @@
 import React from 'react';
 
 /**
- * OrkastorMark — the current brand glyph: a broken orbit ring, a launching
- * arrow crossing it on the same diagonal, and a small trailing spark.
+ * OrkastorMark — the approved mark: an orca in an interrupted ring, navy to teal.
  *
- * Replaces OrkastorLogo (the hex-triad "Monitor · Analyze · Fix" mark) as the
- * mark actually used in the live Nav/Footer — OrkastorLogo predates the
- * reference art the product now ships with and read as a different brand
- * entirely next to it. OrkastorLogo itself is left in place (still imported
- * by the unused `landing/NavBar.jsx` / `landing/Footer.jsx`) rather than
- * deleted, since removing a whole design system wasn't asked for here.
+ * ── THIS FILE WAS SHIPPING A MARK TWO GENERATIONS OLD ───────────────────────
  *
- * Same geometry as apps/orkastor's OrkastorMark.tsx (the Console) and
- * public/favicon.svg (this site's browser-tab icon) — kept in sync by hand
- * across the three since none of them can share a literal component.
+ * It drew the gen-2 "four-shape" glyph — a broken orbit ring, a launching arrow
+ * and a spark — in a purple-to-blue gradient, a palette the brand uses nowhere.
+ * `.orkastor-brand/check_brand.py` flagged every path and both gradient stops in
+ * this file, plus the same drawing in `public/favicon.svg`.
+ *
+ * The retired hex values are deliberately not repeated here: the checker greps
+ * for the literals, so quoting them in a comment re-fails the file it just
+ * fixed. Read SPEC.md for what was retired.
+ *
+ * The geometry below is now copied from `.orkastor-brand/mark-small.svg`
+ * verbatim, and the gradient is the canonical three stops:
+ *
+ *     #0B2A4A  0%   ->  #17608A  45%  ->  #48CBCB  100%
+ *
+ * ── TWO DRAWINGS, PICKED BY RENDERED SIZE ───────────────────────────────────
+ *
+ * SPEC keeps a full drawing (>= 48px) and a simplified one (<= 32px), because
+ * the full one turns to mush below about 48px — which is the exact failure the
+ * previous mark was redrawn to fix. It says to pick by RENDERED size, not by
+ * surface, so this switches on `size` rather than on where it is used. A 40px
+ * nav mark therefore gets the small drawing, deliberately.
+ *
+ * Only the small drawing is inlined. The full one is a 15KB potrace trace whose
+ * paths sit inside a flipped transform, and inlining it would put a fragile
+ * gradientTransform in a React file where the next person will "tidy" it and get
+ * a flat black mark. Above 48px this renders `mark-full.svg` as an <img>, so
+ * there is one copy of that artwork and it is the canonical file.
+ *
+ * The header this replaces claimed the geometry was "kept in sync by hand"
+ * across three files. It was not — all three had drifted to the retired mark
+ * together, which is why the checker exists.
  */
 export default function OrkastorMark({
   size         = 32,
@@ -24,69 +46,84 @@ export default function OrkastorMark({
   const uid = React.useId().replace(/:/g, '');
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      <svg
-        width={size}
-        height={size}
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="Orkastor"
-      >
-        <defs>
-          <linearGradient id={`${uid}g`} x1="4" y1="5" x2="28" y2="27" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#A855F7" />
-            <stop offset="55%" stopColor="#7C6FE8" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </linearGradient>
-        </defs>
-        {/* Orbit ring, broken where the arrow launches through it */}
-        <path
-          d="M12 6.3a9.9 9.9 0 1 0 9.9 12.9"
+      {size >= 48 ? (
+        // Full drawing, straight from the canonical file — see the header for
+        // why this is an <img> and not inlined.
+        <img
+          src="/brand/mark-full.svg"
+          width={size}
+          height={size}
+          alt=""
+          aria-hidden="true"
+          style={{ display: 'block' }}
+        />
+      ) : (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 32 32"
           fill="none"
-          stroke={`url(#${uid}g)`}
-          strokeWidth="4.6"
-          strokeLinecap="round"
-        />
-        {/* Launching arrow, crossing the ring on the same diagonal */}
-        <path
-          d="M8.3 23.7 24.6 6.4"
-          fill="none"
-          stroke={`url(#${uid}g)`}
-          strokeWidth="4.6"
-          strokeLinecap="round"
-        />
-        <path d="M25.3 5.3 16.4 8.6 21.9 14.1Z" fill={`url(#${uid}g)`} />
-        {/* Trailing spark */}
-        <path
-          d="M10.8 12.3 11.9 14.9 14.5 16 11.9 17.1 10.8 19.7 9.7 17.1 7.1 16 9.7 14.9Z"
-          fill="#C4B5FD"
-        />
-      </svg>
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Orkastor"
+        >
+          <defs>
+            <linearGradient id={`${uid}g`} x1="5" y1="26" x2="27" y2="6" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#0B2A4A" />
+              <stop offset="45%" stopColor="#17608A" />
+              <stop offset="100%" stopColor="#48CBCB" />
+            </linearGradient>
+          </defs>
+          {/* The interrupted ring. The gap is the mark, not an accident. */}
+          <path
+            d="M19.9 29.1A13.6 13.6 0 1 0 12.1 29.1"
+            fill="none"
+            stroke={`url(#${uid}g)`}
+            strokeWidth="2.4"
+            strokeLinecap="round"
+          />
+          {/* The orca, solid. */}
+          <path
+            d="M26.4 13.6C24.6 11.4 21.8 9.6 18.6 9.3C17.2 7.2 15.0 6.0 12.6 6.2C13.9 7.9 14.6 9.4 14.6 11.0C12.0 12.8 10.4 15.6 10.2 18.8C10.1 21.4 10.9 23.6 12.4 25.4C12.6 22.6 13.6 20.4 15.4 18.8C16.2 20.0 17.2 20.7 18.4 20.9C18.0 19.4 17.9 18.1 18.2 17.0C21.2 16.2 24.0 15.0 26.4 13.6 Z"
+            fill={`url(#${uid}g)`}
+          />
+        </svg>
+      )}
 
+      {/*
+        WORDMARK — solid, uppercase, letterspaced, ONE text node.
+
+        This was `Orka` + `stor` in a 110deg purple-to-blue gradient across two
+        spans. .orkastor-brand/SPEC.md retires exactly that treatment, and names
+        this file's version as one of the three it is retiring. Two problems, not
+        one:
+
+          · it was a purple-to-blue gradient, a palette the brand does not use
+            anywhere. The approved mark is navy -> teal, and the wordmark is not
+            a gradient at all. (Hex values omitted on purpose — check_brand.py
+            greps for the literals.)
+          · splitting the word across two spans breaks the font's shaping run at
+            the seam, so the kerning between "a" and "s" is wrong at every size.
+
+        Per SPEC: one node, `color` = the surface's foreground. Navy on light,
+        near-white on dark. No background-clip, so no WebKit fallback needed.
+      */}
       {showWordmark && (
         <span
           style={{
-            fontSize: `${(size * 0.5625).toFixed(1)}px`,
+            fontSize: `${(size * 0.5).toFixed(1)}px`,
             fontWeight: 700,
-            letterSpacing: '-0.02em',
+            // Uppercase and letterspaced per the approved artwork. Positive
+            // tracking, not the -0.02em this carried — tight tracking is for
+            // headlines, and it made the uppercase form read as one long glyph.
+            letterSpacing: '0.10em',
+            textTransform: 'uppercase',
             fontFamily: "'Geist', 'Inter', system-ui, -apple-system, sans-serif",
             lineHeight: 1,
-            display: 'inline-flex',
-            alignItems: 'baseline',
+            color: light ? '#0B2A4A' : '#EAF2F8',
           }}
         >
-          <span style={{ color: light ? '#0a0f1a' : '#ffffff' }}>Orka</span>
-          <span
-            style={{
-              background: 'linear-gradient(110deg, #A855F7 0%, #7C6FE8 55%, #3B82F6 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            stor
-          </span>
+          Orkastor
         </span>
       )}
     </div>

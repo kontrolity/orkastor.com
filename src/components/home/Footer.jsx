@@ -4,12 +4,29 @@ import OrkastorMark from '@/components/landing/OrkastorMark';
 import { CONTACT_EMAIL, DiscordIcon, DISCORD_URL, KUBEGRAF_URL } from './shared';
 import { openCookiePreferences } from '@/components/CookieConsent';
 
+/**
+ * One column PER PRODUCT, not one "Product" column holding both.
+ *
+ * The old column listed KubeGraf, then three Cloud links, then `/#features` —
+ * a home-page anchor for KubeGraf's features section that no longer exists there,
+ * so it was a dead link the moment that argument moved to /kubegraf. Mixing two
+ * products into one list is also what made the site read as one product with an
+ * appendix.
+ *
+ * Two columns, each headed by the product's own name, is the footer telling the
+ * same story as the nav and the split above it.
+ */
 const LINKS = {
-  Product: [
-    { label: 'KubeGraf', href: KUBEGRAF_URL, external: true },
-    { label: 'Orkastor Cloud', href: '/cloud' },
-    { label: 'Cloud: how it works', href: '/cloud/how-it-works' },
-    { label: 'Features', href: '/#features' },
+  KubeGraf: [
+    { label: 'Overview', href: '/kubegraf' },
+    { label: 'How it works', href: '/kubegraf#how-it-works' },
+    { label: 'Security', href: '/kubegraf#security' },
+    { label: 'kubegraf.io', href: KUBEGRAF_URL, external: true },
+  ],
+  'Orkastor Cloud': [
+    { label: 'Overview', href: '/cloud' },
+    { label: 'How it works', href: '/cloud/how-it-works' },
+    { label: 'Join the waitlist', href: '/cloud#waitlist' },
     { label: 'Pricing', href: '/pricing' },
   ],
   Company: [
