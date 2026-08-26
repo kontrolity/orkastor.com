@@ -1,23 +1,64 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import OrkastorMark from '@/components/landing/OrkastorMark';
 import { KUBEGRAF_URL, LOGIN_URL, SIGNUP_URL } from './shared';
 
-const LINKS = [
-  { label: 'KubeGraf', href: '/#kubegraf' },
-  { label: 'Cloud', href: '/cloud' },
-  { label: 'Features', href: '/#features' },
-  { label: 'Security', href: '/#security' },
-  { label: 'Platform', href: '/#platform' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'About', href: '/about' },
-  { label: 'Launch KubeGraf', href: KUBEGRAF_URL, external: true },
+/**
+ * ── THE NAV IS THE PARENT'S NAV NOW ─────────────────────────────────────────
+ *
+ * It used to be eight flat links, five of which were KubeGraf's own sections
+ * (#features, #security, #platform) and whose CTA was "Launch KubeGraf". So the
+ * company's navigation was one product's navigation, and Orkastor Cloud was a
+ * single word between them.
+ *
+ * Now: the two products sit together under one Products group, at the same
+ * level, with their status visible before the click. Everything that was a
+ * KubeGraf section anchor moved to /kubegraf with the argument it belongs to.
+ *
+ * `status` is rendered in the menu, not just stored. A visitor should learn that
+ * Cloud is a waitlist here rather than after committing to a click.
+ */
+const PRODUCTS = [
+  {
+    label: 'KubeGraf',
+    href: '/kubegraf',
+    blurb: 'Observability + autonomous SRE for your own clusters',
+    status: 'Live',
+    accent: 'var(--lp-orange)',
+  },
+  {
+    label: 'Orkastor Cloud',
+    href: '/cloud',
+    blurb: 'Dev and test environments we run for you',
+    status: 'Waitlist',
+    accent: 'var(--ork-teal)',
+  },
 ];
 
-export default function Nav() {
+const LINKS = [
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Docs', href: '/docs' },
+  { label: 'About', href: '/about' },
+];
+
+/**
+ * `onDark` — set by pages whose first section is the navy umbrella hero.
+ *
+ * The unscrolled nav is transparent, so its ink has to match whatever is behind
+ * it. Before the redesign that was always cream. The home hero is navy now, and
+ * a nav that kept `--lp-ink` there would be near-invisible dark-on-dark. It is a
+ * PROP rather than a route check because /pricing and /about still open light,
+ * and a component that guesses from the URL breaks the moment a page changes its
+ * own hero.
+ */
+export default function Nav({ onDark = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [prodOpen, setProdOpen] = useState(false);
+  // Inverted only while transparent. Once the glass panel is behind it, the
+  // surface is cream again whatever the page below is.
+  const inv = onDark && !scrolled;
   const menuRef = useRef(null);
   const toggleRef = useRef(null);
 
@@ -58,17 +99,90 @@ export default function Nav() {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorMark size={40} showWordmark light />
+            <OrkastorMark size={40} showWordmark light={!inv} />
           </a>
 
-          <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+          <nav
+            className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2"
+            style={inv ? { color: 'var(--ork-on-navy)' } : undefined}
+          >
+            {/* Products — hover AND focus, so it is reachable by keyboard. A
+                hover-only disclosure is invisible to anyone tabbing. */}
+            <div
+              className="relative"
+              onMouseEnter={() => setProdOpen(true)}
+              onMouseLeave={() => setProdOpen(false)}
+            >
+              <button
+                type="button"
+                className={`px-3.5 py-2 text-[14px] font-medium whitespace-nowrap inline-flex items-center gap-1.5 ${inv ? '' : 'lp-navlink'}`}
+                style={inv ? { color: 'var(--ork-on-navy)' } : undefined}
+                aria-expanded={prodOpen}
+                aria-haspopup="true"
+                onFocus={() => setProdOpen(true)}
+                onClick={() => setProdOpen((v) => !v)}
+              >
+                Products
+                <ChevronDown size={14} className={`transition-transform ${prodOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <AnimatePresence>
+                {prodOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.16 }}
+                    className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[340px]"
+                  >
+                    <div
+                      className="rounded-2xl overflow-hidden p-1.5"
+                      style={{
+                        background: 'var(--lp-surface)',
+                        border: '1px solid var(--lp-line)',
+                        boxShadow: '0 18px 50px -12px rgba(11,42,74,0.28)',
+                      }}
+                    >
+                      {PRODUCTS.map((pr) => (
+                        <a
+                          key={pr.label}
+                          href={pr.href}
+                          className="block rounded-xl px-3.5 py-3 transition-colors hover:bg-black/[0.035]"
+                        >
+                          <span className="flex items-center gap-2 mb-0.5">
+                            <span
+                              className="w-[6px] h-[6px] rounded-full shrink-0"
+                              style={{ background: pr.accent }}
+                            />
+                            <span className="text-[14px] font-semibold" style={{ color: 'var(--lp-ink)' }}>
+                              {pr.label}
+                            </span>
+                            <span
+                              className="ml-auto text-[10.5px] font-semibold uppercase"
+                              style={{ letterSpacing: '0.08em', color: 'var(--lp-ink-3)' }}
+                            >
+                              {pr.status}
+                            </span>
+                          </span>
+                          <span className="block text-[12.5px] leading-[1.45] pl-[14px]" style={{ color: 'var(--lp-ink-2)' }}>
+                            {pr.blurb}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {LINKS.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
                 target={l.external ? '_blank' : undefined}
                 rel={l.external ? 'noopener noreferrer' : undefined}
-                className="lp-navlink px-3.5 py-2 text-[14px] font-medium whitespace-nowrap"
+                className={`px-3.5 py-2 text-[14px] font-medium whitespace-nowrap ${inv ? '' : 'lp-navlink'}`}
+                style={inv ? { color: 'var(--ork-on-navy)' } : undefined}
               >
                 {l.label}
               </a>
@@ -76,7 +190,11 @@ export default function Nav() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            <a href={LOGIN_URL} className="lp-navlink px-3.5 py-2 text-[14px] font-medium">
+            <a
+              href={LOGIN_URL}
+              className={`px-3.5 py-2 text-[14px] font-medium ${inv ? '' : 'lp-navlink'}`}
+              style={inv ? { color: 'var(--ork-on-navy)' } : undefined}
+            >
               Log in
             </a>
             <a
@@ -91,7 +209,7 @@ export default function Nav() {
           <button
             ref={toggleRef}
             className="lg:hidden p-2 -mr-2 rounded-lg"
-            style={{ color: 'var(--lp-ink)' }}
+            style={{ color: inv ? 'var(--ork-on-navy)' : 'var(--lp-ink)' }}
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -117,6 +235,40 @@ export default function Nav() {
               backdropFilter: 'blur(16px)',
             }}
           >
+            {/* Products first, and labelled. On mobile there is no hover, so the
+                desktop disclosure has to become a plain titled group — a
+                dropdown that needs a pointer is a dead control on a phone. */}
+            <p
+              className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase"
+              style={{ letterSpacing: '0.12em', color: 'var(--lp-ink-3)' }}
+            >
+              Products
+            </p>
+            {PRODUCTS.map((pr) => (
+              <a
+                key={pr.label}
+                href={pr.href}
+                onClick={() => setOpen(false)}
+                className="block px-4 py-3 rounded-xl transition-colors hover:bg-black/[0.04]"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="w-[6px] h-[6px] rounded-full shrink-0" style={{ background: pr.accent }} />
+                  <span className="text-[15px] font-semibold" style={{ color: 'var(--lp-ink)' }}>{pr.label}</span>
+                  <span
+                    className="ml-auto text-[10.5px] font-semibold uppercase"
+                    style={{ letterSpacing: '0.08em', color: 'var(--lp-ink-3)' }}
+                  >
+                    {pr.status}
+                  </span>
+                </span>
+                <span className="block text-[12.5px] leading-[1.45] pl-[14px] mt-0.5" style={{ color: 'var(--lp-ink-2)' }}>
+                  {pr.blurb}
+                </span>
+              </a>
+            ))}
+
+            <div className="my-2" style={{ borderTop: '1px solid var(--lp-line-soft)' }} />
+
             {LINKS.map((l) => (
               <a
                 key={l.label}

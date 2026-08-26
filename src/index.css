@@ -1107,6 +1107,28 @@ body::before {
   --lp-dark:        #16181D;   /* dark panel bg (CTA / console) */
   --lp-dark-2:      #1E212A;
 
+  /* ── UMBRELLA TOKENS — the parent brand, not either product ───────────────
+   *
+   * orkastor.com is the company. KubeGraf and Orkastor Cloud are what it sells.
+   * The page used to wear KubeGraf's orange throughout, which read as "orange
+   * company that also has a cloud thing" rather than a parent with two products.
+   *
+   * These three stops are the mark's, verbatim, from .orkastor-brand/SPEC.md:
+   * bottom-left navy -> mid -> teal. Reusing the mark's ramp rather than picking
+   * a new navy means the chrome and the logo cannot drift apart.
+   *
+   * Scope is deliberate: the umbrella chrome (nav, hero, footer, the split) uses
+   * these. Product sections keep their own accent — KubeGraf orange, Cloud teal —
+   * so the two stay tellable apart while the frame around them is Orkastor's.
+   */
+  --ork-navy:       #0B2A4A;
+  --ork-navy-2:     #17608A;
+  --ork-teal:       #48CBCB;
+  --ork-navy-deep:  #071B30;   /* below the gradient's darkest stop, for hero ground */
+  --ork-on-navy:    #EAF2F8;   /* body text on navy — not pure white, which vibrates */
+  --ork-on-navy-2:  rgba(234,242,248,0.62);
+  --ork-line-navy:  rgba(234,242,248,0.14);
+
   font-family: 'Geist', 'Instrument Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--lp-bg);
   color: var(--lp-ink);
