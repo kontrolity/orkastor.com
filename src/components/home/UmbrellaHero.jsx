@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import OrkastorMark from '@/components/landing/OrkastorMark';
 import { Reveal } from './shared';
 
 /**
@@ -56,30 +55,45 @@ export default function UmbrellaHero() {
       />
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-28 pb-20 sm:pt-36 sm:pb-28">
-        <Reveal>
-          <div className="flex items-center gap-3 mb-7">
-            <OrkastorMark className="h-9 w-9" />
-            <span
-              className="text-[12px] font-semibold uppercase"
-              style={{ letterSpacing: '0.16em', color: 'var(--ork-teal)' }}
-            >
-              Orkastor
-            </span>
-          </div>
-        </Reveal>
-
+        {/*
+          NO EYEBROW HERE, and it is a deliberate removal rather than an omission.
+          This carried `<OrkastorMark className="h-9 w-9" />` next to a `<span>`
+          reading "Orkastor" — and OrkastorMark renders its OWN wordmark by
+          default, so the word was drawn twice, overlapping, then squashed into a
+          36px box by the h-9/w-9 utilities (which size the mark's flex wrapper,
+          not the svg inside it).
+          It is not re-added with showWordmark={false} because the nav sits 60px
+          above with the same word in it. Two ORKASTORs stacked is redundant even
+          when they are not overlapping.
+        */}
         <Reveal delay={0.05}>
+          {/*
+            `color` IS REQUIRED HERE. index.css has
+            `.lp h1, .lp h2, .lp h3, .lp h4 { color: var(--lp-ink) }` — a class
+            selector, so it beats the colour this section inherits down from its
+            own inline style. Without it the first line rendered #16181D on navy:
+            legible as a dark smudge and nothing else, while the gradient span
+            beside it looked fine. That shipped, and it is why the headline read
+            as only its teal half.
+          */}
           <h1
             className="max-w-3xl text-[38px] sm:text-[54px] lg:text-[62px] font-semibold leading-[1.04]"
-            style={{ letterSpacing: '-0.03em' }}
+            style={{ letterSpacing: '-0.03em', color: 'var(--ork-on-navy)' }}
           >
             Two products for the same problem:{' '}
+            {/*
+              `color` is the TEAL, not transparent, and the clip paints over it.
+              A gradient-clipped span whose fallback colour is transparent is one
+              unsupported property away from invisible text — so the fallback is
+              the colour it would have been anyway.
+            */}
             <span
               style={{
                 background: 'linear-gradient(96deg, var(--ork-teal), #9BE7E7)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
-                color: 'transparent',
+                WebkitTextFillColor: 'transparent',
+                color: 'var(--ork-teal)',
               }}
             >
               Kubernetes you don&rsquo;t want to babysit.
