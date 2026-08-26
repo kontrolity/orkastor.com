@@ -1129,6 +1129,32 @@ body::before {
   --ork-on-navy-2:  rgba(234,242,248,0.62);
   --ork-line-navy:  rgba(234,242,248,0.14);
 
+  /* ── TEXT-SAFE ACCENTS — a display colour is not a text colour ─────────────
+   *
+   * The product accents (#FF7A1F, #48CBCB) are display colours. Used as TEXT on
+   * white they fail WCAG AA badly, and I shipped them that way: the KUBEGRAF
+   * eyebrow measured 2.61:1 and ORKASTOR CLOUD 1.97:1 against 4.5:1. The teal
+   * fails even the 3:1 threshold for meaningful graphics, so the bullet check
+   * icons were affected too.
+   *
+   * So each product has two values. The bright one is for the card's top rule —
+   * a brand stripe carrying no information, where saturation is the point. The
+   * dark one is for anything a reader has to READ.
+   *
+   * Measured on #FFFFFF (cards) and #FAF8F4 (page), lowest first:
+   *   --kg-accent-text   6.89:1
+   *   --ork-accent-text  6.44:1
+   */
+  --kg-accent-text:  #9A3412;
+  --ork-accent-text: #17608A;
+  --lp-green-text:   #166534;   /* the LIVE badge; #17A34A was 2.96:1 on its own tint */
+
+  /* Orange as TEXT on a light surface. --lp-orange-deep (#EA6410) is a display
+   * colour and measures 3.32:1 on white — it was being used for the CTA step
+   * numbers and the trademark chip, both of which are read. Same family, dark
+   * enough to read: 7.31:1 on white, 5.36:1 on the chip's peach tint. */
+  --lp-orange-text:  #9A3412;
+
   font-family: 'Geist', 'Instrument Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--lp-bg);
   color: var(--lp-ink);

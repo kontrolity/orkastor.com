@@ -55,7 +55,7 @@ export default function CTA() {
                     >
                       <span
                         className="w-6 h-6 rounded-full inline-flex items-center justify-center text-[11px] font-bold shrink-0 lp-mono"
-                        style={{ background: '#fff', color: 'var(--lp-orange-deep)' }}
+                        style={{ background: '#fff', color: 'var(--lp-orange-text)' }}
                       >
                         {n}
                       </span>

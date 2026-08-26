@@ -197,13 +197,33 @@ export default function Nav({ onDark = false }) {
             >
               Log in
             </a>
-            <a
-              href={SIGNUP_URL}
-              className="lp-btn-primary lp-btn-sm group"
-            >
-              Sign up
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            {/*
+              TEAL OVER THE NAVY HERO, not the orange gradient.
+              `lp-btn-primary` is a #FF8A3D -> #E85D04 gradient — KubeGraf's
+              accent. On the parent's navy chrome it was the loudest thing on the
+              page and it belonged to one of the two products, which is the exact
+              imbalance this redesign is undoing. Once the nav is over cream
+              (scrolled, or any other page) the orange is correct again, so this
+              swaps rather than replaces.
+            */}
+            {inv ? (
+              <a
+                href={SIGNUP_URL}
+                className="group inline-flex items-center justify-center gap-2 h-[38px] px-5 rounded-full text-[14px] font-semibold transition-transform hover:-translate-y-[1px]"
+                style={{ background: 'var(--ork-teal)', color: 'var(--ork-navy)' }}
+              >
+                Sign up
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            ) : (
+              <a
+                href={SIGNUP_URL}
+                className="lp-btn-primary lp-btn-sm group"
+              >
+                Sign up
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            )}
           </div>
 
           <button

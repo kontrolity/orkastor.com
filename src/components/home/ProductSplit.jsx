@@ -41,7 +41,10 @@ const PRODUCTS = [
   {
     key: 'kubegraf',
     name: 'KubeGraf',
+    // `accent` paints the top rule only. `ink` is for anything readable — see
+    // the token block in index.css for the measurements.
     accent: 'var(--lp-orange)',
+    ink: 'var(--kg-accent-text)',
     status: { label: 'Live', tone: 'live' },
     line: 'Your clusters.',
     blurb:
@@ -58,6 +61,7 @@ const PRODUCTS = [
     key: 'cloud',
     name: 'Orkastor Cloud',
     accent: 'var(--ork-teal)',
+    ink: 'var(--ork-accent-text)',
     status: { label: 'Waitlist', tone: 'soon' },
     line: 'Our clusters.',
     blurb:
@@ -72,20 +76,22 @@ const PRODUCTS = [
   },
 ];
 
-function StatusBadge({ status, accent }) {
+function StatusBadge({ status, ink }) {
   const live = status.tone === 'live';
   return (
     <span
       className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-full text-[11px] font-semibold uppercase"
       style={{
         letterSpacing: '0.09em',
-        color: live ? 'var(--lp-green)' : accent,
+        // The readable value, not the display one: the bright teal measured
+        // 1.81:1 on its own 12% tint and the bright green 2.96:1 on its.
+        color: live ? 'var(--lp-green-text)' : ink,
         background: live ? 'rgba(23,163,74,0.10)' : 'rgba(72,203,203,0.12)',
         border: `1px solid ${live ? 'rgba(23,163,74,0.24)' : 'rgba(72,203,203,0.30)'}`,
       }}
     >
       {live ? (
-        <span className="w-[6px] h-[6px] rounded-full" style={{ background: 'var(--lp-green)' }} />
+        <span className="w-[6px] h-[6px] rounded-full" style={{ background: 'var(--lp-green-text)' }} />
       ) : null}
       {status.label}
     </span>
@@ -99,7 +105,7 @@ export default function ProductSplit() {
         <Reveal>
           <p
             className="text-[12px] font-semibold uppercase mb-3"
-            style={{ letterSpacing: '0.14em', color: 'var(--lp-ink-3)' }}
+            style={{ letterSpacing: '0.14em', color: 'var(--lp-ink-2)' }}
           >
             The two products
           </p>
@@ -129,11 +135,11 @@ export default function ProductSplit() {
                   <div className="flex items-center justify-between gap-3 mb-5">
                     <span
                       className="text-[12px] font-semibold uppercase"
-                      style={{ letterSpacing: '0.13em', color: p.accent }}
+                      style={{ letterSpacing: '0.13em', color: p.ink }}
                     >
                       {p.name}
                     </span>
-                    <StatusBadge status={p.status} accent={p.accent} />
+                    <StatusBadge status={p.status} ink={p.ink} />
                   </div>
 
                   <p
@@ -150,7 +156,10 @@ export default function ProductSplit() {
                   <ul className="space-y-2.5 mb-8">
                     {p.points.map((pt) => (
                       <li key={pt} className="flex gap-2.5 text-[14px] leading-[1.55]" style={{ color: 'var(--lp-ink-2)' }}>
-                        <Check size={15} className="shrink-0 mt-[3px]" style={{ color: p.accent }} />
+                        {/* A check that marks WHICH claims apply carries meaning,
+                            so it needs the 3:1 graphics minimum. The bright teal
+                            was 1.97:1 on white. */}
+                        <Check size={15} className="shrink-0 mt-[3px]" style={{ color: p.ink }} />
                         <span>{pt}</span>
                       </li>
                     ))}

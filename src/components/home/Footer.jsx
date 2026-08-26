@@ -83,7 +83,9 @@ export default function Footer() {
           {/* Links */}
           {Object.entries(LINKS).map(([category, links]) => (
             <div key={category}>
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-4" style={{ color: 'var(--lp-ink-3)' }}>
+              {/* ink-2, not ink-3: at 11px uppercase on the footer's #F3EFE7 the
+                  lighter token measured 2.90:1 against a 4.5:1 requirement. */}
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-4" style={{ color: 'var(--lp-ink-2)' }}>
                 {category}
               </h3>
               <ul className="space-y-2.5">
@@ -133,7 +135,7 @@ export default function Footer() {
           className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"
           style={{ borderTop: '1px solid var(--lp-line-soft)' }}
         >
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12.5px]" style={{ color: 'var(--lp-ink-3)' }}>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12.5px]" style={{ color: 'var(--lp-ink-2)' }}>
             <span>© 2026 Orkastor. All rights reserved.</span>
             {/* An "All systems operational" indicator used to sit here. Removed:
                 there is no status page behind it, and it read as an availability
@@ -148,7 +150,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold hover:underline"
-              style={{ color: 'var(--lp-orange-deep)' }}
+              style={{ color: 'var(--lp-orange-text)' }}
             >
               KubeGraf<sup style={{ fontSize: '0.6em' }}>®</sup>
             </a>{' '}

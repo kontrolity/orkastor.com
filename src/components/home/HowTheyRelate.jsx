@@ -48,7 +48,7 @@ function Column({ title, note, items, accent }) {
           {title}
         </h3>
       </div>
-      <p className="text-[13.5px] leading-[1.55] mb-6 pl-[19px]" style={{ color: 'var(--lp-ink-3)' }}>
+      <p className="text-[13.5px] leading-[1.55] mb-6 pl-[19px]" style={{ color: 'var(--lp-ink-2)' }}>
         {note}
       </p>
       <dl className="space-y-5 pl-[19px]">
@@ -70,7 +70,7 @@ export default function HowTheyRelate() {
         <Reveal>
           <p
             className="text-[12px] font-semibold uppercase mb-3"
-            style={{ letterSpacing: '0.14em', color: 'var(--lp-ink-3)' }}
+            style={{ letterSpacing: '0.14em', color: 'var(--lp-ink-2)' }}
           >
             How they relate
           </p>
@@ -84,7 +84,7 @@ export default function HowTheyRelate() {
 
         <div className="mt-11 grid md:grid-cols-2 gap-5">
           <Reveal><Column title="What they share" note="Real today, not planned." items={SHARED} accent="var(--ork-teal)" /></Reveal>
-          <Reveal delay={0.06}><Column title="What stays separate" note="By design, and enforced in the architecture." items={SEPARATE} accent="var(--ork-navy-2)" /></Reveal>
+          <Reveal delay={0.06}><Column title="What stays separate" note="By design, and enforced in the architecture." items={SEPARATE} accent="var(--ork-accent-text)" /></Reveal>
         </div>
 
         {/*
@@ -95,7 +95,7 @@ export default function HowTheyRelate() {
         <Reveal delay={0.12}>
           <p
             className="mt-8 text-[13.5px] leading-[1.6] max-w-3xl"
-            style={{ color: 'var(--lp-ink-3)' }}
+            style={{ color: 'var(--lp-ink-2)' }}
           >
             To be clear about one thing people ask: KubeGraf does not monitor your
             Orkastor Cloud environments today. They are separate products with
