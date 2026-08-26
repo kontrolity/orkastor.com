@@ -47,12 +47,16 @@ const PRODUCTS = [
     ink: 'var(--kg-accent-text)',
     status: { label: 'Live', tone: 'live' },
     line: 'Your clusters.',
+    // "Observability" was the first word here and it is the one word its own doc
+    // rules out: how-it-works.md §1 says "not a monitoring/observability tool (it
+    // doesn't just draw graphs); the value is the action landing in the
+    // customer's cluster and being verified." Led with the action instead.
     blurb:
-      'Kubernetes observability and an autonomous SRE for clusters you already run. It watches, finds the cause, and proposes a fix you approve.',
+      'An AI SRE for Kubernetes. It detects the incident, finds the root cause, and ships the fix — then verifies the fix actually landed.',
     points: [
-      'Runs an agent inside your cluster — your data stays there',
-      'Root-cause analysis, not another dashboard of graphs',
-      'Fixes are proposed and approved, never applied behind your back',
+      'One thin agent, outbound-only, no inbound ports and no cluster credentials held centrally',
+      'Root cause and a change, not another dashboard of graphs',
+      'Every fix is proposed for approval — autonomy is a dial you set, not a default',
     ],
     primary: { label: 'Go to kubegraf.io', href: KUBEGRAF_URL, external: true },
     secondary: { label: 'How it works', href: '/kubegraf' },
@@ -64,12 +68,16 @@ const PRODUCTS = [
     ink: 'var(--ork-accent-text)',
     status: { label: 'Waitlist', tone: 'soon' },
     line: 'Our clusters.',
+    // The doc's own one-paragraph definition (§1): "a managed lower environment.
+    // A customer points it at a container image and gets a running microservice
+    // on a URL, in minutes, without owning a Kubernetes cluster or asking their
+    // platform team for anything."
     blurb:
-      'Dev and test environments we run for you. Point it at a container image and get a service on a real HTTPS URL — no cluster to build first.',
+      'A managed lower environment. Point it at a container image and get a running service on a real URL in minutes — no cluster to own, no ticket to raise.',
     points: [
-      'Kubernetes-shaped: Deployments, Services, ingress, rolling updates',
-      'Every environment carries a visible expiry — nothing becomes a quiet bill',
-      'Lower environments on shared infrastructure, not production hosting',
+      'Kubernetes-real: Deployments, Services, ingress, rolling updates. What you test is shaped like what you ship',
+      'Disposable by default — every environment states its expiry, so none becomes a permanent bill',
+      'For dev, test, preview and demos. Explicitly not production, and priced that way',
     ],
     primary: { label: 'Read about Cloud', href: '/cloud' },
     secondary: { label: 'What you get', href: '/cloud/how-it-works' },
@@ -116,8 +124,9 @@ export default function ProductSplit() {
             Whose cluster is it?
           </h2>
           <p className="mt-4 max-w-2xl text-[15.5px] leading-[1.6]" style={{ color: 'var(--lp-ink-2)' }}>
-            That is the whole difference, and it is the fastest way to tell which one
-            you want. Everything else follows from it.
+            One works on infrastructure you own. The other <em>is</em> the
+            infrastructure. That is the fastest way to tell which you want, and
+            everything else follows from it.
           </p>
         </Reveal>
 

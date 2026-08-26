@@ -24,10 +24,23 @@ import { Reveal } from './shared';
  * one, and the whole section would have been a lie for one plausible sentence.
  */
 
+/**
+ * The third row used to read: "One idea — Kubernetes should not need a full-time
+ * babysitter. Both products attack that, from opposite ends." That is the same
+ * false common thread the hero used to carry, restated. The products do not
+ * attack one problem from two ends; one keeps your clusters healthy, the other
+ * spares you having a cluster.
+ *
+ * Replaced with the link the product doc actually claims (§4.1): because we
+ * operate the infrastructure Cloud runs on, the telemetry is already ours — so
+ * KubeGraf's kind of analysis can work there with nothing installed. Worded as
+ * DIRECTION, not as a shipped feature, because it is not one yet. See the note
+ * at the foot of this section.
+ */
 const SHARED = [
   ['One account', 'Sign in once. The same login works across both products — not two sign-ups, not two passwords.'],
   ['One company behind them', 'Same team, same security posture, same people answering support.'],
-  ['One idea', 'Kubernetes should not need a full-time babysitter. Both products attack that, from opposite ends.'],
+  ['One reason they sit together', 'We operate the infrastructure Cloud runs on, so we already hold its telemetry. That is where KubeGraf\u2019s kind of analysis can eventually work with nothing for you to install.'],
 ];
 
 const SEPARATE = [
@@ -78,7 +91,7 @@ export default function HowTheyRelate() {
             className="text-[28px] sm:text-[36px] font-semibold leading-[1.12] max-w-2xl"
             style={{ letterSpacing: '-0.022em', color: 'var(--lp-ink)' }}
           >
-            Two products, one account, and a deliberate wall between them.
+        Different jobs, one account, and a deliberate wall between them.
           </h2>
         </Reveal>
 
@@ -97,9 +110,11 @@ export default function HowTheyRelate() {
             className="mt-8 text-[13.5px] leading-[1.6] max-w-3xl"
             style={{ color: 'var(--lp-ink-2)' }}
           >
-            To be clear about one thing people ask: KubeGraf does not monitor your
-            Orkastor Cloud environments today. They are separate products with
-            separate clusters, and we would rather say so than let it be assumed.
+            To be clear about the obvious next question: KubeGraf does not watch
+            your Orkastor Cloud environments today. Cloud has AI diagnosis of its
+            own for failed builds; KubeGraf&rsquo;s incident detection and root-cause
+            work runs on clusters you connect, and Cloud is not one of them yet.
+            Checked against both codebases rather than inferred from the roadmap.
           </p>
         </Reveal>
       </div>

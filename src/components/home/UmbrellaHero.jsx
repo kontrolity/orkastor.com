@@ -17,11 +17,30 @@ import { Reveal } from './shared';
  * who wants it is one click away, and it is no longer in the way of the visitor
  * who wanted the company.
  *
- * ── ON THE HEADLINE ─────────────────────────────────────────────────────────
+ * ── ON THE HEADLINE, AND THE FALSE COMMON THREAD IT USED TO CARRY ───────────
  *
- * "Two products" is stated in the first line rather than implied by a layout the
- * reader has to scroll to understand. The split below is then a confirmation
- * instead of a surprise.
+ * This said "Two products for the same problem" and closed on "Same problem from
+ * two ends." Wrong on the facts, and it is the specific failure April Dunford
+ * names for multi-product positioning: an umbrella that does not reflect the real
+ * market position "wastes credibility and confuses visitors". Her advice for
+ * products solving different problems is to position them separately and let the
+ * reader self-select.
+ *
+ * The products solve DIFFERENT problems, and their own docs say so:
+ *
+ *   KubeGraf (kubegraf-api/docs/how-it-works.md §1) — "an AI-SRE platform for
+ *   Kubernetes — it detects incidents, finds root cause, and ships the fix." The
+ *   problem is the toil of keeping clusters you ALREADY RUN healthy. That doc
+ *   also says, in as many words, "not a monitoring/observability tool".
+ *
+ *   Orkastor Cloud (docs/orkastor-cloud-product.md §2) — "the gap is not 'we
+ *   cannot run containers.' It is the distance between wanting an environment and
+ *   having one." The problem is not having a cluster, and not wanting to build
+ *   one.
+ *
+ * Two problems, for two states a team can be in. So the headline names the
+ * AUDIENCE split instead of a shared problem — the thread that is actually true,
+ * and it doubles as the self-select.
  *
  * No metric, no logo wall, no "trusted by". There is nothing here we can say
  * that is both impressive and true — Cloud has not shipped — and an unbacked
@@ -80,7 +99,7 @@ export default function UmbrellaHero() {
             className="max-w-3xl text-[38px] sm:text-[54px] lg:text-[62px] font-semibold leading-[1.04]"
             style={{ letterSpacing: '-0.03em', color: 'var(--ork-on-navy)' }}
           >
-            Two products for the same problem:{' '}
+            For teams who run Kubernetes.{' '}
             {/*
               `color` is the TEAL, not transparent, and the clip paints over it.
               A gradient-clipped span whose fallback colour is transparent is one
@@ -96,7 +115,7 @@ export default function UmbrellaHero() {
                 color: 'var(--ork-teal)',
               }}
             >
-              Kubernetes you don&rsquo;t want to babysit.
+              And teams who would rather not.
             </span>
           </h1>
         </Reveal>
@@ -106,9 +125,13 @@ export default function UmbrellaHero() {
             className="mt-6 max-w-2xl text-[16.5px] sm:text-[18px] leading-[1.62]"
             style={{ color: 'var(--ork-on-navy-2)' }}
           >
-            KubeGraf watches the clusters you already run and fixes what breaks.
-            Orkastor Cloud runs the throwaway ones for you, so there is nothing to
-            build in the first place. Same problem from two ends.
+            <strong style={{ fontWeight: 600, color: 'var(--ork-on-navy)' }}>KubeGraf</strong>{' '}
+            is an AI SRE for the clusters you already have: it detects incidents,
+            finds the root cause and ships the fix.{' '}
+            <strong style={{ fontWeight: 600, color: 'var(--ork-on-navy)' }}>Orkastor Cloud</strong>{' '}
+            is a managed environment for the ones you would rather not build &mdash;
+            point it at a container image and get a real URL in minutes. Two
+            products, two different jobs.
           </p>
         </Reveal>
 
