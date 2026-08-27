@@ -40,7 +40,7 @@ const ENTRIES = [
       { type: 'new', text: 'AI Root Cause Analysis: correlates logs, metrics, Kubernetes events and recent deployments.' },
       { type: 'new', text: 'SafeFix™ Auto-Remediation with mandatory human approval gate and full audit trail.' },
       { type: 'new', text: 'Integrations: Datadog, Prometheus, PagerDuty, OpsGenie, GitHub and ArgoCD.' },
-      { type: 'new', text: 'Private AI inference — all LLM calls run inside your VPC with no external data egress.' },
+      { type: 'new', text: 'Private AI inference — model calls route through KubeGraf’s own gateway on redacted telemetry, never with your keys and never on raw logs.' },
       { type: 'new', text: 'Orkastor CLI: brew install orkastor with watch, diagnose and fix subcommands.' },
     ],
   },
