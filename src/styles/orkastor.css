@@ -215,3 +215,21 @@
   from { opacity: 0; transform: translate3d(0, 14px, 0); }
   to   { opacity: 1; transform: none; }
 }
+
+/* ── Brand artwork: two tints, the theme picks ──────────────────────────────
+ *
+ * The mark is raster art cropped from the approved brand sheet, so it cannot
+ * inherit `currentColor` the way the old inline SVG did. The site is
+ * theme-switchable at runtime (next-themes, attribute="class", and there is a
+ * toggle in the nav), so a single fixed tint would be wrong in one theme and
+ * which one is the user's choice, not ours.
+ *
+ * Both tints therefore ship and this picks. Default is the light-surface art;
+ * `.dark` swaps it. Callers that know their surface regardless of theme — a
+ * dark hero band on a light page — pass `onLight` and get a single <img>
+ * without either class instead.
+ */
+.ork-art--light { display: block; }
+.ork-art--dark  { display: none; }
+.dark .ork-art--light { display: none; }
+.dark .ork-art--dark  { display: block; }

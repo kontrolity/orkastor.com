@@ -1,27 +1,22 @@
 import React from 'react';
-import { Mark, Wordmark, INK, PAPER } from './markGeometry';
+import { Logo as BrandLogo } from './markAssets';
 
 /**
- * The Orkastor mark and wordmark.
+ * The Orkastor mark and wordmark. This is the one on the routed path —
+ * `Layout` renders it in `ork/nav/Navbar` and `ork/layout/Footer`.
  *
- * The drawing is in `./markGeometry.jsx`, shared with the two components under
- * `landing/`. It used to be inlined in all three and all three drifted to a
- * retired glyph together, which is why there is now one copy.
+ * The artwork is cropped from the approved brand sheet; see `./markAssets.jsx`
+ * for how, and for why each shape ships in two tints.
  *
- * `tone` picks the ink: 'dark' for a dark mark on a light surface, 'light' for
- * a light mark on a dark one, 'auto' to inherit `currentColor`. It never picks
- * a gradient — this generation of the mark does not have one.
+ * `tone` is kept for the existing callers. 'auto' now means "let the theme
+ * class decide", which is what it should always have meant — the old value
+ * resolved to `currentColor`, and raster art cannot inherit that.
  */
 export function OrkastorLogo({ size = 30, wordmark = true, tone = 'auto', className = '' }) {
-  const onLight = tone !== 'light';
-  const ink = tone === 'light' ? PAPER : tone === 'dark' ? INK : 'currentColor';
-
+  const onLight = tone === 'auto' ? undefined : tone === 'dark';
   return (
-    <span className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      <span style={{ color: ink, display: 'flex' }}>
-        <Mark size={size} onLight={onLight} />
-      </span>
-      {wordmark ? <Wordmark size={size} onLight={onLight} color={ink} /> : null}
+    <span className={`inline-flex items-center select-none ${className}`}>
+      <BrandLogo size={size} wordmark={wordmark} onLight={onLight} />
     </span>
   );
 }
