@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-116.5 -42.5 1239.7 1239.7" role="img" aria-label="Orkastor">
-<!-- Orkastor mark. Traced from the approved artwork, ink on light surfaces.
+<!-- Orkastor mark. Traced from the approved artwork, inverse, for dark surfaces.
      The transform is potrace's own flipped output space and the coordinates are
      expressed in it; do not "simplify" it away without re-flattening the paths.
      Solid fill on purpose - there is no gradient in this generation. -->
-<g transform="translate(0,1156) scale(0.1,-0.1)" fill="#100F22" stroke="none">
+<g transform="translate(0,1156) scale(0.1,-0.1)" fill="#F5F6FA" stroke="none">
   <path d="M4766 11311 c-7 -11 -107 -79 -436 -297 -250 -166 -335 -228 -364
 -267 l-21 -28 -3 -532 c-1 -292 -7 -536 -11 -540 -10 -10 -453 281 -914 600
 l-39 27 -7 -12 c-4 -6 -5 -229 -4 -494 l3 -483 28 -40 c15 -22 61 -66 102 -97
