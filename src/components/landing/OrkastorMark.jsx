@@ -1,31 +1,17 @@
 import React from 'react';
-import { Mark, Wordmark, INK, PAPER } from '@/components/ork/brand/markGeometry';
+import { Logo as BrandLogo } from '@/components/ork/brand/markAssets';
 
 /**
- * OrkastorMark — the mark plus the wordmark.
+ * OrkastorMark — kept for `components/home/*`, which is not on a routed path.
+ * The artwork comes from `ork/brand/markAssets.jsx`; do not add a second copy.
  *
- * The drawing lives in `ork/brand/markGeometry.jsx` and is shared with
- * `ork/brand/Logo.jsx` and `landing/OrkastorLogo.jsx`. It used to be inlined
- * here, in all three, and all three drifted to a retired glyph together. Do not
- * copy the paths back in.
- *
- * `light` says what the mark sits ON — a light background — not what colour the
- * mark is. That is the existing prop's meaning and the call sites depend on it.
+ * `light` means the mark sits ON a light surface. Left undefined the theme
+ * class decides, which is the right default now the site has a theme toggle.
  */
-export default function OrkastorMark({
-  size         = 32,
-  showWordmark = true,
-  light        = false,
-  className    = '',
-}) {
+export default function OrkastorMark({ size = 32, showWordmark = true, light, className = '' }) {
   return (
-    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      {/* The small drawing inherits `currentColor`; the full one is an <img>
-          and picks its own file, so setting colour here is harmless for it. */}
-      <span style={{ color: light ? INK : PAPER, display: 'flex' }}>
-        <Mark size={size} onLight={light} />
-      </span>
-      {showWordmark && <Wordmark size={size} onLight={light} />}
+    <div className={`inline-flex items-center select-none ${className}`}>
+      <BrandLogo size={size} wordmark={showWordmark} onLight={light} />
     </div>
   );
 }
