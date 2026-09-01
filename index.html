@@ -4,9 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicon -->
+    <!-- ── Icons ────────────────────────────────────────────────────────────
+         TWO DRAWINGS, AND THE CROSSOVER IS MEASURED.
+
+         The brand artwork is a lattice with no enclosed counter - it is split
+         down the centre, so every interior channel opens to the outside. At
+         16px its bands land on ~2px and its channels on ~1px, and it resolves
+         to a grey smudge with no structure. At 32px it reads cleanly. So 16px
+         uses a simplified drawing derived from the artwork's own silhouette,
+         and everything from 32px up uses the artwork itself.
+
+         favicon.ico carries 16/32/48 because browsers still reach for it in
+         places the <link> tags do not cover - bookmark bars, history, pinned
+         tabs - and it is requested from / whether or not it is declared.
+
+         apple-touch-icon is a flat opaque square on purpose: iOS composites
+         alpha against BLACK and applies its own corner radius. -->
     <meta name="theme-color" content="#050B12" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Fonts: Cabinet Grotesk (display) + General Sans (body), Fontshare CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
