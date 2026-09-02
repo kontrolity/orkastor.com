@@ -51,8 +51,8 @@ const CARDS = [
       'A whole environment: frontend, API and a real datastore inside the boundary',
       'Ephemeral by design. A TTL, a grace period, then it is gone',
     ],
-    primary: { label: 'Explore Orkastor Cloud', href: '/cloud' },
-    secondary: { label: 'orkastor.cloud', href: EXTERNAL.cloudSite, external: true },
+    primary: { label: 'Explore Domineta', href: '/cloud' },
+    secondary: { label: 'domineta.com', href: EXTERNAL.cloudSite, external: true },
   },
 ];
 

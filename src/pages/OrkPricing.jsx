@@ -19,7 +19,7 @@ import { KUBEGRAF, CLOUD, EXTERNAL } from '@/content/site';
  *    routes AI through KubeGraf's gateway to Amazon Bedrock, so that is not what
  *    happens. The claim is gone.
  *
- * Orkastor Cloud has no published price and this page says so plainly rather
+ * Domineta has no published price and this page says so plainly rather
  * than inventing a tier or hiding the product.
  */
 export default function OrkPricing() {
@@ -31,7 +31,7 @@ export default function OrkPricing() {
         title: 'Pricing — KubeGraf | Orkastor',
         description:
           `KubeGraf ${p.plan} is ${p.price}${p.per}, with ${p.offer.toLowerCase()}. ` +
-          'Orkastor Cloud pricing is not published yet — access is by invitation.',
+          'Domineta pricing is not published yet — access is by invitation.',
         canonical: 'https://www.orkastor.com/pricing',
         image: 'https://www.orkastor.com/og-image.png',
       }}
@@ -40,7 +40,7 @@ export default function OrkPricing() {
         eyebrow="Pricing"
         title="One product has a price."
         titleB="The other has an invitation."
-        sub="KubeGraf is live and self-serve. Orkastor Cloud is still being built in the open, and the measurements a rate depends on are not finished."
+        sub="KubeGraf is live and self-serve. Domineta is still being built in the open, and the measurements a rate depends on are not finished."
         accent="#48CBCB"
       />
 
@@ -86,7 +86,7 @@ export default function OrkPricing() {
             <Reveal delay={70}>
               <Panel className="p-8 h-full flex flex-col" style={{ borderColor: 'rgba(72,203,203,0.4)' }}>
                 <div className="flex items-center justify-between mb-6">
-                  <span className="ork-micro" style={{ color: 'var(--cloud-text)' }}>Orkastor Cloud</span>
+                  <span className="ork-micro" style={{ color: 'var(--cloud-text)' }}>Domineta</span>
                   <Badge kind="invite">By invitation</Badge>
                 </div>
 

@@ -9,7 +9,7 @@
  *
  * ── THE ONE THING TO BE CAREFUL ABOUT ───────────────────────────────────────
  *
- * These are KUBEGRAF's customers. Orkastor Cloud is invitation-only and has
+ * These are KUBEGRAF's customers. Domineta is invitation-only and has
  * none. So the section that renders this says "teams running KubeGraf" rather
  * than "our customers" — letting logos earned by one product imply traction for
  * the other is the exact overclaim this site has been cleaning up.
@@ -94,6 +94,6 @@ export const OUTCOMES = [
   },
   {
     k: 'An environment in minutes, not a quarter',
-    v: 'Point Orkastor Cloud at a container image and get a real HTTPS URL. No cluster to build, no ticket to raise, and an expiry date so nothing becomes a permanent bill.',
+    v: 'Point Domineta at a container image and get a real HTTPS URL. No cluster to build, no ticket to raise, and an expiry date so nothing becomes a permanent bill.',
   },
 ];

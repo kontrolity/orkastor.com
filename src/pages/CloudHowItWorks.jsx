@@ -91,7 +91,7 @@ const FAQ = [
   ],
   [
     'Can I use my own domain or TLS certificate?',
-    'Not in v1. Hostnames are generated under orkastor.cloud with TLS terminated for you.',
+    'Not in v1. Hostnames are generated under domineta.com with TLS terminated for you.',
   ],
   [
     'Which regions?',
@@ -117,7 +117,7 @@ function SectionHeading({ id, children }) {
 
 export default function CloudHowItWorks() {
   useEffect(() => {
-    document.title = 'How Orkastor Cloud works — isolation, regions and TTL';
+    document.title = 'How Domineta works — isolation, regions and TTL';
   }, []);
 
   return (
@@ -132,7 +132,7 @@ export default function CloudHowItWorks() {
         <section className="relative overflow-hidden lp-hero-wash pt-[116px] sm:pt-[150px] pb-12 sm:pb-16">
           <div className="max-w-6xl mx-auto px-5 sm:px-8">
             <Reveal className="max-w-3xl">
-              <div className="lp-eyebrow mb-5">Orkastor Cloud · Technical detail</div>
+              <div className="lp-eyebrow mb-5">Domineta · Technical detail</div>
               <h1 className="lp-display text-[clamp(32px,5vw,58px)]">
                 How it works, one{' '}
                 <span className="lp-serif" style={{ color: 'var(--lp-orange-deep)' }}>
@@ -239,7 +239,7 @@ export default function CloudHowItWorks() {
                     </h3>
                     <p className="text-[14.5px] leading-relaxed mb-4" style={{ color: 'var(--lp-ink-2)' }}>
                       It is a question of shape, not preference. Firecracker dominates ephemeral execution,
-                      where a sandbox lives for one run and sub-second boot is the product. Orkastor Cloud
+                      where a sandbox lives for one run and sub-second boot is the product. Domineta
                       hosts long-running microservices with Services, DNS and rolling deploys — Kubernetes-shaped
                       work. Kata exists to make microVMs behave like pods, so{' '}
                       <Chip>RuntimeClass: kata</Chip> gives an untrusted pod its own guest kernel while the rest

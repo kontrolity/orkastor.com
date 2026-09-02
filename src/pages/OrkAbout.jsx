@@ -13,7 +13,7 @@ import { COMPANY, EXTERNAL } from '@/content/site';
  * entirely inside your own environment… every agent runs as an operator inside
  * your cluster. No data leaves. KubeGraf is the first module."
  *
- * That framing has NO ROOM for Orkastor Cloud. Cloud is the opposite of an agent
+ * That framing has NO ROOM for Domineta. Domineta is the opposite of an agent
  * inside your cluster: it is infrastructure we operate, with customer workloads
  * on our metal. "Runs entirely inside your own environment" cannot describe it.
  * So the site was telling two incompatible stories about what the company is.
@@ -33,7 +33,7 @@ export default function OrkAbout() {
         title: 'About Orkastor — infrastructure software for Kubernetes teams',
         description:
           'Orkastor builds two products either side of one line: KubeGraf works inside the clusters ' +
-          'you own, and Orkastor Cloud is infrastructure we operate for you.',
+          'you own, and Domineta is infrastructure we operate for you.',
         canonical: 'https://www.orkastor.com/about',
         image: 'https://www.orkastor.com/og-image.png',
       }}
@@ -58,7 +58,7 @@ export default function OrkAbout() {
           <div className="grid md:grid-cols-2 gap-5 mt-11">
             {[
               ['KubeGraf', 'Your infrastructure', 'The clusters exist and keeping them healthy is the work. KubeGraf detects the incident, finds the cause and ships the fix — with an agent you install and credentials we never hold.', 'var(--kg-text)', '/kubegraf'],
-              ['Orkastor Cloud', 'Our infrastructure', 'There is no cluster, and building one is a quarter of work nobody asked for. Orkastor Cloud gives you an environment on metal we operate, with a kernel boundary and an expiry date.', 'var(--cloud-text)', '/cloud'],
+              ['Domineta', 'Our infrastructure', 'There is no cluster, and building one is a quarter of work nobody asked for. Domineta gives you an environment on metal we operate, with a kernel boundary and an expiry date.', 'var(--cloud-text)', '/cloud'],
             ].map(([name, side, body, ink, href], i) => (
               <Reveal key={name} delay={i * 70}>
                 <Panel className="p-8 h-full flex flex-col">

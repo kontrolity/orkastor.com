@@ -23,7 +23,7 @@ const LINKS = {
     { label: 'Security', href: '/kubegraf#security' },
     { label: 'kubegraf.io', href: KUBEGRAF_URL, external: true },
   ],
-  'Orkastor Cloud': [
+  'Domineta': [
     { label: 'Overview', href: '/cloud' },
     { label: 'How it works', href: '/cloud/how-it-works' },
     { label: 'Join the waitlist', href: '/cloud#waitlist' },

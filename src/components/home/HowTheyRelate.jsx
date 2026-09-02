@@ -18,7 +18,7 @@ import { Reveal } from './shared';
  * real: separate clusters, separate databases, separate APIs. So both columns
  * describe what exists.
  *
- * What is NOT claimed: that KubeGraf watches your Orkastor Cloud environments.
+ * What is NOT claimed: that KubeGraf watches your Domineta environments.
  * It is the obvious product idea and the obvious thing to put on this page, and
  * it does not exist. A visitor who signs up expecting it would find out on day
  * one, and the whole section would have been a lie for one plausible sentence.
@@ -111,7 +111,7 @@ export default function HowTheyRelate() {
             style={{ color: 'var(--lp-ink-2)' }}
           >
             To be clear about the obvious next question: KubeGraf does not watch
-            your Orkastor Cloud environments today. Cloud has AI diagnosis of its
+            your Domineta environments today. Cloud has AI diagnosis of its
             own for failed builds; KubeGraf&rsquo;s incident detection and root-cause
             work runs on clusters you connect, and Cloud is not one of them yet.
             Checked against both codebases rather than inferred from the roadmap.

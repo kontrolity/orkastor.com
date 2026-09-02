@@ -46,7 +46,7 @@ const Footer = lazy(() => import('@/components/ork/layout/Footer'));
  *
  * The logos and quotes are KubeGraf's, published on kubegraf.io, attributed to
  * named people at named companies. They are labelled as KubeGraf's rather than
- * "our customers", because Orkastor Cloud is invitation-only and has none.
+ * "our customers", because Domineta is invitation-only and has none.
  * See src/content/proof.js for what was deliberately left out.
  */
 export default function OrkHome() {
@@ -54,7 +54,7 @@ export default function OrkHome() {
     title: 'Orkastor — Infrastructure for teams who run Kubernetes',
     description:
       'Orkastor builds infrastructure software for Kubernetes teams. KubeGraf is an AI SRE for ' +
-      'the clusters you already run. Orkastor Cloud provides ephemeral environments with a real ' +
+      'the clusters you already run. Domineta provides ephemeral environments with a real ' +
       'kernel boundary.',
     canonical: 'https://www.orkastor.com/',
     image: 'https://www.orkastor.com/og-image.png',
@@ -93,7 +93,7 @@ export default function OrkHome() {
               <div className="grid md:grid-cols-2 gap-4 mt-11">
                 {[
                   { side: 'Your infrastructure', name: 'KubeGraf', body: 'An agent you install, in a cluster you own. We never hold your credentials.', accent: 'var(--kg)', line: 'rgba(255,138,61,0.34)', href: '/kubegraf' },
-                  { side: 'Our infrastructure', name: 'Orkastor Cloud', body: 'Metal we operate, kernels we boot, environments we destroy on a TTL.', accent: 'var(--cloud-bright)', line: 'rgba(72,203,203,0.34)', href: '/cloud' },
+                  { side: 'Our infrastructure', name: 'Domineta', body: 'Metal we operate, kernels we boot, environments we destroy on a TTL.', accent: 'var(--cloud-bright)', line: 'rgba(72,203,203,0.34)', href: '/cloud' },
                 ].map((c) => (
                   <a key={c.side} href={c.href} className="block" style={{ border: `1px solid ${c.line}`, borderRadius: 'var(--radius-lg)', padding: 26 }}>
                     <p className="ork-micro" style={{ color: c.accent, marginBottom: 10 }}>{c.side}</p>

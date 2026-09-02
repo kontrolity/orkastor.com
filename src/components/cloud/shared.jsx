@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Shared vocabulary for the Orkastor Cloud pages.
+ * Shared vocabulary for the Domineta pages.
  *
  * Every claim on these pages traces back to the product and architecture
  * documents. Nothing here states an uptime figure, a price, a certification or
@@ -10,7 +10,7 @@ import React from 'react';
  */
 
 /** The generated hostname shape a customer gets. */
-export const ENV_HOSTNAME = 'https://<env>.orkastor.cloud';
+export const ENV_HOSTNAME = 'https://<env>.domineta.com';
 
 /** Regions Orkastor already operates. Not a roadmap — the current two. */
 export const REGIONS = ['eu-north-1', 'us-east-1'];

@@ -12,7 +12,7 @@ import { Reveal, SectionMarker } from '@/components/home/shared';
 const NON_GOALS = [
   ['No production SLA', 'No uptime commitment and no multi-AZ high availability per environment. If your users depend on it, it does not belong here.'],
   ['No managed databases', 'You can run a database in an environment. It is not managed, and it is not backed up. Treat every byte inside an environment as disposable.'],
-  ['No custom domains', 'Hostnames are generated under orkastor.cloud. No customer-supplied TLS certificates.'],
+  ['No custom domains', 'Hostnames are generated under domineta.com. No customer-supplied TLS certificates.'],
   ['No cross-environment networking', 'Environments cannot reach each other. That is the same control that stops one tenant reaching another.'],
   ['No GPU', 'Not in v1.'],
   ['No regulated data', 'No compliance certifications are claimed for this product. Do not put customer PII, payment data or anything under a regulatory regime into a lower environment.'],
@@ -33,7 +33,7 @@ export default function NonGoals() {
               </span>
             </h2>
             <p className="mt-5 text-base sm:text-lg leading-relaxed" style={{ color: 'var(--lp-ink-2)' }}>
-              Orkastor Cloud is a lower environment. Everything below is a deliberate choice about what a
+              Domineta is a lower environment. Everything below is a deliberate choice about what a
               lower environment is for — not a roadmap item we are embarrassed about.
             </p>
             <p className="mt-4 text-[15px] leading-relaxed" style={{ color: 'var(--lp-ink-2)' }}>

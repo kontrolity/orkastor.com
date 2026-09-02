@@ -127,19 +127,22 @@ export function Hero() {
               <Line delay={380} reduced={reduced} style={{ color: 'var(--cloud-bright)' }}>{HERO.titleB}</Line>
             </h1>
 
-            <p className="ork-sub" style={{ color: 'rgba(245,248,250,0.72)', marginTop: 20, maxWidth: 560 }}>
+            {/* Its own measure, centred inside the copy column. Left at the
+                column's full 780px the sub would set wider than the headline
+                above it, which reads as a mistake in a centred block. */}
+            <p className="ork-sub" style={{ color: 'rgba(245,248,250,0.72)', marginTop: 22, maxWidth: 660, marginInline: 'auto' }}>
               <Line delay={540} reduced={reduced}>{HERO.sub}</Line>
             </p>
 
             <div
-              className="flex flex-col sm:flex-row gap-3 mt-9 ork-hero-cta"
+              className="flex flex-col sm:flex-row items-center sm:justify-center gap-3 mt-9 ork-hero-cta"
               style={reduced ? undefined : { animationDelay: '700ms' }}
             >
               <Button href="/kubegraf" accent="kg" magnetic>
                 Explore KubeGraf <Arrow />
               </Button>
               <Button href="/cloud" variant="secondary" magnetic style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
-                Explore Orkastor Cloud <Arrow />
+                Explore Domineta <Arrow />
               </Button>
             </div>
           </div>

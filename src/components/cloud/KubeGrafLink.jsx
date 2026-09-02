@@ -9,7 +9,7 @@ import { Reveal, SectionMarker, KUBEGRAF_URL } from '@/components/home/shared';
  * and stops short of promising detection quality we have not measured here.
  */
 const CHAIN = [
-  ['You run dev and test on Orkastor Cloud', 'Your workloads, our infrastructure.'],
+  ['You run dev and test on Domineta', 'Your workloads, our infrastructure.'],
   ['KubeGraf can already see it', 'Logs, metrics, events and traces come from a stack we operate, so there is no agent to install and no credentials to negotiate.'],
   ['One account, one workspace', 'The environment appears as another cluster in the same console you would use for a production cluster.'],
 ];
@@ -30,7 +30,7 @@ export default function KubeGrafLink() {
             </h2>
             <p className="mt-5 text-base sm:text-lg leading-relaxed" style={{ color: 'var(--lp-ink-2)' }}>
               KubeGraf, our AI SRE product, normally needs an agent in your cluster before it can tell you
-              anything. On Orkastor Cloud that step does not exist — we operate the infrastructure, so
+              anything. On Domineta that step does not exist — we operate the infrastructure, so
               incident detection, root-cause analysis and rightsizing work from the first deploy.
             </p>
             <a href={KUBEGRAF_URL} target="_blank" rel="noopener noreferrer" className="mt-8 lp-btn-ghost group">

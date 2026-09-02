@@ -21,7 +21,7 @@ const ITEMS = [
   },
   {
     q: 'How is it priced?',
-    a: 'KubeGraf is free to start, with Business and Custom tiers for larger teams detailed on the pricing page — all of them run entirely inside your own environment. Orkastor Cloud is priced separately and is not yet generally available; it runs on infrastructure we operate, so the in-your-environment guarantee does not apply to it.',
+    a: 'KubeGraf is free to start, with Business and Custom tiers for larger teams detailed on the pricing page — all of them run entirely inside your own environment. Domineta is priced separately and is not yet generally available; it runs on infrastructure we operate, so the in-your-environment guarantee does not apply to it.',
   },
 ];
 

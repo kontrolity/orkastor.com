@@ -32,13 +32,13 @@ const GROUPS = [
     ],
   },
   {
-    product: 'Orkastor Cloud',
+    product: 'Domineta',
     ink: 'var(--cloud-text)',
     status: <Badge kind="invite">By invitation</Badge>,
-    note: 'Cloud is being built in the open. The site carries the architecture; the Console carries the specifics of your environments.',
+    note: 'Domineta is being built in the open. The site carries the architecture; the Console carries the specifics of your environments.',
     links: [
-      { label: 'orkastor.cloud', href: EXTERNAL.cloudSite, note: 'The boundary, the limits and the lifecycle' },
-      { label: 'console.orkastor.cloud', href: EXTERNAL.cloudConsole, note: 'Environments, regions and cost' },
+      { label: 'domineta.com', href: EXTERNAL.cloudSite, note: 'The boundary, the limits and the lifecycle' },
+      { label: 'console.domineta.com', href: EXTERNAL.cloudConsole, note: 'Environments, regions and cost' },
       { label: 'How it works', href: '/cloud/how-it-works', note: 'The request path, in detail', internal: true },
     ],
   },
@@ -52,7 +52,7 @@ export default function OrkDocs() {
         title: 'Documentation — Orkastor',
         description:
           'Where the documentation for each Orkastor product lives: KubeGraf on kubegraf.io, and ' +
-          'Orkastor Cloud on orkastor.cloud and in the Console.',
+          'Domineta on domineta.com and in the Console.',
         canonical: 'https://www.orkastor.com/docs',
         image: 'https://www.orkastor.com/og-image.png',
       }}

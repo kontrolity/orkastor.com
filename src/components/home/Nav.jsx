@@ -9,7 +9,7 @@ import { KUBEGRAF_URL, LOGIN_URL, SIGNUP_URL } from './shared';
  *
  * It used to be eight flat links, five of which were KubeGraf's own sections
  * (#features, #security, #platform) and whose CTA was "Launch KubeGraf". So the
- * company's navigation was one product's navigation, and Orkastor Cloud was a
+ * company's navigation was one product's navigation, and Domineta was a
  * single word between them.
  *
  * Now: the two products sit together under one Products group, at the same
@@ -28,7 +28,7 @@ const PRODUCTS = [
     accent: 'var(--lp-orange)',
   },
   {
-    label: 'Orkastor Cloud',
+    label: 'Domineta',
     href: '/cloud',
     blurb: 'Dev and test environments we run for you',
     status: 'Waitlist',

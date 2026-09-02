@@ -13,7 +13,7 @@ import { Reveal, KUBEGRAF_URL } from './shared';
  * answered that for them.
  *
  * What is NOT equal is the status, and that is deliberate. KubeGraf is live and
- * says so. Orkastor Cloud is a waitlist and says THAT, in the same badge slot,
+ * says so. Domineta is a waitlist and says THAT, in the same badge slot,
  * in the same type size. Dressing a waitlist to look like a shipped product is
  * the one thing that would make the rest of this page untrustworthy — the
  * visitor finds out at the click, and then re-reads everything above it.
@@ -24,7 +24,7 @@ import { Reveal, KUBEGRAF_URL } from './shared';
  * Someone who has decided should leave for the thing itself; /kubegraf is the
  * secondary, for someone still deciding.
  *
- * Cloud's primary is /cloud rather than orkastor.cloud, and that is the reverse
+ * Cloud's primary is /cloud rather than domineta.com, and that is the reverse
  * on purpose: there is no product to log into yet, so sending a visitor to a
  * console they cannot use would be a dead end. /cloud is where the argument and
  * the waitlist live.
@@ -63,7 +63,7 @@ const PRODUCTS = [
   },
   {
     key: 'cloud',
-    name: 'Orkastor Cloud',
+    name: 'Domineta',
     accent: 'var(--ork-teal)',
     ink: 'var(--ork-accent-text)',
     status: { label: 'Waitlist', tone: 'soon' },

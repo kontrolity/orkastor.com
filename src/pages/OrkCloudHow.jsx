@@ -22,7 +22,7 @@ export default function OrkCloudHow() {
     <Page
       onDeep
       seo={{
-        title: 'How Orkastor Cloud works — microVMs, guest kernels and TTLs',
+        title: 'How Domineta works — microVMs, guest kernels and TTLs',
         description:
           'The request path, the microVM boundary, what happens to storage, how the TTL works and ' +
           'why the first environment after a quiet spell is slow.',
@@ -31,7 +31,7 @@ export default function OrkCloudHow() {
       }}
     >
       <ProductHero
-        eyebrow="Orkastor Cloud · how it works"
+        eyebrow="Domineta · how it works"
         title="What actually happens"
         titleB="when you ask for an environment."
         sub="The request path, the boundary it lands inside, and what happens when the clock runs out."

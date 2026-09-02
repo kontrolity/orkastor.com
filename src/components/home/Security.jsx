@@ -50,7 +50,7 @@ export default function Security() {
                 
                 This section is an absolute data-residency guarantee, and it is true
                 of KubeGraf: the agent runs in the customer's cluster and inference
-                happens there. It is structurally NOT true of Orkastor Cloud, where we
+                happens there. It is structurally NOT true of Domineta, where we
                 operate the infrastructure and therefore hold the telemetry — the
                 Cloud section three below says exactly that ("because we run it,
                 KubeGraf can investigate your workloads … with nothing to install").
@@ -61,7 +61,7 @@ export default function Security() {
                 both statements true. */}
             <p className="mt-4 text-sm leading-relaxed max-w-xl" style={{ color: 'rgba(230,232,238,0.55)' }}>
               This is how KubeGraf works wherever you install it — your cluster, your
-              rules. Orkastor Cloud is the deliberate exception: we operate that
+              rules. Domineta is the deliberate exception: we operate that
               infrastructure, so we hold its telemetry. That difference is the whole
               reason it needs no agent.
             </p>

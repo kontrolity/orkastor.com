@@ -1110,7 +1110,7 @@ body::before {
 
   /* ── UMBRELLA TOKENS — the parent brand, not either product ───────────────
    *
-   * orkastor.com is the company. KubeGraf and Orkastor Cloud are what it sells.
+   * orkastor.com is the company. KubeGraf and Domineta are what it sells.
    * The page used to wear KubeGraf's orange throughout, which read as "orange
    * company that also has a cloud thing" rather than a parent with two products.
    *
@@ -1134,7 +1134,7 @@ body::before {
    *
    * The product accents (#FF7A1F, #48CBCB) are display colours. Used as TEXT on
    * white they fail WCAG AA badly, and I shipped them that way: the KUBEGRAF
-   * eyebrow measured 2.61:1 and ORKASTOR CLOUD 1.97:1 against 4.5:1. The teal
+   * eyebrow measured 2.61:1 and DOMINETA 1.97:1 against 4.5:1. The teal
    * fails even the 3:1 threshold for meaningful graphics, so the bullet check
    * icons were affected too.
    *
@@ -1613,7 +1613,7 @@ h1, h2 { text-wrap: balance; }
 body::after { opacity: 0.055; }
 
 /* ═══════════════════════════════════════════════════════════════
-   ORKASTOR CLOUD — extension of the .lp system, not a new one
+   DOMINETA — extension of the .lp system, not a new one
    Every value below resolves to an existing --lp-* token. These are
    the four primitives the Cloud pages need and the landing did not:
    a scroll-safe container for wide technical content, a mono code

@@ -15,7 +15,7 @@ const Footer = lazy(() => import('@/components/home/Footer'));
 
 export default function Cloud() {
   useEffect(() => {
-    document.title = 'Orkastor Cloud — managed lower environments for dev and test';
+    document.title = 'Domineta — managed lower environments for dev and test';
   }, []);
 
   return (

@@ -7,7 +7,7 @@ import { EnvironmentLifecycle, UseCases, Limitations } from '@/components/ork/vi
 import { CLOUD, EXTERNAL } from '@/content/site';
 
 /**
- * /cloud — the Orkastor Cloud page.
+ * /cloud — the Domineta page.
  *
  * Leads with the boundary, because that is what the product's own site leads
  * with and it is the actual differentiator: most platforms in this space put
@@ -22,7 +22,7 @@ export default function OrkCloud() {
     <Page
       onDeep
       seo={{
-        title: 'Orkastor Cloud — ephemeral environments with a real kernel boundary',
+        title: 'Domineta — ephemeral environments with a real kernel boundary',
         description:
           'A complete dev or test environment inside its own microVM, with its own guest kernel. ' +
           'Point it at a container image and get an HTTPS URL in minutes. Access by invitation.',
@@ -31,7 +31,7 @@ export default function OrkCloud() {
       }}
     >
       <ProductHero
-        eyebrow="Orkastor Cloud · our infrastructure"
+        eyebrow="Domineta · our infrastructure"
         title={CLOUD.headline}
         titleB={CLOUD.headlineB}
         sub={CLOUD.oneLine}

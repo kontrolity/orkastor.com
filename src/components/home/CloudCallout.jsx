@@ -2,7 +2,7 @@ import React from 'react';
 import { Reveal, SectionMarker } from './shared';
 
 /**
- * Orkastor Cloud on the home page.
+ * Domineta on the home page.
  *
  * Placed directly after the Platform section on purpose. Platform ends on "one
  * engine, a family of agents" — so the natural next beat is the second thing in
@@ -44,7 +44,7 @@ export default function CloudCallout() {
       style={{ background: 'var(--lp-bg)' }}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <SectionMarker index="07" label="Orkastor Cloud · In development" />
+        <SectionMarker index="07" label="Domineta · In development" />
 
         <Reveal className="max-w-3xl mb-12 sm:mb-14">
           <h2 className="lp-display text-[clamp(28px,4.4vw,50px)]">
@@ -83,7 +83,7 @@ export default function CloudCallout() {
         <Reveal delay={200} className="mt-10 sm:mt-12">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <a href="/cloud" className="lp-btn-primary">
-              Explore Orkastor Cloud
+              Explore Domineta
             </a>
             <a
               href="/cloud/how-it-works"

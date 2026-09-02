@@ -11,7 +11,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
  * ── THE HEADING IS PRECISE ON PURPOSE ───────────────────────────────────────
  *
  * "Teams running KubeGraf in production", not "our customers". These logos were
- * earned by KubeGraf; Orkastor Cloud is invitation-only and has none. Putting
+ * earned by KubeGraf; Domineta is invitation-only and has none. Putting
  * them under a company-level "trusted by" would let one product's traction imply
  * the other's, which is the same overclaim this site has spent three PRs
  * removing.
@@ -148,7 +148,7 @@ export function Testimonials() {
               Quotes as published on{' '}
               <a href={EXTERNAL.kubegrafSite} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cloud-text)', textDecoration: 'underline', textUnderlineOffset: 2 }}>
                 kubegraf.io
-              </a>. Orkastor Cloud is invitation-only and has no customers to show yet.
+              </a>. Domineta is invitation-only and has no customers to show yet.
             </p>
             <Button href={EXTERNAL.kubegrafSite} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>
               More on kubegraf.io <Arrow />

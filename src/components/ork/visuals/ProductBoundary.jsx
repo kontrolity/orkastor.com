@@ -8,7 +8,7 @@ import { useReducedMotion, useHasPointer } from '@/hooks/useReducedMotion';
  * This is the one visual that has to do the explaining: a visitor should be able
  * to look at it for three seconds and know the two products are different
  * things. So the two branches are deliberately NOT symmetrical — KubeGraf's
- * cycle is detect→diagnose→fix→verify on a cluster that already exists; Cloud's
+ * cycle is detect→diagnose→fix→verify on a cluster that already exists; Domineta's
  * is create→isolate→run→expire on one that appears and then does not. Same
  * diagram, opposite shapes.
  *
@@ -140,7 +140,7 @@ export function ProductBoundary({ className = '' }) {
            style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
         <title id="ork-boundary-title">
           Orkastor splits into two products. KubeGraf works inside clusters you already own,
-          cycling through detect, diagnose, fix and verify. Orkastor Cloud is infrastructure
+          cycling through detect, diagnose, fix and verify. Domineta is infrastructure
           Orkastor operates, cycling through create, isolate, run and expire.
         </title>
 
@@ -292,14 +292,14 @@ function KgBranch({ on, at, step, motion }) {
 }
 
 /**
- * Orkastor Cloud: an environment that appears, gets a kernel boundary, runs,
+ * Domineta: an environment that appears, gets a kernel boundary, runs,
  * and goes away. The microVM border DRAWS ITSELF from the isolate step — a
  * boundary being established, rather than a box being faded in.
  */
 function ClBranch({ on, at }) {
   return (
     <g>
-      <text y="26" textAnchor="middle" fill="var(--cloud-bright)" fontSize="17" fontWeight="700" letterSpacing="2.2">ORKASTOR CLOUD</text>
+      <text y="26" textAnchor="middle" fill="var(--cloud-bright)" fontSize="17" fontWeight="700" letterSpacing="2.2">DOMINETA</text>
       <text y="49" textAnchor="middle" fill="rgba(245,248,250,0.7)" fontSize="11" letterSpacing="1.6">OUR INFRASTRUCTURE</text>
 
       <rect x="-110" y="92" width="220" height="168" rx="14"
@@ -327,7 +327,7 @@ function ClBranch({ on, at }) {
         <rect x="-96" y="182" width="192" height="30" rx="15"
               fill="rgba(72,203,203,0.1)" stroke="rgba(72,203,203,0.34)" strokeWidth="1" />
         <text y="202" textAnchor="middle" fill="rgba(111,220,220,0.96)" fontSize="11"
-              fontFamily="ui-monospace, monospace">https://…orkastor.cloud</text>
+              fontFamily="ui-monospace, monospace">https://…domineta.com</text>
       </g>
 
       {/* Expiry. The honest end state: it is gone, not parked. */}

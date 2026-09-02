@@ -60,7 +60,7 @@ export function SectionHead({ eyebrow = undefined, title = undefined, sub = unde
  * Button.
  *
  * `primary` is solid, `secondary` is a hairline ghost, `quiet` is text-only.
- * `accent` tints primary per product so a KubeGraf CTA and a Cloud CTA are
+ * `accent` tints primary per product so a KubeGraf CTA and a Domineta CTA are
  * tellable apart without reading them.
  *
  * The arrow moves 3px on hover and the whole control lifts 1px. Both are

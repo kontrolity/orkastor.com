@@ -166,7 +166,7 @@ export default function OrkKubeGraf() {
                   kubegraf.io ↗
                 </Button>
                 <Button href="/cloud" variant="secondary" style={{ color: 'var(--text)' }}>
-                  Or see Orkastor Cloud <Arrow />
+                  Or see Domineta <Arrow />
                 </Button>
               </div>
             </div>

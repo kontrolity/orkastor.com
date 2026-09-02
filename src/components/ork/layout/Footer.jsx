@@ -8,8 +8,8 @@ import { EXTERNAL } from '@/content/site';
  *
  * The old footer had a single "Product" column mixing both, which is part of how
  * the site came to read as one product with an appendix. It also linked "Pricing"
- * under Cloud — and Cloud has no published pricing, so that link promised
- * something that does not exist. Cloud's column here ends at the Console.
+ * under Domineta — and Domineta has no published pricing, so that link promised
+ * something that does not exist. Domineta's column here ends at the Console.
  */
 const COLUMNS = [
   {
@@ -24,12 +24,12 @@ const COLUMNS = [
     ],
   },
   {
-    title: 'Orkastor Cloud',
+    title: 'Domineta',
     links: [
       { label: 'Overview', href: '/cloud' },
       { label: 'How it works', href: '/cloud/how-it-works' },
       { label: 'The boundary', href: '/cloud#boundary' },
-      { label: 'orkastor.cloud ↗', href: EXTERNAL.cloudSite, external: true },
+      { label: 'domineta.com ↗', href: EXTERNAL.cloudSite, external: true },
       { label: 'Console ↗', href: EXTERNAL.cloudConsole, external: true },
     ],
   },
@@ -54,7 +54,7 @@ export function Footer() {
             <OrkastorLogo size={28} />
             <p className="ork-small mt-4" style={{ color: 'var(--text-2)', maxWidth: 300 }}>
               Infrastructure software for Kubernetes teams. KubeGraf works inside the clusters you
-              own; Orkastor Cloud is infrastructure we operate.
+              own; Domineta is infrastructure we operate.
             </p>
           </div>
 

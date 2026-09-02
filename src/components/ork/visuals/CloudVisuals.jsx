@@ -7,7 +7,7 @@ import { CLOUD } from '@/content/site';
  *
  * Seven stages ending in DESTROY, and the environment visibly goes away at the
  * end before the loop restarts. That ending is the product — "environments
- * expire" is the first thing orkastor.cloud's own limits section says, and a
+ * expire" is the first thing domineta.com's own limits section says, and a
  * lifecycle diagram that quietly loops back to RUN would be selling something
  * else.
  *
@@ -95,7 +95,7 @@ export function EnvironmentLifecycle({ className = '' }) {
             </div>
             <p className="ork-mono ork-small mt-3"
                style={{ color: active >= 4 ? 'var(--cloud-text)' : 'var(--text-3)', opacity: active >= 4 ? 1 : 0.3, transition: 'all 400ms' }}>
-              https://pr-482-acme-7f3a9c21.orkastor.cloud
+              https://pr-482-acme-7f3a9c21.domineta.com
             </p>
             {active >= 5 ? (
               <p className="ork-small mt-2" style={{ color: 'var(--warn)' }}>TTL reached — grace period, then removal</p>
