@@ -233,3 +233,167 @@
 .ork-art--dark  { display: none; }
 .dark .ork-art--light { display: none; }
 .dark .ork-art--dark  { display: block; }
+
+/* ══ HERO ═════════════════════════════════════════════════════════════════════
+ *
+ * Replaces the <Topology> node-scatter that used to sit behind the headline.
+ * Those were small grey circles at 0.7 opacity on navy; several landed directly
+ * behind the type and read as dust rather than as a network.
+ *
+ * Everything below animates ONLY transform and opacity, so the whole background
+ * composites on the GPU and never triggers layout while the page is scrolling.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+.ork-aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Contains the blur. Without this the 180px filter bleeds past the section
+     and paints over the header on short viewports. */
+  contain: paint;
+}
+.ork-aurora span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform;
+}
+/* Teal, top-right — Orkastor Cloud's colour, over the diagram half. */
+.ork-aurora-a {
+  width: 46vw; height: 46vw; min-width: 460px; min-height: 460px;
+  top: -18%; right: -10%;
+  background: radial-gradient(circle, rgba(72, 203, 203, 0.42), transparent 66%);
+  animation: ork-drift-a 34s ease-in-out infinite;
+}
+/* Orange, mid-left — KubeGraf's colour, behind the primary button. Weakest of
+   the three on purpose: it sits under text, where teal does not. */
+.ork-aurora-b {
+  width: 40vw; height: 40vw; min-width: 380px; min-height: 380px;
+  top: 32%; left: -14%;
+  background: radial-gradient(circle, rgba(255, 138, 61, 0.24), transparent 68%);
+  animation: ork-drift-b 43s ease-in-out infinite;
+}
+/* Deep navy lift, bottom-centre. Not a brand colour — it stops the lower third
+   going flat black where the gradient bottoms out. */
+.ork-aurora-c {
+  width: 52vw; height: 34vw; min-width: 520px; min-height: 300px;
+  bottom: -22%; left: 28%;
+  background: radial-gradient(circle, rgba(23, 96, 138, 0.40), transparent 70%);
+  animation: ork-drift-c 51s ease-in-out infinite;
+}
+/* 34 / 43 / 51 seconds — mutually prime, so the three never realign into a
+   pattern a visitor can notice repeating. */
+@keyframes ork-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-6%, 8%, 0) scale(1.12); }
+}
+@keyframes ork-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
+  50%      { transform: translate3d(9%, -7%, 0) scale(1); }
+}
+@keyframes ork-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-8%, -5%, 0) scale(1.1); }
+}
+
+/* Corner darkening. The aurora moves, so without this the headline's contrast
+   would change as it drifts underneath. This pins the worst case. */
+.ork-hero-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% 40%, transparent 42%, rgba(5, 11, 18, 0.55) 100%);
+}
+
+/* ── the eyebrow, with a live dot ─────────────────────────────────────────── */
+.ork-eyebrow-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font: 600 11.5px/1 var(--sans, inherit);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cloud-bright);
+}
+.ork-eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cloud-bright);
+  box-shadow: 0 0 0 0 rgba(72, 203, 203, 0.7);
+  animation: ork-pulse 2.6s ease-out infinite;
+}
+@keyframes ork-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(72, 203, 203, 0.55); }
+  70%  { box-shadow: 0 0 0 9px rgba(72, 203, 203, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(72, 203, 203, 0); }
+}
+
+/* ── one pass of light across the headline, on arrival ────────────────────── */
+.ork-h1-sheen {
+  position: relative;
+  background-image: linear-gradient(100deg,
+    transparent 38%, rgba(255, 255, 255, 0.55) 50%, transparent 62%);
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  background-position: 190% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: ork-sheen 1500ms cubic-bezier(0.3, 0, 0.2, 1) 900ms 1 both;
+}
+/* ⚠ The text colour is set inline and is NOT transparent, so the clip only
+   tints — it never becomes the sole source of the glyphs. A clipped headline
+   whose fallback is transparent is one unsupported property from invisible. */
+@keyframes ork-sheen {
+  to { background-position: -60% 0; }
+}
+
+/* ── the diagram's panel ──────────────────────────────────────────────────── */
+.ork-hero-figure {
+  position: relative;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(245, 248, 250, 0.10);
+  background: linear-gradient(180deg, rgba(245, 248, 250, 0.055), rgba(245, 248, 250, 0.02));
+  box-shadow: 0 30px 80px -50px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(2px);
+}
+/* A teal halo behind the panel, so it reads as lit rather than pasted on. */
+.ork-hero-figure-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 18px;
+  pointer-events: none;
+  background: radial-gradient(70% 55% at 60% 0%, rgba(72, 203, 203, 0.14), transparent 70%);
+}
+/* Hairline of light along the top edge, the same trick the mark uses. */
+.ork-hero-figure::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(72, 203, 203, 0.45) 30%, rgba(72, 203, 203, 0.45) 70%, transparent);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  /* The blur is the single most expensive thing on this page and a phone gets
+     the least out of it — the aurora is mostly off-canvas at this width. */
+  .ork-aurora span { filter: blur(80px); }
+  .ork-hero-figure { padding: 14px; border-radius: 14px; }
+}
+
+/* ⚠ Reduced motion stops the DRIFT but keeps the light. The aurora is the
+   hero's ground; removing it would leave a flat navy rectangle, which is a
+   worse page rather than a calmer one. Only the movement goes. */
+@media (prefers-reduced-motion: reduce) {
+  .ork-aurora span,
+  .ork-eyebrow-dot,
+  .ork-h1-sheen {
+    animation: none !important;
+  }
+  .ork-h1-sheen { background-image: none; }
+}

@@ -74,7 +74,7 @@ export function ProductBoundary({ className = '' }) {
 
         {/* ── Orkastor, the trunk ─────────────────────────────────────────── */}
         <g>
-          <rect x="300" y="6" width="120" height="34" rx="17" fill="none" stroke="rgba(245,248,250,0.28)" strokeWidth="1" />
+          <rect x="300" y="6" width="120" height="34" rx="17" fill="none" stroke="rgba(245,248,250,0.44)" strokeWidth="1" />
           <text x="360" y="28" textAnchor="middle" fill="#F5F8FA" fontSize="12.5" fontWeight="600" letterSpacing="1.6">ORKASTOR</text>
           <line x1="360" y1="40" x2="360" y2="86" stroke="url(#obTrunk)" strokeWidth="1.4" />
           {!reduced ? (
@@ -82,19 +82,19 @@ export function ProductBoundary({ className = '' }) {
                   strokeLinecap="round" pathLength="1" strokeDasharray="0.25 0.75"
                   style={{ animation: 'ork-pulse 3.4s linear infinite' }} />
           ) : null}
-          <text x="360" y="70" textAnchor="middle" fill="rgba(245,248,250,0.42)" fontSize="9" letterSpacing="1.4">INFRASTRUCTURE</text>
+          <text x="360" y="70" textAnchor="middle" fill="rgba(245,248,250,0.58)" fontSize="9" letterSpacing="1.4">INFRASTRUCTURE</text>
         </g>
 
         {/* ── The split ───────────────────────────────────────────────────── */}
         <path d="M360 86 L360 104 Q360 116 348 116 L196 116 Q184 116 184 128 L184 146"
-              fill="none" stroke="rgba(245,248,250,0.2)" strokeWidth="1.2" />
+              fill="none" stroke="rgba(245,248,250,0.34)" strokeWidth="1.2" />
         <path d="M360 86 L360 104 Q360 116 372 116 L524 116 Q536 116 536 128 L536 146"
-              fill="none" stroke="rgba(245,248,250,0.2)" strokeWidth="1.2" />
+              fill="none" stroke="rgba(245,248,250,0.34)" strokeWidth="1.2" />
 
         {/* ── THE BOUNDARY. The one line the whole site is built around. ──── */}
         <g opacity="0.9">
           <line x1="20" y1="131" x2="700" y2="131" stroke="rgba(72,203,203,0.22)" strokeWidth="1" strokeDasharray="3 5" />
-          <text x="30" y="126" fill="rgba(245,248,250,0.4)" fontSize="8.5" letterSpacing="1.5">THE BOUNDARY</text>
+          <text x="30" y="126" fill="rgba(245,248,250,0.56)" fontSize="8.5" letterSpacing="1.5">THE BOUNDARY</text>
         </g>
 
         {/* ── KubeGraf branch ─────────────────────────────────────────────── */}
@@ -105,7 +105,7 @@ export function ProductBoundary({ className = '' }) {
           onMouseLeave={hasPointer ? () => setHot(null) : undefined}
         >
           <text x="184" y="164" textAnchor="middle" fill="var(--kg)" fontSize="12" fontWeight="700" letterSpacing="1.5">KUBEGRAF</text>
-          <text x="184" y="180" textAnchor="middle" fill="rgba(245,248,250,0.5)" fontSize="9" letterSpacing="1.2">YOUR INFRASTRUCTURE</text>
+          <text x="184" y="180" textAnchor="middle" fill="rgba(245,248,250,0.68)" fontSize="9" letterSpacing="1.2">YOUR INFRASTRUCTURE</text>
 
           {/* A cluster that already exists: a fixed ring of pods. */}
           <circle cx="184" cy="268" r="58" fill="none" stroke="rgba(255,138,61,0.22)" strokeWidth="1" strokeDasharray="2 4" />
@@ -119,7 +119,7 @@ export function ProductBoundary({ className = '' }) {
             return (
               <g key={i}>
                 <rect x={x - 7} y={y - 7} width="14" height="14" rx="3"
-                      fill={bad ? (fixed ? 'rgba(74,222,128,0.9)' : 'rgba(248,113,113,0.9)') : 'rgba(245,248,250,0.22)'}
+                      fill={bad ? (fixed ? 'rgba(74,222,128,0.9)' : 'rgba(248,113,113,0.9)') : 'rgba(245,248,250,0.36)'}
                       style={{ transition: 'fill 400ms var(--ease-standard)' }} />
                 {bad && !fixed && !reduced ? (
                   <rect data-motion-loop="" x={x - 11} y={y - 11} width="22" height="22" rx="5" fill="none"
@@ -131,12 +131,12 @@ export function ProductBoundary({ className = '' }) {
           })}
           {/* Below the ring, not inside it: at 40px radius the centre is where
               the pods are, and the label was reading as another node. */}
-          <text x="184" y="342" textAnchor="middle" fill="rgba(245,248,250,0.34)" fontSize="7.5" letterSpacing="1.3">A CLUSTER YOU ALREADY RUN</text>
+          <text x="184" y="342" textAnchor="middle" fill="rgba(245,248,250,0.5)" fontSize="7.5" letterSpacing="1.3">A CLUSTER YOU ALREADY RUN</text>
 
           {KG_STEPS.map((label, i) => (
             <g key={label} opacity={on('kg', i) ? 1 : 0.26} style={{ transition: 'opacity 300ms var(--ease-standard)' }}>
               <text x={64 + i * 62} y="378" textAnchor="middle" fontSize="9.5" fontWeight={on('kg', i) ? 700 : 500}
-                    fill={on('kg', i) ? 'var(--kg)' : 'rgba(245,248,250,0.5)'} letterSpacing="0.6">
+                    fill={on('kg', i) ? 'var(--kg)' : 'rgba(245,248,250,0.68)'} letterSpacing="0.6">
                 {label.toUpperCase()}
               </text>
               {i < 3 ? <line x1={64 + i * 62 + 24} y1="375" x2={64 + (i + 1) * 62 - 24} y2="375" stroke="rgba(255,138,61,0.35)" strokeWidth="1" /> : null}
@@ -152,7 +152,7 @@ export function ProductBoundary({ className = '' }) {
           onMouseLeave={hasPointer ? () => setHot(null) : undefined}
         >
           <text x="536" y="164" textAnchor="middle" fill="var(--cloud-bright)" fontSize="12" fontWeight="700" letterSpacing="1.5">ORKASTOR CLOUD</text>
-          <text x="536" y="180" textAnchor="middle" fill="rgba(245,248,250,0.5)" fontSize="9" letterSpacing="1.2">OUR INFRASTRUCTURE</text>
+          <text x="536" y="180" textAnchor="middle" fill="rgba(245,248,250,0.68)" fontSize="9" letterSpacing="1.2">OUR INFRASTRUCTURE</text>
 
           {/* An environment that appears, gets a kernel boundary, and goes away.
               The microVM rect only exists from the isolate step onward. */}
@@ -169,7 +169,7 @@ export function ProductBoundary({ className = '' }) {
           {['web', 'api', 'db'].map((svc, i) => (
             <g key={svc} opacity={on('cloud', 0) ? 1 : 0.12} style={{ transition: 'opacity 400ms var(--ease-standard)' }}>
               <rect x={486 + i * 36} y="248" width="28" height="20" rx="4" fill="rgba(72,203,203,0.16)" stroke="rgba(72,203,203,0.4)" strokeWidth="0.8" />
-              <text x={500 + i * 36} y="262" textAnchor="middle" fill="rgba(245,248,250,0.72)" fontSize="7.5">{svc}</text>
+              <text x={500 + i * 36} y="262" textAnchor="middle" fill="rgba(245,248,250,0.88)" fontSize="7.5">{svc}</text>
             </g>
           ))}
 
@@ -187,7 +187,7 @@ export function ProductBoundary({ className = '' }) {
           {CL_STEPS.map((label, i) => (
             <g key={label} opacity={on('cloud', i) ? 1 : 0.26} style={{ transition: 'opacity 300ms var(--ease-standard)' }}>
               <text x={416 + i * 62} y="378" textAnchor="middle" fontSize="9.5" fontWeight={on('cloud', i) ? 700 : 500}
-                    fill={on('cloud', i) ? 'var(--cloud-bright)' : 'rgba(245,248,250,0.5)'} letterSpacing="0.6">
+                    fill={on('cloud', i) ? 'var(--cloud-bright)' : 'rgba(245,248,250,0.68)'} letterSpacing="0.6">
                 {label.toUpperCase()}
               </text>
               {i < 3 ? <line x1={416 + i * 62 + 26} y1="375" x2={416 + (i + 1) * 62 - 26} y2="375" stroke="rgba(72,203,203,0.35)" strokeWidth="1" /> : null}
