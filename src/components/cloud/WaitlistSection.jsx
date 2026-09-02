@@ -72,7 +72,7 @@ export default function WaitlistSection() {
                   </span>
                 </h2>
                 <p className="mt-5 text-[15.5px] leading-relaxed max-w-lg" style={{ color: 'rgba(255,248,240,0.90)' }}>
-                  Orkastor Cloud runs on infrastructure with a real hardware cost floor, and we have not
+                  Domineta runs on infrastructure with a real hardware cost floor, and we have not
                   finished measuring it. We would rather publish a price once than publish one twice.
                 </p>
                 <p className="mt-4 text-[15.5px] leading-relaxed max-w-lg" style={{ color: 'rgba(255,248,240,0.90)' }}>
@@ -200,7 +200,7 @@ export default function WaitlistSection() {
                     </p>
 
                     <p className="text-[12px] leading-relaxed" style={{ color: 'rgba(255,248,240,0.78)' }}>
-                      We use your details to contact you about Orkastor Cloud, nothing else. See our{' '}
+                      We use your details to contact you about Domineta, nothing else. See our{' '}
                       <a href="/privacy" className="underline decoration-1 underline-offset-2" style={{ color: '#fff' }}>
                         Privacy Policy
                       </a>

@@ -12,7 +12,7 @@ import { Reveal } from './shared';
  * If those figures are ever measured, they belong here with the basis stated.
  *
  * All three are scoped to KubeGraf-in-your-cluster, which is what makes them
- * true — Orkastor Cloud runs on infrastructure we operate, so a blanket
+ * true — Domineta runs on infrastructure we operate, so a blanket
  * "nothing leaves your network" would not cover it. Same reason section 05
  * names that exception explicitly.
  */

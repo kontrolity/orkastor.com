@@ -19,7 +19,7 @@ const STEPS = [
   {
     title: 'Deploy',
     body: 'An image reference, a port, env vars. Or Deployment-shaped YAML if you would rather write it yourself. You get a generated HTTPS hostname with TLS already terminated.',
-    mono: 'https://<env>.orkastor.cloud  →  Service  →  pod (RuntimeClass: kata)',
+    mono: 'https://<env>.domineta.com  →  Service  →  pod (RuntimeClass: kata)',
   },
   {
     title: 'Observe',

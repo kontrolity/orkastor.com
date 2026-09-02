@@ -8,7 +8,7 @@ import { Reveal } from './shared';
  * ── WHY THIS REPLACED THE KUBEGRAF HERO ─────────────────────────────────────
  *
  * The home page opened with "Kubernetes that heals itself" and a SafeFix
- * terminal — a KubeGraf pitch. Orkastor Cloud appeared 3,000px down as a
+ * terminal — a KubeGraf pitch. Domineta appeared 3,000px down as a
  * three-fact callout. So the page read as one product with a side project, and a
  * visitor sent to orkastor.com to find out what the company does met an argument
  * for one of the two things it sells.
@@ -33,7 +33,7 @@ import { Reveal } from './shared';
  *   problem is the toil of keeping clusters you ALREADY RUN healthy. That doc
  *   also says, in as many words, "not a monitoring/observability tool".
  *
- *   Orkastor Cloud (docs/orkastor-cloud-product.md §2) — "the gap is not 'we
+ *   Domineta (docs/orkastor-cloud-product.md §2) — "the gap is not 'we
  *   cannot run containers.' It is the distance between wanting an environment and
  *   having one." The problem is not having a cluster, and not wanting to build
  *   one.
@@ -128,7 +128,7 @@ export default function UmbrellaHero() {
             <strong style={{ fontWeight: 600, color: 'var(--ork-on-navy)' }}>KubeGraf</strong>{' '}
             is an AI SRE for the clusters you already have: it detects incidents,
             finds the root cause and ships the fix.{' '}
-            <strong style={{ fontWeight: 600, color: 'var(--ork-on-navy)' }}>Orkastor Cloud</strong>{' '}
+            <strong style={{ fontWeight: 600, color: 'var(--ork-on-navy)' }}>Domineta</strong>{' '}
             is a managed environment for the ones you would rather not build &mdash;
             point it at a container image and get a real URL in minutes. Two
             products, two different jobs.

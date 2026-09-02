@@ -8,7 +8,7 @@ import { Topology } from '../visuals/Topology';
  *
  * Two actions, not one, because there is no single next step that fits both
  * products — and a single "Get started" would have to pick one silently.
- * Cloud's says BY INVITATION on the card rather than after the click.
+ * Domineta's says BY INVITATION on the card rather than after the click.
  */
 export function FinalCTA() {
   return (
@@ -43,7 +43,7 @@ export function FinalCTA() {
           <Reveal delay={70}>
             <div style={{ border: '1px solid rgba(72,203,203,0.34)', borderRadius: 'var(--radius-lg)', padding: 28, height: '100%' }}>
               <div className="flex items-center justify-between mb-4">
-                <span className="ork-micro" style={{ color: 'var(--cloud-bright)' }}>Orkastor Cloud</span>
+                <span className="ork-micro" style={{ color: 'var(--cloud-bright)' }}>Domineta</span>
                 <Badge kind="invite" onDeep>By invitation</Badge>
               </div>
               <p className="ork-heading" style={{ color: '#F5F8FA', marginBottom: 8 }}>Our infrastructure</p>

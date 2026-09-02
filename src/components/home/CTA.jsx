@@ -88,7 +88,7 @@ export default function CTA() {
               {/* Friction reducers — answer the last objections at the button */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12.5px]" style={{ color: 'rgba(255,248,240,0.85)' }}>
                 {/* Scoped to KubeGraf. These three are true of KubeGraf and none of them is
-                  true of Orkastor Cloud, which has no free tier and no published price at
+                  true of Domineta, which has no free tier and no published price at
                   all — and since the Cloud section now sits on this page, an unscoped
                   "free tier included" reads as covering both. That is the one claim here
                   most likely to produce a real support ticket: someone clicks expecting

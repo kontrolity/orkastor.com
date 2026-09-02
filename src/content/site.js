@@ -5,7 +5,7 @@
  *
  * The old site said different things in different places about the same
  * products: /about called Orkastor "a modular AI DevOps platform" whose agents
- * all run inside your cluster (which leaves no room for Cloud at all), /pricing
+ * all run inside your cluster (which leaves no room for Domineta at all), /pricing
  * listed plan names and cluster counts that disagreed with kubegraf.io, and the
  * home page claimed both products solved the same problem. Copy living in nine
  * components is how that happens — nobody can see the contradiction because
@@ -13,8 +13,8 @@
  *
  * Every product fact below is traceable to one of:
  *   · kubegraf-api/docs/how-it-works.md              (KubeGraf, what it is)
- *   · kubegraf-api/docs/orkastor-cloud-product.md    (Cloud, what it is and why)
- *   · the live kubegraf.io / orkastor.cloud copy      (positioning, pricing)
+ *   · kubegraf-api/docs/orkastor-cloud-product.md    (Domineta, what it is and why)
+ *   · the live kubegraf.io / domineta.com copy      (positioning, pricing)
  *   · ORKASTOR-PRODUCTS-AND-DOMAINS.md               (the map, and §8's warnings)
  *
  * ── WHAT MUST NOT BE ADDED HERE ─────────────────────────────────────────────
@@ -31,8 +31,8 @@ export const EXTERNAL = {
   kubegrafSite:  'https://kubegraf.io',
   kubegrafApp:   'https://app.kubegraf.io',
   kubegrafPricing: 'https://kubegraf.io/pricing',
-  cloudSite:     'https://orkastor.cloud',
-  cloudConsole:  'https://console.orkastor.cloud',
+  cloudSite:     'https://domineta.com',
+  cloudConsole:  'https://console.domineta.com',
   discord:       'https://discord.gg/GKpbU3pQ',
   email:         'hello@orkastor.com',
 };
@@ -48,7 +48,7 @@ export const PRODUCTS = [
   },
   {
     key: 'cloud',
-    name: 'Orkastor Cloud',
+    name: 'Domineta',
     href: '/cloud',
     status: 'By invitation',
     dot: 'var(--cloud-bright)',
@@ -69,7 +69,7 @@ export const HERO = {
   titleA: 'For teams who run Kubernetes.',
   titleB: 'And teams who would rather not.',
   sub:
-    'KubeGraf is an AI SRE for the clusters you already have. Orkastor Cloud gives you ' +
+    'KubeGraf is an AI SRE for the clusters you already have. Domineta gives you ' +
     'ephemeral environments when you would rather not build the infrastructure yourself.',
 };
 
@@ -127,7 +127,7 @@ export const KUBEGRAF = {
 };
 
 export const CLOUD = {
-  name: 'Orkastor Cloud',
+  name: 'Domineta',
   side: 'Our infrastructure',
   status: 'By invitation',
   headline: 'Ephemeral environments',
@@ -174,20 +174,20 @@ export const COMPANY = {
   oneLine: 'Orkastor builds infrastructure software for Kubernetes teams.',
   boundary:
     'Everything we build sits on one line: the boundary around your infrastructure. ' +
-    'KubeGraf works inside the clusters you own. Orkastor Cloud is infrastructure we ' +
+    'KubeGraf works inside the clusters you own. Domineta is infrastructure we ' +
     'operate for you. The line is the same one; we build on both sides of it.',
   shared: [
     ['One account',        'Sign in once. The same login works across both products.'],
     ['One company',        'Same team, same security posture, same people answering support.'],
-    ['One reason they sit together', 'We operate the infrastructure Cloud runs on, so we already hold its telemetry — which is where KubeGraf’s kind of analysis can eventually work with nothing for you to install.'],
+    ['One reason they sit together', 'We operate the infrastructure Domineta runs on, so we already hold its telemetry — which is where KubeGraf’s kind of analysis can eventually work with nothing for you to install.'],
   ],
   separate: [
-    ['Separate clusters',  'KubeGraf’s agent runs in yours. Cloud runs in ours, and never the reverse.'],
+    ['Separate clusters',  'KubeGraf’s agent runs in yours. Domineta runs in ours, and never the reverse.'],
     ['Separate data',      'Each product has its own database. Your cluster telemetry is not mixed with anything you host.'],
     ['Bought separately',  'Neither requires the other. Nothing is bundled to force a pair.'],
   ],
   // The obvious inference, and it is not true yet. Verified against both
-  // codebases: Cloud has AI diagnosis for failed builds only.
+  // codebases: Domineta has AI diagnosis for failed builds only.
   notYet:
-    'KubeGraf does not watch your Orkastor Cloud environments today. Cloud has AI diagnosis of its own for failed builds; KubeGraf’s incident detection runs on clusters you connect, and Cloud is not one of them yet.',
+    'KubeGraf does not watch your Domineta environments today. Domineta has AI diagnosis of its own for failed builds; KubeGraf’s incident detection runs on clusters you connect, and Domineta is not one of them yet.',
 };

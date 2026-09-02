@@ -59,7 +59,7 @@ export function KernelBoundary({ className = '' }) {
         <svg viewBox="0 0 720 268" role="img" aria-labelledby="kb-title" style={{ width: '100%', height: 'auto', display: 'block' }}>
           <title id="kb-title">
             A comparison of two architectures. Container environments share one host kernel
-            through namespaces. Each Orkastor Cloud environment runs in its own microVM with its
+            through namespaces. Each Domineta environment runs in its own microVM with its
             own guest kernel, above a host kernel neither reaches. Drag the divider to reveal
             more of either.
           </title>

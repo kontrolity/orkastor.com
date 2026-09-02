@@ -260,7 +260,7 @@
   filter: blur(120px);
   will-change: transform;
 }
-/* Teal, top-right — Orkastor Cloud's colour, over the diagram half. */
+/* Teal, top-right — Domineta's colour, over the diagram half. */
 .ork-aurora-a {
   width: 46vw; height: 46vw; min-width: 460px; min-height: 460px;
   top: -18%; right: -10%;
@@ -434,7 +434,14 @@
   flex-direction: column;
   gap: 44px;
 }
-.ork-hero-copy { max-width: 780px; }
+/* Centred, not left-aligned. The hero is stacked, so the copy sits directly
+ * above a figure that is symmetrical about the same axis — a left-aligned block
+ * over a centred diagram reads as two designs rather than one. */
+.ork-hero-copy {
+  max-width: 780px;
+  margin-inline: auto;
+  text-align: center;
+}
 
 @media (min-width: 1024px) {
   .ork-hero-stack { gap: 56px; }

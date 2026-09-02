@@ -16,7 +16,7 @@ import { Chip } from './shared';
 const READY = {
   name: 'checkout-pr-482',
   region: 'eu-north-1',
-  host: 'checkout-pr-482.orkastor.cloud',
+  host: 'checkout-pr-482.domineta.com',
   image: 'ghcr.io/acme/checkout:pr-482',
   ttlLabel: 'expires in 5d 4h',
   ttlPercent: 62,

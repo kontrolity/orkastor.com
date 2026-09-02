@@ -10,7 +10,7 @@ import { PRODUCTS, LINKS, EXTERNAL } from '@/content/site';
  * The company's navigation, not a product's.
  *
  * Both products sit under one Products group at the same level, each showing its
- * STATUS in the menu — a visitor should learn Cloud is invitation-only here,
+ * STATUS in the menu — a visitor should learn Domineta is invitation-only here,
  * before committing to a click, rather than at the end of one.
  *
  * ── `onDeep` IS A PROP, NOT A ROUTE SNIFF ───────────────────────────────────

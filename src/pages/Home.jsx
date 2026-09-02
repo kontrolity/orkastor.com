@@ -10,7 +10,7 @@ import ProductSplit from '@/components/home/ProductSplit';
  *
  * This page was the KubeGraf landing page. Its hero was "Kubernetes that heals
  * itself" over a SafeFix terminal, then Features / HowItWorks / Security /
- * Platform — all KubeGraf's argument — and Orkastor Cloud appeared near the
+ * Platform — all KubeGraf's argument — and Domineta appeared near the
  * bottom as a three-fact callout.
  *
  * That is the right page for kubegraf.io and the wrong one for orkastor.com. A

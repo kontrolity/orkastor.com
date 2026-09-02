@@ -33,7 +33,7 @@ export default function CloudHero() {
               </h1>
 
               <p className="mt-6 text-[16.5px] sm:text-lg leading-relaxed max-w-xl" style={{ color: 'var(--lp-ink-2)' }}>
-                Orkastor Cloud is a managed <strong style={{ color: 'var(--lp-ink)', fontWeight: 600 }}>lower
+                Domineta is a managed <strong style={{ color: 'var(--lp-ink)', fontWeight: 600 }}>lower
                 environment</strong>. Point it at a container image and get a running microservice on a real
                 HTTPS URL — no cluster to build, no ingress to configure, no ticket to file. For dev, test,
                 integration and sandbox work.
