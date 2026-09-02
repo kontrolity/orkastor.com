@@ -55,17 +55,75 @@ function useHeroScroll(enabled) {
   return p;
 }
 
-/** One masked line. The mask is the effect; the span inside does the moving. */
-function Line({ children, delay, reduced, className = '', style }) {
+/**
+ * One line of copy, revealed a word at a time.
+ *
+ * Each WORD gets its own overflow-hidden mask and rises out of it, staggered.
+ * Per-word rather than per-line because a whole sentence sliding up as one
+ * block reads as a panel moving; words arriving in reading order read as
+ * typesetting.
+ *
+ * ⚠ Split on spaces, and the spaces are re-added as real characters between
+ * the masks. An `inline-block` per word collapses the whitespace between them,
+ * so without this the headline renders as "Forteamswhorun".
+ *
+ * ⚠ NOT split per character. At 63px a per-letter stagger looks like a slot
+ * machine, and it multiplies the element count by five for no extra legibility.
+ */
+function Words({ text, base = 0, step = 46, reduced, style, className = '' }) {
+  if (reduced) return <span className={className} style={style}>{text}</span>;
+  const words = text.split(' ');
   return (
-    <span className="ork-line-mask">
-      <span
-        className={`ork-line ${className}`}
-        style={reduced ? style : { ...style, animationDelay: `${delay}ms` }}
-      >
-        {children}
-      </span>
+    <span className={className} style={style}>
+      {words.map((w, i) => (
+        <React.Fragment key={`${w}-${i}`}>
+          <span className="ork-word-mask">
+            <span className="ork-word" style={{ animationDelay: `${base + i * step}ms` }}>{w}</span>
+          </span>
+          {i < words.length - 1 ? ' ' : null}
+        </React.Fragment>
+      ))}
     </span>
+  );
+}
+
+/**
+ * The rotating second line.
+ *
+ * All the alternates are stacked in ONE grid cell, so the widest sets the
+ * headline's width and nothing reflows as they swap. Only the active one is
+ * visible; it rises in word by word while the outgoing one lifts away.
+ *
+ * ⚠ The whole rotator is aria-hidden and the canonical line is rendered
+ * separately for assistive tech. Without that a screen reader reads all four
+ * alternates back to back as one run-on sentence, which is worse than no
+ * rotation at all.
+ */
+function Rotator({ alts, canonical, base, reduced }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (reduced || alts.length < 2) return undefined;
+    const id = window.setInterval(() => setI((n) => (n + 1) % alts.length), 3800);
+    return () => window.clearInterval(id);
+  }, [reduced, alts.length]);
+
+  if (reduced) return <span style={{ color: 'var(--cloud-bright)' }}>{canonical}</span>;
+
+  return (
+    <>
+      <span className="ork-sr-only">{canonical}</span>
+      <span className="ork-rotator" aria-hidden="true">
+        {alts.map((t, n) => (
+          <span key={t} className={`ork-rot-item ${n === i ? 'is-in' : ''}`}>
+            {/* Re-keyed on the active index so the word stagger replays on
+                every swap rather than only on first mount. */}
+            <Words key={n === i ? `in-${i}` : `out-${n}`} text={t}
+                   base={n === i ? base : 0} step={38}
+                   style={{ color: 'var(--cloud-bright)' }} />
+          </span>
+        ))}
+      </span>
+    </>
   );
 }
 
@@ -73,6 +131,20 @@ export function Hero() {
   const reduced = useReducedMotion();
   const p = useHeroScroll(!reduced);
   const ref = useRef(null);
+
+  // Re-keying on this replays the whole reveal when the hero comes back into
+  // view. Without it the animation is a one-shot: scroll down, scroll back up,
+  // and the hero is just sitting there having already happened.
+  const [run, setRun] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduced) return undefined;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) setRun((n) => n + 1);
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduced]);
 
   // Parallax: the copy leaves a little faster than the page, the figure a
   // little slower. Small numbers on purpose — anything larger reads as the
@@ -113,29 +185,39 @@ export function Hero() {
             measure. */}
         <div className="ork-hero-stack">
           <div className="ork-hero-copy" style={copyStyle}>
-            <p className="ork-eyebrow-live" style={{ marginBottom: 18 }}>
+            <p className="ork-eyebrow-live" style={{ marginBottom: 20 }}>
               <span className="ork-eyebrow-dot" aria-hidden="true" />
-              <Line delay={120} reduced={reduced}>{HERO.eyebrow}</Line>
+              <Words key={`eb-${run}`} text={HERO.eyebrow} base={120} step={26} reduced={reduced} />
             </p>
 
             {/* Two lines, two colours, one <h1>. The teal half carries its own
                 colour rather than relying on a gradient-clip: a clipped span
                 whose fallback is transparent is one unsupported property away
-                from invisible text. */}
+                from invisible text.
+
+                ⚠ Each line is WIDE, not stacked. The copy column runs the full
+                container now, so "For teams who run Kubernetes." sets on one
+                line instead of breaking into two — four short centred lines
+                read as a poem, not as a headline. It still wraps on a phone,
+                which is correct; the wrapping was only wrong when there was
+                room not to. */}
             <h1 className="ork-display-xl ork-h1" style={{ color: '#F5F8FA' }}>
-              <Line delay={240} reduced={reduced}>{HERO.titleA}</Line>
-              <Line delay={380} reduced={reduced} style={{ color: 'var(--cloud-bright)' }}>{HERO.titleB}</Line>
+              <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
+              <span className="ork-h1-line">
+                <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB} base={420} reduced={reduced} />
+              </span>
             </h1>
 
-            {/* Its own measure, centred inside the copy column. Left at the
-                column's full 780px the sub would set wider than the headline
-                above it, which reads as a mistake in a centred block. */}
-            <p className="ork-sub" style={{ color: 'rgba(245,248,250,0.72)', marginTop: 22, maxWidth: 660, marginInline: 'auto' }}>
-              <Line delay={540} reduced={reduced}>{HERO.sub}</Line>
+            {/* Its own measure, centred inside the copy column. At the column's
+                full width the sub would set wider than the headline above it,
+                which reads as a mistake in a centred block. */}
+            <p className="ork-sub" style={{ color: 'rgba(245,248,250,0.72)', marginTop: 24, maxWidth: 680, marginInline: 'auto' }}>
+              <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
             </p>
 
             <div
-              className="flex flex-col sm:flex-row items-center sm:justify-center gap-3 mt-9 ork-hero-cta"
+              key={`cta-${run}`}
+              className="flex flex-col sm:flex-row items-center sm:justify-center gap-3 mt-10 ork-hero-cta"
               style={reduced ? undefined : { animationDelay: '700ms' }}
             >
               <Button href="/kubegraf" accent="kg" magnetic>
