@@ -1,39 +1,46 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
-import { ProductBoundary } from '../visuals/ProductBoundary';
 import { HERO } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 /**
- * The home hero.
+ * The home hero. Copy only.
  *
- * ── WHY THE NODE GRAPH IS GONE ──────────────────────────────────────────────
+ * ── WHY THERE IS NO DIAGRAM HERE ────────────────────────────────────────────
  *
- * This used to render <Topology density="mid" />, a scatter of small grey
- * circles across the whole panel. At 0.7 opacity on a navy ground they did not
- * read as a network — they read as dust on the screen, or as an image that had
- * failed to finish loading. Several landed directly behind the headline and the
- * buttons, which is the one place a background must stay quiet.
+ * This used to carry <ProductBoundary />, an architecture drawing: a trunk
+ * splitting to two products, a pod ring, a microVM with web/api/db chips, a
+ * generated hostname, a TTL, and two four-step lifecycles. It was accurate and
+ * it was the wrong thing to put first.
  *
- * What replaced it is an aurora: soft radial washes that drift on long,
- * mutually-prime periods so they never visibly repeat. Same brand colours, but
- * as light rather than as objects, so nothing competes with the type.
+ * orkastor.com is the company's marketing page. Somebody arriving here has not
+ * decided they care yet, and a kernel boundary is an answer to a question they
+ * have not asked. The architecture still exists for anyone who wants it — it is
+ * on /kubegraf and /cloud, where a visitor has already chosen the subject.
+ *
+ * So the hero is the claim, and nothing else: who it is for, what it is, and
+ * two ways in. Proof and the product cards follow immediately below, which is
+ * where a marketing page should send attention next.
+ *
+ * ── WHAT CARRIES IT VISUALLY ────────────────────────────────────────────────
+ *
+ * An aurora: soft radial washes that drift on long, mutually-prime periods so
+ * they never visibly repeat. Brand colours as light rather than as objects, so
+ * nothing competes with the type. This replaced a scatter of small grey circles
+ * that read as dust on the screen, several of which landed behind the headline.
  *
  * ── THE COPY ARRIVES TWICE ──────────────────────────────────────────────────
  *
- * On LOAD each line rises out of its own overflow-hidden mask, staggered. The
- * mask is what makes it read as typesetting rather than as a fade — the glyphs
- * are clipped by a box the width of the line, so they emerge rather than
- * appearing.
+ * On LOAD each word rises out of its own overflow-hidden mask, staggered in
+ * reading order, and the second headline line rotates through alternates.
  *
- * On SCROLL the whole block drifts up and fades as the hero leaves. That is
- * driven by a rAF-throttled scroll listener rather than `animation-timeline:
- * scroll()`, matching the decision already recorded in Effects.jsx: the CSS
- * property is still not safe across the browsers this site supports.
+ * On SCROLL the block drifts up and fades as the hero leaves. That is a
+ * rAF-throttled scroll listener rather than `animation-timeline: scroll()`,
+ * matching the decision already recorded in Effects.jsx.
  *
- * ⚠ Both effects are movement only. Every line is in the DOM and readable from
- * the first frame — a visitor who arrives mid-sequence, or whose JS never runs,
- * has the whole hero.
+ * ⚠ All of it is movement only. Every word is in the DOM and readable from the
+ * first frame — a visitor who arrives mid-sequence, or whose JS never runs, has
+ * the whole hero.
  */
 
 /** Scroll progress through the hero, 0 at the top and 1 once it has left. */
@@ -153,10 +160,6 @@ export function Hero() {
     transform: `translate3d(0, ${p * -56}px, 0)`,
     opacity: 1 - Math.min(1, p * 1.25),
   };
-  const figStyle = reduced ? undefined : {
-    transform: `translate3d(0, ${p * 26}px, 0)`,
-    opacity: 1 - Math.min(1, p * 1.1),
-  };
 
   return (
     <section
@@ -173,70 +176,51 @@ export function Hero() {
       </div>
       <div aria-hidden="true" className="ork-hero-vignette" />
 
-      <Container wide className="relative pt-[112px] pb-[64px] sm:pt-[128px] sm:pb-[80px]">
-        {/* ⚠ STACKED, NOT SIDE BY SIDE.
-            The figure is the thing that explains the two products, and beside
-            the copy it rendered about 560px wide — small enough that its 7.5px
-            labels were sub-pixel and its two branches sat almost on top of each
-            other. Widening its column instead broke the typography: the
-            headline went to three ragged lines and the eyebrow wrapped.
-            Full width below the copy gives it roughly 1200px, which is more
-            than twice what it had, and lets the copy set at its natural
-            measure. */}
-        <div className="ork-hero-stack">
-          <div className="ork-hero-copy" style={copyStyle}>
-            <p className="ork-eyebrow-live" style={{ marginBottom: 20 }}>
-              <span className="ork-eyebrow-dot" aria-hidden="true" />
-              <Words key={`eb-${run}`} text={HERO.eyebrow} base={120} step={26} reduced={reduced} />
-            </p>
+      {/* Taller than it was. The hero used to end at the diagram, which gave
+          it its height; without one, the same padding left the copy floating
+          near the top with the logo bar crowding in under it. */}
+      <Container wide className="relative pt-[132px] pb-[104px] sm:pt-[164px] sm:pb-[128px]">
+        <div className="ork-hero-copy" style={copyStyle}>
+          <p className="ork-eyebrow-live" style={{ marginBottom: 20 }}>
+            <span className="ork-eyebrow-dot" aria-hidden="true" />
+            <Words key={`eb-${run}`} text={HERO.eyebrow} base={120} step={26} reduced={reduced} />
+          </p>
 
-            {/* Two lines, two colours, one <h1>. The teal half carries its own
-                colour rather than relying on a gradient-clip: a clipped span
-                whose fallback is transparent is one unsupported property away
-                from invisible text.
+          {/* Two lines, two colours, one <h1>. The teal half carries its own
+              colour rather than relying on a gradient-clip: a clipped span
+              whose fallback is transparent is one unsupported property away
+              from invisible text.
 
-                ⚠ Each line is WIDE, not stacked. The copy column runs the full
-                container now, so "For teams who run Kubernetes." sets on one
-                line instead of breaking into two — four short centred lines
-                read as a poem, not as a headline. It still wraps on a phone,
-                which is correct; the wrapping was only wrong when there was
-                room not to. */}
-            <h1 className="ork-display-xl ork-h1" style={{ color: '#F5F8FA' }}>
-              <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
-              <span className="ork-h1-line">
-                <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB} base={420} reduced={reduced} />
-              </span>
-            </h1>
+              ⚠ Each line is WIDE, not stacked. The copy column runs the full
+              container, so "For teams who run Kubernetes." sets on one line
+              instead of breaking into two — four short centred lines read as a
+              poem, not as a headline. It still wraps on a phone, which is
+              correct; the wrapping was only wrong when there was room not to. */}
+          <h1 className="ork-display-xl ork-h1" style={{ color: '#F5F8FA' }}>
+            <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
+            <span className="ork-h1-line">
+              <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB} base={420} reduced={reduced} />
+            </span>
+          </h1>
 
-            {/* Its own measure, centred inside the copy column. At the column's
-                full width the sub would set wider than the headline above it,
-                which reads as a mistake in a centred block. */}
-            <p className="ork-sub" style={{ color: 'rgba(245,248,250,0.72)', marginTop: 24, maxWidth: 680, marginInline: 'auto' }}>
-              <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
-            </p>
+          {/* Its own measure, centred inside the copy column. At the column's
+              full width the sub would set wider than the headline above it,
+              which reads as a mistake in a centred block. */}
+          <p className="ork-sub" style={{ color: 'rgba(245,248,250,0.72)', marginTop: 26, maxWidth: 680, marginInline: 'auto' }}>
+            <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
+          </p>
 
-            <div
-              key={`cta-${run}`}
-              className="flex flex-col sm:flex-row items-center sm:justify-center gap-3 mt-10 ork-hero-cta"
-              style={reduced ? undefined : { animationDelay: '700ms' }}
-            >
-              <Button href="/kubegraf" accent="kg" magnetic>
-                Explore KubeGraf <Arrow />
-              </Button>
-              <Button href="/cloud" variant="secondary" magnetic style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
-                Explore Domineta <Arrow />
-              </Button>
-            </div>
-          </div>
-
-          {/* The diagram sits on a glass panel. Before, it floated directly on
-              the gradient at opacities between 0.2 and 0.5 — legible on a good
-              monitor, invisible on a laptop in daylight. The panel gives it its
-              own ground so its contrast can come up without the hero getting
-              louder. */}
-          <div className="ork-hero-figure" style={figStyle}>
-            <div className="ork-hero-figure-glow" aria-hidden="true" />
-            <ProductBoundary />
+          <div
+            key={`cta-${run}`}
+            className="flex flex-col sm:flex-row items-center sm:justify-center gap-3 mt-11 ork-hero-cta"
+            style={reduced ? undefined : { animationDelay: '700ms' }}
+          >
+            <Button href="/kubegraf" accent="kg" magnetic>
+              Explore KubeGraf <Arrow />
+            </Button>
+            <Button href="/cloud" variant="secondary" magnetic style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
+              Explore Domineta <Arrow />
+            </Button>
           </div>
         </div>
       </Container>

@@ -371,163 +371,21 @@
   animation: ork-enter 620ms var(--ease-emphasis) both;
 }
 
-/* ── the diagram's panel ──────────────────────────────────────────────────── */
-.ork-hero-figure {
-  position: relative;
-  padding: 22px;
-  border-radius: 18px;
-  border: 1px solid rgba(245, 248, 250, 0.10);
-  background: linear-gradient(180deg, rgba(245, 248, 250, 0.055), rgba(245, 248, 250, 0.02));
-  box-shadow: 0 30px 80px -50px rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(2px);
-}
-/* A teal halo behind the panel, so it reads as lit rather than pasted on. */
-.ork-hero-figure-glow {
-  position: absolute;
-  inset: -1px;
-  border-radius: 18px;
-  pointer-events: none;
-  background: radial-gradient(70% 55% at 60% 0%, rgba(72, 203, 203, 0.14), transparent 70%);
-}
-/* Hairline of light along the top edge, the same trick the mark uses. */
-.ork-hero-figure::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  border-radius: 18px 18px 0 0;
-  background: linear-gradient(90deg, transparent, rgba(72, 203, 203, 0.45) 30%, rgba(72, 203, 203, 0.45) 70%, transparent);
-  pointer-events: none;
-}
-
-@media (max-width: 640px) {
-  /* The blur is the single most expensive thing on this page and a phone gets
-     the least out of it — the aurora is mostly off-canvas at this width. */
-  .ork-aurora span { filter: blur(80px); }
-  .ork-hero-figure { padding: 14px; border-radius: 14px; }
-}
-
-/* ⚠ Reduced motion stops the DRIFT but keeps the light. The aurora is the
-   hero's ground; removing it would leave a flat navy rectangle, which is a
-   worse page rather than a calmer one. Only the movement goes. */
-@media (prefers-reduced-motion: reduce) {
-  .ork-aurora span,
-  .ork-eyebrow-dot,
-  .ork-hero-cta {
-    animation: none !important;
-  }
-  /* ⚠ The lines are translated 108% DOWN by default and animated back to 0.
-     Killing the animation without resetting the transform hides the entire
-     headline behind its own mask — the copy would be gone, not still. */
-  /* ⚠ Words are translated 112% DOWN by default and animated back to zero.
-     Killing the animation without resetting the transform hides the entire
-     headline behind its own masks — the copy would be gone, not still. */
-  .ork-word {
-    animation: none !important;
-    transform: none !important;
-  }
-  /* The rotator renders only the canonical line under reduced motion, but
-     belt and braces: whatever is in there must be visible and still. */
-  .ork-rot-item { opacity: 1; transform: none; transition: none !important; }
-  .ork-h1-line::before { animation: none !important; }
-  .ork-hero-cta { opacity: 1; }
-  /* Belt and braces. ProductBoundary already refuses to RENDER its motion
-     elements when the hook reports reduced motion, and it draws its final
-     state instead — so none of this animation carries meaning to lose. */
-  .ork-pb [class^='ork-pb-'] { animation: none !important; }
-}
-
-/* ── the hero, stacked ─────────────────────────────────────────────────────
- * Copy at its natural measure, figure full width beneath it. See the comment
- * in Hero.jsx for why this is not a two-column grid.
+/* ── the hero copy ─────────────────────────────────────────────────────────
+ * Centred. The hero is copy only, so the block is the whole composition and
+ * there is nothing for a left edge to align to.
+ *
+ * ⚠ This lived inside the old "hero, stacked" section and was deleted with it
+ * when the diagram came out. Nothing broke visibly at the box level — every
+ * element stayed centred, because the container centres them — so the only
+ * symptom was text-align falling back to `start` and the whole hero quietly
+ * reading left-aligned. Keep it in its own section so the next removal of a
+ * layout mode does not take it along.
  */
-.ork-hero-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 44px;
-}
-/* Centred, not left-aligned. The hero is stacked, so the copy sits directly
- * above a figure that is symmetrical about the same axis — a left-aligned block
- * over a centred diagram reads as two designs rather than one. */
 .ork-hero-copy {
-  /* Full container, not 780px. At 780 the headline broke into four short
-     centred lines, which reads as a poem rather than a headline. Each sentence
-     gets one wide line now. */
   max-width: 1120px;
   margin-inline: auto;
   text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .ork-hero-stack { gap: 56px; }
-}
-
-/* ── the hero diagram ──────────────────────────────────────────────────────
- * Ambient motion for ProductBoundary. All of it is declarative: no React state
- * changes per frame, so a busy page cannot make the diagram stutter.
- *
- * ⚠ Everything here is paused until the figure is on screen. `.ork-pb` alone
- * holds the animations in their first frame; `.is-live` starts them. That is
- * the opposite of the usual default-running pattern, and it is deliberate — the
- * diagram sits in the hero, so on a page a visitor scrolls straight past it
- * would otherwise run its sweep and its packets for the whole session.
- */
-.ork-pb [class^='ork-pb-'] { animation-play-state: paused; }
-.ork-pb.is-live [class^='ork-pb-'] { animation-play-state: running; }
-
-/* The trunk: a short bright dash falling from the Orkastor pill. */
-.ork-pb-flow {
-  animation: ork-pb-flow 2.9s linear infinite;
-}
-@keyframes ork-pb-flow {
-  from { stroke-dashoffset: 100; }
-  to   { stroke-dashoffset: -14; }
-}
-
-/* The boundary line drifts, slowly. It should read as a live frontier rather
-   than as a border, but at a speed you notice only if you look for it. */
-.ork-pb-boundary {
-  animation: ork-pb-boundary 3.6s linear infinite;
-}
-@keyframes ork-pb-boundary {
-  to { stroke-dashoffset: -11; }   /* one full 4+7 dash period */
-}
-
-/* The KubeGraf ring sweep: something is always watching the cluster. */
-.ork-pb-sweep {
-  animation: ork-pb-sweep 6.5s linear infinite;
-}
-@keyframes ork-pb-sweep {
-  to { transform: rotate(360deg); }
-}
-
-/* The unhealthy pod, before the fix. */
-.ork-pb-alarm {
-  animation: ork-pb-alarm 1.6s ease-in-out infinite;
-}
-@keyframes ork-pb-alarm {
-  0%, 100% { opacity: 0.25; transform: scale(0.9); }
-  50%      { opacity: 1;    transform: scale(1.06); }
-}
-
-/* One ring, once, at the moment the pod goes green. Keyed on the step index in
-   JSX so React remounts it and it replays every cycle. */
-.ork-pb-heal {
-  animation: ork-pb-heal 900ms var(--ease-standard) both;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-@keyframes ork-pb-heal {
-  from { opacity: 0.9; transform: scale(0.6); }
-  to   { opacity: 0;   transform: scale(2.4); }
-}
-
-/* ⚠ transform-box: fill-box is what makes scale() work on an SVG child here.
-   Without it the origin is the SVG's own origin and the ring flies off to the
-   top-left corner instead of expanding in place. */
-.ork-pb-alarm {
-  transform-box: fill-box;
-  transform-origin: center;
 }
 
 /* ── the rotating headline line ─────────────────────────────────────────────
