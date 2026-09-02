@@ -333,33 +333,38 @@
 
 /* ── the copy: masked line reveals ────────────────────────────────────────
  *
- * Each line lives in an overflow-hidden box the width of the line, and the span
- * inside rises out of it. The MASK is the effect — clipping the glyphs makes
- * them emerge rather than fade, which is what separates this from a generic
- * opacity transition.
+ * Each WORD lives in an overflow-hidden box its own width, and the span inside
+ * rises out of it, staggered along the line. The MASK is the effect — clipping
+ * the glyphs makes them emerge rather than fade, which is what separates this
+ * from a generic opacity transition.
  *
  * ⚠ display: inline-block on the mask, not block. The eyebrow and the sub are
  * inline contexts, and a block mask there collapses the line box and the text
  * jumps a few pixels on animation end.
  */
-.ork-line-mask {
+.ork-word-mask {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
-  /* Descenders. With a flush box the tails of g, y and p are sliced off for the
-     whole animation, which is very visible on "would rather not." */
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  /* Descenders. The mask clips at the box edge, so a "y" or "g" on the last
+     line loses its tail without this pair. The negative margin puts the extra
+     space back so line-height is unaffected. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
-.ork-line {
+.ork-word {
   display: inline-block;
-  transform: translate3d(0, 108%, 0);
-  animation: ork-line-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform: translate3d(0, 112%, 0);
+  animation: ork-word-rise 780ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-@keyframes ork-line-rise {
-  to { transform: translate3d(0, 0, 0); }
-}
-.ork-h1 .ork-line-mask { display: block; }
+@keyframes ork-word-rise { to { transform: translate3d(0,0,0); } }
+/* ⚠ The hero h1 sizes DOWN from .ork-display-xl's 4.4rem cap.
+   The longest rotating alternate — "And teams who never asked for one." — is
+   34 characters, and at 4.4rem that is about 1125px, just past the 1116px the
+   container actually gives. It wrapped, and only on that one alternate, so the
+   headline changed height every fourth rotation. Cap it where all four fit. */
+.ork-h1 { font-size: clamp(2.05rem, 5.3vw, 3.95rem); }
+.ork-h1-line { display: block; }
 
 .ork-hero-cta {
   opacity: 0;
@@ -414,10 +419,17 @@
   /* ⚠ The lines are translated 108% DOWN by default and animated back to 0.
      Killing the animation without resetting the transform hides the entire
      headline behind its own mask — the copy would be gone, not still. */
-  .ork-line {
+  /* ⚠ Words are translated 112% DOWN by default and animated back to zero.
+     Killing the animation without resetting the transform hides the entire
+     headline behind its own masks — the copy would be gone, not still. */
+  .ork-word {
     animation: none !important;
     transform: none !important;
   }
+  /* The rotator renders only the canonical line under reduced motion, but
+     belt and braces: whatever is in there must be visible and still. */
+  .ork-rot-item { opacity: 1; transform: none; transition: none !important; }
+  .ork-h1-line::before { animation: none !important; }
   .ork-hero-cta { opacity: 1; }
   /* Belt and braces. ProductBoundary already refuses to RENDER its motion
      elements when the hook reports reduced motion, and it draws its final
@@ -438,7 +450,10 @@
  * above a figure that is symmetrical about the same axis — a left-aligned block
  * over a centred diagram reads as two designs rather than one. */
 .ork-hero-copy {
-  max-width: 780px;
+  /* Full container, not 780px. At 780 the headline broke into four short
+     centred lines, which reads as a poem rather than a headline. Each sentence
+     gets one wide line now. */
+  max-width: 1120px;
   margin-inline: auto;
   text-align: center;
 }
@@ -513,4 +528,64 @@
 .ork-pb-alarm {
   transform-box: fill-box;
   transform-origin: center;
+}
+
+/* ── the rotating headline line ─────────────────────────────────────────────
+ * Every alternate lives in the SAME grid cell, so the widest one sets the
+ * headline's width and the tallest sets its height. Nothing reflows as they
+ * swap — which matters here because the block is centred, so any width change
+ * would shift both edges at once.
+ */
+.ork-rotator {
+  display: grid;
+  justify-items: center;
+  /* Clip the incoming and outgoing lines to the row. Same descender trick as
+     the word masks: pad, then pull the padding back off. */
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.ork-rot-item {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translate3d(0, -46%, 0);
+  transition: opacity 420ms var(--ease-standard), transform 560ms var(--ease-emphasis);
+  pointer-events: none;
+}
+.ork-rot-item.is-in {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Available to assistive tech, invisible on screen. The rotator itself is
+   aria-hidden, so this is the only copy of the line a screen reader sees. */
+.ork-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* A slow highlight travelling behind the teal line. Behind, not through: a
+   background-clip:text sheen means the glyphs are painted by a gradient, and a
+   clipped span whose fallback is `transparent` is one unsupported property
+   away from invisible text. That decision is already recorded on the h1. */
+.ork-h1-line { position: relative; }
+.ork-h1-line::before {
+  content: '';
+  position: absolute;
+  inset: -10% -12%;
+  background: radial-gradient(closest-side, rgba(72,203,203,0.16), rgba(72,203,203,0) 70%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: -1;
+  animation: ork-h1-sheen 7.5s ease-in-out infinite;
+}
+@keyframes ork-h1-sheen {
+  0%, 100% { transform: translate3d(-24%, 0, 0); opacity: 0.5; }
+  50%      { transform: translate3d(24%, 0, 0);  opacity: 1; }
 }

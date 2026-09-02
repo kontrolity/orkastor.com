@@ -68,6 +68,28 @@ export const HERO = {
   eyebrow: 'Infrastructure, without the operating tax',
   titleA: 'For teams who run Kubernetes.',
   titleB: 'And teams who would rather not.',
+
+  /* The second line rotates through these. titleB stays the canonical one: it
+   * is what a screen reader gets, what renders under reduced motion, and what
+   * ships if the rotator is ever removed. The rest are variations on the SAME
+   * claim, not new ones — every alternate is a phrasing of copy already
+   * approved elsewhere on the site:
+   *
+   *   'just need a URL'      — proof.js: "get a real HTTPS URL. No cluster to
+   *                            build, no ticket to raise"
+   *   'never asked for one'  — OrkAbout: "building one is a quarter of work
+   *                            nobody asked for"
+   *
+   * ⚠ Keep them the same grammatical shape ("And teams who …") and roughly the
+   * same length. They are stacked in one grid cell, so the widest one sets the
+   * headline's width — a long outlier makes the whole hero jump wider for
+   * everybody. */
+  titleBAlts: [
+    'And teams who would rather not.',
+    'And teams who just need a URL.',
+    'And teams who would rather ship.',
+    'And teams who never asked for one.',
+  ],
   sub:
     'KubeGraf is an AI SRE for the clusters you already have. Domineta gives you ' +
     'ephemeral environments when you would rather not build the infrastructure yourself.',
