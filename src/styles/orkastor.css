@@ -244,70 +244,15 @@
  * composites on the GPU and never triggers layout while the page is scrolling.
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-.ork-aurora {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  /* Contains the blur. Without this the 180px filter bleeds past the section
-     and paints over the header on short viewports. */
-  contain: paint;
-}
-.ork-aurora span {
-  position: absolute;
-  display: block;
-  border-radius: 50%;
-  filter: blur(120px);
-  will-change: transform;
-}
 /* Teal, top-right — Domineta's colour, over the diagram half. */
-.ork-aurora-a {
-  width: 46vw; height: 46vw; min-width: 460px; min-height: 460px;
-  top: -18%; right: -10%;
-  background: radial-gradient(circle, rgba(72, 203, 203, 0.42), transparent 66%);
-  animation: ork-drift-a 34s ease-in-out infinite;
-}
 /* Orange, mid-left — KubeGraf's colour, behind the primary button. Weakest of
    the three on purpose: it sits under text, where teal does not. */
-.ork-aurora-b {
-  width: 40vw; height: 40vw; min-width: 380px; min-height: 380px;
-  top: 32%; left: -14%;
-  background: radial-gradient(circle, rgba(255, 138, 61, 0.24), transparent 68%);
-  animation: ork-drift-b 43s ease-in-out infinite;
-}
 /* Deep navy lift, bottom-centre. Not a brand colour — it stops the lower third
    going flat black where the gradient bottoms out. */
-.ork-aurora-c {
-  width: 52vw; height: 34vw; min-width: 520px; min-height: 300px;
-  bottom: -22%; left: 28%;
-  background: radial-gradient(circle, rgba(23, 96, 138, 0.40), transparent 70%);
-  animation: ork-drift-c 51s ease-in-out infinite;
-}
 /* 34 / 43 / 51 seconds — mutually prime, so the three never realign into a
    pattern a visitor can notice repeating. */
-@keyframes ork-drift-a {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(-6%, 8%, 0) scale(1.12); }
-}
-@keyframes ork-drift-b {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
-  50%      { transform: translate3d(9%, -7%, 0) scale(1); }
-}
-@keyframes ork-drift-c {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(-8%, -5%, 0) scale(1.1); }
-}
-
 /* Corner darkening. The aurora moves, so without this the headline's contrast
    would change as it drifts underneath. This pins the worst case. */
-.ork-hero-vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 80% at 50% 40%, transparent 42%, rgba(5, 11, 18, 0.55) 100%);
-}
-
 /* ── the eyebrow, with a live dot ─────────────────────────────────────────── */
 .ork-eyebrow-live {
   display: inline-flex;

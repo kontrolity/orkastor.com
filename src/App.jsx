@@ -36,7 +36,7 @@ export default function App() {
      * disableTransitionOnChange stops every border on the page animating at once
      * on a theme swap — the few properties that should tween are named in
      * orkastor.css instead. */
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
         <Router>
           <Suspense fallback={null}>
