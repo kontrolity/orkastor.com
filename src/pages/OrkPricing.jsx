@@ -73,7 +73,7 @@ export default function OrkPricing() {
                 <p className="ork-small mt-6" style={{ color: 'var(--text-3)' }}>{p.note}</p>
 
                 <div className="mt-auto pt-8 flex flex-wrap gap-3">
-                  <Button href={EXTERNAL.kubegrafApp} accent="kg" magnetic target="_blank" rel="noopener noreferrer">
+                  <Button href={EXTERNAL.kubegrafApp} accent="kg" target="_blank" rel="noopener noreferrer">
                     Start free <Arrow />
                   </Button>
                   <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>
@@ -106,7 +106,7 @@ export default function OrkPricing() {
                 </ul>
 
                 <div className="mt-auto pt-8 flex flex-wrap gap-3">
-                  <Button href="/cloud" accent="cloud" magnetic>Read about Cloud <Arrow /></Button>
+                  <Button href="/cloud" accent="cloud">Read about Cloud <Arrow /></Button>
                   <Button href={EXTERNAL.cloudConsole} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>
                     Console ↗
                   </Button>

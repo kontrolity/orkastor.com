@@ -36,7 +36,7 @@ export function FinalCTA() {
               <p className="ork-body" style={{ color: 'rgba(245,248,250,0.62)', marginBottom: 22 }}>
                 An AI SRE for the clusters you already run. Free for 14 days, no card.
               </p>
-              <Button href="/kubegraf" accent="kg" magnetic>Run AI SRE on your infrastructure <Arrow /></Button>
+              <Button href="/kubegraf" accent="kg">Run AI SRE on your infrastructure <Arrow /></Button>
             </div>
           </Reveal>
 
@@ -50,7 +50,7 @@ export function FinalCTA() {
               <p className="ork-body" style={{ color: 'rgba(245,248,250,0.62)', marginBottom: 22 }}>
                 Ephemeral environments with a real kernel boundary. No self-serve sign-up yet.
               </p>
-              <Button href="/cloud" accent="cloud" magnetic>Get an environment <Arrow /></Button>
+              <Button href="/cloud" accent="cloud">Get an environment <Arrow /></Button>
             </div>
           </Reveal>
         </div>

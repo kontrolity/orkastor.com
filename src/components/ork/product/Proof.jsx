@@ -1,65 +1,10 @@
 import React from 'react';
 import { Container, Section, SectionHead, Panel, Button, Arrow } from '../ui';
 import { Reveal } from '../motion/Reveal';
-import { CUSTOMERS, PARTNERS, TESTIMONIALS, OUTCOMES } from '@/content/proof';
+import { TESTIMONIALS, OUTCOMES } from '@/content/proof';
 import { EXTERNAL } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-/**
- * The logo band, directly under the hero.
- *
- * ── THE HEADING IS PRECISE ON PURPOSE ───────────────────────────────────────
- *
- * "Teams running KubeGraf in production", not "our customers". These logos were
- * earned by KubeGraf; Domineta is invitation-only and has none. Putting
- * them under a company-level "trusted by" would let one product's traction imply
- * the other's, which is the same overclaim this site has spent three PRs
- * removing.
- *
- * A static row, not a marquee. An animated logo strip is the reflex here and it
- * makes five names harder to read than five names sitting still — and with only
- * five there is nothing to scroll past.
- */
-export function LogoBar() {
-  return (
-    <section style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border-soft)', paddingTop: 40, paddingBottom: 40 }}>
-      <Container wide>
-        <Reveal>
-          <p className="ork-micro text-center" style={{ color: 'var(--text-3)', marginBottom: 22 }}>
-            Teams running KubeGraf in production
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {CUSTOMERS.map((c) => (
-              // Wordmarks, not images: the logo files are KubeGraf's own assets
-              // and are not in this repo. Setting them in the site's type is
-              // honest and avoids hotlinking another host's images.
-              <span key={c} className="ork-heading" style={{ color: 'var(--text-2)', fontSize: 17, letterSpacing: '-0.01em' }}>
-                {c}
-              </span>
-            ))}
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-7">
-            {PARTNERS.map((p) => (
-              <span key={p} className="ork-micro" style={{ color: 'var(--text-3)', border: '1px solid var(--border)', padding: '5px 11px', borderRadius: 999 }}>
-                {p}
-              </span>
-            ))}
-          </div>
-        </Reveal>
-      </Container>
-    </section>
-  );
-}
-
-/**
- * What you get, in outcome terms.
- *
- * This replaced the cluster, agent-roster, security-path, microVM and lifecycle
- * diagrams on the home page. Those are good, and they are the right thing on
- * /kubegraf and /cloud where a reader has already chosen to go deeper. On a
- * landing page they were nine sections of architecture aimed at somebody who had
- * not yet decided they cared.
- */
 export function Outcomes() {
   return (
     <Section tone="alt" id="outcomes">

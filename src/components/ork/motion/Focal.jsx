@@ -50,17 +50,3 @@ export function Focal({ children, as: As = 'div', once = false, className = '', 
     </As>
   );
 }
-
-/**
- * The dotted field plus its accent pool. Decorative and inert: aria-hidden,
- * pointer-events none, and it paints from two background-images rather than
- * from a canvas of individual dots.
- */
-export function DotField({ aura = true, className = '' }) {
-  return (
-    <>
-      {aura ? <div className={`ork-aura ${className}`} aria-hidden="true" /> : null}
-      <div className={`ork-dotfield ${className}`} aria-hidden="true" />
-    </>
-  );
-}
