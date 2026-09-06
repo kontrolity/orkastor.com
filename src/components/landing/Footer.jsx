@@ -109,7 +109,7 @@ export default function Footer() {
 
           {/* Brand col */}
           <div className="md:col-span-2 flex flex-col items-center text-center md:items-start md:text-left">
-            <OrkastorLogo size={30} showWordmark className="mb-5" />
+            <OrkastorLogo size={40} showWordmark className="mb-5" />
             <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-[240px]">
               The AI DevOps &amp; Cloud Orchestration platform. Modular AI agents for
               Kubernetes, cloud costs, security, and beyond — all running inside your environment.
@@ -195,7 +195,7 @@ export default function Footer() {
           {/* Left: copyright + system status */}
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-2">
             <div className="flex items-center gap-3">
-              <OrkastorLogo size={18} showWordmark={false} />
+              <OrkastorLogo size={24} showWordmark={false} />
               <p className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
                 © 2026 Orkastor. All rights reserved.
               </p>

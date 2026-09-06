@@ -51,7 +51,7 @@ export function Footer() {
       <Container wide className="pt-16 pb-10">
         <div className="grid lg:grid-cols-[1.3fr_1fr_1fr_1fr] gap-10 lg:gap-8">
           <div>
-            <OrkastorLogo size={28} />
+            <OrkastorLogo size={38} />
             <p className="ork-small mt-4" style={{ color: 'var(--text-2)', maxWidth: 300 }}>
               Infrastructure software for Kubernetes teams. KubeGraf works inside the clusters you
               own; Domineta is infrastructure we operate.

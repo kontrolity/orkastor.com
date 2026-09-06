@@ -99,7 +99,7 @@ export default function Nav({ onDark = false }) {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[68px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" className="shrink-0">
-            <OrkastorMark size={40} showWordmark light={!inv} />
+            <OrkastorMark size={48} showWordmark light={!inv} />
           </a>
 
           <nav
