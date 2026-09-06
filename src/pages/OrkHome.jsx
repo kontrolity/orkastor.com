@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from 'react';
 import { Navbar } from '@/components/ork/nav/Navbar';
 import { CursorLight, ScrollProgress } from '@/components/ork/motion/Effects';
 import { Hero } from '@/components/ork/product/Hero';
-import { LogoBar } from '@/components/ork/product/Proof';
 import { ProductCards } from '@/components/ork/product/ProductCards';
 import { Container, Section, SectionHead, Panel, Button, Arrow } from '@/components/ork/ui';
 import { Reveal } from '@/components/ork/motion/Reveal';
@@ -32,12 +31,11 @@ const Footer = lazy(() => import('@/components/ork/layout/Footer'));
  * ── SO THIS PAGE NOW ANSWERS FOUR QUESTIONS, IN ORDER ───────────────────────
  *
  *   1. Hero          what is Orkastor, and which of the two do I want
- *   2. LogoBar       is anyone actually using this
- *   3. ProductCards  what are the two things, precisely
- *   4. Outcomes      what changes for me
- *   5. Testimonials  what did it change for them
- *   6. Boundary      one short company-level idea, no diagram
- *   7. FinalCTA      pick a side
+ *   2. ProductCards  what are the two things, precisely
+ *   3. Outcomes      what changes for me
+ *   4. Testimonials  what did it change for them
+ *   5. Boundary      one short company-level idea, no diagram
+ *   6. FinalCTA      pick a side
  *
  * The technical argument is one click away in both directions and nothing was
  * deleted to get here — the diagrams moved, they did not go.
@@ -68,7 +66,6 @@ export default function OrkHome() {
 
       <main>
         <Hero />
-        <LogoBar />
         <ProductCards />
 
         <Suspense fallback={null}>

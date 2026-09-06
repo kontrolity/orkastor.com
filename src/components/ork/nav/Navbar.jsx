@@ -63,7 +63,7 @@ export function Navbar({ onDeep = false }) {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]"
         style={{
           transition: 'background-color var(--duration-normal) var(--ease-standard), border-color var(--duration-normal) var(--ease-standard), backdrop-filter var(--duration-normal)',
           background: scrolled ? 'color-mix(in srgb, var(--bg) 82%, transparent)' : 'transparent',
@@ -72,7 +72,7 @@ export function Navbar({ onDeep = false }) {
           borderBottom: `1px solid ${scrolled ? 'var(--border-soft)' : 'transparent'}`,
         }}
       >
-        <Container wide className="h-[64px] flex items-center justify-between gap-4">
+        <Container wide className="ork-nav-inner h-[64px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0">
             <OrkastorLogo size={38} />
           </a>
@@ -148,7 +148,7 @@ export function Navbar({ onDeep = false }) {
             ref={menuRef}
             initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="fixed left-4 right-4 top-[68px] z-50 lg:hidden p-2"
+            className="fixed left-4 right-4 top-[88px] sm:top-[96px] z-50 lg:hidden p-2"
             style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', boxShadow: '0 24px 60px -18px rgba(5,11,18,0.4)' }}
           >
             {/* Products becomes a titled group on mobile: a hover disclosure is a

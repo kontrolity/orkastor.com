@@ -1,0 +1,436 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   MONO — pure black, one blue.
+
+   Rebuilt from the reference the brief pointed at. Its whole system is four
+   values and a discipline:
+
+     ground   #000000, actually black, not a near-black
+     text     #FFFFFF, with .6 and .8 alphas for secondary and tertiary
+     accent   #001AD0, a deep electric blue, used on almost nothing
+     type     one grotesk at weight 500 with very tight tracking, plus a
+              mono for every label, always bracketed: [OUR MISSION]
+
+   No rounded corners anywhere. No gradients. No texture. Sections are
+   separated by hairlines rather than by changes of ground, and the page is
+   framed by a thin rule inset from the viewport edge. What carries it is
+   type size and negative space, which is why the discipline matters more
+   than any single value: add a second accent or a border-radius and it stops
+   being this design.
+
+   ── WHAT IS COPIED AND WHAT IS NOT ────────────────────────────────────────
+   Copied: the palette, the bracketed mono labels, the hairline frame, the
+   square corners, the tracking, the label/value spec rows.
+
+   NOT copied: #001AD0 as TEXT. It measures 2.06:1 on black, which fails AA
+   by a wide margin — on the reference, "LAUNCHING 2027" is genuinely hard to
+   read. So the exact blue is kept for marks that carry no information (dots,
+   rules, fills) and --ork-accent-text is lifted to #6B7CFF (5.95:1) for
+   anything a reader has to actually read. Same design, one bug fixed.
+
+   ── TYPE ──────────────────────────────────────────────────────────────────
+   The reference uses Onest + Geist Mono. This repo already ships Geist and
+   GeistMono locally, and Geist is the same species of geometric grotesk. So
+   the language lands with ZERO new font loading — no Google Fonts request,
+   no FOUT, no third-party origin. Matching a typeface exactly was not worth
+   two webfonts on a marketing page.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.dark .ork {
+  /* Ground. Both are pure black because the reference paints NO section
+     backgrounds at all — every section is transparent and everything sits on
+     one black. Sections are divided by hairlines, never by a change of
+     ground, which is why adding a --bg-alt here would break the language. */
+  --bg:            #000000;
+  --bg-alt:        #000000;
+  --surface:       #070707;
+  --surface-2:     #0C0C0C;
+
+  /* Text, taken exactly from the YC reference rather than from an alpha
+     ramp. The important one is --text: it is #EBECED, NOT #FFFFFF. Pure
+     white on pure black vibrates at large sizes, and 246 of their 250-odd
+     text nodes use this instead. Measured ratios on #000 in the comments. */
+  --text:          #EBECED;   /* 17.8:1 */
+  --text-2:        #A0A0A0;   /*  8.0:1 */
+  --text-3:        #6C6C6C;   /*  4.0:1 — large text and UI only */
+
+  /* Their dim value, used for rules and disabled states. 2.3:1, so it is
+     never allowed to carry text. */
+  --border:        #464A4D;
+  --border-soft:   rgba(70, 74, 77, 0.55);
+  --border-strong: #6C6C6C;
+
+  /* ⚠ The blue is now UNUSED BY THE 3D OBJECT, on purpose. The reference's
+     hero object is entirely greyscale — near-black faces with grey specular
+     edges and no accent anywhere in it. The token stays for the eyebrow dot
+     and small marks; if you want the object to carry brand colour again,
+     that is a deliberate departure from this reference rather than an
+     oversight. */
+  --ork-accent:      #001AD0;
+  --ork-accent-soft: rgba(0, 26, 208, 0.16);
+  --ork-accent-line: rgba(0, 26, 208, 0.55);
+  --ork-accent-text: #6B7CFF;
+
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --glow:      transparent;
+}
+
+/* Square, everywhere. The reference has no rounded corner on any element, and
+   a single 14px radius in the middle of it reads as a component from another
+   site. This overrides the token rather than every consumer of it. */
+.dark .ork {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+/* ── The frame ────────────────────────────────────────────────────────────
+   A hairline inset from the viewport edge, running the height of the page,
+   with sections divided by rules rather than by colour. This is what makes
+   the reference read as a document rather than as a stack of cards. */
+.ork-frame {
+  border-left: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border-soft);
+  margin-inline: clamp(0px, 1.2vw, 18px);
+}
+.ork-rule { border-top: 1px solid var(--border-soft); }
+
+/* ── Bracketed label ──────────────────────────────────────────────────────
+   `• [OUR MISSION]`. The dot is the mark blue and carries no meaning, so it
+   is allowed to be the inaccessible one; the text beside it is white. */
+.ork-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'GeistMono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.ork-tag::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--ork-accent);
+  flex: none;
+}
+/* The bracket is a real character in the reference, not a border. Kept as
+   content so it copies with the text and never boxes the label. */
+.ork-tag i { font-style: normal; }
+.ork-tag i::before { content: '['; }
+.ork-tag i::after  { content: ']'; }
+
+/* A mono label that IS information — spec keys, dates, statuses. Uses the
+   readable blue, never #001AD0. */
+.ork-mono-accent {
+  font-family: 'GeistMono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ork-accent-text);
+}
+
+/* ── Display type ─────────────────────────────────────────────────────────
+   The reference measures 100px / weight 500 / line-height 1.0 / -5px, which
+   is -0.05em. That tracking is the single most identifying thing about it. */
+.ork-mono-h1 {
+  font-size: clamp(40px, 7.2vw, 100px);
+  line-height: 1.0;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0;
+  text-wrap: balance;
+}
+.ork-mono-h2 {
+  font-size: clamp(26px, 3.4vw, 44px);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0;
+  text-wrap: balance;
+}
+.ork-mono-sub {
+  margin: 20px 0 0;
+  max-width: 54ch;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ── Spec rows ────────────────────────────────────────────────────────────
+   Right-aligned mono key/value pairs, the reference's way of showing numbers
+   without a table's furniture. */
+.ork-spec {
+  display: grid;
+  gap: 6px;
+  font-family: 'GeistMono', ui-monospace, monospace;
+  font-size: 12.5px;
+}
+.ork-spec > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+}
+.ork-spec dt { color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.ork-spec dd { margin: 0; color: var(--text); }
+
+/* ── Cards: image with a mono caption over the foot ───────────────────────
+   Square, no radius, caption sitting on the image behind a scrim so it stays
+   legible whatever the photograph is doing underneath it. */
+.ork-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+.ork-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ork-tile figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 18px 16px 16px;
+  font-family: 'GeistMono', ui-monospace, monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.85) 62%);
+}
+
+/* ── Focal reveal ─────────────────────────────────────────────────────────
+   Kept from the previous pass. It is the one motion idea that survives a
+   change of visual language, because it is about pacing a long document
+   rather than about decoration.
+
+   An IntersectionObserver, not `animation-timeline: scroll()` — that is
+   still Chromium-only, and a page that animates in one browser and sits
+   inert in the others is worse than one that animates in none. */
+.ork-focal {
+  opacity: 0.3;
+  transform: translateY(10px);
+  transition:
+    opacity   .55s cubic-bezier(.22,.61,.36,1),
+    transform .55s cubic-bezier(.22,.61,.36,1);
+}
+.ork-focal.is-lit { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  /* Lit is the resting state. Content is never hidden behind a preference. */
+  .ork-focal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────
+   The reference hangs its headline at the BOTTOM of the first screen with
+   the whole upper two-thirds empty. That emptiness is the design — it is
+   what makes 100px type feel calm instead of loud. */
+.ork-mono-hero {
+  min-height: min(100svh, 900px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────
+   This language is cheap on a phone — no texture, no blur, no gradients —
+   so the work here is type and space, not performance. */
+@media (max-width: 760px) {
+  /* -0.05em on a 40px line closes the counters up at small sizes; the
+     tracking has to relax as the type shrinks or it reads as a smudge. */
+  .ork-mono-h1 { letter-spacing: -0.035em; }
+  .ork-mono-h2 { letter-spacing: -0.025em; }
+
+  /* Two-thirds of empty screen is a luxury a 700px-tall viewport does not
+     have. The headline still hangs low, but the hero stops reserving a
+     screenful above it. */
+  .ork-mono-hero { min-height: auto; }
+
+  .ork-frame { margin-inline: 0; border-left: 0; border-right: 0; }
+  .ork-tile figcaption { padding: 14px 12px 12px; font-size: 11.5px; }
+}
+
+@media (max-width: 640px) {
+  .ork-mono-sub { max-width: none; }
+  .ork-boxbtn span { padding: 12px 14px; }
+  .ork-boxbtn i { width: 38px; }
+  /* Spec rows stop being two columns when the value has nowhere to go. */
+  .ork-spec > div { grid-template-columns: 1fr; gap: 2px; }
+  .ork-spec dd { color: var(--text); }
+}
+
+/* ── Hero copy block ──────────────────────────────────────────────────────
+   Left-ranged and hung low. Both classes survive from the previous language
+   but mean something different here.
+
+   ⚠ .ork-h1-accent is NOT accented in this design. The reference's headline
+   is a single white weight across both lines — putting the second line in
+   blue was the previous language's move, and #001AD0 on black would be
+   2.06:1 anyway. The class stays because Hero.jsx marks the rotating line
+   with it, and it still needs to be its own block for the rotator to stack
+   alternates in one grid cell. */
+.ork-hero-copy--left {
+  text-align: left;
+  max-width: 68rem;
+  margin-inline: 0;
+  width: 100%;
+}
+.ork-hero-copy--left .ork-mono-sub { margin-inline: 0; }
+.ork-h1-accent {
+  display: block;
+  color: var(--text);
+}
+
+/* ── Button ───────────────────────────────────────────────────────────────
+   The hover closes the bracket.
+
+   This button is defined by an INCOMPLETE border: full rules top and bottom,
+   and 1x10px ticks at the four corners, so the vertical sides exist only as
+   stubs. Growing those stubs until they meet in the middle completes the
+   rectangle — a motion that could only exist in this design, because it is
+   made of the thing the design is made of.
+
+   It is `background-size` on four corner gradients, each going 10px -> 50%.
+   Four halves from four corners meet as two full sides. Nothing moves, no
+   layer is promoted, and there is no layout work in the transition.
+
+   This replaced a magnetic pull and a colour brighten — both gestures from
+   the pill-shaped language this design retired. */
+.ork-btn {
+  --btn-line: rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 0;
+  border-top: 1px solid var(--btn-line);
+  border-bottom: 1px solid var(--btn-line);
+  border-left: 0;
+  border-right: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'GeistMono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: transparent;
+  background-image:
+    linear-gradient(var(--btn-line), var(--btn-line)),
+    linear-gradient(var(--btn-line), var(--btn-line)),
+    linear-gradient(var(--btn-line), var(--btn-line)),
+    linear-gradient(var(--btn-line), var(--btn-line));
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 1px 10px, 1px 10px, 1px 10px, 1px 10px;
+  transition:
+    background-size .34s cubic-bezier(.22,.61,.36,1),
+    border-color .22s ease,
+    color .22s ease;
+}
+.ork-btn:hover,
+.ork-btn:focus-visible {
+  --btn-line: rgba(255, 255, 255, 0.6);
+  color: #EBECED;
+  background-size: 1px 50%, 1px 50%, 1px 50%, 1px 50%;
+}
+.ork-btn:focus-visible { outline: 1px solid #EBECED; outline-offset: 3px; }
+/* The arrow travels a little further than the shared Arrow's 3px, so the two
+   halves of the gesture — the frame closing and the arrow leaving — read as
+   one movement rather than two. */
+.ork-btn:hover .ork-arrow { transform: translateX(5px); }
+.ork-btn-quiet {
+  border-top: 0;
+  border-bottom: 0;
+  background-image: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The state still changes — it just arrives rather than travels. */
+  .ork-btn { transition: none; }
+  .ork-btn:hover .ork-arrow { transform: none; }
+}
+
+/* Owned by the button that drives it, so the two halves of the hover share
+   one timing curve. */
+.ork-arrow {
+  display: inline-block;
+  transition: transform .34s cubic-bezier(.22,.61,.36,1);
+}
+
+/* ── Button, tinted per product ───────────────────────────────────────────
+   The frame and the label take the product's hue. This is a departure from
+   the reference — which has one greyscale button and no per-product colour
+   anywhere — and it is deliberate: the two hero CTAs are named after the two
+   products, so the colour is doing naming rather than decoration.
+
+   Line alpha sits higher than the grey button's 0.2. A coloured hairline at
+   the same alpha reads dimmer than a white one, because the eye is reading
+   luminance and these hues carry less of it at low opacity.
+
+   Contrast on #000: kg label 11.0:1, cloud label 12.9:1. */
+.ork-btn--kg {
+  --btn-line: rgba(255, 138, 61, 0.34);
+  color: #FFA76B;
+}
+.ork-btn--kg:hover,
+.ork-btn--kg:focus-visible {
+  --btn-line: rgba(255, 138, 61, 0.85);
+  color: #FFC199;
+}
+.ork-btn--kg:focus-visible { outline-color: #FFA76B; }
+
+.ork-btn--cloud {
+  --btn-line: rgba(72, 203, 203, 0.34);
+  color: #6FDCDC;
+}
+.ork-btn--cloud:hover,
+.ork-btn--cloud:focus-visible {
+  --btn-line: rgba(72, 203, 203, 0.85);
+  color: #9BE9E9;
+}
+.ork-btn--cloud:focus-visible { outline-color: #6FDCDC; }
+
+/* ── Mobile ───────────────────────────────────────────────────────────────
+   This language costs nothing to render on a phone — no texture, no blur, no
+   gradients — so the work here is targets and measure, not performance. */
+@media (max-width: 760px) {
+  /* 40px is under the 44px tap-target guidance, and these are the primary
+     calls to action. The frame grows with the button, so the bracket still
+     reads. */
+  .ork-btn { height: 46px; padding: 0 18px; }
+
+  /* Stacked CTAs go full width. Two half-width bracket boxes side by side on
+     a phone give cramped targets and a ragged right edge. */
+  .ork-hero-cta { align-items: stretch; }
+  .ork-hero-cta > * { width: 100%; }
+  .ork-btn { width: 100%; }
+}
+
+@media (max-width: 380px) {
+  /* The label is mono uppercase with 0.06em tracking; "Explore Domineta" is
+     already 16 characters. Below this the padding has to give before the
+     type does. */
+  .ork-btn { padding: 0 12px; font-size: 12.5px; letter-spacing: 0.04em; }
+}
+
+/* ── Notched and rounded phones ───────────────────────────────────────────
+   Every content column is a Container with `px-5 sm:px-8`, so the gutter is
+   20/32px. In landscape on a notched phone the notch eats into one of those
+   sides and the first characters of a line sit under it.
+
+   max() keeps the existing gutter as the floor and only grows it where the
+   inset is larger, so nothing changes on a device without a notch. Scoped to
+   the ork tree rather than applied to every element with padding. */
+@supports (padding: max(0px)) {
+  .ork .ork-nav-inner,
+  .ork main > section,
+  .ork footer {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  /* The footer is the last thing on the page, so its bottom padding is what
+     lands under the home indicator. */
+  .ork footer { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+}
