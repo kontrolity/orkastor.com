@@ -1,5 +1,5 @@
 @import './styles/orkastor.css';
-@import './styles/night.css';
+@import './styles/mono.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

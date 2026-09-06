@@ -66,7 +66,6 @@ export function SectionHead({ eyebrow = undefined, title = undefined, sub = unde
  * The arrow moves 3px on hover and the whole control lifts 1px. Both are
  * transform-only, so neither triggers layout.
  */
-/* eslint-disable react/prop-types */
 /**
  * @param {{ as?: any, variant?: string, accent?: string, magnetic?: boolean,
  *           children?: any, className?: string, style?: any,
@@ -76,39 +75,25 @@ export function Button({
   as: Tag = 'a', variant = 'primary', accent = undefined, magnetic = false,
   children = undefined, className = '', style = undefined, ...rest
 }) {
-  const accents = {
-    kg:    { bg: 'var(--kg)',           fg: '#1A0A00' },
-    cloud: { bg: 'var(--cloud-bright)', fg: '#04222A' },
-  };
-  const a = accents[accent];
-  const base = 'group inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap select-none';
-  const size = 'h-[46px] px-6 text-[14.5px]';
+  /* The bracket box lives in mono.css as .ork-btn, not in inline styles here.
+     That matters for more than tidiness: inline styles cannot express :hover
+     or :focus-visible, so the previous version drove the hover from
+     onMouseEnter/onMouseLeave handlers — which never fired for a keyboard
+     user, and left the button stuck in its hover colour if the pointer left
+     during a re-render. In CSS both states are free and correct.
 
-  const variants = {
-    primary: {
-      background: a ? a.bg : 'var(--text)',
-      color: a ? a.fg : 'var(--bg)',
-      border: '1px solid transparent',
-    },
-    secondary: {
-      background: 'transparent',
-      color: 'inherit',
-      border: '1px solid var(--border-strong)',
-    },
-    quiet: { background: 'transparent', color: 'inherit', border: '1px solid transparent' },
-  };
-
+     `accent` tints the frame and the label per product — kg orange, cloud
+     teal. It is a departure from the reference, which has exactly one
+     greyscale button treatment, and it is deliberate: the two hero CTAs are
+     "Explore KubeGraf" and "Explore Domineta", so the colour is naming the
+     thing rather than decorating the control. Both hues clear 9:1 on black.
+     Drop the prop and a button falls back to the grey frame. */
+  const tint = accent === 'kg' ? ' ork-btn--kg' : accent === 'cloud' ? ' ork-btn--cloud' : '';
+  const base = 'group ork-btn';
   const el = (
     <Tag
-      className={`${base} ${size} ${className}`}
-      style={{
-        borderRadius: 999,
-        transition: 'transform var(--duration-fast) var(--ease-standard), background-color var(--duration-normal) var(--ease-standard), border-color var(--duration-normal) var(--ease-standard)',
-        ...variants[variant],
-        ...style,
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+      className={`${base}${tint}${variant === 'quiet' ? ' ork-btn-quiet' : ''} ${className}`}
+      style={style}
       {...rest}
     >
       {children}
@@ -122,7 +107,7 @@ export function Arrow({ className = '' }) {
   return (
     <span
       aria-hidden="true"
-      className={`transition-transform duration-200 group-hover:translate-x-[3px] ${className}`}
+      className={`ork-arrow ${className}`}
       style={{ display: 'inline-block' }}
     >
       →

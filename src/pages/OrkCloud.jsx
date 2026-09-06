@@ -40,7 +40,7 @@ export default function OrkCloud() {
       >
         <p className="ork-micro mt-8" style={{ color: 'rgba(72,203,203,0.85)' }}>{CLOUD.strap}</p>
         <div className="flex flex-col sm:flex-row gap-3 mt-6">
-          <Button href={EXTERNAL.cloudConsole} accent="cloud" magnetic target="_blank" rel="noopener noreferrer">
+          <Button href={EXTERNAL.cloudConsole} accent="cloud" target="_blank" rel="noopener noreferrer">
             Sign in to the Console <Arrow />
           </Button>
           <Button href="/cloud/how-it-works" variant="secondary" style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>

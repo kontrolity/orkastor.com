@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
 import { HERO } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { DotField } from '../motion/Focal';
 
 /**
  * The home hero. Copy only.
@@ -165,24 +164,18 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="ork-hero relative overflow-hidden"
+      className="ork-mono-hero ork-hero relative overflow-hidden"
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >
-      {/* ── ground ──────────────────────────────────────────────────────────
-          A dotted halftone field, radially masked so it frames the copy
-          instead of sitting behind it, over one soft pool of accent light.
-          This replaced a navy gradient plus three drifting aurora blobs plus
-          a vignette — four stacked layers doing what two now do, on a ground
-          that had to be dark navy for them to read at all. */}
-      <DotField />
+
 
       {/* Taller than it was. The hero used to end at the diagram, which gave
           it its height; without one, the same padding left the copy floating
           near the top with the logo bar crowding in under it. */}
-      <Container wide className="relative pt-[104px] pb-[72px] sm:pt-[164px] sm:pb-[128px]">
+      <Container wide className="relative pt-[138px] pb-[64px] sm:pt-[206px] sm:pb-[88px] w-full">
         <div className="ork-hero-copy ork-hero-copy--left" style={copyStyle}>
-          <p className="ork-eyebrow-live" style={{ marginBottom: 20 }}>
-            <span className="ork-eyebrow-dot" aria-hidden="true" />
+          <p className="ork-tag" style={{ marginBottom: 22 }}>
+            <i aria-hidden="true" />
             <Words key={`eb-${run}`} text={HERO.eyebrow} base={120} step={26} reduced={reduced} />
           </p>
 
@@ -196,7 +189,7 @@ export function Hero() {
               instead of breaking into two — four short centred lines read as a
               poem, not as a headline. It still wraps on a phone, which is
               correct; the wrapping was only wrong when there was room not to. */}
-          <h1 className="ork-night-h1">
+          <h1 className="ork-mono-h1">
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
             <span className="ork-h1-line ork-h1-accent">
               <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB} base={420} reduced={reduced} />
@@ -206,7 +199,7 @@ export function Hero() {
           {/* Its own measure, centred inside the copy column. At the column's
               full width the sub would set wider than the headline above it,
               which reads as a mistake in a centred block. */}
-          <p className="ork-night-sub">
+          <p className="ork-mono-sub">
             <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
           </p>
 
@@ -215,10 +208,10 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-10 ork-hero-cta"
             style={reduced ? undefined : { animationDelay: '700ms' }}
           >
-            <Button href="/kubegraf" accent="kg" magnetic>
+            <Button href="/kubegraf" accent="kg">
               Explore KubeGraf <Arrow />
             </Button>
-            <Button href="/cloud" variant="secondary" magnetic style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
+            <Button href="/cloud" variant="secondary" accent="cloud">
               Explore Domineta <Arrow />
             </Button>
           </div>

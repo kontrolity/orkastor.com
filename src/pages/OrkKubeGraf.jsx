@@ -35,7 +35,7 @@ export default function OrkKubeGraf() {
         badge={<Badge kind="live" onDeep>Live</Badge>}
       >
         <div className="flex flex-col sm:flex-row gap-3 mt-9">
-          <Button href={EXTERNAL.kubegrafApp} accent="kg" magnetic target="_blank" rel="noopener noreferrer">
+          <Button href={EXTERNAL.kubegrafApp} accent="kg" target="_blank" rel="noopener noreferrer">
             Start free — 14 days <Arrow />
           </Button>
           <Button href="/pricing" variant="secondary" style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
@@ -162,7 +162,7 @@ export default function OrkKubeGraf() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 shrink-0">
-                <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer" magnetic>
+                <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
                   kubegraf.io ↗
                 </Button>
                 <Button href="/cloud" variant="secondary" style={{ color: 'var(--text)' }}>

@@ -27,10 +27,8 @@
 export const PROOF_SOURCE = 'https://kubegraf.io';
 
 /** The logo marquee, verbatim from kubegraf.io's "teams trust KubēGraf" band. */
-export const CUSTOMERS = ['Finden', 'Grovyn', 'Neufology', 'The Cloud Market', 'DeadlineMate'];
 
 /** Programmes and partners kubegraf.io displays. */
-export const PARTNERS = ['Spendbase', 'Inception Program'];
 
 export const TESTIMONIALS = [
   {
