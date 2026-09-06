@@ -33,8 +33,11 @@ import React from 'react';
  */
 
 /** Measured from the crops. width / height. */
-export const MARK_RATIO   = 0.8633;   // 240 x 278
-export const LOCKUP_RATIO = 3.7194;   // 1034 x 278
+export const MARK_RATIO   = 0.9717;   // 103 x 106 — node-graph mark
+export const LOCKUP_RATIO = 3.2642;   // 346 x 106 — node-graph lockup
+// Ratios follow the ARTWORK, not the old chevron mark. Leaving them at the
+// previous 0.8633 / 3.7194 would have stretched the new lockup ~13% wide,
+// which on a wordmark reads as a bad font rather than as a bad image.
 
 function Art({ base, ratio, size, alt, onLight }) {
   // ⚠ NO `display` HERE. The theme swap below is a stylesheet rule, and an

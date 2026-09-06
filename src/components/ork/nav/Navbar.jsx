@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
-import { ThemeToggle } from './ThemeToggle';
 import { Container } from '../ui';
 import { PRODUCTS, LINKS, EXTERNAL } from '@/content/site';
 
@@ -75,7 +74,7 @@ export function Navbar({ onDeep = false }) {
       >
         <Container wide className="h-[64px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0">
-            <OrkastorLogo size={28} />
+            <OrkastorLogo size={38} />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
@@ -127,7 +126,6 @@ export function Navbar({ onDeep = false }) {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <ThemeToggle onDeep={inv} />
             <a href={EXTERNAL.kubegrafApp} className="text-[14px] font-medium" style={{ color: inkMuted }}>Sign in</a>
           </div>
 
@@ -174,7 +172,6 @@ export function Navbar({ onDeep = false }) {
             ))}
             <div className="flex items-center justify-between px-3 py-3 mt-1" style={{ borderTop: '1px solid var(--border-soft)' }}>
               <a href={EXTERNAL.kubegrafApp} className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Sign in</a>
-              <ThemeToggle />
             </div>
           </motion.div>
         ) : null}
