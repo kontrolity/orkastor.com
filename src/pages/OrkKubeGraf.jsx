@@ -32,13 +32,14 @@ export default function OrkKubeGraf() {
         titleB={KUBEGRAF.headlineB}
         sub={KUBEGRAF.oneLine}
         accent="#FF8A3D"
+        accentText="var(--kg-text)"
         badge={<Badge kind="live" onDeep>Live</Badge>}
       >
         <div className="flex flex-col sm:flex-row gap-3 mt-9">
           <Button href={EXTERNAL.kubegrafApp} accent="kg" target="_blank" rel="noopener noreferrer">
             Start free — 14 days <Arrow />
           </Button>
-          <Button href="/pricing" variant="secondary" style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
+          <Button href="/pricing" variant="secondary" style={{ borderColor: 'var(--deep-line)', color: 'var(--deep-ink)' }}>
             See pricing
           </Button>
         </div>

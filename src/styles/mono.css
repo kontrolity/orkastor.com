@@ -72,12 +72,142 @@
 
   --grid-line: rgba(255, 255, 255, 0.05);
   --glow:      transparent;
+
+  /* Button ink. Tokenised because .ork-btn hardcoded white here, which is the
+     one place a theme flip fails silently: the frame recolours, the label does
+     not, and you get white-on-white. */
+  --btn-ink:        rgba(255, 255, 255, 0.8);
+  --btn-ink-strong: #EBECED;
+  --btn-line-rest:  rgba(255, 255, 255, 0.2);
+  --btn-line-hot:   rgba(255, 255, 255, 0.6);
+
+  /* Product tints. Measured on #000: kg label 11.0:1, cloud label 12.9:1. */
+  --btn-kg-line:      rgba(255, 138, 61, 0.34);
+  --btn-kg-line-hot:  rgba(255, 138, 61, 0.85);
+  --btn-kg-ink:       #FFA76B;
+  --btn-kg-ink-hot:   #FFC199;
+  --btn-cloud-line:     rgba(72, 203, 203, 0.34);
+  --btn-cloud-line-hot: rgba(72, 203, 203, 0.85);
+  --btn-cloud-ink:      #6FDCDC;
+  --btn-cloud-ink-hot:  #9BE9E9;
+
+  /* The `deep` panel. See the light block for why this is a token now. */
+  --deep-bg:         linear-gradient(168deg, #0B2A4A 0%, #050B12 100%);
+  --deep-ink:        #F5F8FA;
+  --deep-ink-muted:  rgba(245, 248, 250, 0.62);
+  --deep-ink-label:  var(--cloud-bright, #48CBCB);
+  --deep-line:       rgba(245, 248, 250, 0.24);
+
+  /* The hero's rotating second line. #48CBCB is 9.9:1 on black. */
+  --rotator-ink: var(--cloud-bright, #48CBCB);
+  --h1-sheen:    rgba(72, 203, 203, 0.16);
 }
 
-/* Square, everywhere. The reference has no rounded corner on any element, and
-   a single 14px radius in the middle of it reads as a component from another
-   site. This overrides the token rather than every consumer of it. */
-.dark .ork {
+/* ── MONO, IN WHITE ───────────────────────────────────────────────────────
+   The same language on paper. Not an inversion — the ramp is measured against
+   white the way the dark ramp was measured against black, so each value here
+   lands on its counterpart's contrast rather than on its counterpart's hex.
+
+     role      dark              light             on its own ground
+     text      #EBECED 17.75:1   #16171A 17.92:1
+     text-2    #A0A0A0  8.03:1   #4F5052  8.07:1
+     text-3    #6C6C6C  4.00:1   #7A7A7C  4.28:1   large text and UI only
+     border    #464A4D  2.35:1   #A7A9AB  2.36:1   never carries text
+
+   The discipline is unchanged and has to stay unchanged: one ground with no
+   section backgrounds, hairline rules instead of colour changes, square
+   corners, bracketed mono labels. Only the two ends of the ramp move.
+
+   ⚠ TEXT IS #16171A, NOT #000000 — the same reason --text is #EBECED and not
+   #FFFFFF on the dark side. Maximum contrast at 100px vibrates; the reference
+   avoids it at both ends and so does this.
+
+   ── THE ONE THING LIGHT DOES BETTER ───────────────────────────────────────
+   #001AD0 measures 2.06:1 on black, which is why the dark theme had to lift
+   its readable blue to #6B7CFF and keep the real one for marks that carry no
+   information. On white that same blue is 10.20:1. So here --ork-accent-text
+   IS the reference blue: the light theme gets to use the actual brand value
+   for type, which the dark theme can never do. */
+.ork {
+  --bg:            #FFFFFF;
+  --bg-alt:        #FFFFFF;
+  --surface:       #FAFAFA;
+  --surface-2:     #F4F4F5;
+
+  --text:          #16171A;   /* 17.92:1 */
+  --text-2:        #4F5052;   /*  8.07:1 */
+  --text-3:        #7A7A7C;   /*  4.28:1 — large text and UI only */
+
+  --border:        #A7A9AB;
+  --border-soft:   rgba(167, 169, 171, 0.62);
+  --border-strong: #7A7A7C;
+
+  --ork-accent:      #001AD0;
+  --ork-accent-soft: rgba(0, 26, 208, 0.10);
+  --ork-accent-line: rgba(0, 26, 208, 0.42);
+  --ork-accent-text: #001AD0;   /* 10.20:1 — the real one, see above */
+
+  --grid-line: rgba(0, 0, 0, 0.05);
+  --glow:      transparent;
+
+  --btn-ink:        rgba(0, 0, 0, 0.72);
+  --btn-ink-strong: #16171A;
+  --btn-line-rest:  rgba(0, 0, 0, 0.22);
+  --btn-line-hot:   rgba(0, 0, 0, 0.58);
+
+  /* ⚠ The product tints are NOT the dark values. #FFA76B measures 1.90:1 on
+     white and #6FDCDC 1.85:1 — both are invisible as a label, and a CTA whose
+     text cannot be read is worse than one with no colour at all. These are the
+     readable ends of the same two hues, already measured in orkastor.css:
+     kg 7.31:1, cloud 6.83:1 on white. The hue does the naming either way. */
+  --btn-kg-line:      rgba(154, 52, 18, 0.34);
+  --btn-kg-line-hot:  rgba(154, 52, 18, 0.85);
+  --btn-kg-ink:       #9A3412;   /* 7.31:1 */
+  --btn-kg-ink-hot:   #7C2A0E;
+  --btn-cloud-line:     rgba(23, 96, 138, 0.34);
+  --btn-cloud-line-hot: rgba(23, 96, 138, 0.85);
+  --btn-cloud-ink:      #17608A;   /* 6.83:1 */
+  --btn-cloud-ink-hot:  #114A6B;
+
+  /* ── THE `deep` PANEL DOES FLIP NOW, AND THAT IS THE POINT ──────────────
+     `Section tone="deep"` painted a navy gradient with light ink and was
+     documented as deliberately NOT following the theme — the reasoning being
+     that a few sections are "the control room regardless of theme".
+
+     That reasoning belonged to the previous language. This one paints no
+     section grounds at all: sections are divided by hairlines, and a navy
+     band dropped into a white page is exactly the "component from another
+     site" the square-corner rule exists to prevent. It also simply is not a
+     white site if three of its sections are dark.
+
+     So the panel is a token, dark keeps the navy it always had, and light
+     resolves it to the page. Nothing else about `deep` changes — the
+     components still say `tone="deep"` and still ask for the right ink. */
+  --deep-bg:         var(--bg);
+  --deep-ink:        var(--text);
+  --deep-ink-muted:  var(--text-2);
+  --deep-ink-label:  var(--ork-accent-text);
+  --deep-line:       var(--border);
+
+  /* ⚠ NOT --cloud-bright here. #48CBCB measures 1.85:1 on white, and this is
+     a 100px headline line — the largest unreadable thing the page could
+     possibly contain. Same hue, readable end: 6.83:1. */
+  --rotator-ink: #17608A;
+
+  /* No sheen on paper. See the note on .ork-h1-line::before. */
+  --h1-sheen:    transparent;
+}
+
+/* Square, everywhere, in BOTH themes. The reference has no rounded corner on
+   any element, and a single 14px radius in the middle of it reads as a
+   component from another site. This overrides the token rather than every
+   consumer of it.
+
+   ⚠ NOT scoped to `.dark`. It was, and that was a latent bug rather than a
+   choice: the moment the site rendered in light it picked up orkastor.css's
+   8/12/18/26px radii and the language quietly stopped being itself. Corners
+   are a property of the design, not of the theme. */
+.ork {
   --radius-sm: 0px;
   --radius-md: 0px;
   --radius-lg: 0px;
@@ -195,7 +325,12 @@
   font-size: 12.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--text);
+  /* The scrim stays BLACK and the caption stays light in both themes. This
+     one is not a theme value: it sits over a photograph, so what it has to
+     beat is the image, not the page. Flipping it to a white scrim with dark
+     ink in light mode would make the caption unreadable over any pale
+     photograph — the ground it needs contrast against never changed. */
+  color: #EBECED;
   background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.85) 62%);
 }
 
@@ -296,7 +431,7 @@
    This replaced a magnetic pull and a colour brighten — both gestures from
    the pill-shaped language this design retired. */
 .ork-btn {
-  --btn-line: rgba(255, 255, 255, 0.2);
+  --btn-line: var(--btn-line-rest);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -308,7 +443,7 @@
   border-bottom: 1px solid var(--btn-line);
   border-left: 0;
   border-right: 0;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--btn-ink);
   font-family: 'GeistMono', ui-monospace, monospace;
   font-size: 13px;
   font-weight: 400;
@@ -331,11 +466,11 @@
 }
 .ork-btn:hover,
 .ork-btn:focus-visible {
-  --btn-line: rgba(255, 255, 255, 0.6);
-  color: #EBECED;
+  --btn-line: var(--btn-line-hot);
+  color: var(--btn-ink-strong);
   background-size: 1px 50%, 1px 50%, 1px 50%, 1px 50%;
 }
-.ork-btn:focus-visible { outline: 1px solid #EBECED; outline-offset: 3px; }
+.ork-btn:focus-visible { outline: 1px solid var(--btn-ink-strong); outline-offset: 3px; }
 /* The arrow travels a little further than the shared Arrow's 3px, so the two
    halves of the gesture — the frame closing and the arrow leaving — read as
    one movement rather than two. */
@@ -371,26 +506,26 @@
 
    Contrast on #000: kg label 11.0:1, cloud label 12.9:1. */
 .ork-btn--kg {
-  --btn-line: rgba(255, 138, 61, 0.34);
-  color: #FFA76B;
+  --btn-line: var(--btn-kg-line);
+  color: var(--btn-kg-ink);
 }
 .ork-btn--kg:hover,
 .ork-btn--kg:focus-visible {
-  --btn-line: rgba(255, 138, 61, 0.85);
-  color: #FFC199;
+  --btn-line: var(--btn-kg-line-hot);
+  color: var(--btn-kg-ink-hot);
 }
-.ork-btn--kg:focus-visible { outline-color: #FFA76B; }
+.ork-btn--kg:focus-visible { outline-color: var(--btn-kg-ink); }
 
 .ork-btn--cloud {
-  --btn-line: rgba(72, 203, 203, 0.34);
-  color: #6FDCDC;
+  --btn-line: var(--btn-cloud-line);
+  color: var(--btn-cloud-ink);
 }
 .ork-btn--cloud:hover,
 .ork-btn--cloud:focus-visible {
-  --btn-line: rgba(72, 203, 203, 0.85);
-  color: #9BE9E9;
+  --btn-line: var(--btn-cloud-line-hot);
+  color: var(--btn-cloud-ink-hot);
 }
-.ork-btn--cloud:focus-visible { outline-color: #6FDCDC; }
+.ork-btn--cloud:focus-visible { outline-color: var(--btn-cloud-ink); }
 
 /* ── Mobile ───────────────────────────────────────────────────────────────
    This language costs nothing to render on a phone — no texture, no blur, no
@@ -433,4 +568,104 @@
   /* The footer is the last thing on the page, so its bottom padding is what
      lands under the home indicator. */
   .ork footer { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+}
+
+/* ── The hero's 3D object ─────────────────────────────────────────────────
+   Ranged right and behind the copy. It is deliberately NOT a column beside
+   the headline: the headline runs the full container by design, so an object
+   in its own column would have to take width from the type, and the type is
+   what this language is.
+
+   Sitting behind works because the object is hairlines — there are only ~42
+   strokes in it and none of them is solid, so the headline stays the darkest
+   thing on the screen even where they overlap.
+
+   It stops short of the left edge (`left: auto`) so it never sits under the
+   first characters of a line, which is the one place overlap would actually
+   cost legibility. */
+.ork-hero-lattice {
+  position: absolute;
+  top: 50%;
+  right: clamp(-40px, -2vw, 0px);
+  left: auto;
+  transform: translateY(-50%);
+  width: min(52vw, 620px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+.ork-hero .ork-hero-copy { position: relative; z-index: 1; }
+
+@media (max-width: 900px) {
+  /* On a phone the object goes behind the whole hero and drops back, rather
+     than being removed: it is the page's one piece of dimension, and deleting
+     it on small screens would make the mobile site a different design. At this
+     size it reads as texture, which is the correct role for it here. */
+  .ork-hero-lattice {
+    top: 42%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: min(112vw, 560px);
+    opacity: 0.5;
+  }
+}
+
+/* ── AMBIENT DEPTH ────────────────────────────────────────────────────────
+   The second half of the 3D brief. The hero carries the object; everything
+   below it gets depth from perspective on the elements that are already
+   there, rather than from more canvases.
+
+   That distinction is the whole design of this part. A marketing page with a
+   WebGL context per section is a page that drops frames on a laptop and eats
+   a phone's battery; three CSS transforms cost nothing, composite on the GPU
+   and never touch layout. What they buy is the same thing: the page stops
+   being flat.
+
+   ── WHY `translateZ` AND NOT `scale` ──────────────────────────────────────
+   A card that scales on hover grows into its neighbours and the row reflows
+   in the reader's eye. A card that moves along Z under a shared perspective
+   comes toward the reader and the row holds still. It is also the honest
+   version of the gesture: the page has a camera now, so use it. */
+.ork-depth {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+/* The tilt itself. `will-change` is deliberately NOT set here: it would
+   promote every card on the page to its own layer permanently, and there can
+   be a dozen. The transform promotes on hover, which is when it matters. */
+.ork-depth-item {
+  transform-style: preserve-3d;
+  transition:
+    transform .5s cubic-bezier(.22,.61,.36,1),
+    border-color .3s ease;
+}
+.ork-depth-item:hover,
+.ork-depth-item:focus-within {
+  transform: translate3d(0, -3px, 26px) rotateX(1.4deg);
+}
+
+/* Scroll-linked entrance, in depth rather than in Y alone. The existing
+   .ork-focal fades and lifts; this adds the third axis, so a section arrives
+   by coming toward the reader instead of sliding up at them. Same
+   IntersectionObserver drives both — see Reveal. */
+.ork-focal {
+  transform: translateY(10px) translateZ(-40px);
+}
+.ork-focal.is-lit { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Depth is motion. Under the preference the page is flat, which is the
+     correct reading of the preference rather than a lesser one. */
+  .ork-depth { perspective: none; }
+  .ork-depth-item { transition: none; }
+  .ork-depth-item:hover,
+  .ork-depth-item:focus-within { transform: none; }
+  .ork-focal { transform: none; }
+}
+
+/* Coarse pointers have no hover, and a tilt that only fires on tap reads as a
+   glitch. The perspective stays — the entrance still uses it. */
+@media (hover: none) {
+  .ork-depth-item:hover { transform: none; }
 }
