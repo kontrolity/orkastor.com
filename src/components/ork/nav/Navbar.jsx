@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
 import { Container } from '../ui';
 import { PRODUCTS, LINKS, EXTERNAL } from '@/content/site';
+import { ThemeToggle } from './ThemeToggle';
 
 /**
  * The company's navigation, not a product's.
@@ -52,8 +53,8 @@ export function Navbar({ onDeep = false }) {
   }, [open]);
 
   const inv = onDeep && !scrolled;
-  const ink = inv ? '#F5F8FA' : 'var(--text)';
-  const inkMuted = inv ? 'rgba(245,248,250,0.72)' : 'var(--text-2)';
+  const ink = inv ? 'var(--deep-ink)' : 'var(--text)';
+  const inkMuted = inv ? 'var(--deep-ink-muted)' : 'var(--text-2)';
 
   // Hover-open with a close DELAY. Without it, the 8px gap between the trigger
   // and the panel closes the menu as the pointer crosses it.
@@ -125,7 +126,12 @@ export function Navbar({ onDeep = false }) {
             ))}
           </nav>
 
+          {/* The toggle was written but never mounted, because `forcedTheme`
+              made it inert — next-themes ignores setTheme while a theme is
+              forced, so a rendered control would have done nothing. The force
+              is gone (see App.jsx), so it goes in. */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
+            <ThemeToggle onDeep={inv} />
             <a href={EXTERNAL.kubegrafApp} className="text-[14px] font-medium" style={{ color: inkMuted }}>Sign in</a>
           </div>
 
@@ -172,6 +178,7 @@ export function Navbar({ onDeep = false }) {
             ))}
             <div className="flex items-center justify-between px-3 py-3 mt-1" style={{ borderTop: '1px solid var(--border-soft)' }}>
               <a href={EXTERNAL.kubegrafApp} className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Sign in</a>
+              <ThemeToggle />
             </div>
           </motion.div>
         ) : null}

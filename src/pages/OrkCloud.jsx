@@ -36,6 +36,7 @@ export default function OrkCloud() {
         titleB={CLOUD.headlineB}
         sub={CLOUD.oneLine}
         accent="#48CBCB"
+        accentText="var(--cloud-text)"
         badge={<Badge kind="invite" onDeep>By invitation</Badge>}
       >
         <p className="ork-micro mt-8" style={{ color: 'rgba(72,203,203,0.85)' }}>{CLOUD.strap}</p>
@@ -43,11 +44,11 @@ export default function OrkCloud() {
           <Button href={EXTERNAL.cloudConsole} accent="cloud" target="_blank" rel="noopener noreferrer">
             Sign in to the Console <Arrow />
           </Button>
-          <Button href="/cloud/how-it-works" variant="secondary" style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
+          <Button href="/cloud/how-it-works" variant="secondary" style={{ borderColor: 'var(--deep-line)', color: 'var(--deep-ink)' }}>
             How it works
           </Button>
         </div>
-        <p className="ork-small mt-5" style={{ color: 'rgba(245,248,250,0.5)', maxWidth: 520 }}>{CLOUD.access}</p>
+        <p className="ork-small mt-5" style={{ color: 'var(--deep-ink-muted)', maxWidth: 520 }}>{CLOUD.access}</p>
       </ProductHero>
 
       <Section tone="page" id="boundary">

@@ -68,10 +68,14 @@ export function ProductCards() {
           />
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-5 mt-14">
+        {/* ork-depth establishes the camera for the row; each Panel is the
+            thing that moves in it. Perspective has to live on the SHARED
+            parent — per-card perspective gives every card its own vanishing
+            point, and the row reads as a fan rather than as a plane. */}
+        <div className="grid md:grid-cols-2 gap-5 mt-14 ork-depth">
           {CARDS.map((c, i) => (
             <Reveal key={c.key} delay={i * 70}>
-              <Panel hover accent={c.accent} className="h-full flex flex-col overflow-hidden">
+              <Panel hover accent={c.accent} className="h-full flex flex-col overflow-hidden ork-depth-item">
                 {/* The accent is a 3px brand stripe — decorative, so the bright
                     display value is right here. Everything read below uses `ink`. */}
                 <div style={{ height: 3, background: c.accent }} />

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
 import { HERO } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { ClusterLattice } from '../visuals/ClusterLattice';
 
 /**
  * The home hero. Copy only.
@@ -114,7 +115,7 @@ function Rotator({ alts, canonical, base, reduced }) {
     return () => window.clearInterval(id);
   }, [reduced, alts.length]);
 
-  if (reduced) return <span style={{ color: 'var(--cloud-bright)' }}>{canonical}</span>;
+  if (reduced) return <span style={{ color: 'var(--rotator-ink)' }}>{canonical}</span>;
 
   return (
     <>
@@ -126,7 +127,7 @@ function Rotator({ alts, canonical, base, reduced }) {
                 every swap rather than only on first mount. */}
             <Words key={n === i ? `in-${i}` : `out-${n}`} text={t}
                    base={n === i ? base : 0} step={38}
-                   style={{ color: 'var(--cloud-bright)' }} />
+                   style={{ color: 'var(--rotator-ink)' }} />
           </span>
         ))}
       </span>
@@ -167,7 +168,17 @@ export function Hero() {
       className="ork-mono-hero ork-hero relative overflow-hidden"
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >
+      {/* The 3D object. Placed BEHIND the copy and ranged right, not beside it:
+          the headline runs the full container by design (see the note on the
+          <h1>), so there is no column to put an object in without taking width
+          away from the type. Sitting it behind costs the copy nothing, and the
+          language is hairlines — there is very little ink in the object to
+          compete with.
 
+          `pointer-events-none` because it is decorative and sits over the copy
+          in the stacking order on narrow viewports; without it the object would
+          eat clicks on the CTAs. */}
+      <ClusterLattice className="ork-hero-lattice" />
 
       {/* Taller than it was. The hero used to end at the diagram, which gave
           it its height; without one, the same padding left the copy floating

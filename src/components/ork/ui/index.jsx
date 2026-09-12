@@ -24,10 +24,12 @@ export function Container({ children, className = '', wide = false, ...rest }) {
  * headline earlier in this project.
  */
 export function Section({ children, tone = 'page', id = undefined, className = '', ...rest }) {
-  // `deep` is literal rather than tokenised on purpose: it must NOT flip with the
-  // theme, so it cannot read --navy/--bg, which do.
+  // `deep` IS tokenised now. It used to be literal so it could not flip with
+  // the theme; under the mono language that inverted: the white site paints no
+  // section grounds, so --deep-bg resolves to the page there and keeps the navy
+  // in dark. See the two blocks in styles/mono.css.
   const style = tone === 'deep'
-    ? { background: 'linear-gradient(168deg, #0B2A4A 0%, #050B12 100%)', color: '#F5F8FA' }
+    ? { background: 'var(--deep-bg)', color: 'var(--deep-ink)' }
     : { background: tone === 'alt' ? 'var(--bg-alt)' : 'var(--bg)' };
   return (
     <section
@@ -45,12 +47,12 @@ export function Section({ children, tone = 'page', id = undefined, className = '
 /** Eyebrow + title + optional standfirst. Uses --text-2, never --text-3, for
  *  the standfirst: it is body copy, and --text-3 is for labels. */
 export function SectionHead({ eyebrow = undefined, title = undefined, sub = undefined, align = 'left', onDeep = false, className = '' }) {
-  const muted = onDeep ? 'rgba(245,248,250,0.62)' : 'var(--text-2)';
-  const label = onDeep ? 'var(--cloud-bright)' : 'var(--text-2)';
+  const muted = onDeep ? 'var(--deep-ink-muted)' : 'var(--text-2)';
+  const label = onDeep ? 'var(--deep-ink-label)' : 'var(--text-2)';
   return (
     <header className={`${align === 'center' ? 'text-center mx-auto' : ''} ${className}`} style={{ maxWidth: align === 'center' ? 720 : 760 }}>
       {eyebrow ? <p className="ork-micro" style={{ color: label, marginBottom: 12 }}>{eyebrow}</p> : null}
-      {title ? <h2 className="ork-display-m" style={{ color: onDeep ? '#F5F8FA' : 'var(--text)' }}>{title}</h2> : null}
+      {title ? <h2 className="ork-display-m" style={{ color: onDeep ? 'var(--deep-ink)' : 'var(--text)' }}>{title}</h2> : null}
       {sub ? <p className="ork-sub" style={{ color: muted, marginTop: 14 }}>{sub}</p> : null}
     </header>
   );
@@ -125,7 +127,7 @@ export function Badge({ kind = 'live', children, onDeep = false }) {
   const map = {
     live:   { fg: onDeep ? '#4ADE80' : 'var(--ok)',         bg: 'rgba(22,101,52,0.10)',   bd: 'rgba(22,101,52,0.26)', dot: true },
     invite: { fg: onDeep ? '#6FDCDC' : 'var(--cloud-text)', bg: 'rgba(23,96,138,0.10)',   bd: 'rgba(23,96,138,0.26)', dot: false },
-    neutral:{ fg: onDeep ? 'rgba(245,248,250,0.7)' : 'var(--text-2)', bg: 'transparent',  bd: 'var(--border)',        dot: false },
+    neutral:{ fg: onDeep ? 'var(--deep-ink-muted)' : 'var(--text-2)', bg: 'transparent',  bd: 'var(--border)',        dot: false },
   };
   const s = map[kind] ?? map.neutral;
   return (

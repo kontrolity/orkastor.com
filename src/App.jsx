@@ -31,12 +31,23 @@ const PageNotFound = lazy(() => import('@/lib/PageNotFound'));
 export default function App() {
   return (
     /* attribute="class" so Tailwind's darkMode:["class"] and the `.dark .ork`
-     * token block key off the same thing. defaultTheme="dark" because the brief
-     * makes dark the primary experience; enableSystem keeps "system" real.
-     * disableTransitionOnChange stops every border on the page animating at once
-     * on a theme swap — the few properties that should tween are named in
+     * token block key off the same thing.
+     *
+     * defaultTheme="light": the mono language now ships in white as well as
+     * black (see the two token blocks in styles/mono.css) and white is the
+     * primary experience. `forcedTheme` is GONE — it was pinning the site to
+     * dark and made ThemeToggle dead code, since next-themes ignores setTheme
+     * while a theme is forced. Removing it is what makes the toggle work.
+     *
+     * enableSystem is deliberately NOT set. It would hand the default to the
+     * visitor's OS, so half of them would land on the dark site when the
+     * decision was that the white one is the front door; the toggle is still
+     * there for anyone who prefers black.
+     *
+     * disableTransitionOnChange stops every border on the page animating at
+     * once on a theme swap — the few properties that should tween are named in
      * orkastor.css instead. */
-    <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
         <Router>
           <Suspense fallback={null}>

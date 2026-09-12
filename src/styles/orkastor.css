@@ -382,7 +382,13 @@
   content: '';
   position: absolute;
   inset: -10% -12%;
-  background: radial-gradient(closest-side, rgba(72,203,203,0.16), rgba(72,203,203,0) 70%);
+  /* Tokenised. On black this is a sheen you have to look for; on white the
+     same teal at the same alpha is a visible smudge sitting across the
+     headline, because a light wash on a light ground shifts HUE rather than
+     luminance and the eye reads that as a stain. The mono language also bans
+     gradients outright, so in light the token resolves to nothing and the
+     ::before paints an empty box. See --h1-sheen in mono.css. */
+  background: radial-gradient(closest-side, var(--h1-sheen, rgba(72,203,203,0.16)), transparent 70%);
   filter: blur(18px);
   pointer-events: none;
   z-index: -1;
