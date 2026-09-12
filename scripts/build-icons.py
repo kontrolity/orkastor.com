@@ -1,82 +1,95 @@
 #!/usr/bin/env python3
 """Build the Orkastor icon set.  Run: python3 scripts/build-icons.py
 
+The tab icon is the SITE's mark. If they ever differ, the site shows one logo
+in the page and a different one in its own tab, which is the bug this script
+exists to prevent. It reads `public/brand/mark-inverse.png` — the same artwork
+`ork/brand/markAssets.jsx` renders in the nav — so regenerating is the whole
+fix whenever the mark changes.
+
 WHY THERE ARE TWO DRAWINGS
 --------------------------
-The brand artwork (public/brand/mark.png, cropped from the supplied sheet) is a
-lattice with NO enclosed counter: it is split down the centre line, so every
-interior channel opens to the outside. Measured on the 240x278 crop, the mid
-row is four ink bands separated by gaps of 18, 62 and 17 pixels, and ink covers
-42.9% of the box.
+The mark is a node graph: a hexagon ring, three lit nodes on its vertices, a
+hub in the middle, all drawn in thin strokes with a soft glow.
 
-Scale that to 16px and the bands land on ~2px and the side gaps on ~1.2px. They
-close, and the mark resolves to a grey smudge with no structure. At 32px it
-reads cleanly. Both were rendered at true size and compared before choosing the
-crossover, which is therefore measured rather than picked:
+Rendered at true size, the ring's stroke lands under a pixel at 16px. It does
+not survive downsampling — the glow smears across the field and what is left
+reads as three coloured smudges with no structure. At 32px the ring, the nodes
+and the hub all resolve. Both were rendered and compared before choosing the
+crossover, so it is measured rather than picked:
 
     16px  -> the drawing below
     32px+ -> the artwork itself
 
 WHY THE 16px DRAWING IS PIXEL-PLACED, NOT DOWNSAMPLED
 -----------------------------------------------------
-A downsampled vector renders its diagonals as grey at this size; there is not
-enough room for antialiasing to help. So the 16px icon places pixels directly.
+At this size antialiasing has no room to help: a downsampled diagonal renders
+as a row of greys, and the mark is all diagonals. So the small drawing places
+pixels directly, on a grid, at full saturation.
 
-PROFILE is the artwork's OWN silhouette — the per-row half-width as a fraction
-of the maximum, sampled at 14 rows off the alpha mask and mirror-averaged for
-symmetry. It is measured, not drawn by eye. Regenerate it with the snippet in
-the docstring of `profile()` if the artwork ever changes.
+It also DROPS THE HEXAGON RING, which is the one liberty taken. Six vertices
+cannot be distinguished from three inside a 12px field, and drawing the ring
+anyway costs a pixel of contrast everywhere without adding a readable shape.
+What identifies the mark at this size is three lit nodes around a lit hub, so
+that is what the drawing keeps — the triangle and the spokes, at the vertex
+positions and the node colours sampled from the artwork itself.
 
-THE SLOT STOPS SHORT OF THE EDGES, ON PURPOSE
----------------------------------------------
-The artwork's central channel runs the full height. Reproduced that way at 16px
-it severs the glyph and you read two facing D-shapes rather than one mark. The
-slot here stops three rows in from the top and bottom, which keeps the form
-connected while preserving the vertical channel that identifies the mark.
+Node colours below are measured from `mark-inverse.png`, not invented: the top
+node is the blue one, the two lower nodes the green/teal pair, the hub white.
+If the artwork is re-tinted, re-sample them.
+
+NO IMAGEMAGICK, NO NUMPY
+------------------------
+This used to shell out to `magick` for the .ico and use numpy for the small
+drawing. Both were removed: the script now needs nothing but Pillow, which the
+repo already has, so it runs on a clean checkout. `.ico` is a container format
+around whole images and is written directly below.
 """
-from PIL import Image, ImageDraw
-import numpy as np, subprocess, shutil, sys, os
+import io
+import os
+import shutil
+import struct
+import sys
 
-ROOT   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PUB    = os.path.join(ROOT, "public")
-ART    = os.path.join(PUB, "brand", "mark-inverse.png")   # paper-tinted artwork
+from PIL import Image, ImageDraw
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PUB = os.path.join(ROOT, "public")
+ART = os.path.join(PUB, "brand", "mark-inverse.png")   # the nav's own artwork
 
 INDIGO = (0x1F, 0x13, 0x52)
-PAPER  = (0xF5, 0xF6, 0xFA)
 RADIUS = 0.22          # tile corner radius, as a fraction of the side
 
-# The artwork's silhouette: half-width / max-half-width, 14 samples top to
-# bottom.  Sharp points at each end, a broad flat middle.
-#   a = np.array(Image.open("public/brand/mark.png"))[...,3] > 127
-#   per row: ((cx - xs.min()) + (xs.max() - cx)) / 2, normalised by the max
-PROFILE = [0.054, 0.225, 0.429, 0.787, 0.988, 0.963, 0.996,
-           0.996, 0.979, 0.988, 0.771, 0.429, 0.221, 0.054]
+# Sampled from the artwork. See the docstring.
+NODE_TOP = (119, 176, 255)     # blue
+NODE_BL = (129, 255, 194)      # green
+NODE_BR = (126, 255, 234)      # teal
+HUB = (255, 255, 255)
+EDGE = (96, 140, 205)          # the connecting strokes, dimmed to sit behind
 
 
-def profile(rows):
-    """PROFILE resampled to `rows` rows, linearly."""
-    out = []
-    for y in range(rows):
-        t = y * (len(PROFILE) - 1) / (rows - 1)
-        i = int(t); f = t - i
-        out.append(PROFILE[i] if i + 1 >= len(PROFILE)
-                   else PROFILE[i] * (1 - f) + PROFILE[i + 1] * f)
-    return out
+def pixel_mark(size=16):
+    """The small drawing: three lit nodes and a hub, placed pixel by pixel."""
+    img = Image.new("RGBA", (size, size), INDIGO + (255,))
+    d = ImageDraw.Draw(img)
 
+    # Vertex positions on a 16px grid. The triangle is wider than it is tall,
+    # which is what the hexagon's own vertices do.
+    top, bl, br, hub = (8, 4), (4, 11), (11, 11), (7, 7)
 
-def pixel_mark(size=16, half_max=7.0, slot_half=2.0, slot_from=3, slot_to=12):
-    """The small drawing, placed pixel by pixel."""
-    prof, cx = profile(size), size / 2
-    img = np.zeros((size, size, 4), np.uint8)
-    img[..., :3] = INDIGO
-    img[...,  3] = 255
-    for y in range(size):
-        hw = prof[y] * half_max
-        for x in range(size):
-            d = abs((x + 0.5) - cx)
-            if d <= hw and not (slot_from <= y <= slot_to and d < slot_half):
-                img[y, x, :3] = PAPER
-    return Image.fromarray(img)
+    # Edges first, so the nodes paint over their ends rather than being
+    # outlined by them.
+    for a, b in ((top, bl), (top, br), (bl, br)):
+        d.line([a[0], a[1], b[0], b[1]], fill=EDGE + (255,), width=1)
+    for a in (top, bl, br):
+        d.line([a[0], a[1], hub[0], hub[1]], fill=EDGE + (255,), width=1)
+
+    # 2px nodes. 3px crowds the corner radius and 1px reads as a stray pixel;
+    # both were rendered at true size before settling here.
+    for (x, y), col in ((top, NODE_TOP), (bl, NODE_BL), (br, NODE_BR)):
+        d.rectangle([x - 1, y - 1, x, y], fill=col + (255,))
+    d.rectangle([hub[0], hub[1], hub[0] + 1, hub[1] + 1], fill=HUB + (255,))
+    return img
 
 
 def round_corners(img, frac=RADIUS):
@@ -102,6 +115,34 @@ def tiled(size, inset, opaque=False):
     return canvas.convert("RGB") if opaque else round_corners(canvas)
 
 
+def write_ico(path, images):
+    """Write a multi-size .ico.
+
+    Each entry is a whole PNG, which every browser in use has accepted since
+    Vista. Pillow's own ICO writer is not used: given several images it keeps
+    one and silently drops the rest, and the point of this file is that 16px
+    is a DIFFERENT drawing from 32px rather than a resize of it.
+    """
+    blobs = []
+    for im in images:
+        buf = io.BytesIO()
+        im.save(buf, format="PNG", optimize=True)
+        blobs.append(buf.getvalue())
+
+    out = bytearray(struct.pack("<HHH", 0, 1, len(blobs)))   # reserved, type=icon, count
+    offset = 6 + 16 * len(blobs)
+    for im, blob in zip(images, blobs):
+        w, h = im.size
+        # 0 means 256 in this field; nothing here is that big, but the encoding
+        # is the format's, not ours.
+        out += struct.pack("<BBBBHHII", w % 256, h % 256, 0, 0, 1, 32, len(blob), offset)
+        offset += len(blob)
+    for blob in blobs:
+        out += blob
+    with open(path, "wb") as fh:
+        fh.write(bytes(out))
+
+
 def main():
     made = []
 
@@ -111,19 +152,18 @@ def main():
         made.append((name, os.path.getsize(p)))
         return p
 
-    save(round_corners(pixel_mark(16), 0.19), "favicon-16.png")   # the drawing
-    save(tiled(32, 0.72), "favicon-32.png")                       # the artwork
-    ico48 = os.path.join(PUB, "_ico48.png")
-    tiled(48, 0.72).save(ico48)
+    ico16 = round_corners(pixel_mark(16), 0.19)     # the drawing
+    ico32 = tiled(32, 0.72)                         # the artwork
+    ico48 = tiled(48, 0.72)
+    save(ico16, "favicon-16.png")
+    save(ico32, "favicon-32.png")
 
     # .ico carries 16/32/48: browsers still reach for /favicon.ico in places the
     # <link> tags do not cover — bookmark bars, history, pinned tabs — and it is
     # requested whether or not it is declared.
-    subprocess.run(["magick", os.path.join(PUB, "favicon-16.png"),
-                    os.path.join(PUB, "favicon-32.png"), ico48,
-                    os.path.join(PUB, "favicon.ico")], check=True)
-    made.append(("favicon.ico", os.path.getsize(os.path.join(PUB, "favicon.ico"))))
-    os.remove(ico48)
+    ico_path = os.path.join(PUB, "favicon.ico")
+    write_ico(ico_path, [ico16, ico32, ico48])
+    made.append(("favicon.ico", os.path.getsize(ico_path)))
 
     save(tiled(180, 0.70, opaque=True), "apple-touch-icon.png")
     save(tiled(192, 0.72), "icon-192.png")
