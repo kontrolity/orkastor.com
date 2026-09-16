@@ -14,25 +14,18 @@ import { EXTERNAL } from '@/content/site';
 const COLUMNS = [
   {
     title: 'KubeGraf',
+    /* Overview, How it works and Security were deep links into /kubegraf and
+       two of them into anchors on it. That page is gone, so the column is the
+       product's own site and the pricing it publishes there — the only two
+       destinations for KubeGraf that this site does not own and cannot let
+       drift. A column of links to a page that 404s is worse than a short one. */
     links: [
-      { label: 'Overview', href: '/kubegraf' },
-      { label: 'How it works', href: '/kubegraf#process' },
-      { label: 'Security', href: '/kubegraf#security' },
-      { label: 'Pricing', href: '/pricing' },
       { label: 'kubegraf.io ↗', href: EXTERNAL.kubegrafSite, external: true },
-      { label: 'Sign in ↗', href: EXTERNAL.kubegrafApp, external: true },
+      { label: 'Pricing ↗', href: EXTERNAL.kubegrafPricing, external: true },
     ],
   },
-  {
-    title: 'Domineta',
-    links: [
-      { label: 'Overview', href: '/cloud' },
-      { label: 'How it works', href: '/cloud/how-it-works' },
-      { label: 'The boundary', href: '/cloud#boundary' },
-      { label: 'domineta.com ↗', href: EXTERNAL.cloudSite, external: true },
-      { label: 'Console ↗', href: EXTERNAL.cloudConsole, external: true },
-    ],
-  },
+  /* Domineta's column was here. The product is unlisted — see the note in
+     content/site.js. /cloud still renders for a direct URL. */
   {
     title: 'Company',
     links: [
@@ -54,7 +47,7 @@ export function Footer() {
             <OrkastorLogo size={38} />
             <p className="ork-small mt-4" style={{ color: 'var(--text-2)', maxWidth: 300 }}>
               Infrastructure software for Kubernetes teams. KubeGraf works inside the clusters you
-              own; Domineta is infrastructure we operate.
+              already own.
             </p>
           </div>
 

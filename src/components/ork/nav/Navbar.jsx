@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
 import { Container } from '../ui';
-import { PRODUCTS, LINKS, EXTERNAL } from '@/content/site';
+import { PRODUCTS, LINKS } from '@/content/site';
 import { ThemeToggle } from './ThemeToggle';
 
 /**
@@ -102,7 +102,9 @@ export function Navbar({ onDeep = false }) {
                   >
                     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 6, boxShadow: '0 20px 56px -16px rgba(5,11,18,0.34)' }}>
                       {PRODUCTS.map((p) => (
-                        <a key={p.key} href={p.href} className="block px-3.5 py-3 rounded-[10px]" style={{ transition: 'background-color 140ms' }}
+                        <a key={p.key} href={p.href}
+                           {...(p.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                           className="block px-3.5 py-3 rounded-[10px]" style={{ transition: 'background-color 140ms' }}
                            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-alt)'; }}
                            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}>
                           <span className="flex items-center gap-2">
@@ -130,9 +132,13 @@ export function Navbar({ onDeep = false }) {
               made it inert — next-themes ignores setTheme while a theme is
               forced, so a rendered control would have done nothing. The force
               is gone (see App.jsx), so it goes in. */}
+          {/* "Sign in" sat here, linking to app.kubegraf.io. Removed from the
+              header — both here and in the mobile sheet below, because they are
+              one control at two breakpoints and leaving the mobile one would
+              put it back on every phone. The footer's own Sign in link is
+              untouched. */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <ThemeToggle onDeep={inv} />
-            <a href={EXTERNAL.kubegrafApp} className="text-[14px] font-medium" style={{ color: inkMuted }}>Sign in</a>
           </div>
 
           <button
@@ -161,7 +167,9 @@ export function Navbar({ onDeep = false }) {
                 dead control without a pointer. */}
             <p className="ork-micro px-3 pt-3 pb-1" style={{ color: 'var(--text-3)' }}>Products</p>
             {PRODUCTS.map((p) => (
-              <a key={p.key} href={p.href} onClick={() => setOpen(false)} className="block px-3 py-3 rounded-[10px]">
+              <a key={p.key} href={p.href}
+                 {...(p.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                 onClick={() => setOpen(false)} className="block px-3 py-3 rounded-[10px]">
                 <span className="flex items-center gap-2">
                   <span style={{ width: 6, height: 6, borderRadius: 999, background: p.dot }} />
                   <span className="text-[15px] font-semibold" style={{ color: 'var(--text)' }}>{p.name}</span>
@@ -176,8 +184,7 @@ export function Navbar({ onDeep = false }) {
                 {l.label}
               </a>
             ))}
-            <div className="flex items-center justify-between px-3 py-3 mt-1" style={{ borderTop: '1px solid var(--border-soft)' }}>
-              <a href={EXTERNAL.kubegrafApp} className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Sign in</a>
+            <div className="flex items-center justify-end px-3 py-3 mt-1" style={{ borderTop: '1px solid var(--border-soft)' }}>
               <ThemeToggle />
             </div>
           </motion.div>

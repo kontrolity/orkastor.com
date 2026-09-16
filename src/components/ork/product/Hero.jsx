@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
-import { HERO } from '@/content/site';
+import { HERO, EXTERNAL } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { ClusterLattice } from '../visuals/ClusterLattice';
 
@@ -219,11 +219,21 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-10 ork-hero-cta"
             style={reduced ? undefined : { animationDelay: '700ms' }}
           >
-            <Button href="/kubegraf" accent="kg">
+            {/* Was /kubegraf, this site's own KubeGraf page. That page is gone
+                — the product has its own site, kept current by the team that
+                ships it, and a second one here was copy that could drift. */}
+            <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
               Explore KubeGraf <Arrow />
             </Button>
-            <Button href="/cloud" variant="secondary" accent="cloud">
-              Explore Domineta <Arrow />
+            {/* Was "Explore Domineta". The hero now has one product, so the
+                second CTA points at the thing a visitor most likely wants
+                next rather than at an unlisted one.
+
+                It pointed at /pricing, which no longer exists, and then at
+                kubegraf.io's root — which made both CTAs the same URL once
+                the primary went external. It now names the page it promises. */}
+            <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer">
+              See pricing <Arrow />
             </Button>
           </div>
         </div>

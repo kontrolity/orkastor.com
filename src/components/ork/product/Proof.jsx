@@ -12,8 +12,8 @@ export function Outcomes() {
         <Reveal>
           <SectionHead
             eyebrow="What changes"
-            title="Less time in the incident. Less time building the environment."
-            sub="Both products remove the same thing from your week: the part of running Kubernetes that nobody was hired to do."
+            title="Less time in the incident."
+            sub="It removes the part of running Kubernetes that nobody was hired to do: the hours between something breaking and somebody knowing why."
           />
         </Reveal>
         <div className="grid sm:grid-cols-2 gap-5 mt-12">
@@ -93,7 +93,12 @@ export function Testimonials() {
               Quotes as published on{' '}
               <a href={EXTERNAL.kubegrafSite} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cloud-text)', textDecoration: 'underline', textUnderlineOffset: 2 }}>
                 kubegraf.io
-              </a>. Domineta is invitation-only and has no customers to show yet.
+              {/* The sentence "Domineta is invitation-only and has no customers
+                  to show yet" followed here. It existed to explain why the
+                  logos were KubeGraf's only, which was honest when the page
+                  carried two products — with one, it names a product the site
+                  no longer lists and raises a question nobody asked. */}
+              </a>.
             </p>
             <Button href={EXTERNAL.kubegrafSite} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>
               More on kubegraf.io <Arrow />

@@ -18,10 +18,12 @@ import CookieConsent from '@/components/CookieConsent';
  * Home stays eager. Everything else is code-split, so a visitor who only reads
  * the home page never downloads the Cloud diagrams.
  */
-const OrkKubeGraf  = lazy(() => import('@/pages/OrkKubeGraf'));
+/* OrkKubeGraf is no longer routed. KubeGraf has its own site and the nav,
+   hero, footer and About page all point at it now; a second product page on
+   the company site was copy that could drift. The component stays on disk
+   under the same rule as the pages above — unreachable, not deleted. */
 const OrkCloud     = lazy(() => import('@/pages/OrkCloud'));
 const OrkCloudHow  = lazy(() => import('@/pages/OrkCloudHow'));
-const OrkPricing   = lazy(() => import('@/pages/OrkPricing'));
 const OrkDocs      = lazy(() => import('@/pages/OrkDocs'));
 const OrkChangelog = lazy(() => import('@/pages/OrkChangelog'));
 const OrkAbout     = lazy(() => import('@/pages/OrkAbout'));
@@ -54,10 +56,8 @@ export default function App() {
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<OrkHome />} />
-                <Route path="/kubegraf" element={<OrkKubeGraf />} />
                 <Route path="/cloud" element={<OrkCloud />} />
                 <Route path="/cloud/how-it-works" element={<OrkCloudHow />} />
-                <Route path="/pricing" element={<OrkPricing />} />
                 <Route path="/docs" element={<OrkDocs />} />
                 <Route path="/changelog" element={<OrkChangelog />} />
                 <Route path="/about" element={<OrkAbout />} />
