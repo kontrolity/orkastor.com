@@ -32,14 +32,15 @@ export default function OrkKubeGraf() {
         titleB={KUBEGRAF.headlineB}
         sub={KUBEGRAF.oneLine}
         accent="#FF8A3D"
+        accentText="var(--kg-text)"
         badge={<Badge kind="live" onDeep>Live</Badge>}
       >
         <div className="flex flex-col sm:flex-row gap-3 mt-9">
           <Button href={EXTERNAL.kubegrafApp} accent="kg" target="_blank" rel="noopener noreferrer">
             Start free — 14 days <Arrow />
           </Button>
-          <Button href="/pricing" variant="secondary" style={{ borderColor: 'rgba(245,248,250,0.24)', color: '#F5F8FA' }}>
-            See pricing
+          <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'var(--deep-line)', color: 'var(--deep-ink)' }}>
+            See pricing ↗
           </Button>
         </div>
       </ProductHero>
@@ -157,16 +158,13 @@ export default function OrkKubeGraf() {
               <div>
                 <p className="ork-display-m" style={{ color: 'var(--text)' }}>Ready to look at the product itself?</p>
                 <p className="ork-body mt-3" style={{ color: 'var(--text-2)', maxWidth: 520 }}>
-                  KubeGraf has its own site and its own docs. This page exists so you can compare
-                  both Orkastor products without leaving — the product lives over there.
+                  KubeGraf has its own site and its own docs. This page is the overview —
+                  the product itself lives over there.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 shrink-0">
                 <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
                   kubegraf.io ↗
-                </Button>
-                <Button href="/cloud" variant="secondary" style={{ color: 'var(--text)' }}>
-                  Or see Domineta <Arrow />
                 </Button>
               </div>
             </div>

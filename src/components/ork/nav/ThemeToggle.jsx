@@ -33,7 +33,7 @@ export function ThemeToggle({ onDeep = false }) {
   useEffect(() => setMounted(true), []);
 
   const line = onDeep ? 'rgba(255,255,255,0.16)' : 'var(--border)';
-  const idle = onDeep ? 'rgba(245,248,250,0.55)' : 'var(--text-2)';
+  const idle = onDeep ? 'var(--deep-ink-muted)' : 'var(--text-2)';
 
   return (
     <div
@@ -57,7 +57,7 @@ export function ThemeToggle({ onDeep = false }) {
             style={{
               width: 28, height: 26, borderRadius: 999,
               background: active ? (onDeep ? 'rgba(255,255,255,0.14)' : 'var(--surface)') : 'transparent',
-              color: active ? (onDeep ? '#F5F8FA' : 'var(--text)') : idle,
+              color: active ? (onDeep ? 'var(--deep-ink)' : 'var(--text)') : idle,
               border: active && !onDeep ? '1px solid var(--border)' : '1px solid transparent',
               transition: 'background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard)',
             }}

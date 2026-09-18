@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
-import { HERO } from '@/content/site';
+import { HERO, EXTERNAL } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { ClusterLattice } from '../visuals/ClusterLattice';
 
 /**
  * The home hero. Copy only.
@@ -114,7 +115,7 @@ function Rotator({ alts, canonical, base, reduced }) {
     return () => window.clearInterval(id);
   }, [reduced, alts.length]);
 
-  if (reduced) return <span style={{ color: 'var(--cloud-bright)' }}>{canonical}</span>;
+  if (reduced) return <span style={{ color: 'var(--rotator-ink)' }}>{canonical}</span>;
 
   return (
     <>
@@ -126,7 +127,7 @@ function Rotator({ alts, canonical, base, reduced }) {
                 every swap rather than only on first mount. */}
             <Words key={n === i ? `in-${i}` : `out-${n}`} text={t}
                    base={n === i ? base : 0} step={38}
-                   style={{ color: 'var(--cloud-bright)' }} />
+                   style={{ color: 'var(--rotator-ink)' }} />
           </span>
         ))}
       </span>
@@ -167,7 +168,17 @@ export function Hero() {
       className="ork-mono-hero ork-hero relative overflow-hidden"
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >
+      {/* The 3D object. Placed BEHIND the copy and ranged right, not beside it:
+          the headline runs the full container by design (see the note on the
+          <h1>), so there is no column to put an object in without taking width
+          away from the type. Sitting it behind costs the copy nothing, and the
+          language is hairlines — there is very little ink in the object to
+          compete with.
 
+          `pointer-events-none` because it is decorative and sits over the copy
+          in the stacking order on narrow viewports; without it the object would
+          eat clicks on the CTAs. */}
+      <ClusterLattice className="ork-hero-lattice" />
 
       {/* Taller than it was. The hero used to end at the diagram, which gave
           it its height; without one, the same padding left the copy floating
@@ -208,11 +219,21 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-10 ork-hero-cta"
             style={reduced ? undefined : { animationDelay: '700ms' }}
           >
-            <Button href="/kubegraf" accent="kg">
+            {/* Was /kubegraf, this site's own KubeGraf page. That page is gone
+                — the product has its own site, kept current by the team that
+                ships it, and a second one here was copy that could drift. */}
+            <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
               Explore KubeGraf <Arrow />
             </Button>
-            <Button href="/cloud" variant="secondary" accent="cloud">
-              Explore Domineta <Arrow />
+            {/* Was "Explore Domineta". The hero now has one product, so the
+                second CTA points at the thing a visitor most likely wants
+                next rather than at an unlisted one.
+
+                It pointed at /pricing, which no longer exists, and then at
+                kubegraf.io's root — which made both CTAs the same URL once
+                the primary went external. It now names the page it promises. */}
+            <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer">
+              See pricing <Arrow />
             </Button>
           </div>
         </div>

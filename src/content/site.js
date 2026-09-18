@@ -41,25 +41,37 @@ export const PRODUCTS = [
   {
     key: 'kubegraf',
     name: 'KubeGraf',
-    href: '/kubegraf',
+    /* Points at the PRODUCT'S OWN SITE, not this site's /kubegraf page. The
+       nav names a product, and the thing a visitor wants after clicking a
+       product's name is that product — which has its own site, kept current
+       by the team that ships it. /kubegraf still exists and still renders;
+       the hero's "Explore KubeGraf" CTA is what reaches it. */
+    href: EXTERNAL.kubegrafSite,
+    external: true,
     status: 'Live',
     dot: 'var(--kg)',
     tagline: 'An AI SRE for the clusters you already run',
   },
-  {
-    key: 'cloud',
-    name: 'Domineta',
-    href: '/cloud',
-    status: 'By invitation',
-    dot: 'var(--cloud-bright)',
-    tagline: 'Ephemeral environments with a real kernel boundary',
-  },
 ];
 
+/* ⚠ DOMINETA IS UNLISTED, NOT DELETED.
+   Its entry used to sit above. /cloud and /cloud/how-it-works still exist and
+   still render — they are simply not linked from anywhere on this site any
+   more, so the pages keep working for anyone holding a direct URL while the
+   product is not being marketed here.
+
+   Everything that drove a LINK to it was removed: this list, the footer
+   column, the hero copy, the product cards, the home page's two-product
+   section and the split CTA. Its content blocks (CLOUD, and the comparison
+   copy below) are left in place because /cloud still reads from them. */
+
+/* Pricing was the first entry here. It is gone with the /pricing page —
+   KubeGraf publishes its own pricing on kubegraf.io, and a second copy on the
+   company site is a number that can drift out of date without anyone
+   noticing. Three tabs became two. */
 export const LINKS = [
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Docs',    href: '/docs' },
-  { label: 'About',   href: '/about' },
+  { label: 'Docs',  href: '/docs' },
+  { label: 'About', href: '/about' },
 ];
 
 /** The hero. "Same problem" was the old claim and it was false — the products
@@ -67,7 +79,7 @@ export const LINKS = [
 export const HERO = {
   eyebrow: 'Infrastructure, without the operating tax',
   titleA: 'For teams who run Kubernetes.',
-  titleB: 'And teams who would rather not.',
+  titleB: 'And would rather not be paged for it.',
 
   /* The second line rotates through these. titleB stays the canonical one: it
    * is what a screen reader gets, what renders under reduced motion, and what
@@ -84,15 +96,34 @@ export const HERO = {
    * same length. They are stacked in one grid cell, so the widest one sets the
    * headline's width — a long outlier makes the whole hero jump wider for
    * everybody. */
+  /* ⚠ These were the OTHER HALF of a two-product headline: "And teams who
+     would rather not [run Kubernetes]" was Domineta's audience, and "just
+     need a URL" was its product description. With Domineta unlisted they
+     described something the site no longer offers.
+
+     The replacements keep the same grammatical shape and roughly the same
+     length — they are stacked in one grid cell, so the widest sets the
+     headline's width — and every one is a phrasing of KubeGraf copy already
+     approved elsewhere in this file:
+
+       'be paged for it'    — KUBEGRAF.problems: "Hours lost paging the right
+                              person"
+       'firefight it'       — KUBEGRAF.oneLine: it ships the fix rather than
+                              handing you a dashboard
+       'babysit it'         — KUBEGRAF.stages: detect/diagnose/fix/verify run
+                              without a human in the loop
+       'guess at it'        — KUBEGRAF.problems: "the first fix was a guess,
+                              not a diagnosis" */
   titleBAlts: [
-    'And teams who would rather not.',
-    'And teams who just need a URL.',
-    'And teams who would rather ship.',
-    'And teams who never asked for one.',
+    'And would rather not be paged for it.',
+    'And would rather not firefight it.',
+    'And would rather not babysit it.',
+    'And would rather not guess at it.',
   ],
   sub:
-    'KubeGraf is an AI SRE for the clusters you already have. Domineta gives you ' +
-    'ephemeral environments when you would rather not build the infrastructure yourself.',
+    'KubeGraf is an AI SRE for the clusters you already have. It detects the ' +
+    'incident, finds the root cause, and ships the fix — then verifies the fix ' +
+    'actually landed.',
 };
 
 export const KUBEGRAF = {

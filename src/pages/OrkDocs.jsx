@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page, ProductHero } from '@/components/ork/layout/Page';
-import { Container, Section, SectionHead, Panel, Badge } from '@/components/ork/ui';
+import { Container, Section, Panel, Badge } from '@/components/ork/ui';
 import { Reveal } from '@/components/ork/motion/Reveal';
 import { EXTERNAL } from '@/content/site';
 
@@ -31,17 +31,8 @@ const GROUPS = [
       { label: 'app.kubegraf.io', href: EXTERNAL.kubegrafApp, note: 'Sign in to the dashboard' },
     ],
   },
-  {
-    product: 'Domineta',
-    ink: 'var(--cloud-text)',
-    status: <Badge kind="invite">By invitation</Badge>,
-    note: 'Domineta is being built in the open. The site carries the architecture; the Console carries the specifics of your environments.',
-    links: [
-      { label: 'domineta.com', href: EXTERNAL.cloudSite, note: 'The boundary, the limits and the lifecycle' },
-      { label: 'console.domineta.com', href: EXTERNAL.cloudConsole, note: 'Environments, regions and cost' },
-      { label: 'How it works', href: '/cloud/how-it-works', note: 'The request path, in detail', internal: true },
-    ],
-  },
+  /* Domineta's docs group was here — the product is unlisted, see
+     content/site.js. Its pages still render for a direct URL. */
 ];
 
 export default function OrkDocs() {
@@ -59,8 +50,8 @@ export default function OrkDocs() {
     >
       <ProductHero
         eyebrow="Documentation"
-        title="Two products,"
-        titleB="two sets of docs."
+        title="KubeGraf,"
+        titleB="and where its docs live."
         sub="Each product's documentation lives with the product. This page is the signpost — there is no Orkastor-wide docs site yet, and we would rather say so than build a shell of one."
         accent="#48CBCB"
       />

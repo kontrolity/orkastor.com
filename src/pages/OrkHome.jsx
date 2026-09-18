@@ -3,13 +3,9 @@ import { Navbar } from '@/components/ork/nav/Navbar';
 import { CursorLight, ScrollProgress } from '@/components/ork/motion/Effects';
 import { Hero } from '@/components/ork/product/Hero';
 import { ProductCards } from '@/components/ork/product/ProductCards';
-import { Container, Section, SectionHead, Panel, Button, Arrow } from '@/components/ork/ui';
-import { Reveal } from '@/components/ork/motion/Reveal';
-import { COMPANY } from '@/content/site';
 import { useSeo } from '@/hooks/useSeo';
 
 const Outcomes = lazy(() => import('@/components/ork/product/Proof').then((m) => ({ default: m.Outcomes })));
-const Testimonials = lazy(() => import('@/components/ork/product/Proof').then((m) => ({ default: m.Testimonials })));
 const FinalCTA = lazy(() => import('@/components/ork/product/FinalCTA'));
 const Footer = lazy(() => import('@/components/ork/layout/Footer'));
 
@@ -28,17 +24,23 @@ const Footer = lazy(() => import('@/components/ork/layout/Footer'));
  * ~9,200px of architecture aimed at somebody who had not yet decided they cared.
  * A landing page's job is to make a visitor want the depth, then send them to it.
  *
- * ── SO THIS PAGE NOW ANSWERS FOUR QUESTIONS, IN ORDER ───────────────────────
+ * ── SO THIS PAGE NOW ANSWERS THREE QUESTIONS, IN ORDER ──────────────────────
  *
- *   1. Hero          what is Orkastor, and which of the two do I want
- *   2. ProductCards  what are the two things, precisely
+ *   1. Hero          what is Orkastor
+ *   2. ProductCards  what the product is, precisely
  *   3. Outcomes      what changes for me
- *   4. Testimonials  what did it change for them
- *   5. Boundary      one short company-level idea, no diagram
- *   6. FinalCTA      pick a side
+ *   4. FinalCTA      start
  *
- * The technical argument is one click away in both directions and nothing was
- * deleted to get here — the diagrams moved, they did not go.
+ * It used to answer six. Two sections have since gone and the comment is
+ * updated rather than left describing a page that no longer exists:
+ *
+ *   Testimonials  the three founder quotes, removed by request. The
+ *                 component and content/proof.js are untouched.
+ *   Boundary      "One company, two products" — its premise was the
+ *                 KubeGraf / Domineta split, and Domineta is unlisted.
+ *
+ * The first two questions also lost their plural: the hero used to ask which
+ * of the two products you wanted.
  *
  * ── ON THE PROOF ────────────────────────────────────────────────────────────
  *
@@ -52,8 +54,8 @@ export default function OrkHome() {
     title: 'Orkastor — Infrastructure for teams who run Kubernetes',
     description:
       'Orkastor builds infrastructure software for Kubernetes teams. KubeGraf is an AI SRE for ' +
-      'the clusters you already run. Domineta provides ephemeral environments with a real ' +
-      'kernel boundary.',
+      'the clusters you already run — it detects the incident, finds the root cause, and ' +
+      'ships the fix.',
     canonical: 'https://www.orkastor.com/',
     image: 'https://www.orkastor.com/og-image.png',
   });
@@ -64,49 +66,46 @@ export default function OrkHome() {
       <ScrollProgress />
       <Navbar onDeep />
 
-      <main>
+      {/* ── THE FRAME ────────────────────────────────────────────────────
+          .ork-frame and .ork-rule were written into styles/mono.css when the
+          language landed and then never applied to anything. The stylesheet
+          calls the frame "what makes the reference read as a document rather
+          than as a stack of cards", and that is the single most identifying
+          structural thing about the sites this language was taken from — a
+          hairline running the height of the page, with sections divided by
+          rules instead of by changes of ground.
+
+          Wiring it up is the whole of this change. Nothing new was invented
+          and no claim was added; the language already specified this and the
+          page simply was not using it. */}
+      <main className="ork-frame">
         <Hero />
+        <div className="ork-rule" />
         <ProductCards />
 
+        <div className="ork-rule" />
+        {/* <Testimonials /> followed <Outcomes /> here — the three founder
+            quotes from Finden, Neufology and Grovyn. Removed from this page.
+
+            The component and its content (content/proof.js) are untouched, so
+            restoring it is re-adding the one line. Note the quotes are
+            KubeGraf's customers, published on kubegraf.io, and proof.js
+            records that provenance — anywhere they are reused, that
+            attribution has to travel with them. */}
         <Suspense fallback={null}>
           <Outcomes />
-          <Testimonials />
         </Suspense>
 
-        {/* The company-level idea, said in words. This was a full section with a
-            diagram; on a landing page one paragraph and two lines carries it, and
-            the diagram is on both product pages for anyone who wants it. */}
-        <Section tone="deep" id="boundary">
-          <Container wide>
-            <Reveal>
-              <SectionHead
-                onDeep
-                eyebrow="One company, two products"
-                title="Everything we build sits on one line."
-                sub={COMPANY.boundary}
-              />
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="grid md:grid-cols-2 gap-4 mt-11">
-                {[
-                  { side: 'Your infrastructure', name: 'KubeGraf', body: 'An agent you install, in a cluster you own. We never hold your credentials.', accent: 'var(--kg)', line: 'rgba(255,138,61,0.34)', href: '/kubegraf' },
-                  { side: 'Our infrastructure', name: 'Domineta', body: 'Metal we operate, kernels we boot, environments we destroy on a TTL.', accent: 'var(--cloud-bright)', line: 'rgba(72,203,203,0.34)', href: '/cloud' },
-                ].map((c) => (
-                  <a key={c.side} href={c.href} className="block" style={{ border: `1px solid ${c.line}`, borderRadius: 'var(--radius-lg)', padding: 26 }}>
-                    <p className="ork-micro" style={{ color: c.accent, marginBottom: 10 }}>{c.side}</p>
-                    <p className="ork-heading" style={{ color: '#F5F8FA', marginBottom: 8 }}>{c.name}</p>
-                    <p className="ork-body" style={{ color: 'rgba(245,248,250,0.62)' }}>{c.body}</p>
-                    <p className="ork-small mt-4" style={{ color: c.accent }}>See how it works →</p>
-                  </a>
-                ))}
-              </div>
-            </Reveal>
-            <Reveal delay={140}>
-              <p className="ork-small mt-8" style={{ color: 'rgba(245,248,250,0.5)', maxWidth: 720 }}>{COMPANY.notYet}</p>
-            </Reveal>
-          </Container>
-        </Section>
-
+        {/* The "One company, two products" section was here. Its entire
+            premise was the KubeGraf / Domineta split — the eyebrow, the
+            headline ("Everything we build sits on one line"), the paired
+            cards and the closing note about what KubeGraf does not watch yet
+            were all about the relationship between the two. With Domineta
+            unlisted there is no relationship left to explain, and a section
+            arguing a boundary with one side reads as a page missing half its
+            content. COMPANY.boundary / shared / separate / notYet stay in
+            content/site.js — /about still reads them. */}
+        <div className="ork-rule" />
         <Suspense fallback={null}><FinalCTA /></Suspense>
       </main>
 

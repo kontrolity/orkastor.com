@@ -92,6 +92,6 @@ export const OUTCOMES = [
   },
   {
     k: 'An environment in minutes, not a quarter',
-    v: 'Point Domineta at a container image and get a real HTTPS URL. No cluster to build, no ticket to raise, and an expiry date so nothing becomes a permanent bill.',
+    v: 'A root cause with its evidence, and a change you approve — not another dashboard to read at 3am. The fix is dry-run validated before it is offered.',
   },
 ];

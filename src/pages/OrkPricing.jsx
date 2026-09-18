@@ -1,8 +1,8 @@
 import React from 'react';
 import { Page, ProductHero } from '@/components/ork/layout/Page';
-import { Container, Section, SectionHead, Panel, Badge, Button, Arrow } from '@/components/ork/ui';
+import { Container, Section, Panel, Badge, Button, Arrow } from '@/components/ork/ui';
 import { Reveal } from '@/components/ork/motion/Reveal';
-import { KUBEGRAF, CLOUD, EXTERNAL } from '@/content/site';
+import { KUBEGRAF, EXTERNAL } from '@/content/site';
 
 /**
  * /pricing — KubeGraf's, because that is the only product with a price.
@@ -31,7 +31,7 @@ export default function OrkPricing() {
         title: 'Pricing — KubeGraf | Orkastor',
         description:
           `KubeGraf ${p.plan} is ${p.price}${p.per}, with ${p.offer.toLowerCase()}. ` +
-          'Domineta pricing is not published yet — access is by invitation.',
+          'KubeGraf pricing, in full. No usage meter and no per-seat surprise.',
         canonical: 'https://www.orkastor.com/pricing',
         image: 'https://www.orkastor.com/og-image.png',
       }}
@@ -40,7 +40,7 @@ export default function OrkPricing() {
         eyebrow="Pricing"
         title="One product has a price."
         titleB="The other has an invitation."
-        sub="KubeGraf is live and self-serve. Domineta is still being built in the open, and the measurements a rate depends on are not finished."
+        sub="KubeGraf is live and self-serve. One plan, published in full, with a 14-day trial and no card required to start."
         accent="#48CBCB"
       />
 
@@ -83,36 +83,8 @@ export default function OrkPricing() {
               </Panel>
             </Reveal>
 
-            <Reveal delay={70}>
-              <Panel className="p-8 h-full flex flex-col" style={{ borderColor: 'rgba(72,203,203,0.4)' }}>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="ork-micro" style={{ color: 'var(--cloud-text)' }}>Domineta</span>
-                  <Badge kind="invite">By invitation</Badge>
-                </div>
-
-                <p className="ork-display-m" style={{ color: 'var(--text)' }}>Not published</p>
-                <p className="ork-body mt-4" style={{ color: 'var(--text-2)' }}>{CLOUD.pricing}</p>
-
-                <ul className="mt-8 space-y-3">
-                  {[
-                    'No self-serve sign-up while it is being built in the open',
-                    'The Console shows the exact cost of an environment before you create it',
-                    'One region, eu-north-1',
-                  ].map((f) => (
-                    <li key={f} className="flex gap-3 ork-small" style={{ color: 'var(--text-2)' }}>
-                      <span aria-hidden="true" style={{ color: 'var(--cloud-text)' }}>—</span><span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto pt-8 flex flex-wrap gap-3">
-                  <Button href="/cloud" accent="cloud">Read about Cloud <Arrow /></Button>
-                  <Button href={EXTERNAL.cloudConsole} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>
-                    Console ↗
-                  </Button>
-                </div>
-              </Panel>
-            </Reveal>
+            {/* Domineta's pricing panel was here. The product is unlisted;
+                /cloud still renders for a direct URL. */}
           </div>
 
           <Reveal delay={140}>

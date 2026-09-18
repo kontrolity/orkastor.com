@@ -32,8 +32,8 @@ export default function OrkAbout() {
       seo={{
         title: 'About Orkastor — infrastructure software for Kubernetes teams',
         description:
-          'Orkastor builds two products either side of one line: KubeGraf works inside the clusters ' +
-          'you own, and Domineta is infrastructure we operate for you.',
+          'Orkastor builds infrastructure software for Kubernetes teams. KubeGraf is an AI SRE ' +
+          'that works inside the clusters you already own.',
         canonical: 'https://www.orkastor.com/about',
         image: 'https://www.orkastor.com/og-image.png',
       }}
@@ -42,7 +42,7 @@ export default function OrkAbout() {
         eyebrow="About Orkastor"
         title="Infrastructure software"
         titleB="for Kubernetes teams."
-        sub={COMPANY.boundary}
+        sub={COMPANY.oneLine}
         accent="#48CBCB"
       />
 
@@ -50,15 +50,16 @@ export default function OrkAbout() {
         <Container wide>
           <Reveal>
             <SectionHead
-              eyebrow="Two directions, one line"
-              title="We build on both sides of the boundary."
-              sub="Which is not the same as building one thing twice. The two products solve different problems, for teams in different situations."
+              eyebrow="What we build"
+              title="One product, and a clear line around it."
+              sub="KubeGraf works inside the clusters you already own. The agent is yours, the credentials stay yours, and nothing about your infrastructure has to move for it to be useful."
             />
           </Reveal>
-          <div className="grid md:grid-cols-2 gap-5 mt-11">
+          <div className="mt-11" style={{ maxWidth: 560 }}>
             {[
-              ['KubeGraf', 'Your infrastructure', 'The clusters exist and keeping them healthy is the work. KubeGraf detects the incident, finds the cause and ships the fix — with an agent you install and credentials we never hold.', 'var(--kg-text)', '/kubegraf'],
-              ['Domineta', 'Our infrastructure', 'There is no cluster, and building one is a quarter of work nobody asked for. Domineta gives you an environment on metal we operate, with a kernel boundary and an expiry date.', 'var(--cloud-text)', '/cloud'],
+              /* "Read more" was /kubegraf, this site's KubeGraf page. It is
+                 gone, so the card reads on at the product's own site. */
+              ['KubeGraf', 'Your infrastructure', 'The clusters exist and keeping them healthy is the work. KubeGraf detects the incident, finds the cause and ships the fix — with an agent you install and credentials we never hold.', 'var(--kg-text)', EXTERNAL.kubegrafSite],
             ].map(([name, side, body, ink, href], i) => (
               <Reveal key={name} delay={i * 70}>
                 <Panel className="p-8 h-full flex flex-col">
@@ -66,7 +67,7 @@ export default function OrkAbout() {
                   <p className="ork-display-m" style={{ color: 'var(--text)', marginBottom: 14 }}>{name}</p>
                   <p className="ork-body" style={{ color: 'var(--text-2)', marginBottom: 26 }}>{body}</p>
                   <div className="mt-auto">
-                    <Button href={href} variant="secondary" style={{ color: 'var(--text)' }}>Read more <Arrow /></Button>
+                    <Button href={href} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>Read more <Arrow /></Button>
                   </div>
                 </Panel>
               </Reveal>
@@ -75,36 +76,17 @@ export default function OrkAbout() {
         </Container>
       </Section>
 
-      <Section tone="alt">
-        <Container wide>
-          <Reveal><SectionHead eyebrow="How they relate" title="One account, and a deliberate wall." /></Reveal>
-          <div className="grid md:grid-cols-2 gap-5 mt-11">
-            {[
-              { title: 'What they share', rows: COMPANY.shared, ink: 'var(--cloud-text)' },
-              { title: 'What stays separate', rows: COMPANY.separate, ink: 'var(--kg-text)' },
-            ].map(({ title, rows, ink }, i) => (
-              <Reveal key={title} delay={i * 70}>
-                <Panel className="p-7 h-full">
-                  <p className="ork-heading" style={{ color: 'var(--text)', marginBottom: 18 }}>
-                    <span style={{ color: ink }}>—</span> {title}
-                  </p>
-                  <dl className="space-y-5">
-                    {rows.map(([k, v]) => (
-                      <div key={k}>
-                        <dt className="ork-small" style={{ color: 'var(--text)', fontWeight: 600 }}>{k}</dt>
-                        <dd className="ork-small mt-1" style={{ color: 'var(--text-2)' }}>{v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </Panel>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal delay={140}>
-            <p className="ork-small mt-8" style={{ color: 'var(--text-2)', maxWidth: 720 }}>{COMPANY.notYet}</p>
-          </Reveal>
-        </Container>
-      </Section>
+      {/* The "How they relate" section was here: "One account, and a
+          deliberate wall", the what-they-share / what-stays-separate pair, and
+          the note that KubeGraf does not watch Domineta environments yet.
+
+          All of it described the relationship BETWEEN the two products. With
+          Domineta unlisted there is one product and no relationship, and a
+          section explaining a wall with nothing on the other side of it
+          invites exactly the question the unlisting is meant to avoid.
+
+          COMPANY.shared / separate / notYet stay in content/site.js so this
+          section can be restored verbatim when Domineta is listed again. */}
 
       <Section tone="page">
         <Container wide>
@@ -112,7 +94,7 @@ export default function OrkAbout() {
             <SectionHead
               eyebrow="How we write about this"
               title="If we cannot point at a source, it does not go on the site."
-              sub="No customer logos, no testimonials, no uptime figures, and no mean-time-to-resolution number. One of the two products has not shipped, and a company page full of unbacked metrics makes everything under it read as marketing."
+              sub="No customer logos, no testimonials, no uptime figures, and no mean-time-to-resolution number. A company page full of unbacked metrics makes everything under it read as marketing."
             />
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href={`mailto:${EXTERNAL.email}`} variant="secondary" style={{ color: 'var(--text)' }}>{EXTERNAL.email}</Button>

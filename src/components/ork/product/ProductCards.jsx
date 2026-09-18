@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Section, SectionHead, Panel, Badge, Button, Arrow } from '../ui';
+import { Container, Section, SectionHead, Panel, Badge, Button } from '../ui';
 import { Reveal } from '../motion/Reveal';
-import { KUBEGRAF, CLOUD, EXTERNAL } from '@/content/site';
+import { KUBEGRAF, EXTERNAL } from '@/content/site';
 
 /**
- * The two products as editorial panels, at equal weight.
+ * The product as an editorial panel. This was a two-card row until
+ * Domineta was unlisted; see the note in content/site.js.
  *
  * Equal weight is not equal claims. Same width, same structure, same bullet
  * count — because the section's job is to help someone choose, and a layout that
@@ -34,26 +35,9 @@ const CARDS = [
       'A root cause and a change, not another dashboard of graphs',
       'Every fix is proposed for approval. Autonomy is a dial you set',
     ],
-    primary: { label: 'Explore KubeGraf', href: '/kubegraf' },
     secondary: { label: 'kubegraf.io', href: EXTERNAL.kubegrafSite, external: true },
   },
-  {
-    key: 'cloud',
-    name: CLOUD.name,
-    side: CLOUD.side,
-    status: <Badge kind="invite">By invitation</Badge>,
-    accent: 'var(--cloud-bright)',
-    ink: 'var(--cloud-text)',
-    line: 'Our clusters.',
-    blurb: CLOUD.oneLine,
-    points: [
-      'One environment, one microVM, one guest kernel — not a namespace on a shared one',
-      'A whole environment: frontend, API and a real datastore inside the boundary',
-      'Ephemeral by design. A TTL, a grace period, then it is gone',
-    ],
-    primary: { label: 'Explore Domineta', href: '/cloud' },
-    secondary: { label: 'domineta.com', href: EXTERNAL.cloudSite, external: true },
-  },
+  /* Domineta's card was here — unlisted, see content/site.js. */
 ];
 
 export function ProductCards() {
@@ -62,16 +46,20 @@ export function ProductCards() {
       <Container wide>
         <Reveal>
           <SectionHead
-            eyebrow="Two products. Two jobs."
-            title="Whose cluster is it?"
-            sub="One works on infrastructure you own. The other is the infrastructure. That is the fastest way to tell which you want — everything else follows from it."
+            eyebrow="The product"
+            title="An AI SRE for the clusters you own."
+            sub="An agent you install, in infrastructure that stays yours. It detects the incident, finds the cause and ships the fix — with credentials we never hold."
           />
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-5 mt-14">
+        {/* ork-depth establishes the camera for the row; each Panel is the
+            thing that moves in it. Perspective has to live on the SHARED
+            parent — per-card perspective gives every card its own vanishing
+            point, and the row reads as a fan rather than as a plane. */}
+        <div className="mt-14 ork-depth" style={{ maxWidth: 560 }}>
           {CARDS.map((c, i) => (
             <Reveal key={c.key} delay={i * 70}>
-              <Panel hover accent={c.accent} className="h-full flex flex-col overflow-hidden">
+              <Panel hover accent={c.accent} className="h-full flex flex-col overflow-hidden ork-depth-item">
                 {/* The accent is a 3px brand stripe — decorative, so the bright
                     display value is right here. Everything read below uses `ink`. */}
                 <div style={{ height: 3, background: c.accent }} />
@@ -95,13 +83,12 @@ export function ProductCards() {
                     ))}
                   </ul>
 
-                  {/* mt-auto so both cards' CTAs land on one line however the
-                      bullets wrap. Two rows disagreeing by 12px reads as one
-                      card being an afterthought. */}
+                  {/* mt-auto keeps the CTA on the card's bottom edge however
+                      the bullets wrap. It was a two-button row — "Explore
+                      KubeGraf" led, with kubegraf.io beside it — and the
+                      primary has been removed, so kubegraf.io is the only
+                      call to action here now. */}
                   <div className="mt-auto flex flex-wrap items-center gap-3">
-                    <Button href={c.primary.href} accent={c.key === 'kubegraf' ? 'kg' : 'cloud'}>
-                      {c.primary.label} <Arrow />
-                    </Button>
                     <Button
                       href={c.secondary.href}
                       variant="secondary"
