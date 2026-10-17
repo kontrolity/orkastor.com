@@ -13,7 +13,10 @@ import { EXTERNAL } from '@/content/site';
  */
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden"
+    /* .ork-grained: this panel already has its own --deep-bg gradient, so it
+       wants the dithering layer only, not the atmosphere's light. Without it
+       this is the one wide gradient left on the page that still bands. */
+    <section className="relative overflow-hidden ork-grained"
              style={{ background: 'var(--deep-bg)', color: 'var(--deep-ink)', paddingTop: 'var(--space-2xl)', paddingBottom: 'var(--space-2xl)' }}>
       <div aria-hidden="true" className="ork-grid" style={{ opacity: 0.5 }} />
       <Topology density="low" seed={11} style={{ opacity: 0.55 }} />

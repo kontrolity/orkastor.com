@@ -35,8 +35,25 @@ export function Reveal({
   children,
   as: Tag = 'div',
   delay = 0,
-  y = 24,
-  blur = true,
+  /* 24 -> 14. A long travel reads as the page assembling itself; a short one
+     reads as the content settling. The register this now follows is calm,
+     and calm motion moves less, not slower. */
+  y = 14,
+  /* ⚠ DEFAULT FLIPPED, true -> false. Two reasons, and the second is the
+     one that matters.
+
+     It looks wrong: a blur-in is a stock effect, and against a quiet
+     editorial page it is the loudest thing on screen.
+
+     It costs: `filter: blur()` on a section-sized element forces it onto its
+     own compositing layer and repaints that layer every frame of a 680ms
+     transition — on a page that reveals a dozen blocks, during a scroll.
+     Fade and transform are the two properties that do NOT trigger paint;
+     blur throws that away for a flourish.
+
+     Kept as a prop rather than deleted so any caller that genuinely wants
+     it can still opt in. Nothing currently does. */
+  blur = false,
   className = '',
   style = undefined,
   ...rest
@@ -73,12 +90,22 @@ export function Reveal({
       style={{
         ...style,
         opacity: shown ? 1 : 0,
-        transform: shown ? 'none' : `translate3d(0,${y}px,0) scale(0.985)`,
+        /* ⚠ scale(0.985) REMOVED from this transform. A scaling element is
+           resampled every frame, so text inside it is soft for the whole
+           reveal and snaps sharp at the end. At grotesk body sizes that was
+           survivable; under a light serif display face it is obvious. Pure
+           translation moves whole pixels and stays crisp. */
+        transform: shown ? 'none' : `translate3d(0,${y}px,0)`,
         filter: blur && !shown ? 'blur(6px)' : 'none',
+        /* Opacity leads, transform trails slightly longer, so the block has
+           finished appearing before it has finished arriving. Reading the
+           two channels as one movement is what stops a reveal feeling
+           mechanical. --ease-emphasis decelerates harder than --ease-standard,
+           which is what gives it the settle. */
         transition: reduced
           ? 'none'
           : `opacity var(--duration-slow) var(--ease-standard) ${delay}ms,` +
-            `transform var(--duration-slow) var(--ease-standard) ${delay}ms,` +
+            `transform var(--duration-reveal) var(--ease-emphasis) ${delay}ms,` +
             `filter var(--duration-slow) var(--ease-standard) ${delay}ms`,
         willChange: shown ? 'auto' : 'opacity, transform',
       }}

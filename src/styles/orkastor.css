@@ -67,9 +67,13 @@
 
   /* ── Radii ────────────────────────────────────────────────────────────── */
   --radius-sm:  8px;
-  --radius-md:  12px;
-  --radius-lg:  18px;
-  --radius-xl:  26px;
+  /* 12/18/26 -> 8/16/24. The reference radii cluster hard on 8 for controls
+     and 16 for cards, and almost nothing is rounder than that. The old 26px
+     xl read as a pill on anything card-sized, which is a softer, more
+     consumer voice than this one. */
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
 
   /* ── Space ────────────────────────────────────────────────────────────── */
   --space-xs:   6px;
@@ -77,7 +81,13 @@
   --space-md:  20px;
   --space-lg:  36px;
   --space-xl:  64px;
-  --space-2xl: 104px;   /* between major sections — infrastructure needs air */
+  /* 104px -> 124px with the serif. The display tiers put noticeably less ink
+     on the page at weight 300 than the grotesk did at 500, and type that is
+     lighter needs more margin around it to hold the same weight in the
+     composition — otherwise the section reads as drifting rather than as
+     deliberately open. The frame's hairline rules are doing the dividing, so
+     this is the only thing separating one section from the next. */
+  --space-2xl: 124px;   /* between major sections — infrastructure needs air */
 
   /* ── Motion ───────────────────────────────────────────────────────────── */
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
@@ -85,6 +95,56 @@
   --duration-fast:   160ms;
   --duration-normal: 320ms;
   --duration-slow:   680ms;
+  /* Scroll reveals only. Longer than --duration-slow so the transform trails
+     the fade — see Reveal.jsx. Separate token because changing reveal pacing
+     should not re-time every hover on the site. */
+  --duration-reveal: 820ms;
+
+  /* ── Display face ───────────────────────────────────────────────────────
+     Geist still sets everything a reader reads in sequence. The display
+     tiers are a light transitional serif, which is the one thing carried
+     over from the reference wholesale: a serif at 300 against a grotesk
+     body is what reads as editorial rather than as a product page.
+
+     The reference ships a proprietary serif (Anthropic Serif Web Text, a
+     variable face). It cannot be licensed here, so the job is to pick the
+     closest free substitute.
+
+     ⚠ THIS WAS BRIEFLY LITERATA, ON A BAD MEASUREMENT. Candidates were first
+     scored on advance widths at equal POINT SIZE, which put Literata first
+     and Source Serif 4 fourth. That comparison is invalid: at equal point
+     size a face with a small x-height renders smaller overall, so its
+     advances come out narrow for a reason that has nothing to do with its
+     proportions. The score was reading "small" as "narrow".
+
+     Re-run with every candidate normalised to the SAME X-HEIGHT — which is
+     how two faces actually compare on a page, because that is what you match
+     when you size them — the order inverts. Setting the same string at a
+     26px x-height:
+
+       REFERENCE       ~725px
+       Source Serif 4  ~722px   ← chosen; essentially identical
+       Literata        ~770px   wider, lower contrast, slabbier serifs
+       Spectral        ~810px
+       Newsreader      ~860px   much wider and rounder
+
+     Source Serif also carries the reference's texture: compact, moderately
+     high contrast, crisp wedge serifs. Literata is a sturdy screen face
+     built for e-readers and reads bookish beside it.
+
+     Variable on opsz as well as wght, so a 90px headline gets a true display
+     cut and a 26px one gets a text cut rather than one drawing scaled across
+     both. `font-optical-sizing: auto` on the tiers asks for it.
+
+     ⚠ Source Serif's x-height is 0.475 against Geist's 0.530 — the widest
+     gap of any candidate — so serif text set at a sans size reads ~10%
+     smaller. The prose sizes below compensate. Do not "fix" them back. */
+  --ork-display: 'Source Serif 4', Georgia, ui-serif, serif;
+  /* Same family for running prose. The reference sets its BODY default to
+     the serif and opts UI back into the sans; this does it the safe way
+     round — sans stays the default so no control can lose its face, and the
+     prose classes opt in. Same result, fewer ways to break a button. */
+  --ork-serif-text: 'Source Serif 4', Georgia, ui-serif, serif;
 
   background-color: var(--bg);
   color: var(--text);
@@ -156,12 +216,38 @@
 /* ── Type scale ──────────────────────────────────────────────────────────── */
 /* clamp() rather than breakpoint jumps: a headline that steps at 768px looks
  * broken at 800px. Every step is capped so nothing becomes a billboard. */
-.ork-display-xl { font-size: clamp(2.4rem, 6.2vw, 4.4rem);  line-height: 1.02; letter-spacing: -0.035em; font-weight: 600; }
-.ork-display-l  { font-size: clamp(2rem,   4.6vw, 3.2rem);  line-height: 1.06; letter-spacing: -0.03em;  font-weight: 600; }
-.ork-display-m  { font-size: clamp(1.6rem, 3.2vw, 2.3rem);  line-height: 1.12; letter-spacing: -0.024em; font-weight: 600; }
+/* ⚠ The tracking here USED TO BE -0.035/-0.03/-0.024em at weight 600. Those
+   numbers were right for Geist and are wrong for a serif: negative tracking
+   that a grotesk absorbs makes serifs touch, because the serifs themselves
+   are already reaching into the sidebearing. Each tier is roughly halved,
+   and the weight drops to 300 — a serif at 600 across a 70px headline is a
+   slab, which is the opposite of the reference.
+
+   Leading goes the other way. Grotesk display can sit at 1.02; a serif needs
+   air between lines or the ascenders and descenders interleave. */
+.ork-display-xl { font-family: var(--ork-display); font-optical-sizing: auto; font-size: clamp(2.4rem, 6.2vw, 4.6rem);  line-height: 1.08; letter-spacing: -0.022em; font-weight: 300; }
+.ork-display-l  { font-family: var(--ork-display); font-optical-sizing: auto; font-size: clamp(2rem,   4.6vw, 3.3rem);  line-height: 1.12; letter-spacing: -0.019em; font-weight: 300; }
+/* 350, not 300: this tier bottoms out near 26px, and the page sets
+   -webkit-font-smoothing: antialiased globally, which thins light serifs.
+   At display sizes that reads as refinement; at 26px it reads as a render
+   bug. The extra 50 buys the stems back without changing the voice. */
+.ork-display-m  { font-family: var(--ork-display); font-optical-sizing: auto; font-size: clamp(1.6rem, 3.2vw, 2.35rem); line-height: 1.16; letter-spacing: -0.014em; font-weight: 350; }
 .ork-heading    { font-size: clamp(1.15rem,1.9vw, 1.4rem);  line-height: 1.25; letter-spacing: -0.018em; font-weight: 600; }
-.ork-sub        { font-size: 1.0625rem; line-height: 1.6;  letter-spacing: -0.011em; }
-.ork-body       { font-size: 0.9375rem; line-height: 1.62; }
+/* ── Prose goes serif ─────────────────────────────────────────────────────
+   .ork-sub is the standfirst under a heading; the reference sets exactly
+   this role in its serif at 24px/1.4 and it is the most recognisable thing
+   about the page after the headline itself. .ork-body follows it so a card's
+   paragraph does not change species halfway down the page.
+
+   Sizes are UP (1.0625 -> 1.1875rem, 0.9375 -> 0.98rem) to pay back
+   Literata's smaller x-height — see the note on --ork-display. Tracking goes
+   to zero: the negative value was compensating for a grotesk, and a serif at
+   text size does not want it.
+
+   Everything else — nav, buttons, labels, spec rows, .ork-micro, .ork-mono —
+   stays on Geist. */
+.ork-sub        { font-family: var(--ork-serif-text); font-optical-sizing: auto; font-size: 1.25rem; line-height: 1.45; letter-spacing: 0; }
+.ork-body       { font-family: var(--ork-serif-text); font-optical-sizing: auto; font-size: 1.03rem;  line-height: 1.58; letter-spacing: 0; }
 .ork-small      { font-size: 0.8125rem; line-height: 1.55; }
 .ork-micro      { font-size: 0.6875rem; line-height: 1.4; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 600; }
 .ork-mono       { font-family: 'GeistMono', 'IBM Plex Mono', ui-monospace, monospace; font-feature-settings: 'zero' 1; }
@@ -297,10 +383,16 @@
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
 }
+/* 780 -> 980ms. The per-word stagger stays — a sentence sliding up as one
+   block reads as a panel moving, where words arriving in reading order read
+   as typesetting, and that decision is still right. What was wrong was the
+   speed: at 780ms with a 46ms step the last word of the line had landed
+   before the eye reached it, so the stagger was doing nothing a plain fade
+   would not. Slower, and it actually reads as setting. */
 .ork-word {
   display: inline-block;
   transform: translate3d(0, 112%, 0);
-  animation: ork-word-rise 780ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: ork-word-rise 980ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes ork-word-rise { to { transform: translate3d(0,0,0); } }
 /* ⚠ The hero h1 sizes DOWN from .ork-display-xl's 4.4rem cap.
@@ -348,11 +440,20 @@
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
 }
+/* ⚠ The swap USED TO TRAVEL -46% — nearly half a line, which at an 88px
+   headline is a 40px slide every few seconds in the reader's peripheral
+   vision. It read as a slot machine on a page whose whole register is calm.
+
+   Now it is a cross-fade with a 0.12em drift: enough that the line reads as
+   being replaced rather than recoloured, small enough that it does not pull
+   the eye back every cycle. The fade is also slower than the drift, so the
+   outgoing line is gone before the incoming one has settled and the two
+   never overlap as doubled text. */
 .ork-rot-item {
   grid-area: 1 / 1;
   opacity: 0;
-  transform: translate3d(0, -46%, 0);
-  transition: opacity 420ms var(--ease-standard), transform 560ms var(--ease-emphasis);
+  transform: translate3d(0, 0.12em, 0);
+  transition: opacity 620ms var(--ease-standard), transform 760ms var(--ease-emphasis);
   pointer-events: none;
 }
 .ork-rot-item.is-in {
