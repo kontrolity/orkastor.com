@@ -4,7 +4,6 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
 import { Container } from '../ui';
 import { PRODUCTS, LINKS } from '@/content/site';
-import { ThemeToggle } from './ThemeToggle';
 
 /**
  * The company's navigation, not a product's.
@@ -137,9 +136,11 @@ export function Navbar({ onDeep = false }) {
               one control at two breakpoints and leaving the mobile one would
               put it back on every phone. The footer's own Sign in link is
               untouched. */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <ThemeToggle onDeep={inv} />
-          </div>
+          {/* The ThemeToggle sat here, and in the mobile sheet below. Both
+              are gone: the site is forced to light in App.jsx, so the control
+              could not change anything. A dead switch on screen is worse than
+              no switch. Restoring it is re-adding the import and these two
+              call sites. */}
 
           <button
             type="button"
@@ -184,9 +185,6 @@ export function Navbar({ onDeep = false }) {
                 {l.label}
               </a>
             ))}
-            <div className="flex items-center justify-end px-3 py-3 mt-1" style={{ borderTop: '1px solid var(--border-soft)' }}>
-              <ThemeToggle />
-            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>

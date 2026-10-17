@@ -78,8 +78,33 @@ export const LINKS = [
  *  solve different problems, so the thread is the AUDIENCE. */
 export const HERO = {
   eyebrow: 'Infrastructure, without the operating tax',
-  titleA: 'For teams who run Kubernetes.',
-  titleB: 'And would rather not be paged for it.',
+  /* ⚠ THE HEADLINE NOW STATES THE CLAIM INSTEAD OF THE GRIEVANCE.
+     It was "For teams who run Kubernetes." / "And would rather not be paged
+     for it.", with four alternates that were all "would rather not <verb>".
+
+     Two problems with that. It was four negatives in a row — the reader was
+     told what they do not want three times before being told what this is.
+     And the headline never said what the product DOES; the whole claim was
+     deferred to the standfirst, which is the one line people skip.
+
+     The replacement is a contrast in two beats: what you already get, then
+     what is missing. "What broke" versus "why" is the actual gap KubeGraf
+     fills, stated in eight words, and it is the same gap KUBEGRAF.problems
+     describes at length ("the first fix was a guess, not a diagnosis").
+
+     Line A is a statement about Kubernetes, not a claim about a competitor:
+     it reports what the platform surfaces, which is uncontroversial and
+     true. */
+  /* ⚠ `*…*` MARKS AN UNDERLINED RUN. The reference underlines the two words
+     its headline actually turns on ("research", "products"); the device is
+     what stops a three-line bold headline reading as a wall.
+
+     Here the sentence turns on what/why, so those are the marked words. The
+     markers are stripped before the text reaches a screen reader or a
+     reduced-motion render — see plainText() in Hero.jsx. Punctuation stays
+     OUTSIDE the marker so the rule does not run under a full stop. */
+  titleA: 'Kubernetes tells you *what* broke.',
+  titleB: 'KubeGraf tells you *why*.',
 
   /* The second line rotates through these. titleB stays the canonical one: it
    * is what a screen reader gets, what renders under reduced motion, and what
@@ -96,34 +121,65 @@ export const HERO = {
    * same length. They are stacked in one grid cell, so the widest one sets the
    * headline's width — a long outlier makes the whole hero jump wider for
    * everybody. */
-  /* ⚠ These were the OTHER HALF of a two-product headline: "And teams who
-     would rather not [run Kubernetes]" was Domineta's audience, and "just
-     need a URL" was its product description. With Domineta unlisted they
-     described something the site no longer offers.
+  /* The alternates now walk the product's four stages rather than restating
+     one complaint four ways. Each is a phrasing of copy already approved
+     elsewhere in this file — the rule has not changed, only the copy:
 
-     The replacements keep the same grammatical shape and roughly the same
-     length — they are stacked in one grid cell, so the widest sets the
-     headline's width — and every one is a phrasing of KubeGraf copy already
-     approved elsewhere in this file:
+       'tells you why'         — KUBEGRAF.stages Diagnose: "A root cause,
+                                 stated — not a correlation and not a
+                                 dashboard."
+       'finds the root cause'  — KUBEGRAF.oneLine, verbatim
+       'ships the fix'         — KUBEGRAF.oneLine, verbatim
+       'proves it landed'      — KUBEGRAF.stages Verify: "A fix that did not
+                                 land is not a fix."
 
-       'be paged for it'    — KUBEGRAF.problems: "Hours lost paging the right
-                              person"
-       'firefight it'       — KUBEGRAF.oneLine: it ships the fix rather than
-                              handing you a dashboard
-       'babysit it'         — KUBEGRAF.stages: detect/diagnose/fix/verify run
-                              without a human in the loop
-       'guess at it'        — KUBEGRAF.problems: "the first fix was a guess,
-                              not a diagnosis" */
+     ⚠ NOTHING HERE CLAIMS IT FIXES THINGS UNATTENDED, and nothing may. The
+     Fix stage is "a concrete change, dry-run validated, FOR YOU TO APPROVE".
+     "Ships the fix" is only usable because oneLine already says exactly that
+     in the same breath as the approval step; an alternate like "fixes it
+     while you sleep" would be a new claim and a false one.
+
+     ⚠ Same grammatical shape ("KubeGraf <verb> …") and length held inside a
+     tight range — 23 to 30 characters. They are stacked in one grid cell, so
+     the widest sets the headline's width and a long outlier makes the hero
+     jump wider for everybody. These are all SHORTER than the lines they
+     replace, which suits the heavier sans the h1 now uses. */
+  /* One marked word per alternate, always the one that distinguishes it from
+     the other three. Keep it to a SINGLE word: each word is its own
+     inline-block mask for the reveal, so a run spanning a space would draw as
+     two underlines with a gap. */
   titleBAlts: [
-    'And would rather not be paged for it.',
-    'And would rather not firefight it.',
-    'And would rather not babysit it.',
-    'And would rather not guess at it.',
+    'KubeGraf tells you *why*.',
+    'KubeGraf finds the root *cause*.',
+    'KubeGraf ships the *fix*.',
+    'KubeGraf proves it *landed*.',
   ],
+  /* ⚠ THIS USED TO REPEAT THE HEADLINE. It read "…It detects the incident,
+     finds the root cause, and ships the fix — then verifies the fix actually
+     landed", which is KUBEGRAF.oneLine, which is also where titleBAlts came
+     from. Three of the four rotating alternates appeared verbatim in the
+     sentence sitting directly beside them: the hero made one claim twice, in
+     two faces, side by side.
+
+     The standfirst's job is what the headline CANNOT say. The headline has
+     the pipeline — why, root cause, fix, landed. So this has the
+     precondition instead: whose clusters, and where the thing runs. That is
+     the question "an AI SRE" actually raises, and nothing else on the page
+     answers it above the fold.
+
+     Both halves are approved copy:
+       'agent already inside them'    — KUBEGRAF.stages Detect: "from the
+                                        agent already in the cluster"
+       'one evidence set'             — KUBEGRAF.stages Investigate, verbatim
+
+     ⚠ Length is deliberate at ~158 characters, within a few of the 162 it
+     replaces. The hero's right column is sized so this sets in THREE lines
+     and ends level with the two-line headline — see .ork-hero-lead. A
+     materially longer or shorter line breaks that balance. */
   sub:
-    'KubeGraf is an AI SRE for the clusters you already have. It detects the ' +
-    'incident, finds the root cause, and ships the fix — then verifies the fix ' +
-    'actually landed.',
+    'KubeGraf is an AI SRE for the clusters you already have. It works from ' +
+    'an agent already inside them, pulling metrics, logs and events into one ' +
+    'evidence set.',
 };
 
 export const KUBEGRAF = {

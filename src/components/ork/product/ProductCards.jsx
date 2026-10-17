@@ -94,7 +94,12 @@ export function ProductCards() {
                       variant="secondary"
                       target={c.secondary.external ? '_blank' : undefined}
                       rel={c.secondary.external ? 'noopener noreferrer' : undefined}
-                      style={{ color: 'var(--text)' }}
+                      /* The inline `color: var(--text)` that was here is gone.
+                         .ork-btn-line already sets exactly that, so it was a
+                         no-op that also made the button look like it needed
+                         an override to be legible — the next person to touch
+                         the variant would have had to work out whether this
+                         was load-bearing. It was not. */
                     >
                       {c.secondary.label} ↗
                     </Button>

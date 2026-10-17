@@ -3,9 +3,33 @@ import React, { useEffect, useRef } from 'react';
 /**
  * ClusterLattice — the hero's 3D object.
  *
- * Two nested icosahedral graphs turning against each other, with work moving
- * along their edges as pulses. It is a cluster drawn the way this design draws
- * everything else: hairlines, points, and nothing filled.
+ * Two nested icosahedral graphs, with work moving along their edges as pulses.
+ * It is a cluster drawn the way this design draws everything else: hairlines,
+ * points, and nothing filled.
+ *
+ * ── IT ARRIVES AND THEN STOPS ───────────────────────────────────────────────
+ *
+ * ⚠ THIS USED TO SPIN CONTINUOUSLY and the sentence above used to say "turning
+ * against each other". It no longer does, and that is the point: this sits
+ * beside a headline, and the element that never stops moving is read as the
+ * subject of the page whether or not it is one.
+ *
+ * What happens instead, in order of how much it moves:
+ *
+ *   1. ARRIVAL   the outer shell sweeps into a resting angle over SETTLE
+ *                seconds and holds there. One movement, then done.
+ *   2. POINTER   both angles follow the reader's pointer, damped. This is the
+ *                only motion a visitor can cause, and it is the one that
+ *                actually conveys depth, because it is parallax they drove.
+ *   3. SCROLL    tilt only, never translate or scale — see onScroll.
+ *   4. IDLE      a breath of ±0.045rad, the inner shell turning about once
+ *                every three minutes, and the pulses. Below the threshold of
+ *                distraction but above zero, so the graph reads as live.
+ *
+ * The inner shell keeping its slow turn is load-bearing, not decoration: the
+ * depth cue in this object was never shading, it was two shells moving at
+ * different rates against each other. Stop both and it flattens into a
+ * drawing.
  *
  * ── WHY A WIREFRAME AND NOT A RENDER ────────────────────────────────────────
  *
@@ -41,7 +65,10 @@ import React, { useEffect, useRef } from 'react';
  */
 
 /** Pulses in flight along edges at any moment. */
-const PULSES = 7;
+/* 7 -> 5. Seven on two shells meant something was always crossing the middle
+   of the object; at five there are gaps, and a gap is what makes the next
+   pulse read as an event rather than as traffic. */
+const PULSES = 5;
 
 /* Icosahedron vertices, from the golden ratio. Chosen over a cube or a grid
    because 12 vertices and 30 edges read as a MESH from every angle — a cube
@@ -135,7 +162,9 @@ export function ClusterLattice({ className = '' }) {
     const readTheme = () => {
       const cs = getComputedStyle(cv);
       INK = rgbTriplet(cs.getPropertyValue('--text'), INK);
-      LINE = rgbTriplet(cs.getPropertyValue('--border'), LINE);
+      /* --lattice-line, NOT --border. See the token's note in mono.css: a
+         card edge and a wireframe want opposite things from the same name. */
+      LINE = rgbTriplet(cs.getPropertyValue('--lattice-line'), LINE);
       ACCENT = rgbTriplet(cs.getPropertyValue('--ork-accent'), ACCENT);
     };
     readTheme();
@@ -177,11 +206,46 @@ export function ClusterLattice({ className = '' }) {
     };
     onScroll();
 
+    /* ── Pointer parallax ──────────────────────────────────────────────────
+       The object used to turn on a clock whether or not anybody was there.
+       This turns it on the READER instead: the pointer's position in the
+       viewport nudges the two angles, so the thing has depth when you move
+       and is perfectly still when you do not.
+
+       px/py are targets; pxs/pys are what the frame actually uses, lerped
+       toward them in step(). Without that damping the object snaps with
+       every mousemove and reads as jitter rather than as parallax.
+
+       Listener is on WINDOW, not the canvas: the canvas sits behind the
+       headline with pointer-events:none, so it would never see a move. And
+       it is passive — this never calls preventDefault, and saying so lets
+       the browser keep scrolling off the main thread. */
+    let px = 0, py = 0, pxs = 0, pys = 0;
+    const onPointer = (e) => {
+      px = (e.clientX / (window.innerWidth || 1)) * 2 - 1;
+      py = (e.clientY / (window.innerHeight || 1)) * 2 - 1;
+    };
+    if (!reduced) window.addEventListener('pointermove', onPointer, { passive: true });
+
     let raf = 0, t0 = 0, elapsed = 0, last = 0;
     const INTRO = 1.4;
+    /* Longer than INTRO on purpose: the object finishes fading in while it is
+       still turning, so the arrival is one movement that resolves rather than
+       a fade followed by a separate rotation. */
+    const SETTLE = 2.6;
+    const AY_REST = 0.86;   // the resting yaw — chosen so no edge is end-on
+    const AY_SWEEP = 0.9;   // how far it travels getting there
     const ease = (u) => 1 - Math.pow(1 - u, 3);
 
     function step(dt) {
+      /* Damp the pointer toward its target. The coefficient is applied as
+         `1 - (1 - k) ** (dt * 60)` rather than a flat `k * dt` so the easing
+         is identical at 60Hz and 120Hz — a plain lerp against dt makes the
+         object noticeably snappier on a high-refresh display. */
+      const k = 1 - Math.pow(1 - 0.085, Math.max(0.0001, dt) * 60);
+      pxs += (px - pxs) * k;
+      pys += (py - pys) * k;
+
       for (const p of pulses) {
         p.t += dt * p.speed;
         if (p.t >= 1) {
@@ -206,7 +270,9 @@ export function ClusterLattice({ className = '' }) {
         // Depth is carried by ALPHA, not by line width. A hairline design has
         // exactly one stroke weight; varying it is what makes a wireframe read
         // as a 3D render instead of as a drawing.
-        g2.strokeStyle = `rgba(${LINE},${Math.min(0.85, 0.30 * d * d) * alphaScale})`;
+        /* 0.30 -> 0.46. With the dedicated line token this is what makes the
+           structure read before the pulses do, rather than after. */
+        g2.strokeStyle = `rgba(${LINE},${Math.min(0.85, 0.46 * d * d) * alphaScale})`;
         g2.beginPath();
         g2.moveTo(P[e[0]].x, P[e[0]].y);
         g2.lineTo(P[e[1]].x, P[e[1]].y);
@@ -229,13 +295,32 @@ export function ClusterLattice({ className = '' }) {
       g2.globalAlpha = intro;
 
       const s = Math.min(w, h) * 0.34 * (0.94 + 0.06 * intro);
-      const ay = reduced ? 0.7 : 0.7 + time * 0.10;
-      const ax = -0.22 + tilt + (reduced ? 0 : Math.sin(time * 0.07) * 0.06);
 
-      // The inner shell counter-rotates and sits smaller, which is what gives
-      // the object depth without any shading: two rates of parallax.
+      /* ── THE OUTER SHELL ARRIVES AND THEN STOPS ────────────────────────
+         ⚠ It used to be `0.7 + time * 0.10` — an unconditional spin, for as
+         long as the hero was on screen. That was right for a page whose
+         whole hero was the object. It is wrong now: this sits beside a
+         headline, and a thing that never stops moving is read as the
+         subject of the page whether or not it is.
+
+         So the rotation is now an ARRIVAL. It sweeps in over SETTLE seconds
+         on the same easing as the intro fade and comes to rest at AY_REST.
+         After that the only things moving are a breath far below the
+         threshold of distraction, the reader's own pointer, and scroll. */
+      const settle = reduced ? 1 : ease(Math.min(1, time / SETTLE));
+      const breath = reduced ? 0 : Math.sin(time * 0.05) * 0.045;
+      const ay = AY_REST - (1 - settle) * AY_SWEEP + breath + pxs * 0.13;
+      const ax = -0.22 + tilt + (reduced ? 0 : Math.sin(time * 0.04) * 0.03) + pys * 0.10;
+
+      /* The inner shell keeps a slow counter-rotation of its own — about one
+         turn every three minutes — and that is deliberate now that the outer
+         one has stopped. The depth cue in this object was never shading, it
+         was two shells moving at different rates against each other; if both
+         came to rest the thing would flatten into a drawing. One still shell
+         and one barely-turning shell keeps the parallax and still reads as
+         at rest: a live system, idling, rather than a spinning logo. */
       const Pout = shell(outer, ax, ay, s, 1);
-      const Pin = shell(inner, ax * 0.9, -ay * 0.62, s * 0.52, 0.7);
+      const Pin = shell(inner, ax * 0.9, -(ay * 0.62) - (reduced ? 0 : time * 0.035), s * 0.52, 0.7);
 
       // Pulses. The only saturated thing in the object, and the only thing
       // that says the graph is live rather than decorative.
@@ -254,17 +339,22 @@ export function ClusterLattice({ className = '' }) {
         const by = a.y + (b.y - a.y) * back;
         const grad = g2.createLinearGradient(bx, by, x, y);
         grad.addColorStop(0, `rgba(${ACCENT},0)`);
-        grad.addColorStop(1, `rgba(${ACCENT},${0.85 * d})`);
+        /* ⚠ 0.85 -> 0.48 alpha, 1.4 -> 1.0 width, and the dot below shrinks
+           too. The accent measures 8.79:1 on this ground against the
+           wireframe's 2.19:1 — the pulses do not need help to be seen, they
+           needed holding back. They are meant to say the graph is live, not
+           to be the graph. */
+        grad.addColorStop(1, `rgba(${ACCENT},${0.48 * d})`);
         g2.strokeStyle = grad;
-        g2.lineWidth = 1.4;
+        g2.lineWidth = 1.0;
         g2.beginPath();
         g2.moveTo(bx, by);
         g2.lineTo(x, y);
         g2.stroke();
 
         g2.beginPath();
-        g2.arc(x, y, 2.1 * d, 0, Math.PI * 2);
-        g2.fillStyle = `rgba(${ACCENT},${Math.min(1, 0.9 * d)})`;
+        g2.arc(x, y, 1.5 * d, 0, Math.PI * 2);
+        g2.fillStyle = `rgba(${ACCENT},${Math.min(1, 0.55 * d)})`;
         g2.fill();
       }
       g2.globalAlpha = 1;
@@ -309,6 +399,7 @@ export function ClusterLattice({ className = '' }) {
       stop(); io.disconnect(); ro.disconnect(); themeObserver.disconnect();
       document.removeEventListener('visibilitychange', onVis);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('pointermove', onPointer);
     };
   }, []);
 

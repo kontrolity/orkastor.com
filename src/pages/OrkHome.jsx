@@ -66,24 +66,27 @@ export default function OrkHome() {
       <ScrollProgress />
       <Navbar onDeep />
 
-      {/* ── THE FRAME ────────────────────────────────────────────────────
-          .ork-frame and .ork-rule were written into styles/mono.css when the
-          language landed and then never applied to anything. The stylesheet
-          calls the frame "what makes the reference read as a document rather
-          than as a stack of cards", and that is the single most identifying
-          structural thing about the sites this language was taken from — a
-          hairline running the height of the page, with sections divided by
-          rules instead of by changes of ground.
+      {/* ── HOW THIS PAGE DIVIDES ─────────────────────────────────────────
+          The side frame is off here (it is still on the sub-pages). Every
+          section boundary is a .ork-seam hairline, including the one above
+          <FinalCTA />.
 
-          Wiring it up is the whole of this change. Nothing new was invented
-          and no claim was added; the language already specified this and the
-          page simply was not using it. */}
-      <main className="ork-frame">
+          ⚠ That last one is easy to get wrong, and was: --deep-bg looks like
+          a dark panel, so a rule above it reads as redundant. It is NOT dark
+          here. In the light token block --deep-bg resolves to var(--bg) and
+          --deep-ink to var(--text), so the "deep" sections are plain white
+          like everything else and need the hairline exactly as much as the
+          others do. Check what the token resolves to, not what it is called.
+
+          With the site forced to light (see App.jsx) every ground on the page
+          is #FFFFFF, so these hairlines are the only thing giving the page
+          structure. .ork-seam still goes transparent under `.dark`, which is
+          now unreachable but kept with the rest of the dark tokens. */}
+      <main>
         <Hero />
-        <div className="ork-rule" />
+        <div className="ork-seam" />
         <ProductCards />
 
-        <div className="ork-rule" />
         {/* <Testimonials /> followed <Outcomes /> here — the three founder
             quotes from Finden, Neufology and Grovyn. Removed from this page.
 
@@ -92,6 +95,7 @@ export default function OrkHome() {
             KubeGraf's customers, published on kubegraf.io, and proof.js
             records that provenance — anywhere they are reused, that
             attribution has to travel with them. */}
+        <div className="ork-seam" />
         <Suspense fallback={null}>
           <Outcomes />
         </Suspense>
@@ -105,7 +109,7 @@ export default function OrkHome() {
             arguing a boundary with one side reads as a page missing half its
             content. COMPANY.boundary / shared / separate / notYet stay in
             content/site.js — /about still reads them. */}
-        <div className="ork-rule" />
+        <div className="ork-seam" />
         <Suspense fallback={null}><FinalCTA /></Suspense>
       </main>
 

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
 import { HERO, EXTERNAL } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { ClusterLattice } from '../visuals/ClusterLattice';
 
 /**
  * The home hero. Copy only.
@@ -78,15 +77,67 @@ function useHeroScroll(enabled) {
  * ⚠ NOT split per character. At 63px a per-letter stagger looks like a slot
  * machine, and it multiplies the element count by five for no extra legibility.
  */
+/**
+ * `*marked*` runs, for the headline's underline. See HERO.titleA.
+ *
+ * Splits ONE word into segments so punctuation can sit outside the rule:
+ * `*why*.` becomes an underlined "why" followed by a plain ".". Without that
+ * the underline runs beneath the full stop, which reads as a typo.
+ */
+function segments(word) {
+  const out = [];
+  const re = /\*([^*]+)\*/g;
+  let last = 0;
+  let m = re.exec(word);
+  while (m) {
+    if (m.index > last) out.push({ t: word.slice(last, m.index), u: false });
+    out.push({ t: m[1], u: true });
+    last = m.index + m[0].length;
+    m = re.exec(word);
+  }
+  if (last < word.length) out.push({ t: word.slice(last), u: false });
+  return out.length ? out : [{ t: word, u: false }];
+}
+
+/**
+ * The same string with its markers removed.
+ *
+ * ⚠ EVERY path that renders the raw text must go through this. A screen
+ * reader given the unstripped string says "star why star", and the
+ * reduced-motion branch would print the asterisks on the page.
+ */
+export function plainText(s) {
+  return s.replace(/\*/g, '');
+}
+
 function Words({ text, base = 0, step = 46, reduced, style, className = '' }) {
-  if (reduced) return <span className={className} style={style}>{text}</span>;
+  if (reduced) {
+    // Still marked up — the underline is typography, not motion, so it
+    // survives prefers-reduced-motion. Only the stagger is dropped.
+    return (
+      <span className={className} style={style}>
+        {text.split(' ').map((w, i) => (
+          <React.Fragment key={`${w}-${i}`}>
+            {segments(w).map((sg, j) => (
+              sg.u ? <span key={j} className="ork-u">{sg.t}</span> : <React.Fragment key={j}>{sg.t}</React.Fragment>
+            ))}
+            {i < text.split(' ').length - 1 ? ' ' : null}
+          </React.Fragment>
+        ))}
+      </span>
+    );
+  }
   const words = text.split(' ');
   return (
     <span className={className} style={style}>
       {words.map((w, i) => (
         <React.Fragment key={`${w}-${i}`}>
           <span className="ork-word-mask">
-            <span className="ork-word" style={{ animationDelay: `${base + i * step}ms` }}>{w}</span>
+            <span className="ork-word" style={{ animationDelay: `${base + i * step}ms` }}>
+              {segments(w).map((sg, j) => (
+                sg.u ? <span key={j} className="ork-u">{sg.t}</span> : <React.Fragment key={j}>{sg.t}</React.Fragment>
+              ))}
+            </span>
           </span>
           {i < words.length - 1 ? ' ' : null}
         </React.Fragment>
@@ -111,15 +162,25 @@ function Rotator({ alts, canonical, base, reduced }) {
   const [i, setI] = useState(0);
   useEffect(() => {
     if (reduced || alts.length < 2) return undefined;
-    const id = window.setInterval(() => setI((n) => (n + 1) % alts.length), 3800);
+    /* 3800 -> 5600ms. At 3.8s the line changed while the reader was still
+       on the first one; the rotation stopped being a flourish and became an
+       interruption. 5.6s is long enough to finish reading both lines before
+       anything moves. */
+    const id = window.setInterval(() => setI((n) => (n + 1) % alts.length), 5600);
     return () => window.clearInterval(id);
   }, [reduced, alts.length]);
 
-  if (reduced) return <span style={{ color: 'var(--rotator-ink)' }}>{canonical}</span>;
+  /* No italic here any more. The headline is a grotesk now (see .ork-mono-h1),
+     and a sans italic is a mechanical oblique rather than a drawn cut — it
+     reads as a browser faking a style it does not have. The second line is
+     distinguished by colour alone, which is what the reference does. */
+  if (reduced) return <Words text={canonical} reduced style={{ color: 'var(--rotator-ink)' }} />;
 
   return (
     <>
-      <span className="ork-sr-only">{canonical}</span>
+      {/* plainText, not the raw string: a screen reader given the markers
+          reads "star why star". */}
+      <span className="ork-sr-only">{plainText(canonical)}</span>
       <span className="ork-rotator" aria-hidden="true">
         {alts.map((t, n) => (
           <span key={t} className={`ork-rot-item ${n === i ? 'is-in' : ''}`}>
@@ -158,27 +219,41 @@ export function Hero() {
   // little slower. Small numbers on purpose — anything larger reads as the
   // layout being broken rather than as depth.
   const copyStyle = reduced ? undefined : {
-    transform: `translate3d(0, ${p * -56}px, 0)`,
-    opacity: 1 - Math.min(1, p * 1.25),
+    transform: `translate3d(0, ${p * -34}px, 0)`,
+    opacity: 1 - Math.min(1, p * 1.05),
   };
 
   return (
     <section
       ref={ref}
-      className="ork-mono-hero ork-hero relative overflow-hidden"
-      style={{ background: 'var(--bg)', color: 'var(--text)' }}
+      /* ⚠ The ground used to be a flat `var(--bg)`. It is now .ork-atmos — a
+         lit, grained surface rather than a painted rectangle. That is the
+         single biggest visual change on the page, and it is what makes the
+         hero read as a space the type is sitting in. See the block in
+         mono.css for why the grain layer is load-bearing and not a
+         flourish. */
+      className="ork-mono-hero ork-hero ork-atmos relative overflow-hidden"
     >
-      {/* The 3D object. Placed BEHIND the copy and ranged right, not beside it:
-          the headline runs the full container by design (see the note on the
-          <h1>), so there is no column to put an object in without taking width
-          away from the type. Sitting it behind costs the copy nothing, and the
-          language is hairlines — there is very little ink in the object to
-          compete with.
+      {/* ── THE 3D OBJECT IS GONE FROM THE HERO ───────────────────────────
+          <ClusterLattice className="ork-hero-lattice" /> rendered here: two
+          nested icosahedral wireframes with pulses running their edges.
 
-          `pointer-events-none` because it is decorative and sits over the copy
-          in the stacking order on narrow viewports; without it the object would
-          eat clicks on the CTAs. */}
-      <ClusterLattice className="ork-hero-lattice" />
+          It is removed rather than tuned again. Three rounds went into its
+          size, its line weight, its pulse count and its rotation, and every
+          one of them was treating a symptom. The design this hero now follows
+          puts NOTHING in its hero but type on an open ground — the object was
+          not badly balanced against that, it was the wrong kind of thing for
+          it. A wireframe graph belongs on /cloud and /kubegraf, where a
+          reader has already asked a question it answers.
+
+          It also kept colliding with the copy. The canvas is absolutely
+          positioned across the right of the section, so every layout that put
+          text there overlapped it, and every layout that did not left a large
+          object balancing two lines of headline.
+
+          ⚠ NOT DELETED. ClusterLattice.jsx and .ork-hero-lattice both stay on
+          disk, under the same rule as the retired `.lp` pages: restoring it
+          is re-adding the import and this one line. */}
 
       {/* Taller than it was. The hero used to end at the diagram, which gave
           it its height; without one, the same padding left the copy floating
@@ -190,16 +265,21 @@ export function Hero() {
             <Words key={`eb-${run}`} text={HERO.eyebrow} base={120} step={26} reduced={reduced} />
           </p>
 
-          {/* Two lines, two colours, one <h1>. The teal half carries its own
+          {/* Two lines, two colours, one <h1>. The second line carries its own
               colour rather than relying on a gradient-clip: a clipped span
               whose fallback is transparent is one unsupported property away
-              from invisible text.
+              from invisible text. (It is no longer teal — see --rotator-ink.)
 
               ⚠ Each line is WIDE, not stacked. The copy column runs the full
-              container, so "For teams who run Kubernetes." sets on one line
-              instead of breaking into two — four short centred lines read as a
-              poem, not as a headline. It still wraps on a phone, which is
-              correct; the wrapping was only wrong when there was room not to. */}
+              container so each line sets on one line instead of breaking into
+              two — four short lines read as a poem, not as a headline. It
+              still wraps on a phone, which is correct; the wrapping was only
+              wrong when there was room not to.
+
+              That constraint got EASIER, not harder, with the new copy: the
+              longest alternate is now 30 characters against the old 37, so
+              both lines clear the container with more room than before. */}
+          <div className="ork-hero-grid">
           <h1 className="ork-mono-h1">
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
             <span className="ork-h1-line ork-h1-accent">
@@ -207,12 +287,18 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Its own measure, centred inside the copy column. At the column's
-              full width the sub would set wider than the headline above it,
-              which reads as a mistake in a centred block. */}
-          <p className="ork-mono-sub">
+          {/* The standfirst sits between the headline and the buttons —
+              the one position it cannot be skipped from, since you pass it on
+              the way to the only two controls on the screen.
+
+              It was briefly a right-hand column, copying the reference. That
+              laid it over the hero's 3D object; the object has since gone
+              (see above), so the collision is moot, but the stacked order is
+              the better reading anyway and stays. */}
+          <p className="ork-mono-sub ork-hero-lead">
             <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
           </p>
+          </div>
 
           <div
             key={`cta-${run}`}

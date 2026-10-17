@@ -51,9 +51,14 @@ export function SectionHead({ eyebrow = undefined, title = undefined, sub = unde
   const label = onDeep ? 'var(--deep-ink-label)' : 'var(--text-2)';
   return (
     <header className={`${align === 'center' ? 'text-center mx-auto' : ''} ${className}`} style={{ maxWidth: align === 'center' ? 720 : 760 }}>
-      {eyebrow ? <p className="ork-micro" style={{ color: label, marginBottom: 12 }}>{eyebrow}</p> : null}
+      {/* 12 -> 16 and 14 -> 18 with the serif title between them. The mono
+          eyebrow and the sans standfirst both sit tight to a grotesk; against
+          a serif at 350 with 1.16 leading they crowded it, because the serif's
+          own line box is looser and the old gaps read as smaller than they
+          measure. */}
+      {eyebrow ? <p className="ork-micro" style={{ color: label, marginBottom: 16 }}>{eyebrow}</p> : null}
       {title ? <h2 className="ork-display-m" style={{ color: onDeep ? 'var(--deep-ink)' : 'var(--text)' }}>{title}</h2> : null}
-      {sub ? <p className="ork-sub" style={{ color: muted, marginTop: 14 }}>{sub}</p> : null}
+      {sub ? <p className="ork-sub" style={{ color: muted, marginTop: 18 }}>{sub}</p> : null}
     </header>
   );
 }
@@ -74,7 +79,7 @@ export function SectionHead({ eyebrow = undefined, title = undefined, sub = unde
  *           [key: string]: any }} props
  */
 export function Button({
-  as: Tag = 'a', variant = 'primary', accent = undefined, magnetic = false,
+  as: Tag = 'a', variant = 'primary', size = undefined, accent = undefined, magnetic = false,
   children = undefined, className = '', style = undefined, ...rest
 }) {
   /* The bracket box lives in mono.css as .ork-btn, not in inline styles here.
@@ -91,10 +96,22 @@ export function Button({
      thing rather than decorating the control. Both hues clear 9:1 on black.
      Drop the prop and a button falls back to the grey frame. */
   const tint = accent === 'kg' ? ' ork-btn--kg' : accent === 'cloud' ? ' ork-btn--cloud' : '';
-  const base = 'group ork-btn';
+  /* `primary` is now a filled ink block (.ork-btn-ink) rather than the
+     bracket frame. On a warm bone page the frame had almost nothing to hold
+     onto — hairlines on cream read as a suggestion, not a control — and the
+     register being followed states its primary action as a solid near-black
+     rectangle. `secondary` and `quiet` keep the bracket, so the hierarchy
+     between the two is now fill-vs-frame instead of two weights of frame. */
+  const fill = variant === 'primary' ? ' ork-btn-ink'
+    : variant === 'secondary' ? ' ork-btn-line'
+      : ' ork-btn-quiet';
+  /* `size="lg"` is the hero step. Deliberately the only size: two is a
+     scale, three is a decision every caller has to make. */
+  const scale = size === 'lg' ? ' ork-btn-lg' : '';
+  const base = `group ork-btn${fill}${scale}`;
   const el = (
     <Tag
-      className={`${base}${tint}${variant === 'quiet' ? ' ork-btn-quiet' : ''} ${className}`}
+      className={`${base}${tint} ${className}`}
       style={style}
       {...rest}
     >
@@ -146,25 +163,25 @@ export function Badge({ kind = 'live', children, onDeep = false }) {
 }
 
 /** A hairline panel. The card layer, without the shadow pile-up the brief bans. */
+/**
+ * A card.
+ *
+ * ⚠ The hover USED TO BE onMouseEnter/onMouseLeave handlers writing inline
+ * styles. That is the exact pattern the Button comment above criticises, for
+ * the same two reasons: pointer events never fire for a keyboard user, so a
+ * focused card showed no state at all; and if the pointer left during a
+ * re-render the inline style stayed stuck in its hover value.
+ *
+ * It is .ork-panel / .ork-panel-hot in mono.css now, where :hover and
+ * :focus-within are both free and neither can get stuck. `accent` still
+ * works — it sets a custom property the CSS reads, rather than being baked
+ * into a handler.
+ */
 export function Panel({ children, className = '', hover = false, accent = undefined, style = undefined, ...rest }) {
   return (
     <div
-      className={`relative ${className}`}
-      style={{
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--radius-lg)',
-        transition: 'border-color var(--duration-normal) var(--ease-standard), transform var(--duration-normal) var(--ease-standard)',
-        ...style,
-      }}
-      onMouseEnter={hover ? (e) => {
-        e.currentTarget.style.borderColor = accent || 'var(--border-strong)';
-        e.currentTarget.style.transform = 'translateY(-2px)';
-      } : undefined}
-      onMouseLeave={hover ? (e) => {
-        e.currentTarget.style.borderColor = 'var(--border)';
-        e.currentTarget.style.transform = 'translateY(0)';
-      } : undefined}
+      className={`relative ork-panel${hover ? ' ork-panel-hot' : ''} ${className}`}
+      style={accent ? { '--panel-hot-line': accent, ...style } : style}
       {...rest}
     >
       {children}

@@ -35,21 +35,31 @@ export default function App() {
     /* attribute="class" so Tailwind's darkMode:["class"] and the `.dark .ork`
      * token block key off the same thing.
      *
-     * defaultTheme="light": the mono language now ships in white as well as
-     * black (see the two token blocks in styles/mono.css) and white is the
-     * primary experience. `forcedTheme` is GONE — it was pinning the site to
-     * dark and made ThemeToggle dead code, since next-themes ignores setTheme
-     * while a theme is forced. Removing it is what makes the toggle work.
+     * ⚠ forcedTheme="light" — THE SITE IS WHITE, AND ONLY WHITE.
      *
-     * enableSystem is deliberately NOT set. It would hand the default to the
-     * visitor's OS, so half of them would land on the dark site when the
-     * decision was that the white one is the front door; the toggle is still
-     * there for anyone who prefers black.
+     * This flag has now been here, removed, and put back, so the history is
+     * worth stating. It originally pinned the site to DARK, which made
+     * ThemeToggle dead code because next-themes ignores setTheme while a
+     * theme is forced. It was removed so the toggle would work and the site
+     * could ship in both. The decision now is that there is no second theme
+     * to toggle to: white is the site.
+     *
+     * So the toggle is gone from the Navbar rather than left on screen doing
+     * nothing — a control that cannot change anything is worse than no
+     * control. enableSystem stays unset for the same reason it always was,
+     * and now additionally because there is nothing for the OS to pick.
+     *
+     * ⚠ The `.dark .ork` token blocks in styles/mono.css are INTENTIONALLY
+     * LEFT IN PLACE. They are unreachable while this flag is set, and
+     * deleting a whole token system is a separate change from ceasing to use
+     * it — the same rule the retired `.lp` pages below are kept under.
+     * Reinstating dark is: drop this prop, restore the toggle.
      *
      * disableTransitionOnChange stops every border on the page animating at
      * once on a theme swap — the few properties that should tween are named in
-     * orkastor.css instead. */
-    <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
+     * orkastor.css instead. Harmless now that nothing swaps, kept for the
+     * revert. */
+    <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
         <Router>
           <Suspense fallback={null}>

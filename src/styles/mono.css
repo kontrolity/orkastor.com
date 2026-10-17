@@ -36,12 +36,21 @@
    ───────────────────────────────────────────────────────────────────────── */
 
 .dark .ork {
-  /* Ground. Both are pure black because the reference paints NO section
-     backgrounds at all — every section is transparent and everything sits on
-     one black. Sections are divided by hairlines, never by a change of
-     ground, which is why adding a --bg-alt here would break the language. */
+  /* Ground.
+     ⚠ THIS COMMENT USED TO SAY the opposite: that both values are pure black
+     because the old reference painted no section backgrounds at all, divided
+     everything by hairlines, and that "adding a --bg-alt here would break the
+     language". That was correct for that reference.
+
+     The new reference divides by ground, not by rule — a section is a lit
+     surface and the boundary is where one surface stops. So --bg-alt now has
+     to be a real second ground, or `tone="alt"` is a no-op and the home page
+     (which no longer draws rules) has nothing separating its sections at all.
+
+     Kept to one quiet step off black. This is a seam, not a panel; if you can
+     name the colour it is too far. */
   --bg:            #000000;
-  --bg-alt:        #000000;
+  --bg-alt:        #08090C;
   --surface:       #070707;
   --surface-2:     #0C0C0C;
 
@@ -69,6 +78,21 @@
   --ork-accent-soft: rgba(0, 26, 208, 0.16);
   --ork-accent-line: rgba(0, 26, 208, 0.55);
   --ork-accent-text: #6B7CFF;
+
+  /* ── Atmosphere (dark) ──────────────────────────────────────────────────
+     The hero ground. Volumetric light rather than a painted rectangle: two
+     offset blooms over a near-black base, with a vignette pulling the
+     bottom edge down so the section has a floor. The blue is the brand
+     accent used AS LIGHT, which is how it stays present now that the 3D
+     object is greyscale. */
+  --atmos-base:     #04060C;
+  --atmos-glow-a:   rgba(58, 94, 255, 0.30);
+  --atmos-glow-b:   rgba(0, 26, 208, 0.20);
+  --atmos-vignette: rgba(0, 0, 0, 0.62);
+  /* Dark grounds need roughly double the grain of light ones to read at all:
+     noise is a luminance perturbation, and there is very little luminance
+     down here to perturb. */
+  --atmos-grain:    0.16;
 
   --grid-line: rgba(255, 255, 255, 0.05);
   --glow:      transparent;
@@ -101,51 +125,204 @@
   /* The hero's rotating second line. #48CBCB is 9.9:1 on black. */
   --rotator-ink: var(--cloud-bright, #48CBCB);
   --h1-sheen:    rgba(72, 203, 203, 0.16);
+  /* See the light block. On black the existing --border is already strong
+     enough to carry the drawing, so this just names it. */
+  --lattice-line: #464A4D;
 }
 
-/* ── MONO, IN WHITE ───────────────────────────────────────────────────────
-   The same language on paper. Not an inversion — the ramp is measured against
-   white the way the dark ramp was measured against black, so each value here
-   lands on its counterpart's contrast rather than on its counterpart's hex.
+/* ── THE LIGHT THEME IS NOW THE WHOLE SITE, AND IT IS BONE, NOT WHITE ──────
+   ⚠ THIS BLOCK HAS MOVED TWICE. It began as "MONO, IN WHITE" — the dark
+   language inverted onto #FFFFFF, same discipline, ramp re-measured against
+   white. It then became pure-white-plus-hairlines. It is now a warm neutral
+   system, and that header is kept only to explain why values below no longer
+   match anything the file header says.
 
-     role      dark              light             on its own ground
-     text      #EBECED 17.75:1   #16171A 17.92:1
-     text-2    #A0A0A0  8.03:1   #4F5052  8.07:1
-     text-3    #6C6C6C  4.00:1   #7A7A7C  4.28:1   large text and UI only
-     border    #464A4D  2.35:1   #A7A9AB  2.36:1   never carries text
+   THE FILE HEADER AT THE TOP IS STALE FOR THIS BLOCK. It describes the
+   original mono language: square corners, no texture, one grotesk, hairlines
+   instead of grounds. That is still an accurate description of `.dark .ork`,
+   which is now unreachable (App.jsx forces light). It is NOT a description of
+   this block any more. Specifically, here:
 
-   The discipline is unchanged and has to stay unchanged: one ground with no
-   section backgrounds, hairline rules instead of colour changes, square
-   corners, bracketed mono labels. Only the two ends of the ramp move.
+     - corners are rounded (8/16/24, see orkastor.css)
+     - the ground is warm and there are three of them
+     - the display face is a serif, not the grotesk
+     - a full-bleed ink footer and a filled ink button exist
 
-   ⚠ TEXT IS #16171A, NOT #000000 — the same reason --text is #EBECED and not
-   #FFFFFF on the dark side. Maximum contrast at 100px vibrates; the reference
-   avoids it at both ends and so does this.
+   Measured ramp, all against --bg #FAF9F5:
+
+     role      value      ratio    notes
+     text      #141413    17.50:1
+     text-2    #4A4844     8.66:1
+     text-3    #76726A     4.55:1  large text and UI only
+     border    #C9C4B6     1.60:1  never carries text
+     accent    #001AD0     9.68:1  readable, see below
+     ink-on    #FAF9F5    17.50:1  on --ink-ground #141413
+
+   ⚠ TEXT IS #141413, NOT #000000 — same reason --text is #EBECED and not
+   #FFFFFF on the dark side. Maximum contrast at display sizes vibrates.
 
    ── THE ONE THING LIGHT DOES BETTER ───────────────────────────────────────
    #001AD0 measures 2.06:1 on black, which is why the dark theme had to lift
    its readable blue to #6B7CFF and keep the real one for marks that carry no
-   information. On white that same blue is 10.20:1. So here --ork-accent-text
+   information. On bone that same blue is 9.68:1. So here --ork-accent-text
    IS the reference blue: the light theme gets to use the actual brand value
    for type, which the dark theme can never do. */
 .ork {
-  --bg:            #FFFFFF;
-  --bg-alt:        #FFFFFF;
-  --surface:       #FAFAFA;
-  --surface-2:     #F4F4F5;
+  /* ── Warm neutral ground ────────────────────────────────────────────────
+     ⚠ NOT WHITE, and that is the point. These were #FFFFFF / #FFFFFF /
+     #FAFAFA — a cold, pure-white page.
 
-  --text:          #16171A;   /* 17.92:1 */
-  --text-2:        #4F5052;   /*  8.07:1 */
-  --text-3:        #7A7A7C;   /*  4.28:1 — large text and UI only */
+     The register being worked in builds on a warm bone ground with a second,
+     warmer ground stepped off it, and that single choice does more than any
+     other to stop a page reading as a default browser canvas. Pure white has
+     no temperature; bone has one, and every neutral above it inherits it.
 
-  --border:        #A7A9AB;
-  --border-soft:   rgba(167, 169, 171, 0.62);
-  --border-strong: #7A7A7C;
+     Three grounds, not two: --bg is the page, --bg-alt is a stepped section,
+     --surface is a card sitting on either. They are close together on
+     purpose — this is a warm *grey scale*, not a palette.
+
+     The hairline seams still do the section dividing (see .ork-seam). The
+     grounds are warmth, not structure. */
+  /* ⚠ THE PAGE AND THE CARD WERE THE WRONG WAY ROUND, and these values are
+     sampled from the reference rather than estimated.
+
+     It was --bg #FAF9F5 with --surface #F0EEE6 — a light page carrying
+     slightly darker cards, which is the normal instinct. The reference does
+     the opposite: its page is the warm GREY and its cards are the lighter
+     near-white lifted off it. That inversion is most of why its cards read
+     as floating rather than as inset panels, and no amount of shadow
+     tuning gets there while the card is the darker of the two.
+
+     Pixel-sampled from the reference: page #F0EEE7, card #FAF9F5. Both
+     kept exactly. The step between them is only 1.10:1 — the lift comes
+     from direction, not from distance. */
+  --bg:            #F0EEE7;   /* warm grey — the page */
+  --bg-alt:        #E9E6DD;   /* stepped section */
+  --surface:       #FAF9F5;   /* card — LIGHTER than the page, on purpose */
+  --surface-2:     #FFFFFF;   /* nested / raised */
+
+  /* Ink warms with the ground. #16171A was a blue-leaning near-black and it
+     read cold against bone; this is the same darkness with the temperature
+     turned round. 17.50:1 on --bg. */
+  --text:          #141413;
+  --text-2:        #4A4844;   /*  8.66:1 on --bg */
+  /* ⚠ DARKENED from #76726A with the ground inversion above. On the old
+     light page it measured 4.55:1; on the new darker page that fell to
+     4.12:1, under the 4.5 needed for normal text. Rather than re-audit
+     every use, this value clears AA on EVERY ground the site has —
+     page 5.39:1, card 5.94:1, footer 4.52:1 — so it is safe wherever it
+     lands, not just where it was checked. */
+  --text-3:        #646058;
+
+  /* Borders warm too, or every card edge reads as a grey seam laid on a
+     cream page. */
+  --border:        #C9C4B6;
+  --border-soft:   rgba(160, 153, 138, 0.42);
+  --border-strong: #A09A8A;
+
+  /* ── Ink surfaces ───────────────────────────────────────────────────────
+     The register puts near-black full-bleed under the footer and inside the
+     primary button, against the bone everywhere else. That contrast IS the
+     structure — without it a warm page has no punctuation at all. */
+  --ink-ground:    #141413;
+  --ink-on:        #FAF9F5;
+  --ink-on-muted:  rgba(250, 249, 245, 0.66);
+
+  /* ── Footer ─────────────────────────────────────────────────────────────
+     ⚠ The footer was --ink-ground, a full-bleed near-black block. It is now
+     the deepest warm tone in the system instead.
+
+     Black ended the page with a hard stop, which is what the reference does
+     and why it was built that way. But black was the one thing left on the
+     page contradicting "no black", and a tan this far down the ramp still
+     ends the page decisively — it is the darkest ground the site has, it
+     just ends it in the same temperature as everything above it.
+
+     #E3DACC is 1.31:1 against the page, the clearest step available before
+     the ground starts reading as a panel rather than as a floor. Text on it
+     measures 13.31:1, secondary 6.59:1, the accent 8.49:1 — all AA, so the
+     footer keeps the normal ink ramp and needs no inverted token set.
+
+     The ink tokens above are UNUSED NOW but kept: the filled primary button
+     is the other thing that could want them back, and reinstating a dark
+     footer is swapping these three values. */
+  /* ── The lattice's own line ─────────────────────────────────────────────
+     ⚠ IT USED TO READ --border, AND THAT WAS A REGRESSION. --border is a
+     card edge: its job is to be almost invisible, and warming it to #C9C4B6
+     for the new palette took it to 1.50:1 on the page. The lattice is not an
+     edge — it IS the drawing — and at 1.50:1 behind a 0.30 alpha it stopped
+     being visible at all. Measured against the pulses, which draw in the
+     accent at 0.85 alpha, the moving dots were roughly SEVENTEEN TIMES more
+     prominent than the structure they travel along. That is what the hero
+     actually looked like: blue dashes floating in nothing.
+
+     One token, two incompatible jobs. This is the second one. 2.19:1 — too
+     low for text, which it never carries, and enough for a hairline that has
+     to be seen. */
+  --lattice-line:  #A8A296;
+
+  --footer-bg:     #E3DACC;
+  --footer-line:   rgba(20, 20, 19, 0.14);
 
   --ork-accent:      #001AD0;
   --ork-accent-soft: rgba(0, 26, 208, 0.10);
   --ork-accent-line: rgba(0, 26, 208, 0.42);
   --ork-accent-text: #001AD0;   /* 10.20:1 — the real one, see above */
+
+  /* ── Atmosphere (light) ─────────────────────────────────────────────────
+     The same construction, inverted. NOT a white rectangle: the blooms are
+     still there, just as tint on a near-white base, so the hero reads as a
+     lit surface in both themes rather than as "the dark one, but empty".
+     Kept weak on purpose — the headline over it is a 300-weight serif in
+     --text, and anything stronger starts eating its stems. */
+  /* ── Atmosphere: OFF in light ───────────────────────────────────────────
+     ⚠ The blooms are deliberately set to transparent rather than the class
+     being removed from the hero.
+
+     The earlier reference lit its hero volumetrically. This one does not —
+     its ground is flat, even bone from the masthead to the footer, and the
+     page gets its depth from stepped grounds and ink blocks instead. A blue
+     wash behind the headline would be the one thing on the page announcing
+     a different design language.
+
+     What survives is the grain, at a whisper. The reference's surfaces have
+     a papery quality, and a trace of noise on a large flat warm field is
+     also what stops it banding on cheap panels.
+
+     Reinstating the light: put real colours back in these three. The
+     machinery in .ork-atmos is untouched. */
+  /* ⚠ THESE WERE ALL `transparent`. The hero ground was deliberately flat,
+     matching a reference whose hero is flat bone end to end. They are back
+     because the hero now has nothing else in it — the 3D object is gone, and
+     a completely static field of one colour behind two lines of type reads
+     as a page that has not finished loading rather than as restraint.
+
+     WARM, not the brand blue. The blue blooms this started with tinted the
+     whole hero lavender and were the one cold thing on a bone page. These
+     are sand at low alpha: the ground stays the same temperature and only
+     its depth changes.
+
+     ⚠ ALPHAS ARE BOUNDED BY CONTRAST, NOT BY TASTE. At the bloom's densest
+     the composited ground is #E8E1D2, where --text measures 14.16:1,
+     --text-2 7.01:1 and --text-3 4.81:1. All three still clear AA for normal
+     text, which is the ceiling these values were chosen against — push them
+     further and --text-3 is the first to fail. */
+  /* ⚠ var(--bg), NOT A LITERAL. It was hardcoded #FAF9F5, which was correct
+     when --bg WAS #FAF9F5 and became wrong the moment the grounds were
+     inverted — the hero stayed on the old light value while the page moved
+     to the warm grey beneath it. The hero was a lighter panel than the rest
+     of the page, and scrolling out of it stepped DOWN in brightness, which
+     is backwards: in this design the page is the grey and only CARDS lift
+     off it.
+
+     Binding to the token instead of repeating its value is what stops that
+     happening again. The hero is now the page; the drift supplies the depth
+     that the flat colour used to fake. */
+  --atmos-base:     var(--bg);
+  --atmos-glow-a:   rgba(216, 201, 168, 0.34);
+  --atmos-glow-b:   rgba(201, 180, 154, 0.22);
+  --atmos-vignette: rgba(120, 110, 92, 0.05);
+  --atmos-grain:    0.035;
 
   --grid-line: rgba(0, 0, 0, 0.05);
   --glow:      transparent;
@@ -192,7 +369,14 @@
   /* ⚠ NOT --cloud-bright here. #48CBCB measures 1.85:1 on white, and this is
      a 100px headline line — the largest unreadable thing the page could
      possibly contain. Same hue, readable end: 6.83:1. */
-  --rotator-ink: #17608A;
+  /* ⚠ WAS #17608A, the cloud blue. That was a product cue on a page whose
+     ground was white and whose accents were blue. On bone it is the only
+     cold thing in the hero, and it made the second headline line read as a
+     link rather than as the other half of a sentence.
+     --text-2 instead, 8.66:1, and the ITALIC now carries the distinction —
+     roman against italic inside one family is the editorial contrast, and it
+     does not cost a colour. */
+  --rotator-ink: var(--text-2);
 
   /* No sheen on paper. See the note on .ork-h1-line::before. */
   --h1-sheen:    transparent;
@@ -224,6 +408,98 @@
   margin-inline: clamp(0px, 1.2vw, 18px);
 }
 .ork-rule { border-top: 1px solid var(--border-soft); }
+
+/* ── Seam: the theme-conditional divider ─────────────────────────────────
+   .ork-rule is unconditional and still divides the sub-pages, which run the
+   frame in both themes. This is the divider for the ground-divided pages.
+
+   It draws in light and goes transparent in dark, because the two themes
+   separate sections by different means — see the --bg-alt note in the light
+   block. Drawing a hairline in dark as well would double-draw a boundary the
+   change of ground already states.
+
+   `transparent` rather than `display:none` or dropping the border: the 1px
+   stays in the box either way, so toggling the theme never shifts the
+   layout by a pixel. */
+.ork-seam { border-top: 1px solid var(--border-soft); }
+.dark .ork-seam { border-top-color: transparent; }
+
+/* ── Atmosphere ───────────────────────────────────────────────────────────
+   A full-bleed lit ground. Two layers, both pseudo-elements, so any section
+   becomes one by adding a single class and nothing in the markup moves.
+
+   ::before is the light. Three radial gradients over a flat base — a main
+   bloom high and right, a weaker counter-bloom low and left, and a vignette
+   that closes the bottom edge. Offsetting the two blooms is what stops it
+   reading as a symmetrical "glow behind the logo"; uneven light is what
+   makes a surface look like a photographed space.
+
+   ::after is grain, and it is not decoration. A gradient this wide banding
+   on an 8-bit display is extremely visible — you get visible steps across
+   the bloom. Noise dithers those steps away. It is the same trick film
+   grain plays, and it is why the layer is mandatory rather than a flourish.
+
+   `isolation: isolate` keeps the grain's blend mode off whatever the section
+   is sitting on. Without it the overlay blend reaches through to the page
+   background and the section edges glow. */
+.ork-atmos {
+  position: relative;
+  isolation: isolate;
+  background: var(--atmos-base);
+  color: var(--text);
+}
+.ork-atmos::before,
+.ork-atmos::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ork-atmos::before {
+  z-index: -2;
+  /* Oversized so the drift below never swings an edge of the gradient into
+     view. -18% on every side is more than the animation can travel. */
+  inset: -18%;
+  /* ⚠ 54s, and alternate, so a full cycle is nearly two minutes. Ambient
+     means it must never catch the eye: if a visitor can see it moving, it
+     has failed. transform only — the gradient itself is static and the
+     pseudo-element is composited, so this costs no repaint and no layout. */
+  animation: ork-atmos-drift 54s var(--ease-standard) infinite alternate;
+  background:
+    radial-gradient(ellipse 78% 58% at 74% 26%, var(--atmos-glow-a), transparent 64%),
+    radial-gradient(ellipse 62% 52% at 16% 82%, var(--atmos-glow-b), transparent 60%),
+    radial-gradient(ellipse 130% 85% at 50% 118%, var(--atmos-vignette), transparent 72%);
+}
+.ork-atmos::after {
+  z-index: -1;
+  opacity: var(--atmos-grain);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+}
+
+/* The two blooms are offset from each other and the element drifts
+   diagonally, so the light never returns to the same arrangement within a
+   cycle — which is what stops it reading as a loop. */
+@keyframes ork-atmos-drift {
+  from { transform: translate3d(-1.6%, -1.2%, 0) scale(1.02); }
+  to   { transform: translate3d(1.6%,  1.4%, 0) scale(1.06); }
+}
+
+/* Grain on its own, for grounds that already have their own background
+   (the --deep-bg panels) and only want the dithering. */
+.ork-grained { position: relative; isolation: isolate; }
+.ork-grained::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: var(--atmos-grain);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+}
 
 /* ── Bracketed label ──────────────────────────────────────────────────────
    `• [OUR MISSION]`. The dot is the mark blue and carries no meaning, so it
@@ -262,31 +538,80 @@
 }
 
 /* ── Display type ─────────────────────────────────────────────────────────
-   The reference measures 100px / weight 500 / line-height 1.0 / -5px, which
-   is -0.05em. That tracking is the single most identifying thing about it. */
+   ⚠ THIS BLOCK USED TO READ: 100px / weight 500 / line-height 1.0 / -0.05em,
+   with a note calling that tracking "the single most identifying thing" about
+   the grotesk reference it came from. It was. It is also the one value that
+   cannot survive the move to a serif.
+
+   At -0.05em a serif headline does not look tight, it looks broken: the
+   serifs are already occupying the sidebearing, so pulling another 5% out
+   makes adjacent letters touch and then overlap. The new tracking is well
+   under half of it, and the weight drops 500 -> 300.
+
+   The size cap comes down too, 100px -> 88px. A light serif at the same
+   measurement reads considerably larger than a medium grotesk did, because
+   the thin strokes let the counters open up; holding 100px would have the
+   headline shouting where the reference murmurs.
+
+   Leading moves the other way, 1.0 -> 1.09. A grotesk at 1.0 is tight and
+   deliberate; a serif at 1.0 interleaves ascenders and descenders. */
+/* ⚠ THE HERO HEADLINE IS SANS, AND THAT IS THE CORRECTION.
+   It was var(--ork-display) at weight 300 — a light serif. That was wrong
+   about the reference, not just different from it.
+
+   The reference's own roles, read off its computed styles:
+
+     h1  (the hero)          SANS   700   64px / 1.10 / tracking 0
+     h2  (product feature)   serif  400   79px
+     p   (lead paragraph)    serif  400   24px
+     h2  (section label)     sans   600   24px
+
+   Its serif carries PROSE and feature headings. Its masthead is a bold
+   grotesk. Setting the hero in a light serif inverted the whole voice: the
+   loudest thing on the page was the quietest face in the system.
+
+   So the h1 takes the body sans at 700, and the serif keeps everything it
+   is actually used for below — .ork-mono-h2, the display tiers, and all
+   running prose.
+
+   Tracking goes to -0.025em where the serif sat at -0.022em. Opposite of
+   the usual rule, and correct here: a grotesk at 76px has no serifs reaching
+   into the sidebearing, so it can take the tighter set that the serif could
+   not. */
 .ork-mono-h1 {
-  font-size: clamp(40px, 7.2vw, 100px);
-  line-height: 1.0;
-  letter-spacing: -0.05em;
-  font-weight: 500;
+  font-family: inherit;
+  font-size: clamp(36px, 5.9vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 700;
   color: var(--text);
   margin: 0;
   text-wrap: balance;
 }
 .ork-mono-h2 {
+  font-family: var(--ork-display);
+  font-optical-sizing: auto;
   font-size: clamp(26px, 3.4vw, 44px);
-  line-height: 1.06;
-  letter-spacing: -0.035em;
-  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.016em;
+  font-weight: 300;
   color: var(--text);
   margin: 0;
   text-wrap: balance;
 }
 .ork-mono-sub {
-  margin: 20px 0 0;
+  /* 20 -> 26: the hero headline above this is now a serif with 1.09 leading
+     rather than a grotesk at 1.0, so its last line sits optically higher in
+     its own box and the old gap closed up. */
+  margin: 26px 0 0;
   max-width: 54ch;
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.5;
+  /* The hero standfirst, in the serif like the rest of the prose. Sized up
+     from clamp(15,1.2vw,17) to pay back Literata's smaller x-height and to
+     sit nearer the reference's 24px lead paragraph. */
+  font-family: var(--ork-serif-text);
+  font-optical-sizing: auto;
+  font-size: clamp(18px, 1.55vw, 23px);
+  line-height: 1.45;
   color: var(--text-2);
 }
 
@@ -370,10 +695,12 @@
    This language is cheap on a phone — no texture, no blur, no gradients —
    so the work here is type and space, not performance. */
 @media (max-width: 760px) {
-  /* -0.05em on a 40px line closes the counters up at small sizes; the
-     tracking has to relax as the type shrinks or it reads as a smudge. */
-  .ork-mono-h1 { letter-spacing: -0.035em; }
-  .ork-mono-h2 { letter-spacing: -0.025em; }
+  /* The same principle as before — tracking relaxes as the type shrinks or
+     the counters close up — but starting from the serif's much smaller
+     desktop values rather than the grotesk's -0.05em/-0.035em. At 38px a
+     light serif wants essentially no negative tracking at all. */
+  .ork-mono-h1 { letter-spacing: -0.012em; }
+  .ork-mono-h2 { letter-spacing: -0.008em; }
 
   /* Two-thirds of empty screen is a luxury a 700px-tall viewport does not
      have. The headline still hangs low, but the hero stops reserving a
@@ -410,6 +737,72 @@
   width: 100%;
 }
 .ork-hero-copy--left .ork-mono-sub { margin-inline: 0; }
+
+/* ── Headline underline ───────────────────────────────────────────────────
+   The reference's one typographic device: the two words its headline turns
+   on carry a heavy rule. It is what stops three lines of bold sans reading
+   as a wall, and it is doing the job a colour change would otherwise do —
+   which matters on a page with one accent that is spent elsewhere.
+
+   ⚠ skip-ink: none IS THE WHOLE EFFECT. By default browsers break an
+   underline around descenders, and in the reference the rule runs straight
+   THROUGH the p of "products". Leave skip-ink on and you get a polite
+   typographic underline; turn it off and you get the drawn rule the design
+   is actually using.
+
+   Thickness and offset are in em so they track the clamp()ed headline
+   instead of going hairline at 76px and clubby at 36px. 0.06em lands near
+   the reference's ~4px at its 64px setting.
+
+   `from-font` is deliberately NOT used: it would hand thickness back to the
+   face's own metrics, which is the opposite of the point. */
+.ork-u {
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.13em;
+  text-decoration-skip-ink: none;
+}
+
+/* ── Hero standfirst: under the headline, above the buttons ───────────────
+   ⚠ THIS WAS A TWO-COLUMN GRID AND IT WAS A BUG, not just a preference.
+
+   .ork-hero-lattice is `position: absolute; right: 0; width: min(52vw,
+   620px)` — the 3D object occupies the RIGHT HALF of the hero. Putting the
+   standfirst in a right-hand column laid it directly over the wireframe.
+   The copy has z-index 1 so it rendered on top rather than vanishing, which
+   is worse: it looked deliberate.
+
+   The reference can run a right-hand lead because the right of its hero is
+   empty. Ours is not. So the lead goes back under the headline, where it
+   also lands in a better reading position than it had in either previous
+   arrangement:
+
+     headline  ->  standfirst  ->  buttons
+
+   One column, one direction. The earlier worry was that a stacked lead gets
+   skipped — true when it is the fourth thing down a long column, not when
+   it sits between the headline and the only two controls on the screen. You
+   have to pass it to reach them.
+
+   52ch is a measure decision now, not a clearance one. It was originally
+   sized to miss the hero's 3D object on the right; that object has been
+   removed, so this is simply the line length this serif wants at 19-21px —
+   long enough to avoid a ragged three-word rag, short enough to stay inside
+   a comfortable reading measure. */
+.ork-hero-grid { display: block; }
+.ork-hero-lead {
+  /* 26 -> 34px. Under a 2-line bold headline the old gap read as a fifth
+     line of the headline rather than as a new voice starting. */
+  margin-top: 34px;
+  max-width: 52ch;
+}
+/* ⚠ BUG FIX. .ork-rotator sets `justify-items: center`, which was right when
+   the hero was centred and wrong ever since it moved left. The grid cell is
+   as wide as the WIDEST alternate, so every shorter one was being centred
+   inside it — the second headline line stepped left and right by a dozen
+   pixels each time the rotator cycled, against a first line that never
+   moved. Start-aligned here, so both lines share one left edge. */
+.ork-hero-copy--left .ork-rotator { justify-items: start; }
 .ork-h1-accent {
   display: block;
   color: var(--text);
@@ -430,55 +823,199 @@
 
    This replaced a magnetic pull and a colour brighten — both gestures from
    the pill-shaped language this design retired. */
+/* ── BUTTONS, REBUILT ─────────────────────────────────────────────────────
+   ⚠ .ork-btn USED TO BE A SKIN, not a base. It drew the bracket control in
+   full — four corner gradients that grew on hover, a mono uppercase label,
+   square corners — and every variant then had to switch all of that off
+   before it could draw itself. `border: 0; background-image: none;` appeared
+   in two places purely to undo the base. That cascade is why a new variant
+   was expensive to add and easy to get wrong.
+
+   Now .ork-btn carries ONLY what every button shares: box, type, focus,
+   transition. The skin lives entirely in the variant. Adding one is adding
+   one rule, and nothing has to be undone.
+
+   ── SHAPE ────────────────────────────────────────────────────────────────
+   ⚠ Pill, not the 8px of the reference. This is a deliberate departure and
+   it is one value to put back (--btn-radius below). A full round on a warm
+   editorial ground reads as a control rather than as a tile — at 8px the
+   filled button and the card it sat beside had the same corner, so the
+   button stopped announcing itself as the thing you press.
+
+   ── TYPE ─────────────────────────────────────────────────────────────────
+   The label was GeistMono, 13px, uppercase, +0.06em. That is a terminal
+   chip, and this is a marketing CTA: it wants to be spoken, not typed. It
+   is now the body sans at 15px/500 with slightly negative tracking, which
+   also makes it the only place on the page where the sans appears at a size
+   a reader actually reads — deliberate, since controls should not whisper.
+
+   The prose serif is NOT used here. A serif label inside a pill reads as a
+   quotation, and a control is an instruction. */
 .ork-btn {
-  --btn-line: var(--btn-line-rest);
+  --btn-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  height: 40px;
-  padding: 0 20px;
-  border-radius: 0;
-  border-top: 1px solid var(--btn-line);
-  border-bottom: 1px solid var(--btn-line);
-  border-left: 0;
-  border-right: 0;
-  color: var(--btn-ink);
-  font-family: 'GeistMono', ui-monospace, monospace;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  height: 46px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: var(--btn-radius);
   background-color: transparent;
-  background-image:
-    linear-gradient(var(--btn-line), var(--btn-line)),
-    linear-gradient(var(--btn-line), var(--btn-line)),
-    linear-gradient(var(--btn-line), var(--btn-line)),
-    linear-gradient(var(--btn-line), var(--btn-line));
-  background-position: left top, right top, left bottom, right bottom;
-  background-repeat: no-repeat;
-  background-size: 1px 10px, 1px 10px, 1px 10px, 1px 10px;
-  transition:
-    background-size .34s cubic-bezier(.22,.61,.36,1),
-    border-color .22s ease,
-    color .22s ease;
-}
-.ork-btn:hover,
-.ork-btn:focus-visible {
-  --btn-line: var(--btn-line-hot);
-  color: var(--btn-ink-strong);
-  background-size: 1px 50%, 1px 50%, 1px 50%, 1px 50%;
-}
-.ork-btn:focus-visible { outline: 1px solid var(--btn-ink-strong); outline-offset: 3px; }
-/* The arrow travels a little further than the shared Arrow's 3px, so the two
-   halves of the gesture — the frame closing and the arrow leaving — read as
-   one movement rather than two. */
-.ork-btn:hover .ork-arrow { transform: translateX(5px); }
-.ork-btn-quiet {
-  border-top: 0;
-  border-bottom: 0;
   background-image: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    box-shadow       var(--duration-fast) var(--ease-standard),
+    color            var(--duration-fast) var(--ease-standard),
+    transform        var(--duration-fast) var(--ease-standard);
+}
+/* One ring for every variant, matching the site-wide focus rule. */
+.ork-btn:focus-visible { outline: 2px solid var(--ink-ground); outline-offset: 3px; }
+/* The arrow travels on hover AND on keyboard focus — the old rule was
+   :hover only, so a tabbing user never saw the affordance move. */
+.ork-btn:hover .ork-arrow,
+.ork-btn:focus-visible .ork-arrow { transform: translateX(5px); }
+.ork-btn[aria-disabled='true'],
+.ork-btn:disabled { opacity: 0.45; pointer-events: none; }
+
+/* ── Size ─────────────────────────────────────────────────────────────────
+   One step up, for a hero pair. Height and padding grow together so the
+   pill keeps its proportion; type grows less than the box, because a label
+   that scales with its container stops looking like a label. */
+.ork-btn-lg { height: 54px; padding: 0 30px; font-size: 16px; }
+
+/* ── Quiet ────────────────────────────────────────────────────────────────
+   Text and an arrow, no box. Was just the bracket base with its borders
+   switched off, which left a mono uppercase label floating with no frame —
+   it read as a disabled control rather than as a tertiary action.
+
+   The underline is on a pseudo-element rather than text-decoration so it can
+   animate from zero width; `currentColor` keeps it right in every context. */
+.ork-btn-quiet {
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  color: var(--text-2);
+  position: relative;
+}
+.ork-btn-quiet::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transition: right var(--duration-normal) var(--ease-emphasis);
+}
+.ork-btn-quiet:hover,
+.ork-btn-quiet:focus-visible { color: var(--text); }
+.ork-btn-quiet:hover::after,
+.ork-btn-quiet:focus-visible::after { right: 0; }
+
+/* ── Filled ink button ────────────────────────────────────────────────────
+   The primary action. Everything .ork-btn does with hairlines is switched
+   off here — the corner brackets, the top/bottom rules, the background-size
+   hover — and replaced with a solid block.
+
+   The label goes to the body sans rather than GeistMono. Mono on a filled
+   control reads as a terminal chip; this is a marketing CTA and wants to be
+   spoken, not typed. Letter-spacing comes down accordingly.
+
+   Hover lightens rather than darkens: the ground is already near-black, so
+   there is nowhere darker to go that still reads as a change. */
+/* ── Primary: a solid block of ink ────────────────────────────────────────
+   Skin only. Box, type and focus all come from .ork-btn, which is the point
+   of the rebuild — these two variants are now four declarations each.
+
+   ⚠ Primary and secondary share a silhouette ON PURPOSE. When two buttons
+   sit side by side, any difference in box reads as a mistake rather than as
+   hierarchy; the hierarchy is fill-versus-outline and nothing else. Do not
+   "improve" one of them to a different height. */
+.ork-btn-ink { background-color: var(--ink-ground); color: var(--ink-on); }
+/* Hover LIGHTENS. The ground is already near-black, so there is nowhere
+   darker to go that still reads as a change. */
+.ork-btn-ink:hover { background-color: #2B2A27; }
+
+/* ── Secondary: the same silhouette, drawn in outline ─────────────────────
+   inset box-shadow rather than a border, so the ring sits INSIDE the box.
+   A real border would add 2px to the width and make this button wider than
+   the filled one beside it — the exact mismatch the note above warns about.
+
+   ⚠ THE RING AND THE HOVER ARE BOTH TRANSLUCENT INK, NOT GROUND TOKENS, AND
+   BOTH USED TO BE WRONG.
+
+   The ring was --border. That is a card-edge value: 1.65:1 against the card
+   this button actually sits on inside ProductCards, where WCAG 1.4.11 asks
+   3:1 for the boundary of a control. --border-strong would not have fixed it
+   either, at 2.66:1. Ink at 48% is the first value that clears 3:1 on EVERY
+   ground the site has — card 3.23:1, page 3.18:1, footer 3.03:1 — which is
+   the property a control needs, since a button does not know what it is
+   sitting on.
+
+   The hover was `background-color: var(--surface)`. On the page that reads
+   as the control lifting. Inside a card it is a NO-OP: the card already IS
+   --surface, so hovering the only call to action on the product card changed
+   nothing at all. A translucent ink wash darkens whatever is beneath it, so
+   one value works on both grounds. */
+.ork-btn-line {
+  background-color: transparent;
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, 0.48);
+}
+.ork-btn-line:hover {
+  background-color: rgba(20, 20, 19, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, 0.72);
+}
+
+.ork-btn-ink:active,
+.ork-btn-line:active { transform: translateY(1px); }
+
+/* ── Footer links ─────────────────────────────────────────────────────────
+   A hover that darkens to full ink rather than underlining. On a tan ground
+   an underline on every link reads as a dense ruled block before anyone has
+   hovered anything; the colour step is enough, and it costs no layout.
+
+   :focus-visible gets the same treatment plus the global ring, so keyboard
+   and pointer see the same state. */
+.ork-footer-link {
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.ork-footer-link:hover,
+.ork-footer-link:focus-visible {
+  color: var(--text) !important;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────
+   Moved out of Panel's inline styles — see the note on that component. */
+.ork-panel {
+  --panel-hot-line: var(--border-strong);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-normal) var(--ease-standard),
+              box-shadow   var(--duration-normal) var(--ease-standard),
+              transform    var(--duration-normal) var(--ease-standard);
+}
+/* :focus-within as well as :hover, which is the whole point of moving this
+   into CSS — a card containing a link now shows state when that link is
+   tabbed to, which the pointer handlers could never do. */
+.ork-panel-hot:hover,
+.ork-panel-hot:focus-within {
+  border-color: var(--panel-hot-line);
+  transform: translateY(-2px);
+  /* A warm page wants a warm shadow. Pure-black alpha on cream greys the
+     area under the card and reads as dirt; this is the ink colour at low
+     alpha, which keeps the temperature. */
+  box-shadow: 0 2px 4px rgba(20, 20, 19, 0.03), 0 12px 28px rgba(20, 20, 19, 0.06);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -505,27 +1042,39 @@
    luminance and these hues carry less of it at low opacity.
 
    Contrast on #000: kg label 11.0:1, cloud label 12.9:1. */
-.ork-btn--kg {
-  --btn-line: var(--btn-kg-line);
-  color: var(--btn-kg-ink);
-}
-.ork-btn--kg:hover,
-.ork-btn--kg:focus-visible {
-  --btn-line: var(--btn-kg-line-hot);
-  color: var(--btn-kg-ink-hot);
-}
-.ork-btn--kg:focus-visible { outline-color: var(--btn-kg-ink); }
+/* ── Product tints ────────────────────────────────────────────────────────
+   ⚠ THESE WERE BROKEN BY THE REBUILD AND ARE NOW FIXED. They used to set
+   `--btn-line` — a variable the old bracket base owned and the new base does
+   not define — plus a `color` meant for an unfilled control. Every accented
+   Button on the site defaults to variant="primary", i.e. the FILLED one, so
+   the old rules would have painted --btn-kg-ink (#9A3412) onto
+   --ink-ground (#141413): dark brown on near-black, 2.52:1. Unreadable.
 
-.ork-btn--cloud {
-  --btn-line: var(--btn-cloud-line);
-  color: var(--btn-cloud-ink);
-}
-.ork-btn--cloud:hover,
-.ork-btn--cloud:focus-visible {
-  --btn-line: var(--btn-cloud-line-hot);
-  color: var(--btn-cloud-ink-hot);
-}
-.ork-btn--cloud:focus-visible { outline-color: var(--btn-cloud-ink); }
+   The tint now does what the prop means — it names the product by colouring
+   the FILL, not the label. Measured, because a bright fill only takes one of
+   the two label colours:
+
+     fill #FF7A1F (kg)     ink label 7.07:1   bone label 2.47:1
+     fill #48CBCB (cloud)  ink label 9.38:1   bone label 1.87:1
+
+   So tinted primaries carry the INK label, where the plain primary carries
+   the bone one. That inversion is the point: a bright pill is a light
+   surface and wants dark type on it.
+
+   Hover lightens, as the plain primary does — and on these it also raises
+   the label contrast rather than lowering it. */
+.ork-btn-ink.ork-btn--kg          { background-color: var(--kg); color: var(--ink-ground); }
+.ork-btn-ink.ork-btn--kg:hover    { background-color: #FF8A3D; }
+.ork-btn-ink.ork-btn--cloud       { background-color: var(--cloud-bright); color: var(--ink-ground); }
+.ork-btn-ink.ork-btn--cloud:hover { background-color: #6FDCDC; }
+
+/* On the outline variant the tint colours the ring and the label instead.
+   --btn-kg-ink is 6.94:1 on bone and --btn-cloud-ink 6.48:1, so both stay
+   readable as type here in a way they never were on the filled control. */
+.ork-btn-line.ork-btn--kg          { box-shadow: inset 0 0 0 1px var(--btn-kg-line); color: var(--btn-kg-ink); }
+.ork-btn-line.ork-btn--kg:hover    { box-shadow: inset 0 0 0 1px var(--btn-kg-line-hot); color: var(--btn-kg-ink-hot); }
+.ork-btn-line.ork-btn--cloud       { box-shadow: inset 0 0 0 1px var(--btn-cloud-line); color: var(--btn-cloud-ink); }
+.ork-btn-line.ork-btn--cloud:hover { box-shadow: inset 0 0 0 1px var(--btn-cloud-line-hot); color: var(--btn-cloud-ink-hot); }
 
 /* ── Mobile ───────────────────────────────────────────────────────────────
    This language costs nothing to render on a phone — no texture, no blur, no
@@ -586,10 +1135,18 @@
 .ork-hero-lattice {
   position: absolute;
   top: 50%;
-  right: clamp(-40px, -2vw, 0px);
+  right: clamp(-20px, -1vw, 0px);
   left: auto;
   transform: translateY(-50%);
-  width: min(52vw, 620px);
+  /* ⚠ 52vw/620px -> 38vw/460px. At the old size the object spanned past the
+     centre of the viewport and into the column the copy sits in — on a
+     1400px screen it was over 600px of a 1320px container. It did not read
+     as a figure beside the hero, it read as the hero.
+
+     38vw keeps it inside the right third at every width, which is also what
+     keeps it clear of the 52ch standfirst now that the copy is stacked on
+     the left. The two no longer share any horizontal space. */
+  width: min(38vw, 460px);
   aspect-ratio: 1;
   pointer-events: none;
   z-index: 0;
