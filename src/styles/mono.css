@@ -274,8 +274,27 @@
      to be seen. */
   --lattice-line:  #A8A296;
 
-  --footer-bg:     #E3DACC;
-  --footer-line:   rgba(20, 20, 19, 0.14);
+  /* ⚠ WAS #E3DACC, A WARM TAN — and by the time anyone looked, the page had
+     gone cool. Measured: the page sits at hue 252deg and that tan at 36.5deg.
+     215 degrees apart, very nearly opposite on the wheel. It was chosen when
+     the palette was warm bone and left behind when the palette changed; the
+     same stale-literal failure as --atmos-base before it.
+
+     It is now the FLOOR OF THE FIELD'S OWN RAMP. The field ramps toward deep
+     indigo but can never reach it, because dark ink stops being readable
+     below #565183 and the field has to carry body copy. The footer is the
+     one surface on the site that controls its own ink, so it is the one
+     place that end of the ramp can actually be used — which is also what
+     makes the page feel like it ENDS rather than stops.
+
+     ⚠ NOT BLACK. #171520 and #121214 are further down the sampled ramp and
+     both measure better, but both read as black, and black was removed from
+     this site deliberately. #231F3A is unmistakably violet and still gives
+     ink 13.69:1, muted 7.73:1 and the accent 9.14:1. */
+  --footer-bg:     #231F3A;
+  --footer-ink:        #EFEEF3;                  /* 13.69:1 — the page colour, inverted */
+  --footer-ink-muted:  rgba(239, 238, 243, 0.72);/*  7.73:1 */
+  --footer-line:   rgba(239, 238, 243, 0.16);
 
   /* ── Accent: green, borrowed and SPLIT BY MEASUREMENT ───────────────────
      ⚠ WAS #001AD0 BLUE throughout. The greens come from the reference's own
