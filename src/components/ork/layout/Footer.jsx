@@ -40,21 +40,21 @@ const COLUMNS = [
 
 export function Footer() {
   return (
-    /* ── INK FOOTER ───────────────────────────────────────────────────────
-       Was `--bg-alt` with a hairline on top: a slightly-stepped ground that
-       ended the page by fading out. The register this follows ends on a
-       full-bleed near-black block instead, and on a warm page that block is
-       the only hard stop there is — it is what makes the page feel finished
-       rather than scrolled-off.
+    /* ── THE FOOTER IS THE PAGE ───────────────────────────────────────────
+       This block has argued for three different grounds now: --bg-alt with a
+       rule, then a warm tan, then a full-bleed near-black "so the page feels
+       finished rather than scrolled-off". The site is light, and a dark slab
+       at the bottom of it was the only surface not obeying that.
 
-       ⚠ NO borderTop, still. The ground change is doing the work: --footer-bg
-       is the darkest tone in the system and steps clearly off the page. A
-       hairline on top of a visible change of ground is the double-draw this
-       codebase avoids everywhere else (see .ork-seam). */
-    /* ⚠ EVERY INK TOKEN BELOW IS A FOOTER TOKEN, NOT A PAGE TOKEN. The
-       ground is dark now, so --text and --text-2 would be dark-on-dark.
-       Nothing in this subtree may use the page ramp. */
-    <footer style={{ background: 'var(--footer-bg)', color: 'var(--footer-ink)' }}>
+       `transparent`, not a copy of --bg. The field is fixed behind the whole
+       document, so a footer painting its own ground — even the identical
+       colour — would punch a static rectangle through a moving gradient.
+
+       ⚠ AND THE borderTop IS BACK. The note here used to insist a hairline
+       would be a double-draw, because the change of ground already marked
+       the boundary. With no change of ground there is nothing to double, and
+       the rule is the only thing marking it. See --footer-line. */
+    <footer style={{ background: 'transparent', color: 'var(--text)', borderTop: '1px solid var(--footer-line)' }}>
       <Container wide className="pt-24 pb-12">
         <div className="grid lg:grid-cols-[1.3fr_1fr_1fr_1fr] gap-10 lg:gap-8">
           <div>
@@ -62,7 +62,7 @@ export function Footer() {
             {/* .ork-sub, not .ork-small: this is the one line of prose in the
                 footer, and the rest of the site now sets prose in the serif.
                 A sans caption here was the last place the old voice survived. */}
-            <p className="ork-sub mt-5" style={{ color: 'var(--footer-ink-muted)', maxWidth: 330 }}>
+            <p className="ork-sub mt-5" style={{ color: 'var(--text-2)', maxWidth: 330 }}>
               Infrastructure software for Kubernetes teams. KubeGraf works inside the clusters you
               already own.
             </p>
@@ -73,12 +73,12 @@ export function Footer() {
               {/* ⚠ --text-2, NOT --text-3. The original comment here warned
                   about exactly this on the old ink ground, and the warning
                   survives the change of ground: --text-3 measures 3.46:1 on
-                  --footer-bg, and 11px uppercase is NORMAL text by WCAG
+                  the footer's ground, and 11px uppercase is NORMAL text by WCAG
                   (large starts at 24px, or 18.66px bold), so it needs 4.5:1.
                   --text-2 is 6.59:1 here. The label being quieter than the
                   links is not worth failing contrast for; the size and the
                   caps already separate it. */}
-              <h2 className="ork-micro" style={{ color: 'var(--footer-ink-muted)', marginBottom: 16 }}>{col.title}</h2>
+              <h2 className="ork-micro" style={{ color: 'var(--text-2)', marginBottom: 16 }}>{col.title}</h2>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0 }} className="space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
@@ -87,7 +87,7 @@ export function Footer() {
                       target={l.external ? '_blank' : undefined}
                       rel={l.external ? 'noopener noreferrer' : undefined}
                       className="ork-small ork-footer-link"
-                      style={{ color: 'var(--footer-ink-muted)' }}
+                      style={{ color: 'var(--text-2)' }}
                     >
                       {l.label}
                     </a>
@@ -102,8 +102,8 @@ export function Footer() {
              style={{ borderTop: '1px solid var(--footer-line)' }}>
           {/* --text-2 for the same reason as the column headers above: 13px
               is normal text and --text-3 does not clear 4.5:1 on this ground. */}
-          <p className="ork-small" style={{ color: 'var(--footer-ink-muted)' }}>© 2026 Orkastor</p>
-          <p className="ork-small" style={{ color: 'var(--footer-ink-muted)' }}>
+          <p className="ork-small" style={{ color: 'var(--text-2)' }}>© 2026 Orkastor</p>
+          <p className="ork-small" style={{ color: 'var(--text-2)' }}>
             KubeGraf® is a registered trademark of ORKASTOR LIMITED.
           </p>
         </div>
