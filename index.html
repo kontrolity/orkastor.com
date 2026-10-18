@@ -27,13 +27,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Fonts: Cabinet Grotesk (display) + General Sans (body), Fontshare CDN -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&display=swap"
-    />
+    <!-- ⚠ NO GOOGLE FONTS REQUEST. There was a render-blocking stylesheet here
+         pulling Bricolage Grotesque, Instrument Sans and IBM Plex Mono, plus
+         two preconnects for it. The live site paints with NONE of them:
+         Bricolage belongs to the retired .lp design, and the other two appear
+         only as fallbacks after Geist and GeistMono — which are self-hosted
+         and preloaded below, so the fallbacks never render.
+
+         That was a blocking CSS round trip, two TLS handshakes and three font
+         families downloaded to be used by nothing. The fallback NAMES stay in
+         the CSS stacks; they simply resolve to system fonts now, which is
+         what a fallback is for. -->
     <!-- Geist (body/display on the landing page) is self-hosted: preload for fast hero paint -->
     <link rel="preload" href="/fonts/geist/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
 
