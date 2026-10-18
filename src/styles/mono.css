@@ -74,10 +74,13 @@
      and small marks; if you want the object to carry brand colour again,
      that is a deliberate departure from this reference rather than an
      oversight. */
-  --ork-accent:      #001AD0;
-  --ork-accent-soft: rgba(0, 26, 208, 0.16);
-  --ork-accent-line: rgba(0, 26, 208, 0.55);
-  --ork-accent-text: #6B7CFF;
+  /* Green, as in the light block. On black the bright spring green is
+     already high contrast, so the display and readable values converge —
+     #1DE26C measures 11.4:1 on #000, where forest would be unreadable. */
+  --ork-accent:      #1DE26C;
+  --ork-accent-soft: rgba(29, 226, 108, 0.16);
+  --ork-accent-line: rgba(29, 226, 108, 0.55);
+  --ork-accent-text: #1DE26C;
 
   /* ── Atmosphere (dark) ──────────────────────────────────────────────────
      The hero ground. Volumetric light rather than a painted rectangle: two
@@ -164,8 +167,11 @@
    ── THE ONE THING LIGHT DOES BETTER ───────────────────────────────────────
    #001AD0 measures 2.06:1 on black, which is why the dark theme had to lift
    its readable blue to #6B7CFF and keep the real one for marks that carry no
-   information. On bone that same blue is 9.68:1. So here --ork-accent-text
-   IS the reference blue: the light theme gets to use the actual brand value
+   information. ⚠ THAT WHOLE PARAGRAPH IS NOW HISTORY: the accent is green,
+   not blue — see the token block below. The lesson survives the change of
+   hue exactly, which is why it is kept: a bright accent is a FILL, and the
+   readable value is a different, darker one. Blue hit that wall on black;
+   green hits it on bone. --ork-accent-text
    for type, which the dark theme can never do. */
 .ork {
   /* ── Warm neutral ground ────────────────────────────────────────────────
@@ -196,10 +202,17 @@
      Pixel-sampled from the reference: page #F0EEE7, card #FAF9F5. Both
      kept exactly. The step between them is only 1.10:1 — the lift comes
      from direction, not from distance. */
-  --bg:            #F0EEE7;   /* warm grey — the page */
-  --bg-alt:        #E9E6DD;   /* stepped section */
-  --surface:       #FAF9F5;   /* card — LIGHTER than the page, on purpose */
+  /* ⚠ COOL, NOT WARM. Sampled from the reference's own field: its page is
+     #EFEEF3, a near-white with a faint lavender cast, and everything above
+     it stays on that axis. The warm bone this replaces fought the violet —
+     a sand ground under an indigo field reads as two designs arguing. */
+  --bg:            #EFEEF3;   /* cool near-white — the page */
+  --bg-alt:        #E8E7EF;   /* stepped section */
+  --surface:       #F8F7FB;   /* card — LIGHTER than the page, as before */
   --surface-2:     #FFFFFF;   /* nested / raised */
+  /* A stepped section over the field: translucent, so the gradient still
+     moves beneath it rather than being covered by a flat panel. */
+  --section-alt-wash: rgba(232, 231, 239, 0.62);
 
   /* Ink warms with the ground. #16171A was a blue-leaning near-black and it
      read cold against bone; this is the same darkness with the temperature
@@ -264,10 +277,28 @@
   --footer-bg:     #E3DACC;
   --footer-line:   rgba(20, 20, 19, 0.14);
 
-  --ork-accent:      #001AD0;
-  --ork-accent-soft: rgba(0, 26, 208, 0.10);
-  --ork-accent-line: rgba(0, 26, 208, 0.42);
-  --ork-accent-text: #001AD0;   /* 10.20:1 — the real one, see above */
+  /* ── Accent: green, borrowed and SPLIT BY MEASUREMENT ───────────────────
+     ⚠ WAS #001AD0 BLUE throughout. The greens come from the reference's own
+     tokens: mint #69FFD2, spring #1DE26C, forest #06351E.
+
+     Two of those three cannot carry text at all. Measured on this page:
+
+       mint   #69FFD2   1.07:1   decoration only
+       spring #1DE26C   1.49:1   decoration only
+       forest #06351E  11.78:1   readable
+
+     So they are split the way this file already splits --kg from --kg-text,
+     and the way the reference itself uses them: the bright green is a FILL
+     with dark type on it (ink on spring measures 10.66:1, on mint 14.78:1),
+     never type on the page. The dark green is the readable one.
+
+     ⚠ DO NOT PUT --ork-accent ON TEXT. At 1.49:1 it is invisible. That is
+     the same mistake the file header records about #001AD0 on black, in the
+     other direction. */
+  --ork-accent:      #1DE26C;   /*  1.49:1 — fills, dots, marks. NEVER text */
+  --ork-accent-soft: rgba(29, 226, 108, 0.16);
+  --ork-accent-line: rgba(29, 226, 108, 0.45);
+  --ork-accent-text: #06351E;   /* 11.78:1 page · 12.98:1 card · 9.88:1 footer */
 
   /* ── Atmosphere (light) ─────────────────────────────────────────────────
      The same construction, inverted. NOT a white rectangle: the blooms are
@@ -291,38 +322,33 @@
 
      Reinstating the light: put real colours back in these three. The
      machinery in .ork-atmos is untouched. */
-  /* ⚠ THESE WERE ALL `transparent`. The hero ground was deliberately flat,
-     matching a reference whose hero is flat bone end to end. They are back
-     because the hero now has nothing else in it — the 3D object is gone, and
-     a completely static field of one colour behind two lines of type reads
-     as a page that has not finished loading rather than as restraint.
+  /* ── The field ─────────────────────────────────────────────────────────
+     The reference's whole visual identity is one enormous soft violet
+     gradient, grained, drifting. Its exact ramp, sampled from a screenshot
+     of the live site:
 
-     WARM, not the brand blue. The blue blooms this started with tinted the
-     whole hero lavender and were the one cold thing on a bone page. These
-     are sand at low alpha: the ground stays the same temperature and only
-     its depth changes.
+       #EFEEF3  top, near-white      dark ink 15.97:1
+       #E6E4F8  violet begins        dark ink 14.76:1
+       #C0BCE5  violet core          dark ink 10.15:1
+       #565183  deep indigo          dark ink  2.55:1   <- WALL
+       #1F1A70  saturated            dark ink  1.26:1
+       #121214  floor                dark ink  1.02:1
 
-     ⚠ ALPHAS ARE BOUNDED BY CONTRAST, NOT BY TASTE. At the bloom's densest
-     the composited ground is #E8E1D2, where --text measures 14.16:1,
-     --text-2 7.01:1 and --text-3 4.81:1. All three still clear AA for normal
-     text, which is the ceiling these values were chosen against — push them
-     further and --text-3 is the first to fail. */
-  /* ⚠ var(--bg), NOT A LITERAL. It was hardcoded #FAF9F5, which was correct
-     when --bg WAS #FAF9F5 and became wrong the moment the grounds were
-     inverted — the hero stayed on the old light value while the page moved
-     to the warm grey beneath it. The hero was a lighter panel than the rest
-     of the page, and scrolling out of it stepped DOWN in brightness, which
-     is backwards: in this design the page is the grey and only CARDS lift
-     off it.
+     ⚠ THE RAMP STOPS AT THE VIOLET CORE, AND IT HAS TO. Below #565183 no
+     dark ink is readable; light ink only starts working at that same value.
+     There is no single ink colour that survives the whole ramp. On the
+     reference that is fine, because its dark floor carries nothing but a
+     white-label pill — the body copy all sits in the light top. A site-wide
+     field with normal type cannot do that.
 
-     Binding to the token instead of repeating its value is what stops that
-     happening again. The hero is now the page; the drift supplies the depth
-     that the flat colour used to fake. */
+     So this runs near-white to violet core and stops. Getting the floor as
+     well means inverting the site's ink, i.e. the dark theme — the token
+     block for which is still in this file, unreachable. */
   --atmos-base:     var(--bg);
-  --atmos-glow-a:   rgba(216, 201, 168, 0.34);
-  --atmos-glow-b:   rgba(201, 180, 154, 0.22);
-  --atmos-vignette: rgba(120, 110, 92, 0.05);
-  --atmos-grain:    0.035;
+  --atmos-glow-a:   rgba(124, 116, 214, 0.42);  /* the violet sweep */
+  --atmos-glow-b:   rgba(192, 188, 229, 0.52);  /* the pale shoulder */
+  --atmos-vignette: rgba(86, 81, 131, 0.26);    /* deepest permitted */
+  --atmos-grain:    0.055;
 
   --grid-line: rgba(0, 0, 0, 0.05);
   --glow:      transparent;
@@ -459,16 +485,29 @@
   z-index: -2;
   /* Oversized so the drift below never swings an edge of the gradient into
      view. -18% on every side is more than the animation can travel. */
-  inset: -18%;
+  /* Oversized well past anything the drift and swell can reach. */
+  inset: -22%;
   /* ⚠ 54s, and alternate, so a full cycle is nearly two minutes. Ambient
      means it must never catch the eye: if a visitor can see it moving, it
      has failed. transform only — the gradient itself is static and the
      pseudo-element is composited, so this costs no repaint and no layout. */
-  animation: ork-atmos-drift 54s var(--ease-standard) infinite alternate;
+  /* ⚠ TWO animations on MUTUALLY PRIME periods, 61s and 47s, using the
+     INDIVIDUAL `translate` and `scale` properties rather than one `transform`.
+     That is the whole trick: a single transform keyframe can only hold one
+     combined value, so position and size would move in lockstep and the
+     field would visibly loop every cycle. Driven separately, the pattern
+     does not repeat for 61x47 seconds — just under 48 minutes — which is
+     what makes it read as weather rather than as a loop. */
+  animation: ork-atmos-drift 61s var(--ease-standard) infinite alternate,
+             ork-atmos-swell 47s var(--ease-standard) infinite alternate;
+  /* ⚠ THESE POSITIONS ARE THE ONES THE CONTRAST WAS MEASURED AGAINST — see
+     the token block. Moving a bloom left or up pushes density into the copy
+     column, and the 14.78:1 worst case stops being true. If you move one,
+     re-measure across the copy box (x 4-52%, y 16-66%), not at its centre. */
   background:
-    radial-gradient(ellipse 78% 58% at 74% 26%, var(--atmos-glow-a), transparent 64%),
-    radial-gradient(ellipse 62% 52% at 16% 82%, var(--atmos-glow-b), transparent 60%),
-    radial-gradient(ellipse 130% 85% at 50% 118%, var(--atmos-vignette), transparent 72%);
+    radial-gradient(ellipse 62% 56% at 84% 74%, var(--atmos-glow-a), transparent 70%),
+    radial-gradient(ellipse 58% 46% at 72% 16%, var(--atmos-glow-b), transparent 66%),
+    radial-gradient(ellipse 125% 70% at 50% 116%, var(--atmos-vignette), transparent 74%);
 }
 .ork-atmos::after {
   z-index: -1;
@@ -482,8 +521,84 @@
    diagonally, so the light never returns to the same arrangement within a
    cycle — which is what stops it reading as a loop. */
 @keyframes ork-atmos-drift {
-  from { transform: translate3d(-1.6%, -1.2%, 0) scale(1.02); }
-  to   { transform: translate3d(1.6%,  1.4%, 0) scale(1.06); }
+  from { translate: -3.5% -2.4%; }
+  to   { translate:  3.5%  2.8%; }
+}
+@keyframes ork-atmos-swell {
+  from { scale: 1.04; }
+  to   { scale: 1.14; }
+}
+
+/* ── The field, site-wide ─────────────────────────────────────────────────
+   .ork-atmos puts a field on ONE section. This puts it behind the whole
+   document, which is what the reference actually does: scroll its site and
+   the gradient does not scroll with you, because it is the backdrop rather
+   than a section background.
+
+   `position: fixed` is the entire difference and it is load-bearing. A field
+   that scrolled would re-run its ramp per section, so every section would
+   have its own pale top and violet bottom and the page would read as a
+   stack of identical panels. Fixed, there is ONE field and content passes
+   over it.
+
+   ⚠ Sections must therefore be transparent for this to be visible at all —
+   see Section in ui/index.jsx. Cards keep their own grounds, because a card
+   is meant to sit ON the field, not be a hole in it.
+
+   z-index: -1 with no stacking context on .ork, so it sits behind content
+   without needing anything else to opt in. */
+.ork-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--atmos-base);
+}
+.ork-field::before,
+.ork-field::after {
+  content: '';
+  position: absolute;
+  inset: -22%;
+  pointer-events: none;
+}
+.ork-field::before {
+  background:
+    radial-gradient(ellipse 72% 58% at 78% 88%, var(--atmos-glow-a), transparent 72%),
+    radial-gradient(ellipse 86% 52% at 46% 104%, var(--atmos-glow-b), transparent 68%),
+    radial-gradient(ellipse 120% 46% at 50% 124%, var(--atmos-vignette), transparent 70%);
+  animation: ork-atmos-drift 61s var(--ease-standard) infinite alternate,
+             ork-atmos-swell 47s var(--ease-standard) infinite alternate;
+}
+/* Grain sits on the field rather than on each section, so it never doubles
+   where two grained things overlap. */
+.ork-field::after {
+  inset: 0;
+  opacity: var(--atmos-grain);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+}
+
+/* ── The field, on a phone ────────────────────────────────────────────────
+   The gradient and its drift are cheap: transform only, on a layer the
+   compositor already owns. The GRAIN is not. `mix-blend-mode: overlay`
+   forces the compositor to read back everything painted beneath the layer
+   and re-blend it — full-screen, every frame the field moves. On a desktop
+   GPU that is invisible; on a phone it is the single most expensive thing
+   this page does.
+
+   So below 760px the grain stops blending and becomes a plain low-opacity
+   overlay. It is a slightly weaker texture and it costs nothing, which is
+   the right trade on the device least able to afford the readback.
+
+   The drift itself stays — removing motion for its own sake would make the
+   phone the only place the design does not move, and transform on a
+   composited layer is genuinely close to free. */
+@media (max-width: 760px) {
+  .ork-field::after {
+    mix-blend-mode: normal;
+    opacity: calc(var(--atmos-grain) * 0.6);
+  }
 }
 
 /* Grain on its own, for grounds that already have their own background
@@ -528,7 +643,8 @@
 .ork-tag i::after  { content: ']'; }
 
 /* A mono label that IS information — spec keys, dates, statuses. Uses the
-   readable blue, never #001AD0. */
+   readable GREEN (#06351E, 11.78:1), never the bright #1DE26C, which is
+   1.49:1 on this ground and would be unreadable. */
 .ork-mono-accent {
   font-family: 'GeistMono', ui-monospace, monospace;
   font-size: 12px;
@@ -589,12 +705,14 @@
   text-wrap: balance;
 }
 .ork-mono-h2 {
-  font-family: var(--ork-display);
-  font-optical-sizing: auto;
-  font-size: clamp(26px, 3.4vw, 44px);
-  line-height: 1.14;
-  letter-spacing: -0.016em;
-  font-weight: 300;
+  /* Follows .ork-mono-h1 and the display tiers onto the sans — see the note
+     in orkastor.css. Weight 300 -> 700 and tracking -0.016 -> -0.024em for
+     the same reasons given there. */
+  font-family: inherit;
+  font-size: clamp(24px, 3.1vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.024em;
+  font-weight: 700;
   color: var(--text);
   margin: 0;
   text-wrap: balance;
@@ -605,13 +723,11 @@
      its own box and the old gap closed up. */
   margin: 26px 0 0;
   max-width: 54ch;
-  /* The hero standfirst, in the serif like the rest of the prose. Sized up
-     from clamp(15,1.2vw,17) to pay back Literata's smaller x-height and to
-     sit nearer the reference's 24px lead paragraph. */
-  font-family: var(--ork-serif-text);
-  font-optical-sizing: auto;
-  font-size: clamp(18px, 1.55vw, 23px);
-  line-height: 1.45;
+  /* Sans, like everything else now. Sized down from clamp(18,1.55vw,23):
+     that range was paying back Source Serif's small x-height, and Geist does
+     not need it. */
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.55;
   color: var(--text-2);
 }
 
@@ -695,12 +811,14 @@
    This language is cheap on a phone — no texture, no blur, no gradients —
    so the work here is type and space, not performance. */
 @media (max-width: 760px) {
-  /* The same principle as before — tracking relaxes as the type shrinks or
-     the counters close up — but starting from the serif's much smaller
-     desktop values rather than the grotesk's -0.05em/-0.035em. At 38px a
-     light serif wants essentially no negative tracking at all. */
-  .ork-mono-h1 { letter-spacing: -0.012em; }
-  .ork-mono-h2 { letter-spacing: -0.008em; }
+  /* ⚠ RETUNED FOR THE SANS. These were -0.012em and -0.008em, values chosen
+     for a light serif whose serifs were already filling the sidebearing.
+     Both headings are a grotesk at 700 now, which takes a tighter set — and
+     the principle still holds that tracking relaxes as type shrinks, so
+     these sit looser than the desktop -0.025em/-0.024em without going near
+     the serif's near-zero. */
+  .ork-mono-h1 { letter-spacing: -0.02em; }
+  .ork-mono-h2 { letter-spacing: -0.018em; }
 
   /* Two-thirds of empty screen is a luxury a 700px-tall viewport does not
      have. The headline still hangs low, but the hero stops reserving a
@@ -979,6 +1097,40 @@
 .ork-btn-ink:active,
 .ork-btn-line:active { transform: translateY(1px); }
 
+/* ── Popover / sheet ──────────────────────────────────────────────────────
+   The nav's products popover and its mobile sheet. Both were framer-motion
+   AnimatePresence blocks; this is the same gesture in CSS, and taking them
+   off framer removed the library from every page's critical path.
+
+   ⚠ `visibility` is the load-bearing property, not opacity. Staying mounted
+   means the panel's links would remain tabbable and readable by a screen
+   reader while invisible — a keyboard user would tab into a menu that is not
+   on screen. visibility:hidden removes it from both the tab order and the
+   accessibility tree.
+
+   It is transitioned at 0s with a DELAY on exit so it stays visible for the
+   duration of the fade, and at 0s with no delay on enter so it is available
+   the instant the fade starts. That delay is why this needs two transition
+   declarations rather than one. */
+.ork-pop {
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity    160ms var(--ease-standard),
+              transform  160ms var(--ease-standard),
+              visibility 0s linear 160ms;
+}
+.ork-pop.is-open {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity    160ms var(--ease-standard),
+              transform  160ms var(--ease-standard),
+              visibility 0s;
+}
+
 /* ── Footer links ─────────────────────────────────────────────────────────
    A hover that darkens to full ink rather than underlining. On a tan ground
    an underline on every link reads as a dense ruled block before anyone has
@@ -1076,20 +1228,60 @@
 .ork-btn-line.ork-btn--cloud       { box-shadow: inset 0 0 0 1px var(--btn-cloud-line); color: var(--btn-cloud-ink); }
 .ork-btn-line.ork-btn--cloud:hover { box-shadow: inset 0 0 0 1px var(--btn-cloud-line-hot); color: var(--btn-cloud-ink-hot); }
 
-/* ── Mobile ───────────────────────────────────────────────────────────────
-   This language costs nothing to render on a phone — no texture, no blur, no
-   gradients — so the work here is targets and measure, not performance. */
-@media (max-width: 760px) {
-  /* 40px is under the 44px tap-target guidance, and these are the primary
-     calls to action. The frame grows with the button, so the bracket still
-     reads. */
-  .ork-btn { height: 46px; padding: 0 18px; }
+/* ── The nav's scrolled chrome ────────────────────────────────────────────
+   Was four inline properties on <header>. In CSS so the blur can be dropped
+   per-breakpoint, which an inline style makes impossible. */
+.ork-nav {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--duration-normal) var(--ease-standard),
+              border-color     var(--duration-normal) var(--ease-standard),
+              backdrop-filter  var(--duration-normal);
+}
+.ork-nav.is-scrolled {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom-color: var(--border-soft);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
 
-  /* Stacked CTAs go full width. Two half-width bracket boxes side by side on
-     a phone give cramped targets and a ragged right edge. */
+/* ── Mobile ───────────────────────────────────────────────────────────────
+   ⚠ THIS COMMENT USED TO READ "costs nothing to render on a phone — no
+   texture, no blur, no gradients". All three of those are now false: the
+   site has a full-screen animated gradient with grain, and this header
+   blurs what is behind it. So performance IS part of the work here.
+
+   The work is targets, measure, AND the two things that read back pixels. */
+@media (max-width: 760px) {
+  /* ⚠ NO BACKDROP BLUR ON PHONES. A blurred backdrop forces the compositor
+     to sample everything painted behind the header — and what is behind it
+     is the animated field, so that readback happens on every frame of a
+     scroll, at the top of the screen, on the weakest GPU the site runs on.
+
+     The bar goes nearly opaque instead. It loses the glassiness and keeps
+     the legibility, which is the part that matters when the thing behind it
+     is a moving gradient. */
+  .ork-nav.is-scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: color-mix(in srgb, var(--bg) 96%, transparent);
+  }
+}
+@media (max-width: 760px) {
+  /* ⚠ THE `height: 46px` OVERRIDE THAT WAS HERE IS GONE — .ork-btn is 46px
+     at every width now, so this was re-stating the base. Its comment still
+     warned that "40px is under the 44px tap-target guidance", which stopped
+     being true when the control was rebuilt. Both sizes clear the 44px
+     minimum: 46px default, 54px for size="lg".
+
+     ⚠ AND `.ork-btn { width: 100% }` WAS UNSCOPED. It made EVERY button on
+     the site full-width on a phone — including the trailing "kubegraf.io"
+     link under the product columns, which is a quiet tertiary action and
+     read as a second primary CTA. Full width is right for a stacked pair of
+     hero CTAs and wrong for a standalone one, so it is scoped to them. */
   .ork-hero-cta { align-items: stretch; }
-  .ork-hero-cta > * { width: 100%; }
-  .ork-btn { width: 100%; }
+  .ork-hero-cta > *,
+  .ork-hero-cta .ork-btn { width: 100%; }
 }
 
 @media (max-width: 380px) {
@@ -1183,6 +1375,10 @@
    in the reader's eye. A card that moves along Z under a shared perspective
    comes toward the reader and the row holds still. It is also the honest
    version of the gesture: the page has a camera now, so use it. */
+/* ⚠ UNUSED SINCE ProductCards STOPPED BEING A CARD ROW. The only consumer
+   was that one-item grid; see the note in ProductCards.jsx. Kept rather than
+   deleted, under the same rule as the dark token block and the retired .lp
+   pages — a perspective system is a thing to restore, not to re-derive. */
 .ork-depth {
   perspective: 1400px;
   perspective-origin: 50% 40%;

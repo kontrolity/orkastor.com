@@ -64,7 +64,7 @@ export default function OrkAbout() {
               <Reveal key={name} delay={i * 70}>
                 <Panel className="p-8 h-full flex flex-col">
                   <p className="ork-micro" style={{ color: ink, marginBottom: 10 }}>{side}</p>
-                  <p className="ork-display-m" style={{ color: 'var(--text)', marginBottom: 14 }}>{name}</p>
+                  <p className="ork-heading" style={{ color: 'var(--text)', marginBottom: 14 }}>{name}</p>
                   <p className="ork-body" style={{ color: 'var(--text-2)', marginBottom: 26 }}>{body}</p>
                   <div className="mt-auto">
                     <Button href={href} variant="secondary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)' }}>Read more <Arrow /></Button>

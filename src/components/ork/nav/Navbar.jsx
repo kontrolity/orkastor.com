@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
 import { Container } from '../ui';
@@ -62,15 +61,13 @@ export function Navbar({ onDeep = false }) {
 
   return (
     <>
+      {/* ⚠ The scrolled chrome moved from this inline style into .ork-nav /
+          .is-scrolled. It had to: `backdrop-filter` was set inline, and an
+          inline style cannot be overridden by a media query — so there was no
+          way to turn the blur off on phones, where it is the most expensive
+          thing in the header. See the mobile block in mono.css. */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]"
-        style={{
-          transition: 'background-color var(--duration-normal) var(--ease-standard), border-color var(--duration-normal) var(--ease-standard), backdrop-filter var(--duration-normal)',
-          background: scrolled ? 'color-mix(in srgb, var(--bg) 82%, transparent)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(16px) saturate(150%)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(16px) saturate(150%)' : 'none',
-          borderBottom: `1px solid ${scrolled ? 'var(--border-soft)' : 'transparent'}`,
-        }}
+        className={`ork-nav fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]${scrolled ? ' is-scrolled' : ''}`}
       >
         <Container wide className="ork-nav-inner h-[64px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0">
@@ -92,13 +89,14 @@ export function Navbar({ onDeep = false }) {
                 <ChevronDown size={14} className="transition-transform" style={{ transform: products ? 'rotate(180deg)' : 'none' }} />
               </button>
 
-              <AnimatePresence>
-                {products ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[368px]"
-                  >
+              {/* ⚠ ALWAYS MOUNTED, toggled by a class. This was AnimatePresence
+                  + motion.div, which pulled framer-motion into the main bundle
+                  — 38 kB gzipped on every page of the site, for two fades.
+                  .ork-pop does the same 160ms fade-and-rise in CSS, and
+                  transitions `visibility` so the panel leaves the tab order
+                  and the accessibility tree when closed rather than merely
+                  being invisible. */}
+              <div className={`ork-pop absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[368px]${products ? ' is-open' : ''}`}>
                     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 6, boxShadow: '0 20px 56px -16px rgba(5,11,18,0.34)' }}>
                       {PRODUCTS.map((p) => (
                         <a key={p.key} href={p.href}
@@ -115,9 +113,7 @@ export function Navbar({ onDeep = false }) {
                         </a>
                       ))}
                     </div>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
+              </div>
             </div>
 
             {LINKS.map((l) => (
@@ -142,12 +138,21 @@ export function Navbar({ onDeep = false }) {
               no switch. Restoring it is re-adding the import and these two
               call sites. */}
 
+          {/* ⚠ 44x44, NOT `p-2`. It was 8px of padding around a 20px icon —
+              a 36px target, under the 44px minimum this codebase holds itself
+              to elsewhere (the hero CTA comment cites the same number). The
+              icon is unchanged; the hit area grew around it.
+
+              `-mr-3` pulls the BOX back so the icon still sits on the
+              container's optical right edge: a 44px target aligned by its
+              box would look inset next to the 20px glyph it contains. */}
           <button
             type="button"
-            className="lg:hidden p-2 -mr-2"
+            className="lg:hidden inline-flex h-11 w-11 items-center justify-center -mr-3"
             style={{ color: ink }}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
+            aria-controls="ork-mobile-nav"
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -155,15 +160,12 @@ export function Navbar({ onDeep = false }) {
         </Container>
       </header>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            ref={menuRef}
-            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18 }}
-            className="fixed left-4 right-4 top-[88px] sm:top-[96px] z-50 lg:hidden p-2"
-            style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', boxShadow: '0 24px 60px -18px rgba(5,11,18,0.4)' }}
-          >
+      <div
+        ref={menuRef}
+        id="ork-mobile-nav"
+        className={`ork-pop fixed left-4 right-4 top-[88px] sm:top-[96px] z-50 lg:hidden p-2${open ? ' is-open' : ''}`}
+        style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', boxShadow: '0 24px 60px -18px rgba(5,11,18,0.4)' }}
+      >
             {/* Products becomes a titled group on mobile: a hover disclosure is a
                 dead control without a pointer. */}
             <p className="ork-micro px-3 pt-3 pb-1" style={{ color: 'var(--text-3)' }}>Products</p>
@@ -185,9 +187,7 @@ export function Navbar({ onDeep = false }) {
                 {l.label}
               </a>
             ))}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      </div>
     </>
   );
 }

@@ -28,9 +28,15 @@ export function Section({ children, tone = 'page', id = undefined, className = '
   // the theme; under the mono language that inverted: the white site paints no
   // section grounds, so --deep-bg resolves to the page there and keeps the navy
   // in dark. See the two blocks in styles/mono.css.
+  /* ⚠ TRANSPARENT, NOT var(--bg). The field (.ork-field) is fixed behind
+     the whole document; a section painting its own ground would cover it and
+     the gradient would only ever be visible in the hero. `alt` keeps a
+     translucent wash so a stepped section still reads as stepped without
+     blocking the field entirely. Cards still paint — a card is meant to sit
+     ON the field, not be a hole in it. */
   const style = tone === 'deep'
     ? { background: 'var(--deep-bg)', color: 'var(--deep-ink)' }
-    : { background: tone === 'alt' ? 'var(--bg-alt)' : 'var(--bg)' };
+    : { background: tone === 'alt' ? 'var(--section-alt-wash)' : 'transparent' };
   return (
     <section
       id={id}

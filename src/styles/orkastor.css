@@ -139,6 +139,11 @@
      ⚠ Source Serif's x-height is 0.475 against Geist's 0.530 — the widest
      gap of any candidate — so serif text set at a sans size reads ~10%
      smaller. The prose sizes below compensate. Do not "fix" them back. */
+  /* ⚠ NOTHING READS THESE TWO ANY MORE — every display tier and every prose
+     class is on the sans. They are kept so the serif system is one edit away
+     rather than a re-derivation, but the WEBFONT IS NO LONGER LOADED:
+     restoring them means putting Source Serif 4 back in index.html's font
+     link as well, or they will silently fall through to Georgia. */
   --ork-display: 'Source Serif 4', Georgia, ui-serif, serif;
   /* Same family for running prose. The reference sets its BODY default to
      the serif and opts UI back into the sans; this does it the safe way
@@ -146,7 +151,14 @@
      prose classes opt in. Same result, fewer ways to break a button. */
   --ork-serif-text: 'Source Serif 4', Georgia, ui-serif, serif;
 
-  background-color: var(--bg);
+  /* ⚠ TRANSPARENT, NOT var(--bg). The site's ground is now .ork-field, a
+     fixed layer at z-index -1 — and an element's own background paints IN
+     FRONT of its negative-z children, so any background here would hide the
+     field completely. The base colour moved onto the field itself.
+
+     `background-color` on <body> still matches, so overscroll and fast
+     scrolling never flash through to white. */
+  background-color: transparent;
   color: var(--text);
   font-family: 'Geist', 'Instrument Sans', system-ui, -apple-system, sans-serif;
   font-synthesis: none;
@@ -216,22 +228,36 @@
 /* ── Type scale ──────────────────────────────────────────────────────────── */
 /* clamp() rather than breakpoint jumps: a headline that steps at 768px looks
  * broken at 800px. Every step is capped so nothing becomes a billboard. */
-/* ⚠ The tracking here USED TO BE -0.035/-0.03/-0.024em at weight 600. Those
-   numbers were right for Geist and are wrong for a serif: negative tracking
-   that a grotesk absorbs makes serifs touch, because the serifs themselves
-   are already reaching into the sidebearing. Each tier is roughly halved,
-   and the weight drops to 300 — a serif at 600 across a 70px headline is a
-   slab, which is the opposite of the reference.
+/* ── Display: SANS, matching the hero ──────────────────────────────────────
+   ⚠ THESE WERE A LIGHT SERIF (Source Serif 4 at 300/350) and are now the
+   body grotesk at 700. Two reasons, and the first is internal:
 
-   Leading goes the other way. Grotesk display can sit at 1.02; a serif needs
-   air between lines or the ascenders and descenders interleave. */
-.ork-display-xl { font-family: var(--ork-display); font-optical-sizing: auto; font-size: clamp(2.4rem, 6.2vw, 4.6rem);  line-height: 1.08; letter-spacing: -0.022em; font-weight: 300; }
-.ork-display-l  { font-family: var(--ork-display); font-optical-sizing: auto; font-size: clamp(2rem,   4.6vw, 3.3rem);  line-height: 1.12; letter-spacing: -0.019em; font-weight: 300; }
-/* 350, not 300: this tier bottoms out near 26px, and the page sets
-   -webkit-font-smoothing: antialiased globally, which thins light serifs.
-   At display sizes that reads as refinement; at 26px it reads as a render
-   bug. The extra 50 buys the stems back without changing the voice. */
-.ork-display-m  { font-family: var(--ork-display); font-optical-sizing: auto; font-size: clamp(1.6rem, 3.2vw, 2.35rem); line-height: 1.16; letter-spacing: -0.014em; font-weight: 350; }
+   THE HERO IS ALREADY SANS. .ork-mono-h1 is Geist 700 — set that way because
+   the reference it came from puts its h1 in a grotesk and reserves the serif
+   for prose. Leaving the SECTION headings on a light serif meant the biggest
+   type on the page and the second-biggest type on the page were different
+   species, and the page read as two designs meeting halfway down.
+
+   AND THE CURRENT REFERENCE HAS NO SERIF AT ALL. harmonic.ai runs on one
+   grotesk plus a mono — PP Neue Montreal, Inter, Fira Code — and nothing
+   else. A serif heading is not a lighter version of that; it is a different
+   idea.
+
+   SIZES COME DOWN with the weight change, and that is not a contradiction.
+   A grotesk at 700 puts far more ink on a line than a serif at 300, so the
+   same measurement reads much louder: display-l 3.3rem -> 2.9rem keeps the
+   optical size while the literal size shrinks.
+
+   TRACKING GOES THE OTHER WAY, tighter rather than looser (-0.019 ->
+   -0.025em), for the reason the hero note gives: a grotesk has no serifs
+   reaching into the sidebearing, so it takes a tighter set than the serif
+   could.
+
+   ⚠ --ork-display and --ork-serif-text are still defined and still point at
+   Source Serif 4. Nothing reads them now. Kept, not deleted. */
+.ork-display-xl { font-size: clamp(2.3rem, 5.8vw, 4.1rem);  line-height: 1.08; letter-spacing: -0.028em; font-weight: 700; }
+.ork-display-l  { font-size: clamp(1.9rem, 4.2vw, 2.9rem);  line-height: 1.10; letter-spacing: -0.025em; font-weight: 700; }
+.ork-display-m  { font-size: clamp(1.5rem, 3.0vw, 2.1rem);  line-height: 1.15; letter-spacing: -0.022em; font-weight: 700; }
 .ork-heading    { font-size: clamp(1.15rem,1.9vw, 1.4rem);  line-height: 1.25; letter-spacing: -0.018em; font-weight: 600; }
 /* ── Prose goes serif ─────────────────────────────────────────────────────
    .ork-sub is the standfirst under a heading; the reference sets exactly
@@ -246,8 +272,28 @@
 
    Everything else — nav, buttons, labels, spec rows, .ork-micro, .ork-mono —
    stays on Geist. */
-.ork-sub        { font-family: var(--ork-serif-text); font-optical-sizing: auto; font-size: 1.25rem; line-height: 1.45; letter-spacing: 0; }
-.ork-body       { font-family: var(--ork-serif-text); font-optical-sizing: auto; font-size: 1.03rem;  line-height: 1.58; letter-spacing: 0; }
+/* The standfirst follows the headings off the serif — it sits directly under
+   one, and a serif paragraph beneath a grotesk heading is the same mismatch
+   one line further down. 1.25 -> 1.15rem because Geist's x-height is a tenth
+   larger than Source Serif's, so it reads bigger at a smaller measurement. */
+.ork-sub        { font-size: 1.15rem; line-height: 1.55; letter-spacing: -0.006em; }
+/* ⚠ .ork-body IS SANS AGAIN. It was switched to the serif along with
+   .ork-sub, on the reasoning that "running prose" takes the serif. That was
+   too broad a reading of its own name: every one of its twelve uses is
+   inside a card, a panel or a list — UI copy sitting directly beside sans
+   labels, sans bullets and a sans button. It was never running prose.
+
+   The result inside a product card was five changes of voice in one box:
+   sans caps label, serif heading, sans caps, serif paragraph, sans bullets.
+
+   THE RULE, so this does not drift again:
+     serif  — .ork-display-* and .ork-sub. Section headings and standfirsts.
+               Editorial type that a reader meets before deciding to read on.
+     sans   — everything INSIDE a component. Card titles, body, bullets,
+               labels, controls.
+   Size back to 0.95rem: 1.03 was compensating for the serif's smaller
+   x-height, and Geist does not need it. */
+.ork-body       { font-size: 0.95rem;  line-height: 1.6; }
 .ork-small      { font-size: 0.8125rem; line-height: 1.55; }
 .ork-micro      { font-size: 0.6875rem; line-height: 1.4; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 600; }
 .ork-mono       { font-family: 'GeistMono', 'IBM Plex Mono', ui-monospace, monospace; font-feature-settings: 'zero' 1; }

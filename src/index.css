@@ -1173,6 +1173,10 @@ body:has(.lp)::after,
 body:has(.lp)::before { display: none; }
 /* Match the page bg so overscroll / fast-scroll never flashes the dark legacy body */
 body:has(.lp) { background-color: #FAF8F4; }
+/* The ork site's base colour lives here now rather than on .ork, which has
+   to stay transparent so the fixed field behind it is visible. This is only
+   ever seen during overscroll. */
+body:has(.ork) { background-color: #EFEEF3; }
 
 .lp ::selection { background: rgba(255,122,31,0.25); color: var(--lp-ink); }
 

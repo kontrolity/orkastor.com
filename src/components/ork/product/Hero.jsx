@@ -226,13 +226,12 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      /* ⚠ The ground used to be a flat `var(--bg)`. It is now .ork-atmos — a
-         lit, grained surface rather than a painted rectangle. That is the
-         single biggest visual change on the page, and it is what makes the
-         hero read as a space the type is sitting in. See the block in
-         mono.css for why the grain layer is load-bearing and not a
-         flourish. */
-      className="ork-mono-hero ork-hero ork-atmos relative overflow-hidden"
+      /* ⚠ NO .ork-atmos HERE ANY MORE. The hero used to own its field; the
+         field is now fixed behind the entire document (.ork-field, mounted
+         in Layout). Keeping a second one here would paint a section-sized
+         gradient on top of the page-sized one, and the seam where they met
+         would be the most visible edge on the site. */
+      className="ork-mono-hero ork-hero relative overflow-hidden"
     >
       {/* ── THE 3D OBJECT IS GONE FROM THE HERO ───────────────────────────
           <ClusterLattice className="ork-hero-lattice" /> rendered here: two

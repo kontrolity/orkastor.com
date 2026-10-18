@@ -156,7 +156,7 @@ export default function OrkKubeGraf() {
           <Reveal>
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div>
-                <p className="ork-display-m" style={{ color: 'var(--text)' }}>Ready to look at the product itself?</p>
+                <p className="ork-heading" style={{ color: 'var(--text)' }}>Ready to look at the product itself?</p>
                 <p className="ork-body mt-3" style={{ color: 'var(--text-2)', maxWidth: 520 }}>
                   KubeGraf has its own site and its own docs. This page is the overview —
                   the product itself lives over there.
