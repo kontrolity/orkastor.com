@@ -219,13 +219,22 @@
      turned round. 17.50:1 on --bg. */
   --text:          #141413;
   --text-2:        #4A4844;   /*  8.66:1 on --bg */
-  /* ⚠ DARKENED from #76726A with the ground inversion above. On the old
-     light page it measured 4.55:1; on the new darker page that fell to
-     4.12:1, under the 4.5 needed for normal text. Rather than re-audit
-     every use, this value clears AA on EVERY ground the site has —
-     page 5.39:1, card 5.94:1, footer 4.52:1 — so it is safe wherever it
-     lands, not just where it was checked. */
-  --text-3:        #646058;
+  /* ⚠ DARKENED AND COOLED, TWICE OVER.
+
+     It was #76726A, a warm grey, which failed when the page ground darkened;
+     it became #646058, still warm, which survived the move to a cool palette
+     only because nobody re-measured it against the thing that now sits
+     behind every page.
+
+     THE FIELD IS THE CONSTRAINT. .ork-field runs behind the whole document
+     and reaches #BEBAE6 at its darkest. Against that, #646058 measured
+     3.38:1 — under the 4.5 needed for normal text, across all 47 uses of
+     this token, anywhere the field happens to be dark beneath them. A page
+     token has to clear its worst ground, not its usual one.
+
+     #4C4C56 is on the cool axis the rest of the palette moved to, and clears
+     everywhere: page 7.35:1, card 7.95:1, field at its darkest 4.59:1. */
+  --text-3:        #4C4C56;
 
   /* Borders warm too, or every card edge reads as a grey seam laid on a
      cream page. */
@@ -274,27 +283,31 @@
      to be seen. */
   --lattice-line:  #A8A296;
 
-  /* ⚠ WAS #E3DACC, A WARM TAN — and by the time anyone looked, the page had
-     gone cool. Measured: the page sits at hue 252deg and that tan at 36.5deg.
-     215 degrees apart, very nearly opposite on the wheel. It was chosen when
-     the palette was warm bone and left behind when the palette changed; the
-     same stale-literal failure as --atmos-base before it.
+  /* ── Footer ─────────────────────────────────────────────────────────────
+     ⚠ THIS HAS NOW BEEN WARM TAN, THEN DARK VIOLET, AND IS NOW THE PAGE.
 
-     It is now the FLOOR OF THE FIELD'S OWN RAMP. The field ramps toward deep
-     indigo but can never reach it, because dark ink stops being readable
-     below #565183 and the field has to carry body copy. The footer is the
-     one surface on the site that controls its own ink, so it is the one
-     place that end of the ramp can actually be used — which is also what
-     makes the page feel like it ENDS rather than stops.
+     The tan was stale — chosen for a warm palette, left behind when the page
+     went cool, measuring 215deg from it on the wheel. The dark violet fixed
+     the clash but introduced a different one: it made the footer the only
+     surface on a light site that was not light.
 
-     ⚠ NOT BLACK. #171520 and #121214 are further down the sampled ramp and
-     both measure better, but both read as black, and black was removed from
-     this site deliberately. #231F3A is unmistakably violet and still gives
-     ink 13.69:1, muted 7.73:1 and the accent 9.14:1. */
-  --footer-bg:     #231F3A;
-  --footer-ink:        #EFEEF3;                  /* 13.69:1 — the page colour, inverted */
-  --footer-ink-muted:  rgba(239, 238, 243, 0.72);/*  7.73:1 */
-  --footer-line:   rgba(239, 238, 243, 0.16);
+     It is `transparent` rather than a copy of --bg, and that distinction is
+     the whole point. The field (.ork-field) is fixed behind the document; a
+     footer painting its own ground — even the exact same colour — would
+     punch a static rectangle through a moving gradient, and the seam would
+     show the moment the field drifted. Transparent lets the field run to the
+     bottom of the page uninterrupted.
+
+     ⚠ WHICH IS WHY THE TOP RULE IS BACK. The previous note here said a
+     hairline would be "the double-draw this codebase avoids", because the
+     change of ground already marked the boundary. There is no change of
+     ground any more, so there is nothing to double-draw: the rule is now the
+     only thing separating the footer from the content above it.
+
+     The ink tokens are gone with the dark ground. Page tokens are correct
+     again, and safe anywhere on the field — --text measures 10.07:1 at the
+     field's darkest point. */
+  --footer-line:   var(--border-soft);
 
   /* ── Accent: green, borrowed and SPLIT BY MEASUREMENT ───────────────────
      ⚠ WAS #001AD0 BLUE throughout. The greens come from the reference's own
