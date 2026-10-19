@@ -5,7 +5,7 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     {
-      "source": "/(cloud|cloud/how-it-works|docs|changelog|about|privacy)/?",
+      "source": "/((?:cloud|cloud/how-it-works|docs|changelog|about|privacy)/?)",
       "destination": "/index.html"
     }
   ],
