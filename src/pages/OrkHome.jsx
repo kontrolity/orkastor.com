@@ -6,6 +6,8 @@ import { ProductCards } from '@/components/ork/product/ProductCards';
 import { useSeo } from '@/hooks/useSeo';
 
 const Outcomes = lazy(() => import('@/components/ork/product/Proof').then((m) => ({ default: m.Outcomes })));
+const HowItWorks = lazy(() => import('@/components/ork/product/HowItWorks'));
+const Metrics = lazy(() => import('@/components/ork/product/Metrics'));
 const FinalCTA = lazy(() => import('@/components/ork/product/FinalCTA'));
 const Footer = lazy(() => import('@/components/ork/layout/Footer'));
 
@@ -82,10 +84,32 @@ export default function OrkHome() {
           is #FFFFFF, so these hairlines are the only thing giving the page
           structure. .ork-seam still goes transparent under `.dark`, which is
           now unreachable but kept with the rest of the dark tokens. */}
+      {/* ── SECTION ORDER ─────────────────────────────────────────────────
+          Reordered to the reference's rhythm (hubble.ai), which answers a
+          visitor's questions in the order they actually ask them:
+
+            Hero         what is this
+            ProductCards what exactly is the product
+            HowItWorks   what do I have to do            ← was missing
+            Outcomes     what changes for me
+            Metrics      on whose terms does it run      ← was missing
+            FinalCTA     start
+
+          The two new sections sit where the page previously jumped straight
+          from "what it is" to "decide". "What do I have to do" is the
+          question between interest and a trial for infrastructure software,
+          and leaving it unanswered sends a reader looking for docs instead
+          of a CTA.
+
+          Both are lazy for the same reason the rest of the page is: they are
+          below the fold, and the hero should not wait on them. */}
       <main>
         <Hero />
         <div className="ork-seam" />
         <ProductCards />
+
+        <div className="ork-seam" />
+        <Suspense fallback={null}><HowItWorks /></Suspense>
 
         {/* <Testimonials /> followed <Outcomes /> here — the three founder
             quotes from Finden, Neufology and Grovyn. Removed from this page.
@@ -109,6 +133,9 @@ export default function OrkHome() {
             arguing a boundary with one side reads as a page missing half its
             content. COMPANY.boundary / shared / separate / notYet stay in
             content/site.js — /about still reads them. */}
+        <div className="ork-seam" />
+        <Suspense fallback={null}><Metrics /></Suspense>
+
         <div className="ork-seam" />
         <Suspense fallback={null}><FinalCTA /></Suspense>
       </main>

@@ -1,7 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Container, Button, Arrow } from '../ui';
 import { HERO, EXTERNAL } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+
+/* Lazy so three.js stays out of the entry bundle — a visitor who bounces
+   above the fold never pays for it. Never rendered under reduced motion, so
+   that setting also means the chunk is never fetched. */
+const HeroField = lazy(() => import('@/components/ork/visuals/HeroField'));
 
 /**
  * The home hero. Copy only.
@@ -233,6 +238,30 @@ export function Hero() {
          would be the most visible edge on the site. */
       className="ork-mono-hero ork-hero relative overflow-hidden"
     >
+      {/* ── THE FIELD ──────────────────────────────────────────────────────
+          A WebGL ambient ground, NOT the object that used to live here.
+
+          Hero.jsx's own history is the argument: <ClusterLattice /> was an
+          object positioned across the right of the section, it collided with
+          every layout that put text there, and it was removed because an
+          object is the wrong kind of thing for a hero built on type and open
+          ground. This is full-bleed, behind the copy, with no silhouette to
+          balance against the headline — the same role the CSS aurora plays,
+          rendered better.
+
+          It layers ON TOP of nothing: .ork-field is fixed behind the whole
+          document and this sits above it but below the copy, confined to the
+          hero. If this ever starts reading as a thing rather than as light,
+          lower the uniforms in HeroField.jsx — do not move the type.
+
+          Suspense fallback is null on purpose. The CSS aurora is already the
+          hero's ground, so there is nothing to stand in for while the chunk
+          loads, and a placeholder would only flash. */}
+      {!reduced && (
+        <Suspense fallback={null}>
+          <HeroField className="ork-hero-field" />
+        </Suspense>
+      )}
       {/* ── THE 3D OBJECT IS GONE FROM THE HERO ───────────────────────────
           <ClusterLattice className="ork-hero-lattice" /> rendered here: two
           nested icosahedral wireframes with pulses running their edges.
@@ -257,12 +286,31 @@ export function Hero() {
       {/* Taller than it was. The hero used to end at the diagram, which gave
           it its height; without one, the same padding left the copy floating
           near the top with the logo bar crowding in under it. */}
-      <Container wide className="relative pt-[138px] pb-[64px] sm:pt-[206px] sm:pb-[88px] w-full">
-        <div className="ork-hero-copy ork-hero-copy--left" style={copyStyle}>
-          <p className="ork-tag" style={{ marginBottom: 22 }}>
-            <i aria-hidden="true" />
-            <Words key={`eb-${run}`} text={HERO.eyebrow} base={120} step={26} reduced={reduced} />
-          </p>
+      {/* Padding was pt-138/206 to hang the copy at the bottom of a 100vh
+          section. The section is centred now, so that top padding is dead
+          height — it only has to clear the fixed navbar. */}
+      <Container wide className="relative pt-[96px] pb-[52px] sm:pt-[112px] sm:pb-[64px] w-full">
+        {/* ── CENTRED, per the reference ──────────────────────────────────
+            .ork-hero-copy--left is dropped rather than overridden: the base
+            class is already the centred layout, and .ork-rotator is already
+            justify-items:center.
+
+            ⚠ mono.css carries a bug note saying centring made the rotating
+            second line step left and right as alternates cycled. That was a
+            MISMATCH, not centring itself — a centred rotator under a
+            left-aligned first line, so the two lines disagreed about their
+            axis. With the whole block centred both lines share one centre,
+            and differing alternate widths are symmetric about it, which is
+            what a centred headline is supposed to do. Verified by measuring
+            the h1's centre across a full rotation; it does not move. */}
+        <div className="ork-hero-copy" style={copyStyle}>
+          {/* The eyebrow ("INFRASTRUCTURE, WITHOUT THE OPERATING TAX") was
+              here. The reference opens straight on the headline, and the
+              line it carried is a positioning claim that the headline and
+              standfirst already make between them — kept in content/site.js
+              as HERO.eyebrow, so restoring it is re-adding this block. The
+              status descriptors that now sit under the CTAs do the job the
+              eyebrow was really doing: telling you this is real and running. */}
 
           {/* Two lines, two colours, one <h1>. The second line carries its own
               colour rather than relying on a gradient-clip: a clipped span
@@ -301,7 +349,7 @@ export function Hero() {
 
           <div
             key={`cta-${run}`}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-10 ork-hero-cta"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-10 ork-hero-cta"
             style={reduced ? undefined : { animationDelay: '700ms' }}
           >
             {/* Was /kubegraf, this site's own KubeGraf page. That page is gone
@@ -321,6 +369,24 @@ export function Hero() {
               See pricing <Arrow />
             </Button>
           </div>
+
+          {/* ── STATUS LINE ────────────────────────────────────────────────
+              The reference puts short factual descriptors directly under its
+              CTAs — "Live in production", and two properties of the product.
+              It is the last thing read before a click, so it carries the
+              facts most likely to stop one: whether this is real, whose
+              infrastructure it touches, and what it opens.
+
+              A <ul>, not three spans: these are a list, and the separators
+              are CSS so a screen reader does not read "dot" between them. */}
+          <ul
+            className="ork-hero-status"
+            style={reduced ? undefined : { animationDelay: '820ms' }}
+          >
+            <li>Live in production</li>
+            <li>Your clusters, your keys</li>
+            <li>No inbound ports</li>
+          </ul>
         </div>
       </Container>
     </section>

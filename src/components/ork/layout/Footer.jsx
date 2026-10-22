@@ -58,7 +58,10 @@ export function Footer() {
       <Container wide className="pt-24 pb-12">
         <div className="grid lg:grid-cols-[1.3fr_1fr_1fr_1fr] gap-10 lg:gap-8">
           <div>
-            <OrkastorLogo size={38} />
+            {/* Larger than the nav's 44: the footer has the room, and this
+                is where the company signs the page. Still under the ~53px
+                point where the 346x106 crop would soften at 2x. */}
+            <OrkastorLogo size={48} />
             {/* .ork-sub, not .ork-small: this is the one line of prose in the
                 footer, and the rest of the site now sets prose in the serif.
                 A sans caption here was the last place the old voice survived. */}

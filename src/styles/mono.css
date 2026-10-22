@@ -829,14 +829,24 @@
 }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────
-   The reference hangs its headline at the BOTTOM of the first screen with
-   the whole upper two-thirds empty. That emptiness is the design — it is
-   what makes 100px type feel calm instead of loud. */
+   ⚠ RETARGETED. This used to read: "The reference hangs its headline at the
+   BOTTOM of the first screen with the whole upper two-thirds empty." That
+   was true of the PREVIOUS reference, and it is why this was 100svh with
+   justify-content: flex-end.
+
+   The reference is now hubble.ai, which does the opposite: a hero of about
+   60-70vh with the block optically centred, so the section below is already
+   breaking the fold and the page reads as something to scroll rather than a
+   full screen to clear. Measured at 100vh before this change.
+
+   Kept as a min-height, not a height: the copy still sets the floor, so a
+   long headline wrap on a narrow window grows the hero instead of
+   overflowing it. */
 .ork-mono-hero {
-  min-height: min(100svh, 900px);
+  min-height: min(68svh, 720px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 /* ── Mobile ───────────────────────────────────────────────────────────────
@@ -944,7 +954,18 @@
   /* 26 -> 34px. Under a 2-line bold headline the old gap read as a fifth
      line of the headline rather than as a new voice starting. */
   margin-top: 34px;
-  max-width: 52ch;
+  max-width: 58ch;
+  /* ⚠ `text-align: center` on .ork-hero-copy centres the TEXT, not this box.
+     At 58ch the box is ~769px inside a 1116px column, so without this it sat
+     flush left and the standfirst centred about its own axis — 173px left of
+     the one the headline, the buttons and the status line all share. The
+     symptom reads as "the paragraph is slightly off", which is why it
+     survived: every other child of .ork-hero-copy is full-width, so this is
+     the only one whose box is narrower than the column.
+
+     The left-aligned variant is unaffected — .ork-hero-copy--left
+     .ork-mono-sub sets margin-inline: 0 and outranks this on specificity. */
+  margin-inline: auto;
 }
 /* ⚠ BUG FIX. .ork-rotator sets `justify-items: center`, which was right when
    the hero was centred and wrong ever since it moved left. The grid cell is
@@ -1332,7 +1353,26 @@
    inset is larger, so nothing changes on a device without a notch. Scoped to
    the ork tree rather than applied to every element with padding. */
 @supports (padding: max(0px)) {
-  .ork .ork-nav-inner,
+  /* ⚠ THE FLOOR IS THE GUTTER, NOT ZERO. This used to read
+     `max(0px, env(...))` for .ork-nav-inner as well, and the floor is the
+     whole point of the max(): .ork-nav-inner IS a Container, so it carries
+     `px-5 sm:px-8`, and a longhand padding-left of max(0px, ...) BEAT that
+     and collapsed the nav gutter to 0 on every phone without a notch. The
+     logo sat flush against the screen edge while the hero below it kept its
+     20px, so the bar looked subtly unaligned with the page.
+
+     It survived because it is invisible on a desktop: the bar is
+     max-w-[1180px] and centred, so the padding never decides anything until
+     the viewport is narrower than the column. Only a phone ever sees it.
+
+     The two values track Container's own `px-5 sm:px-8`. If that changes,
+     change these with it. */
+  .ork .ork-nav-inner {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  /* Not Containers — these have no gutter of their own, so zero is the
+     correct floor here and the inset is pure addition. */
   .ork main > section,
   .ork footer {
     padding-left: max(0px, env(safe-area-inset-left));
@@ -1341,6 +1381,16 @@
   /* The footer is the last thing on the page, so its bottom padding is what
      lands under the home indicator. */
   .ork footer { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+}
+
+@media (min-width: 640px) {
+  @supports (padding: max(0px)) {
+    /* sm: — matches Container's `sm:px-8`. */
+    .ork .ork-nav-inner {
+      padding-left: max(32px, env(safe-area-inset-left));
+      padding-right: max(32px, env(safe-area-inset-right));
+    }
+  }
 }
 
 /* ── The hero's 3D object ─────────────────────────────────────────────────
