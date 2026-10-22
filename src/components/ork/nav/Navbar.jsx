@@ -70,8 +70,12 @@ export function Navbar({ onDeep = false }) {
         className={`ork-nav fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]${scrolled ? ' is-scrolled' : ''}`}
       >
         <Container wide className="ork-nav-inner h-[64px] flex items-center justify-between gap-4">
-          <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0">
-            <OrkastorLogo size={38} />
+          <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0 inline-flex items-center leading-none">
+            {/* 44, not 38: the mark is fine-stroked line art and at 38 in a
+                64px bar it read as a faint smudge next to a solid wordmark.
+                The lockup crop is 346x106, so 2x stays sharp up to ~53px —
+                this keeps a margin under that ceiling. */}
+            <OrkastorLogo size={44} />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main">

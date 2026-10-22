@@ -545,3 +545,57 @@
   0%, 100% { transform: translate3d(-24%, 0, 0); opacity: 0.5; }
   50%      { transform: translate3d(24%, 0, 0);  opacity: 1; }
 }
+
+/* ── Hero field ───────────────────────────────────────────────────────────
+   The WebGL ground. z-0 puts it above .ork-field (the page-wide fixed
+   gradient, z -1) and below .ork-hero-copy, which carries no z-index of its
+   own and so wins on document order. Deliberately NOT given a z-index high
+   enough to need one on the copy: the copy must never depend on this layer
+   existing, because under reduced motion it does not. */
+.ork-hero-field { z-index: 0; }
+.ork-hero-copy  { position: relative; z-index: 1; }
+
+/* The canvas is a ground, not a figure: it must never take the cursor or
+   trap a selection drag across the headline. */
+.ork-hero-field canvas { pointer-events: none; }
+
+/* ── Hero status line ─────────────────────────────────────────────────────
+   The reference's descriptors under the CTAs: the last thing read before a
+   click. Small, quiet, and factual — it is not a feature list.
+
+   The separator is a ::before on every item but the first, so the bullets
+   are decoration the accessibility tree never sees. Three <span>s with "·"
+   typed between them would have a screen reader read "dot" aloud. */
+.ork-hero-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0 18px;
+  row-gap: 6px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+.ork-hero-status > li { display: inline-flex; align-items: center; }
+.ork-hero-status > li + li::before {
+  content: '';
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.55;
+  margin-right: 18px;
+}
+
+/* On a phone the three descriptors wrap to two lines and the dots start
+   landing at the beginning of a line, which reads as a bullet list that
+   lost its indent. Below 560px they are dropped and row-gap does the
+   separating instead. */
+@media (max-width: 560px) {
+  .ork-hero-status { gap: 0 14px; }
+  .ork-hero-status > li + li::before { display: none; }
+}
