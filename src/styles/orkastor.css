@@ -682,13 +682,44 @@
    it is the only thing on the page that is not the fixed chrome. */
 .ork main { padding-top: var(--ork-banner-h); }
 
-/* At the narrowest widths the full sentence will not fit beside both
-   the icon. The attribution goes before the award does, and the icon goes
-   before the words do. */
-@media (max-width: 420px) {
-  .ork-banner-icon { display: none; }
-  .ork-banner-text { font-size: 12px; }
-}
-@media (max-width: 340px) {
-  .ork-banner-by { display: none; }
+/* ⚠ THESE BREAKPOINTS ARE MEASURED, NOT GUESSED, and the first version was
+   guessed and wrong — it dropped the icon at 420px and the attribution at
+   340px, so an iPhone 14 showed neither despite having room for both.
+
+   Measured natural width of .ork-banner-inner (text + icon + its 32px of
+   padding): icon + full sentence is 333px at 12.5px type, 306px without the
+   icon, 211px with neither icon nor attribution. Each step below fires just
+   under where the previous arrangement stops fitting, with ~10px of slack
+   for font-rendering differences.
+
+   The ladder drops the least meaningful thing first: size, then ornament,
+   then the attribution — which is WHO GAVE THE AWARD and so goes last, only
+   under 300px, a width no current phone has. .ork-banner-text also carries
+   overflow:hidden + text-overflow:ellipsis as a final net, so an unexpected
+   translation truncates rather than breaking the bar.
+
+   If the copy changes, re-measure. */
+@media (max-width: 430px) { .ork-banner-text { font-size: 12.5px; } }
+@media (max-width: 344px) { .ork-banner-icon { display: none; } }
+@media (max-width: 318px) { .ork-banner-text { font-size: 12px; } }
+@media (max-width: 300px) { .ork-banner-by { display: none; } }
+
+/* ⚠ SHORT VIEWPORTS GET NO BANNER. A phone in landscape is ~320-430px tall,
+   and the fixed chrome measured 33-37% of the screen there — a third of the
+   first fold spent on chrome before a single word of the page. The award is
+   recognition, not navigation, so it is what yields; the nav stays.
+   
+   Setting the variable to 0 is what makes this one rule instead of three:
+   .ork main's padding and the nav's position both read it, so hiding the
+   bar collapses the space it reserved without touching either. Hide it
+   without zeroing the variable and you get a 36px void at the top of every
+   landscape page.
+
+   Keyed on height alone, not `orientation: landscape`. No phone has a
+   portrait viewport under 450px tall, so the orientation test adds nothing
+   on mobile — and without it a short desktop window gets the same sensible
+   treatment. */
+@media (max-height: 450px) {
+  :root { --ork-banner-h: 0px; }
+  .ork-banner { display: none; }
 }
