@@ -653,8 +653,7 @@
 /* The attribution is the quieter half — it is the same sentence, not a
    second one, so it stays the same colour and only drops in weight. */
 .ork-banner-by { font-weight: 500; opacity: 0.82; }
-.ork-banner-sprig { flex: none; opacity: 0.72; }
-.ork-banner-sprig.is-flipped { transform: scaleX(-1); }
+.ork-banner-icon { flex: none; opacity: 0.78; }
 
 /* The sheen. A slow highlight crossing the strip, which is what makes it
    read as metal instead of as a gradient. 9s and low alpha on purpose: this
@@ -684,10 +683,10 @@
 .ork main { padding-top: var(--ork-banner-h); }
 
 /* At the narrowest widths the full sentence will not fit beside both
-   sprigs. The attribution goes before the award does, and the sprigs go
+   the icon. The attribution goes before the award does, and the icon goes
    before the words do. */
 @media (max-width: 420px) {
-  .ork-banner-sprig { display: none; }
+  .ork-banner-icon { display: none; }
   .ork-banner-text { font-size: 12px; }
 }
 @media (max-width: 340px) {

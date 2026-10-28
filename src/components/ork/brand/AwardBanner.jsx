@@ -1,4 +1,5 @@
 import React from 'react';
+import { Award } from 'lucide-react';
 
 /**
  * The Innovate NI 2026 Gold Award banner — the strip above the nav.
@@ -10,8 +11,17 @@ import React from 'react';
  * produced a graphic that reads as their official badge without being it —
  * which is a claim about who endorsed what, not a styling choice.
  *
- * So this states the fact in words. The two sprigs are a generic ornament,
- * not a reproduction of any award body's device.
+ * So this states the fact in words. The medal is lucide's generic `Award`
+ * glyph, not a reproduction of any award body's device.
+ *
+ * ⚠ THE ORNAMENT WAS TWO HAND-DRAWN LAUREL SPRIGS AND THEY DID NOT READ.
+ * At 16px the curved stem and three leaves collapsed into a brown smudge
+ * that looked like a feather — confirmed by rendering all the candidates at
+ * final size and comparing. The replacement is lucide's Award rosette,
+ * which is drawn for this size, carries a consistent stroke weight, and is
+ * recognisable as an award at a glance. Do not swap it for another
+ * hand-rolled path; if a bespoke mark is wanted, draw it at 16px and look
+ * at it there before committing.
  *
  * ⚠ If Innovate NI supplies real badge artwork, put their file in here rather
  * than restyling this to resemble it. Their mark is theirs; an approximation
@@ -37,12 +47,14 @@ export function AwardBanner() {
   return (
     <div className="ork-banner" role="complementary" aria-label="Award recognition">
       <div className="ork-banner-inner">
-        <Sprig />
+        {/* One icon, not a flanking pair: the inner block is centred as a
+            whole, so a single mark leading the sentence balances without
+            needing a mirrored twin that doubles the noise. */}
+        <Award className="ork-banner-icon" size={15} strokeWidth={2} aria-hidden="true" />
         <p className="ork-banner-text">
           <span className="ork-banner-strong">Gold Award Recognition 2026</span>
           <span className="ork-banner-by"> by Innovate NI</span>
         </p>
-        <Sprig flip />
       </div>
       {/* Decoration only, and the one thing here that moves. Disabled under
           prefers-reduced-motion in CSS — a sheen travelling across a fixed
@@ -50,28 +62,6 @@ export function AwardBanner() {
           exactly the case that setting exists for. */}
       <span className="ork-banner-sheen" aria-hidden="true" />
     </div>
-  );
-}
-
-/** A laurel sprig. Generic ornament — see the note above. */
-function Sprig({ flip = false }) {
-  return (
-    <svg
-      className={`ork-banner-sprig${flip ? ' is-flipped' : ''}`}
-      width="16"
-      height="18"
-      viewBox="0 0 16 18"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.3"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <path d="M11.5 1.5C7 4 4.5 8 5 16.5" />
-      <path d="M10.4 4.4c-2 .1-3.2 1-3.7 2.6 1.8.5 3-.1 3.7-2.6z" />
-      <path d="M8.6 8.1c-2 .1-3.2 1-3.7 2.6 1.8.5 3-.1 3.7-2.6z" />
-      <path d="M7.6 12c-2 .1-3.2 1-3.7 2.6 1.8.5 3-.1 3.7-2.6z" />
-    </svg>
   );
 }
 
