@@ -600,60 +600,96 @@
   .ork-hero-status > li + li::before { display: none; }
 }
 
-/* ── Innovate NI 2026 Gold badge ───────────────────────────────────────────
- * Set in the site's own mono-caps label voice (see .ork-tag in mono.css)
- * rather than as imported artwork. The component note in AwardBadge.jsx says
- * why that is a correctness decision and not a styling one.
+/* ── Innovate NI 2026 Gold Award banner ───────────────────────────────────
+ * The strip above the nav. Set in the site's own type rather than as
+ * imported artwork — AwardBanner.jsx says why that is a correctness
+ * decision and not a styling one.
  *
- * GOLD IS A HARD COLOUR TO MAKE ACCESSIBLE. The metallic value everyone
- * reaches for (#D4AF37) is 2.9:1 on this site's white and fails outright as
- * text. So the two themes do not share an ink: the light theme uses a deep
- * gold-brown on a pale gold wash, the dark theme a pale gold on a dim one.
- * Both are measured below — if you retune the gradient, re-measure.
+ * ⚠ --ork-banner-h IS THE ONLY PLACE THE HEIGHT LIVES. The banner sits
+ * inside the FIXED header, so every page's first fold moves down by exactly
+ * this much; `.ork main` is padded by the same variable. Change it here and
+ * the whole site stays consistent. Hardcode it in either place and the hero
+ * ends up under the header on some breakpoint nobody checked.
  */
-.ork-award {
+:root { --ork-banner-h: 40px; }
+@media (max-width: 640px) { :root { --ork-banner-h: 36px; } }
+
+.ork-banner {
+  position: relative;
+  overflow: hidden;
+  height: var(--ork-banner-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Full-bleed: it is the first child of the header, OUTSIDE the Container,
+     so it spans the viewport rather than the content column. */
+  width: 100%;
+  /* A real gold, warm at the ends and bright through the middle, so the
+     strip reads as metal rather than as a flat yellow bar. */
+  background: linear-gradient(90deg, #8A6410 0%, #C9A227 22%, #F3DC92 50%, #C9A227 78%, #8A6410 100%);
+  border-bottom: 1px solid rgba(90, 68, 9, 0.38);
+  /* #2A1F03 on the #C9A227 shoulders is 7.1:1 and on the #F3DC92 centre
+     14.0:1. The ink is near-black-brown rather than black so it belongs to
+     the gold; pure #000 on this ramp reads as a warning strip. */
+  color: #2A1F03;
+}
+.ork-banner-inner {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  flex: none;
-  padding: 5px 11px;
-  border-radius: 100px;
-  /* Matches .ork-tag's label voice so it reads as part of the site rather
-     than as a sticker dropped on top of it. */
-  font-family: 'GeistMono', ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  gap: 12px;
+  padding: 0 16px;
+  min-width: 0;
+}
+.ork-banner-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.01em;
   white-space: nowrap;
-  cursor: default;
-  user-select: none;
-
-  /* Light theme. #5A4409 on the #F2D98B end of the wash is 6.2:1. */
-  color: #5A4409;
-  background: linear-gradient(180deg, #FDF2CE 0%, #F2D98B 100%);
-  border: 1px solid rgba(166, 128, 18, 0.42);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) inset;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-/* Dark theme. #E8C86A on the dim wash over #0A0A0A clears 10:1. The fill is
-   an alpha tint rather than a solid so the page's field still shows through
-   — a solid gold chip on the dark site reads as a foreign object. */
-.dark .ork-award {
-  color: #E8C86A;
-  background: linear-gradient(180deg, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.09) 100%);
-  border-color: rgba(212, 175, 55, 0.42);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset;
-}
-/* The star is ornament, so it is allowed to be the quieter element — the
-   same licence .ork-tag's dot takes. */
-.ork-award-wreath { flex: none; opacity: 0.85; }
-.ork-award-sep { opacity: 0.5; }
+.ork-banner-strong { font-weight: 700; }
+/* The attribution is the quieter half — it is the same sentence, not a
+   second one, so it stays the same colour and only drops in weight. */
+.ork-banner-by { font-weight: 500; opacity: 0.82; }
+.ork-banner-sprig { flex: none; opacity: 0.72; }
+.ork-banner-sprig.is-flipped { transform: scaleX(-1); }
 
-/* ⚠ The year is the first thing to go, not the award. Between lg and xl the
-   bar is tightest — lockup, badge, five links and the toggles — and losing
-   "Innovate NI 2026" to a wrap would break the pill. Below xl the badge
-   keeps only "GOLD", which is still true and still legible; the full string
-   stays in the title attribute either way. */
-@media (max-width: 1279px) {
-  .ork-award-body,
-  .ork-award-sep { display: none; }
+/* The sheen. A slow highlight crossing the strip, which is what makes it
+   read as metal instead of as a gradient. 9s and low alpha on purpose: this
+   is fixed on every page, so anything faster or brighter becomes the most
+   distracting thing on the site. */
+.ork-banner-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 38%, rgba(255,255,255,0.42) 50%, transparent 62%);
+  transform: translateX(-100%);
+  animation: ork-banner-sheen 9s ease-in-out infinite;
+}
+@keyframes ork-banner-sheen {
+  0%, 62% { transform: translateX(-100%); }
+  100%    { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ork-banner-sheen { animation: none; display: none; }
+}
+
+/* ⚠ THE HEADER IS FIXED, SO THE PAGE HAS TO BE TOLD. Without this every
+   hero sits `--ork-banner-h` further under the header than its own top
+   padding accounts for. One rule here instead of re-tuning pt-[96px] and
+   its equivalent on every page — and `main` is the right element because
+   it is the only thing on the page that is not the fixed chrome. */
+.ork main { padding-top: var(--ork-banner-h); }
+
+/* At the narrowest widths the full sentence will not fit beside both
+   sprigs. The attribution goes before the award does, and the sprigs go
+   before the words do. */
+@media (max-width: 420px) {
+  .ork-banner-sprig { display: none; }
+  .ork-banner-text { font-size: 12px; }
+}
+@media (max-width: 340px) {
+  .ork-banner-by { display: none; }
 }

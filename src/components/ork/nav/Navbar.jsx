@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
-import { AwardBadge } from '../brand/AwardBadge';
+import { AwardBanner } from '../brand/AwardBanner';
 import { Container } from '../ui';
 import { PRODUCTS, LINKS } from '@/content/site';
 
@@ -67,33 +67,33 @@ export function Navbar({ onDeep = false }) {
           inline style cannot be overridden by a media query — so there was no
           way to turn the blur off on phones, where it is the most expensive
           thing in the header. See the mobile block in mono.css. */}
+      {/* ⚠ THE pt-[18px] sm:pt-[26px] MOVED OFF THIS ELEMENT. It used to sit
+          on the header, which floats the nav row below the top of the screen.
+          With the banner as the first child that padding applied ABOVE the
+          banner too, leaving a strip of page visible above a bar that is
+          supposed to be flush to the viewport edge. The gap is now margin on
+          the nav row itself, which is the only thing it was ever for. */}
       <header
-        className={`ork-nav fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]${scrolled ? ' is-scrolled' : ''}`}
+        className={`ork-nav fixed top-0 left-0 right-0 z-50${scrolled ? ' is-scrolled' : ''}`}
       >
-        <Container wide className="ork-nav-inner h-[64px] flex items-center justify-between gap-4">
-          {/* ⚠ WRAPPED, and the wrapper is load-bearing. This row is
-              `justify-between` over THREE groups — mark, nav, controls. Adding
-              the badge as a fourth direct child made the browser distribute
-              four things instead, which pulled the lockup off the gutter and
-              floated the badge into the middle of the bar. Grouping it with
-              the mark keeps the row at three. */}
-          <div className="flex items-center gap-3 shrink-0">
-            <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0 inline-flex items-center leading-none">
-              {/* 44, not 38: the mark is fine-stroked line art and at 38 in a
-                  64px bar it read as a faint smudge next to a solid wordmark.
-                  The lockup crop is 346x106, so 2x stays sharp up to ~53px —
-                  this keeps a margin under that ceiling. */}
-              <OrkastorLogo size={44} />
-            </a>
+        {/* ⚠ FIRST CHILD, AND OUTSIDE THE CONTAINER. The banner is full-bleed
+            — it spans the viewport, not the content column — so it cannot go
+            inside <Container>, which is what sets that column.
 
-            {/* Recognition, not navigation — so it sits with the mark rather
-                than in the nav list, and it is the first thing dropped when the
-                bar runs out of room. `hidden lg:inline-flex` is the SAME
-                breakpoint the desktop nav uses below: the badge and the links
-                appear together, so there is never a width where this survives
-                into a bar the links have already left. See AwardBadge.jsx. */}
-            <AwardBadge className="hidden lg:inline-flex" />
-          </div>
+            This REPLACED a compact pill that sat beside the lockup and was
+            hidden below `lg`, because the bar had no room for it. A full-width
+            strip has room at every width, so the award now survives on a
+            phone — see AwardBanner.jsx. */}
+        <AwardBanner />
+
+        <Container wide className="ork-nav-inner h-[64px] mt-[18px] sm:mt-[26px] flex items-center justify-between gap-4">
+          <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0 inline-flex items-center leading-none">
+            {/* 44, not 38: the mark is fine-stroked line art and at 38 in a
+                64px bar it read as a faint smudge next to a solid wordmark.
+                The lockup crop is 346x106, so 2x stays sharp up to ~53px —
+                this keeps a margin under that ceiling. */}
+            <OrkastorLogo size={44} />
+          </a>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
             <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
