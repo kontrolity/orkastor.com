@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
+import { AwardBadge } from '../brand/AwardBadge';
 import { Container } from '../ui';
 import { PRODUCTS, LINKS } from '@/content/site';
 
@@ -70,13 +71,29 @@ export function Navbar({ onDeep = false }) {
         className={`ork-nav fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]${scrolled ? ' is-scrolled' : ''}`}
       >
         <Container wide className="ork-nav-inner h-[64px] flex items-center justify-between gap-4">
-          <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0 inline-flex items-center leading-none">
-            {/* 44, not 38: the mark is fine-stroked line art and at 38 in a
-                64px bar it read as a faint smudge next to a solid wordmark.
-                The lockup crop is 346x106, so 2x stays sharp up to ~53px —
-                this keeps a margin under that ceiling. */}
-            <OrkastorLogo size={44} />
-          </a>
+          {/* ⚠ WRAPPED, and the wrapper is load-bearing. This row is
+              `justify-between` over THREE groups — mark, nav, controls. Adding
+              the badge as a fourth direct child made the browser distribute
+              four things instead, which pulled the lockup off the gutter and
+              floated the badge into the middle of the bar. Grouping it with
+              the mark keeps the row at three. */}
+          <div className="flex items-center gap-3 shrink-0">
+            <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0 inline-flex items-center leading-none">
+              {/* 44, not 38: the mark is fine-stroked line art and at 38 in a
+                  64px bar it read as a faint smudge next to a solid wordmark.
+                  The lockup crop is 346x106, so 2x stays sharp up to ~53px —
+                  this keeps a margin under that ceiling. */}
+              <OrkastorLogo size={44} />
+            </a>
+
+            {/* Recognition, not navigation — so it sits with the mark rather
+                than in the nav list, and it is the first thing dropped when the
+                bar runs out of room. `hidden lg:inline-flex` is the SAME
+                breakpoint the desktop nav uses below: the badge and the links
+                appear together, so there is never a width where this survives
+                into a bar the links have already left. See AwardBadge.jsx. */}
+            <AwardBadge className="hidden lg:inline-flex" />
+          </div>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
             <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>

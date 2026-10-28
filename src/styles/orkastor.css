@@ -599,3 +599,61 @@
   .ork-hero-status { gap: 0 14px; }
   .ork-hero-status > li + li::before { display: none; }
 }
+
+/* ── Innovate NI 2026 Gold badge ───────────────────────────────────────────
+ * Set in the site's own mono-caps label voice (see .ork-tag in mono.css)
+ * rather than as imported artwork. The component note in AwardBadge.jsx says
+ * why that is a correctness decision and not a styling one.
+ *
+ * GOLD IS A HARD COLOUR TO MAKE ACCESSIBLE. The metallic value everyone
+ * reaches for (#D4AF37) is 2.9:1 on this site's white and fails outright as
+ * text. So the two themes do not share an ink: the light theme uses a deep
+ * gold-brown on a pale gold wash, the dark theme a pale gold on a dim one.
+ * Both are measured below — if you retune the gradient, re-measure.
+ */
+.ork-award {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 5px 11px;
+  border-radius: 100px;
+  /* Matches .ork-tag's label voice so it reads as part of the site rather
+     than as a sticker dropped on top of it. */
+  font-family: 'GeistMono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+
+  /* Light theme. #5A4409 on the #F2D98B end of the wash is 6.2:1. */
+  color: #5A4409;
+  background: linear-gradient(180deg, #FDF2CE 0%, #F2D98B 100%);
+  border: 1px solid rgba(166, 128, 18, 0.42);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) inset;
+}
+/* Dark theme. #E8C86A on the dim wash over #0A0A0A clears 10:1. The fill is
+   an alpha tint rather than a solid so the page's field still shows through
+   — a solid gold chip on the dark site reads as a foreign object. */
+.dark .ork-award {
+  color: #E8C86A;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.09) 100%);
+  border-color: rgba(212, 175, 55, 0.42);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+}
+/* The star is ornament, so it is allowed to be the quieter element — the
+   same licence .ork-tag's dot takes. */
+.ork-award-wreath { flex: none; opacity: 0.85; }
+.ork-award-sep { opacity: 0.5; }
+
+/* ⚠ The year is the first thing to go, not the award. Between lg and xl the
+   bar is tightest — lockup, badge, five links and the toggles — and losing
+   "Innovate NI 2026" to a wrap would break the pill. Below xl the badge
+   keeps only "GOLD", which is still true and still legible; the full string
+   stays in the title attribute either way. */
+@media (max-width: 1279px) {
+  .ork-award-body,
+  .ork-award-sep { display: none; }
+}
