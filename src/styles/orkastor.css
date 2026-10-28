@@ -599,3 +599,127 @@
   .ork-hero-status { gap: 0 14px; }
   .ork-hero-status > li + li::before { display: none; }
 }
+
+/* ── Innovate NI 2026 Gold Award banner ───────────────────────────────────
+ * The strip above the nav. Set in the site's own type rather than as
+ * imported artwork — AwardBanner.jsx says why that is a correctness
+ * decision and not a styling one.
+ *
+ * ⚠ --ork-banner-h IS THE ONLY PLACE THE HEIGHT LIVES. The banner sits
+ * inside the FIXED header, so every page's first fold moves down by exactly
+ * this much; `.ork main` is padded by the same variable. Change it here and
+ * the whole site stays consistent. Hardcode it in either place and the hero
+ * ends up under the header on some breakpoint nobody checked.
+ */
+:root { --ork-banner-h: 40px; }
+@media (max-width: 640px) { :root { --ork-banner-h: 36px; } }
+
+.ork-banner {
+  position: relative;
+  overflow: hidden;
+  height: var(--ork-banner-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Full-bleed: it is the first child of the header, OUTSIDE the Container,
+     so it spans the viewport rather than the content column. */
+  width: 100%;
+  /* A real gold, warm at the ends and bright through the middle, so the
+     strip reads as metal rather than as a flat yellow bar. */
+  background: linear-gradient(90deg, #8A6410 0%, #C9A227 22%, #F3DC92 50%, #C9A227 78%, #8A6410 100%);
+  border-bottom: 1px solid rgba(90, 68, 9, 0.38);
+  /* #2A1F03 on the #C9A227 shoulders is 7.1:1 and on the #F3DC92 centre
+     14.0:1. The ink is near-black-brown rather than black so it belongs to
+     the gold; pure #000 on this ramp reads as a warning strip. */
+  color: #2A1F03;
+}
+.ork-banner-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  min-width: 0;
+}
+.ork-banner-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ork-banner-strong { font-weight: 700; }
+/* The attribution is the quieter half — it is the same sentence, not a
+   second one, so it stays the same colour and only drops in weight. */
+.ork-banner-by { font-weight: 500; opacity: 0.82; }
+.ork-banner-icon { flex: none; opacity: 0.78; }
+
+/* The sheen. A slow highlight crossing the strip, which is what makes it
+   read as metal instead of as a gradient. 9s and low alpha on purpose: this
+   is fixed on every page, so anything faster or brighter becomes the most
+   distracting thing on the site. */
+.ork-banner-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 38%, rgba(255,255,255,0.42) 50%, transparent 62%);
+  transform: translateX(-100%);
+  animation: ork-banner-sheen 9s ease-in-out infinite;
+}
+@keyframes ork-banner-sheen {
+  0%, 62% { transform: translateX(-100%); }
+  100%    { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ork-banner-sheen { animation: none; display: none; }
+}
+
+/* ⚠ THE HEADER IS FIXED, SO THE PAGE HAS TO BE TOLD. Without this every
+   hero sits `--ork-banner-h` further under the header than its own top
+   padding accounts for. One rule here instead of re-tuning pt-[96px] and
+   its equivalent on every page — and `main` is the right element because
+   it is the only thing on the page that is not the fixed chrome. */
+.ork main { padding-top: var(--ork-banner-h); }
+
+/* ⚠ THESE BREAKPOINTS ARE MEASURED, NOT GUESSED, and the first version was
+   guessed and wrong — it dropped the icon at 420px and the attribution at
+   340px, so an iPhone 14 showed neither despite having room for both.
+
+   Measured natural width of .ork-banner-inner (text + icon + its 32px of
+   padding): icon + full sentence is 333px at 12.5px type, 306px without the
+   icon, 211px with neither icon nor attribution. Each step below fires just
+   under where the previous arrangement stops fitting, with ~10px of slack
+   for font-rendering differences.
+
+   The ladder drops the least meaningful thing first: size, then ornament,
+   then the attribution — which is WHO GAVE THE AWARD and so goes last, only
+   under 300px, a width no current phone has. .ork-banner-text also carries
+   overflow:hidden + text-overflow:ellipsis as a final net, so an unexpected
+   translation truncates rather than breaking the bar.
+
+   If the copy changes, re-measure. */
+@media (max-width: 430px) { .ork-banner-text { font-size: 12.5px; } }
+@media (max-width: 344px) { .ork-banner-icon { display: none; } }
+@media (max-width: 318px) { .ork-banner-text { font-size: 12px; } }
+@media (max-width: 300px) { .ork-banner-by { display: none; } }
+
+/* ⚠ SHORT VIEWPORTS GET NO BANNER. A phone in landscape is ~320-430px tall,
+   and the fixed chrome measured 33-37% of the screen there — a third of the
+   first fold spent on chrome before a single word of the page. The award is
+   recognition, not navigation, so it is what yields; the nav stays.
+   
+   Setting the variable to 0 is what makes this one rule instead of three:
+   .ork main's padding and the nav's position both read it, so hiding the
+   bar collapses the space it reserved without touching either. Hide it
+   without zeroing the variable and you get a 36px void at the top of every
+   landscape page.
+
+   Keyed on height alone, not `orientation: landscape`. No phone has a
+   portrait viewport under 450px tall, so the orientation test adds nothing
+   on mobile — and without it a short desktop window gets the same sensible
+   treatment. */
+@media (max-height: 450px) {
+  :root { --ork-banner-h: 0px; }
+  .ork-banner { display: none; }
+}

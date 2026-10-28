@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { OrkastorLogo } from '../brand/Logo';
+import { AwardBanner } from '../brand/AwardBanner';
 import { Container } from '../ui';
 import { PRODUCTS, LINKS } from '@/content/site';
 
@@ -66,10 +67,26 @@ export function Navbar({ onDeep = false }) {
           inline style cannot be overridden by a media query — so there was no
           way to turn the blur off on phones, where it is the most expensive
           thing in the header. See the mobile block in mono.css. */}
+      {/* ⚠ THE pt-[18px] sm:pt-[26px] MOVED OFF THIS ELEMENT. It used to sit
+          on the header, which floats the nav row below the top of the screen.
+          With the banner as the first child that padding applied ABOVE the
+          banner too, leaving a strip of page visible above a bar that is
+          supposed to be flush to the viewport edge. The gap is now margin on
+          the nav row itself, which is the only thing it was ever for. */}
       <header
-        className={`ork-nav fixed top-0 left-0 right-0 z-50 pt-[18px] sm:pt-[26px]${scrolled ? ' is-scrolled' : ''}`}
+        className={`ork-nav fixed top-0 left-0 right-0 z-50${scrolled ? ' is-scrolled' : ''}`}
       >
-        <Container wide className="ork-nav-inner h-[64px] flex items-center justify-between gap-4">
+        {/* ⚠ FIRST CHILD, AND OUTSIDE THE CONTAINER. The banner is full-bleed
+            — it spans the viewport, not the content column — so it cannot go
+            inside <Container>, which is what sets that column.
+
+            This REPLACED a compact pill that sat beside the lockup and was
+            hidden below `lg`, because the bar had no room for it. A full-width
+            strip has room at every width, so the award now survives on a
+            phone — see AwardBanner.jsx. */}
+        <AwardBanner />
+
+        <Container wide className="ork-nav-inner h-[64px] mt-[18px] sm:mt-[26px] flex items-center justify-between gap-4">
           <a href="/" aria-label="Orkastor home" style={{ color: ink }} className="shrink-0 inline-flex items-center leading-none">
             {/* 44, not 38: the mark is fine-stroked line art and at 38 in a
                 64px bar it read as a faint smudge next to a solid wordmark.
