@@ -734,7 +734,13 @@
  */
 .ork-hero-3col {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) minmax(0, 0.6fr);
+  /* ⚠ THE MIDDLE COLUMN IS THE WIDEST, and that is what lets the bloom be
+     big. It was 0.95fr, which capped the aura at 376px no matter what
+     max-width it carried — the same trap the headline's dead `max-width:
+     13ch` fell into, where the column does the constraining and the rule on
+     the element is inert. Measure the rendered width after changing these,
+     not the max-width you asked for. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.62fr);
   align-items: center;
   gap: clamp(18px, 3vw, 54px);
   width: 100%;
@@ -898,4 +904,59 @@
    do that rather than reaching for max-width again. */
 @media (max-width: 960px) {
   .ork-hero-3col .ork-btn { height: 48px; }
+}
+
+/* ── Hero: the air ───────────────────────────────────────────────────────
+ * The reference's hero is mostly empty. Its content occupies roughly the
+ * middle third of a full screen, with large margins above and below, and
+ * that emptiness is the design — it is what makes a short headline read as
+ * confident rather than as a page that has not loaded yet.
+ *
+ * ⚠ THIS OVERRIDES .ork-mono-hero's min-height, which is min(68svh, 720px).
+ * That value has its own note in mono.css explaining it was deliberately
+ * reduced FROM 100svh so the section below breaks the fold and the page
+ * reads as something to scroll. That reasoning still holds, which is why
+ * this stops at 86svh rather than going back to a full screen: the next
+ * section still shows, there is just more room around the hero's content.
+ */
+/* ⚠ .ork .ork-hero, not .ork-hero. The value being overridden is
+   .ork-mono-hero's min-height, declared in mono.css, which ties this on
+   specificity (0,1,0) and wins on load order — a bare .ork-hero rule here
+   measured 612px when it asked for 774px. The .ork scope breaks the tie
+   rather than reaching for !important. */
+.ork .ork-hero { min-height: min(86svh, 900px); }
+
+/* The gap between the headline and the buttons is the single biggest
+   contributor to how airy the block reads, now that nothing sits between
+   them. 32px (mt-8) was right when a paragraph filled the space; with the
+   paragraph gone the buttons crowd the type. */
+.ork-hero-3col .ork-hero-cta { margin-top: 44px; }
+
+/* The three lines get the reference's spacing: generous leading, quiet
+   colour, and no attempt to fill the column. They are already as short as
+   the reference's own (3/4/3 words against its 3/5/3) — what was missing
+   was the air around them, not fewer words. */
+.ork-hero-aside {
+  gap: 15px;
+  font-size: 15px;
+  color: var(--text-3, var(--text-2));
+}
+
+/* ⚠ GUARDED BY min-width, NOT DECLARED BARE. The bloom grows with the room
+   — but .ork-aura already has max-width rules in the stacked breakpoints
+   above (300px under 960, 230px under 560), and a bare rule here would come
+   later in the file and silently beat both. It did: the aura measured 350px
+   on a 390px phone instead of 230px, which made the hero 98% of the screen
+   and pushed the next section off the fold. Scoped to the three-column
+   layout, which is the only place the extra room exists. */
+@media (min-width: 961px) {
+  .ork-aura { max-width: 520px; }
+}
+
+@media (max-width: 960px) {
+  /* Stacked, the extra height is dead space rather than composition — a
+     phone screen has no margins to spare. Back to the original, and scoped
+     the same way so it beats mono.css too. */
+  .ork .ork-hero { min-height: min(68svh, 720px); }
+  .ork-hero-3col .ork-hero-cta { margin-top: 32px; }
 }
