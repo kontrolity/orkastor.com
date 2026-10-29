@@ -1121,3 +1121,41 @@
   --deep-ink: #F5F8FA;
   --deep-ink-muted: rgba(245, 248, 250, 0.66);
 }
+
+/* ── The Products dropdown over the deep hero ────────────────────────────
+ * It rendered as a white card on the navy panel — the same root cause as
+ * the nav ink and the lockup: the menu paints with page tokens, and on the
+ * light theme those are the light surface and dark ink.
+ *
+ * ⚠ RE-POINTS THE TOKENS, DOES NOT RESTYLE THE ELEMENTS. Every declaration
+ * on that panel is set INLINE in Navbar.jsx — background: var(--surface),
+ * color: var(--text), and so on — and an inline style cannot be overridden
+ * by a stylesheet rule. mono.css already records that lesson for this very
+ * component ("backdrop-filter was set inline, so there was no way to turn
+ * the blur off on phones").
+ *
+ * But those inline values are all var() references, and a custom property
+ * resolves against the element's own inherited value. So redefining the
+ * tokens here reaches straight through the inline styles without touching
+ * the markup, and the menu keeps using the same token names it always did.
+ *
+ * Scoped to :not(.is-scrolled) for the same reason the nav ink is: once the
+ * bar has its own surface the menu is over the page again, and the page
+ * tokens are correct.
+ */
+.ork-nav.is-deep:not(.is-scrolled) .ork-pop {
+  --surface:  rgba(8, 24, 46, 0.94);
+  --border:   rgba(245, 248, 250, 0.16);
+  --text:     #F5F8FA;
+  --text-2:   rgba(245, 248, 250, 0.70);
+  --text-3:   rgba(245, 248, 250, 0.54);
+  --bg-alt:   rgba(245, 248, 250, 0.09);
+}
+/* The glass. backdrop-filter is NOT set inline on that panel, so unlike the
+   colours it can be reached by an ordinary rule — hence a child selector
+   here rather than another token. */
+.ork-nav.is-deep:not(.is-scrolled) .ork-pop > div {
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  box-shadow: 0 24px 60px -18px rgba(2, 8, 18, 0.72);
+}
