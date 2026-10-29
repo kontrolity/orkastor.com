@@ -1181,3 +1181,85 @@
   -webkit-backdrop-filter: blur(14px) saturate(130%);
   box-shadow: 0 24px 60px -18px rgba(2, 8, 18, 0.72);
 }
+
+/* ── Hero: 3D depth and hover ────────────────────────────────────────────
+ * usePointerTilt writes --px and --py onto .ork-hero-deep, -1..1 from the
+ * panel's centre, damped. Everything below is CSS reading those two
+ * numbers — no JS touches any of these elements.
+ *
+ * ⚠ FALLBACKS MATTER HERE. --px/--py only exist once the pointer has moved,
+ * and never on touch or under reduced motion, where the hook does not run
+ * at all. Every use goes through var(--px, 0) so the untouched state is
+ * exactly the centred, untilted composition rather than an invalid
+ * calc() that drops the whole declaration.
+ */
+.ork-hero-deep { perspective: 1200px; }
+.ork-hero-centre { transform-style: preserve-3d; }
+.ork-hero-tilt { transform-style: preserve-3d; }
+
+/* The whole block tilts, slightly. 3.2deg is small on purpose: this is
+   60px type, and a few degrees of rotation at that size is already a
+   strong effect — past about 5 the headline starts to look like it is
+   falling over rather than responding. */
+.ork-hero-tilt {
+  transform:
+    rotateY(calc(var(--px, 0) * 3.2deg))
+    rotateX(calc(var(--py, 0) * -2.4deg));
+  transition: transform 120ms linear;
+}
+
+/* ── The depth ──────────────────────────────────────────────────────────
+   The layers sit at different translateZ, so the perspective above makes
+   them move at different rates as the block turns. That parallax is what
+   reads as depth — a block that tilts rigidly reads as a tilting picture,
+   not as layers in space. Headline nearest, facts furthest. */
+.ork-hero-centre-h1    { transform: translateZ(46px); }
+.ork-hero-centre-sub   { transform: translateZ(26px); }
+.ork-hero-centre-cta   { transform: translateZ(34px); }
+.ork-hero-centre-facts { transform: translateZ(12px); }
+
+/* The background light leans the opposite way to the content, which
+   deepens the parallax — near things move with you, far things against. */
+.ork-hero-deep::before { margin-left: calc(var(--px, 0) * -22px); margin-top: calc(var(--py, 0) * -14px); }
+.ork-hero-deep::after  { margin-right: calc(var(--px, 0) * -26px); margin-top: calc(var(--py, 0) * -16px); }
+
+/* ── Hover ──────────────────────────────────────────────────────────────
+   The buttons lift toward the viewer rather than just changing colour.
+   translateZ, not translateY, so the lift belongs to the same 3D space the
+   tilt is in and the shadow reads as distance rather than as an offset. */
+.ork-hero-deep .ork-btn {
+  transition: transform 220ms cubic-bezier(.2, .7, .3, 1), box-shadow 220ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ork-hero-deep .ork-btn:hover {
+    transform: translateZ(22px);
+    box-shadow: 0 18px 40px -16px rgba(2, 10, 24, 0.75);
+  }
+  /* The facts are quiet by default and come up to full strength one at a
+     time. A cheap affordance, but it tells you the row is content rather
+     than decoration. */
+  .ork-hero-centre-facts > li { transition: color 180ms ease; }
+  .ork-hero-centre-facts > li:hover { color: rgba(245, 248, 250, 0.95); }
+}
+/* Keyboard users get the lift too — :hover alone would make the control
+   look inert on focus, which is the same inertness the button's own CSS
+   note complains about in mono.css. */
+.ork-hero-deep .ork-btn:focus-visible {
+  transform: translateZ(22px);
+  box-shadow: 0 18px 40px -16px rgba(2, 10, 24, 0.75);
+}
+
+/* ⚠ ALL OF IT OFF UNDER REDUCED MOTION, including the hover lift. The hook
+   does not run, so --px/--py never exist and the tilt resolves to 0 via the
+   fallbacks — but the transitions and the lift are declared here and have
+   to be switched off explicitly. */
+@media (prefers-reduced-motion: reduce) {
+  .ork-hero-tilt { transform: none; transition: none; }
+  .ork-hero-centre-h1,
+  .ork-hero-centre-sub,
+  .ork-hero-centre-cta,
+  .ork-hero-centre-facts { transform: none; }
+  .ork-hero-deep .ork-btn { transition: none; }
+  .ork-hero-deep .ork-btn:hover,
+  .ork-hero-deep .ork-btn:focus-visible { transform: none; box-shadow: none; }
+}
