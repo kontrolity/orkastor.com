@@ -624,14 +624,36 @@
   /* Full-bleed: it is the first child of the header, OUTSIDE the Container,
      so it spans the viewport rather than the content column. */
   width: 100%;
-  /* A real gold, warm at the ends and bright through the middle, so the
-     strip reads as metal rather than as a flat yellow bar. */
-  background: linear-gradient(90deg, #8A6410 0%, #C9A227 22%, #F3DC92 50%, #C9A227 78%, #8A6410 100%);
-  border-bottom: 1px solid rgba(90, 68, 9, 0.38);
-  /* #2A1F03 on the #C9A227 shoulders is 7.1:1 and on the #F3DC92 centre
-     14.0:1. The ink is near-black-brown rather than black so it belongs to
-     the gold; pure #000 on this ramp reads as a warning strip. */
-  color: #2A1F03;
+  /* ── NAVY GROUND, GOLD INK ────────────────────────────────────────────
+     This was a solid gold strip, which was right while the page under it
+     opened light. The hero is a deep navy panel now, and a gold band
+     sitting directly on top of it read as a stripe borrowed from another
+     site — the exact failure the square-corner note in mono.css describes.
+
+     So the award moves from the GROUND to the INK. The bar takes the
+     hero's own navy and continues it upward, so the top of the page reads
+     as one dark unit rather than two competing bands, and the gold does
+     its work in the type where it is unambiguous.
+
+     ⚠ This exact treatment was rendered and REJECTED earlier in the
+     redesign, as "ink + gold", on the grounds that a near-black band is
+     heavy on a light page. That judgement was correct at the time. The
+     hero going dark is what turned it from wrong into right — which is
+     worth knowing before anyone reverts it on the strength of the old
+     comparison.
+
+     The ramp lifts through the middle so the bar is lit the way the hero
+     below it is, rather than reading as a flat block. */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(90deg, #07203F 0%, #0B2F5E 30%, #10477A 50%, #0B2F5E 70%, #07203F 100%);
+  border-bottom: 1px solid rgba(240, 206, 112, 0.30);
+  box-shadow: inset 0 -1px 0 rgba(240, 206, 112, 0.10);
+  /* #F0CE70 measures 8.70:1 on the bar's mid navy and 10.69:1 at its
+     edges, so it holds right across the ramp. Note this is the OPPOSITE
+     risk to the gold-ground version, where the dark ENDS were the problem
+     and had to be lifted to clear AA — here the ends are the safest part. */
+  color: #F0CE70;
 }
 .ork-banner-inner {
   display: inline-flex;
@@ -653,7 +675,7 @@
 /* The attribution is the quieter half — it is the same sentence, not a
    second one, so it stays the same colour and only drops in weight. */
 .ork-banner-by { font-weight: 500; opacity: 0.82; }
-.ork-banner-icon { flex: none; opacity: 0.78; }
+.ork-banner-icon { flex: none; opacity: 0.82; }
 
 /* The sheen. A slow highlight crossing the strip, which is what makes it
    read as metal instead of as a gradient. 9s and low alpha on purpose: this
