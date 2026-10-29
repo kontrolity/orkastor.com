@@ -1,12 +1,23 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { Container, Button, Arrow } from '../ui';
-import { HERO, EXTERNAL } from '@/content/site';
+import { Container, Button } from '../ui';
+import { HERO, EXTERNAL, COMPANY } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { usePointerTilt } from '@/hooks/usePointerTilt';
 
 /* Lazy so three.js stays out of the entry bundle — a visitor who bounces
    above the fold never pays for it. Never rendered under reduced motion, so
    that setting also means the chunk is never fetched. */
 const HeroField = lazy(() => import('@/components/ork/visuals/HeroField'));
+
+/* ⚠ <HeroAura /> IS NO LONGER RENDERED. It was the mark floating in a
+   prismatic bloom in a three-column layout, following a previous reference.
+   The hero now follows a different one: a deep blue panel with the copy
+   centred on it and the light coming from the background rather than from
+   an object in the middle.
+
+   HeroAura.jsx stays on disk. It is self-contained, it carries the damped
+   pointer-tilt loop and the note about headless rAF throttling that cost
+   two wrong diagnoses, and re-rendering it is one import plus one tag. */
 
 /**
  * The home hero. Copy only.
@@ -203,6 +214,12 @@ function Rotator({ alts, canonical, base, reduced }) {
 
 export function Hero() {
   const reduced = useReducedMotion();
+  /* Writes --px/--py (-1..1 from the panel's centre) while the pointer
+     moves. Everything built on it is CSS — see .ork-hero-deep in
+     orkastor.css. The hook handles damping, the idle guard, touch and
+     reduced motion; it is deliberately shared rather than copied, because
+     each of those was arrived at by measuring. */
+  const tiltRef = usePointerTilt();
   const p = useHeroScroll(!reduced);
   const ref = useRef(null);
 
@@ -230,13 +247,18 @@ export function Hero() {
 
   return (
     <section
-      ref={ref}
+      /* ⚠ TWO refs on one node. `ref` is the IntersectionObserver that
+         replays the word reveal; `tiltRef` measures the pointer against this
+         element. A callback ref assigns both — React takes one ref prop, and
+         silently keeping whichever was written last is how one of them stops
+         working without any error. */
+      ref={(node) => { ref.current = node; tiltRef.current = node; }}
       /* ⚠ NO .ork-atmos HERE ANY MORE. The hero used to own its field; the
          field is now fixed behind the entire document (.ork-field, mounted
          in Layout). Keeping a second one here would paint a section-sized
          gradient on top of the page-sized one, and the seam where they met
          would be the most visible edge on the site. */
-      className="ork-mono-hero ork-hero relative overflow-hidden"
+      className="ork-mono-hero ork-hero ork-hero-deep relative overflow-hidden"
     >
       {/* ── THE FIELD ──────────────────────────────────────────────────────
           A WebGL ambient ground, NOT the object that used to live here.
@@ -303,105 +325,61 @@ export function Hero() {
             and differing alternate widths are symmetric about it, which is
             what a centred headline is supposed to do. Verified by measuring
             the h1's centre across a full rotation; it does not move. */}
-        <div className="ork-hero-copy" style={copyStyle}>
-          {/* The eyebrow ("INFRASTRUCTURE, WITHOUT THE OPERATING TAX") was
-              here. The reference opens straight on the headline, and the
-              line it carried is a positioning claim that the headline and
-              standfirst already make between them — kept in content/site.js
-              as HERO.eyebrow, so restoring it is re-adding this block. The
-              status descriptors that now sit under the CTAs do the job the
-              eyebrow was really doing: telling you this is real and running. */}
+        {/* ── CENTRED ON A DEEP PANEL ──────────────────────────────────────
+            Follows the supplied reference: everything centred on a dark blue
+            ground, with the light in the background rather than in an object.
+            Headline, one line of sub, the two controls, and the three facts.
 
-          {/* Two lines, two colours, one <h1>. The second line carries its own
-              colour rather than relying on a gradient-clip: a clipped span
-              whose fallback is transparent is one unsupported property away
-              from invisible text. (It is no longer teal — see --rotator-ink.)
-
-              ⚠ Each line is WIDE, not stacked. The copy column runs the full
-              container so each line sets on one line instead of breaking into
-              two — four short lines read as a poem, not as a headline. It
-              still wraps on a phone, which is correct; the wrapping was only
-              wrong when there was room not to.
-
-              That constraint got EASIER, not harder, with the new copy: the
-              longest alternate is now 30 characters against the old 37, so
-              both lines clear the container with more room than before. */}
-          <div className="ork-hero-grid">
-          {/* ⚠ ONE LINE, AND <Rotator> IS GONE FROM THE RENDER. The headline
-              was two lines — a static first and a rotating second cycling
-              four alternates. It is now a single positioning line, so there
-              is no second line for the rotator to animate.
-
-              Rotator, HERO.titleB and HERO.titleBAlts all REMAIN on disk.
-              site.js says why they are kept; restoring the two-line headline
-              is re-adding the span below, which is left here as a comment
-              rather than described in prose so it can be pasted back:
-
-                <span className="ork-h1-line ork-h1-accent">
-                  <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB}
-                           base={420} reduced={reduced} />
-                </span>
-
-              The word reveal still runs — `base={260}` is unchanged — so the
-              headline arrives the same way it always did, just without the
-              cycling line underneath. */}
-          <h1 className="ork-mono-h1">
+            ⚠ THE REFERENCE'S PROMPT BOX IS DELIBERATELY ABSENT. It is the
+            product on that site — you type into it and it builds something.
+            Orkastor has nothing behind it, so reproducing it would be an
+            input that does nothing, or worse, implies an AI product that
+            does not exist. The two CTAs occupy its position instead. */}
+        {/* ⚠ TWO ELEMENTS, TWO TRANSFORMS, AND THAT IS WHY. copyStyle is the
+            scroll parallax and it sets `transform` INLINE on this element.
+            An inline transform beats a stylesheet rule outright, so the 3D
+            tilt declared in CSS resolved to identity when it lived here —
+            the custom properties updated correctly and nothing moved.
+            Scroll drift stays on the outer node; the tilt gets its own. */}
+        <div className="ork-hero-centre" style={copyStyle}>
+        <div className="ork-hero-tilt">
+          <h1 className="ork-mono-h1 ork-hero-centre-h1">
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
           </h1>
 
-          {/* The standfirst sits between the headline and the buttons —
-              the one position it cannot be skipped from, since you pass it on
-              the way to the only two controls on the screen.
-
-              It was briefly a right-hand column, copying the reference. That
-              laid it over the hero's 3D object; the object has since gone
-              (see above), so the collision is moot, but the stacked order is
-              the better reading anyway and stays. */}
-          <p className="ork-mono-sub ork-hero-lead">
-            <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
+          {/* COMPANY.oneLine, not HERO.sub. The reference carries one short
+              line under its headline, and this hero's headline is a company
+              statement — so the line under it has to be about the company
+              too. HERO.sub is a KubeGraf sentence and was retired from here
+              for exactly that mismatch. */}
+          <p className="ork-hero-centre-sub">
+            <Words key={`sub-${run}`} text={COMPANY.oneLine} base={560} step={13} reduced={reduced} />
           </p>
-          </div>
 
           <div
             key={`cta-${run}`}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-10 ork-hero-cta"
-            style={reduced ? undefined : { animationDelay: '700ms' }}
+            className="ork-hero-cta ork-hero-centre-cta"
+            style={reduced ? undefined : { animationDelay: '720ms' }}
           >
-            {/* Was /kubegraf, this site's own KubeGraf page. That page is gone
-                — the product has its own site, kept current by the team that
-                ships it, and a second one here was copy that could drift. */}
             <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
-              Explore KubeGraf <Arrow />
+              Explore KubeGraf
             </Button>
-            {/* Was "Explore Domineta". The hero now has one product, so the
-                second CTA points at the thing a visitor most likely wants
-                next rather than at an unlisted one.
-
-                It pointed at /pricing, which no longer exists, and then at
-                kubegraf.io's root — which made both CTAs the same URL once
-                the primary went external. It now names the page it promises. */}
             <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer">
-              See pricing <Arrow />
+              See pricing
             </Button>
           </div>
 
-          {/* ── STATUS LINE ────────────────────────────────────────────────
-              The reference puts short factual descriptors directly under its
-              CTAs — "Live in production", and two properties of the product.
-              It is the last thing read before a click, so it carries the
-              facts most likely to stop one: whether this is real, whose
-              infrastructure it touches, and what it opens.
-
-              A <ul>, not three spans: these are a list, and the separators
-              are CSS so a screen reader does not read "dot" between them. */}
+          {/* Same three facts, now a centred row beneath the controls —
+              which is where the reference puts its "or start from" row. */}
           <ul
-            className="ork-hero-status"
-            style={reduced ? undefined : { animationDelay: '820ms' }}
+            className="ork-hero-centre-facts"
+            style={reduced ? undefined : { animationDelay: '840ms' }}
           >
             <li>Live in production</li>
             <li>Your clusters, your keys</li>
             <li>No inbound ports</li>
           </ul>
+        </div>
         </div>
       </Container>
     </section>

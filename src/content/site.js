@@ -109,14 +109,16 @@ export const HERO = {
      line instead, and it maps onto the company rather than onto one product:
      AI DevOps is KubeGraf, Cloud is Domineta, and Orchestrator is the name.
 
-     'Orchestrator' carries the underline because it is the word the company
-     name turns on, and it is a SINGLE word — the marker rule below still
-     applies: each word is its own mask for the reveal, so a run spanning a
-     space would draw as two underlines with a gap.
+     ⚠ NO MARKED WORD, DELIBERATELY. 'Orchestrator' carried the underline
+     for one revision. The reference this hero follows has no typographic
+     device in its headline at all — it is set plain and lets the whitespace
+     and the bloom do the work — and a heavy rule under a 60px word is the
+     single least minimal thing the hero could contain. The marker syntax
+     still works if it is ever wanted back: wrap one word in asterisks.
 
      DevOps, not Devops. It is the standard styling of the term and the one a
      technical reader expects to see set in 60px type. */
-  titleA: 'AI DevOps & Cloud *Orchestrator*',
+  titleA: 'AI DevOps & Cloud Orchestrator',
 
   /* ⚠ RETIRED, NOT DELETED, 2026-10-29. titleB and titleBAlts drove the
      rotating second line; the headline is one line now, so Hero.jsx no
@@ -197,6 +199,16 @@ export const HERO = {
      replaces. The hero's right column is sized so this sets in THREE lines
      and ends level with the two-line headline — see .ork-hero-lead. A
      materially longer or shorter line breaks that balance. */
+  /* ⚠ RETIRED FROM THE HERO, 2026-10-29, and kept for the same reason
+     titleBAlts is. The reference has NO paragraph in its hero — headline,
+     two buttons, three short lines, and air. This sentence was also the
+     thing flagged as mismatched when the headline became a company line:
+     it is a KubeGraf sentence sitting under an Orkastor headline.
+
+     Nothing renders it now. It stays because the commentary below is the
+     record of which approved copy each half came from, and because the
+     product sections lower down are where a sentence like it belongs if it
+     is wanted again. */
   sub:
     'KubeGraf is an AI SRE for the clusters you already have. It works from ' +
     'an agent already inside them, pulling metrics, logs and events into one ' +
