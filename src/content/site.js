@@ -103,7 +103,28 @@ export const HERO = {
      markers are stripped before the text reaches a screen reader or a
      reduced-motion render — see plainText() in Hero.jsx. Punctuation stays
      OUTSIDE the marker so the rule does not run under a full stop. */
-  titleA: 'Kubernetes tells you *what* broke.',
+  /* ⚠ ONE LINE NOW, AND THE ROTATOR IS RETIRED WITH IT. The headline was
+     'Kubernetes tells you *what* broke.' over a rotating 'KubeGraf tells you
+     *why*.' — a product claim on the COMPANY's page. This is a positioning
+     line instead, and it maps onto the company rather than onto one product:
+     AI DevOps is KubeGraf, Cloud is Domineta, and Orchestrator is the name.
+
+     'Orchestrator' carries the underline because it is the word the company
+     name turns on, and it is a SINGLE word — the marker rule below still
+     applies: each word is its own mask for the reveal, so a run spanning a
+     space would draw as two underlines with a gap.
+
+     DevOps, not Devops. It is the standard styling of the term and the one a
+     technical reader expects to see set in 60px type. */
+  titleA: 'AI DevOps & Cloud *Orchestrator*',
+
+  /* ⚠ RETIRED, NOT DELETED, 2026-10-29. titleB and titleBAlts drove the
+     rotating second line; the headline is one line now, so Hero.jsx no
+     longer renders <Rotator> and nothing reads these. They stay because the
+     comment below is the record of WHY each alternate was allowed to make
+     the claim it makes — particularly the note that none of them may say the
+     fix ships unattended. Re-deriving that from scratch is how a false claim
+     gets written. Restoring the rotator is re-adding one component call. */
   titleB: 'KubeGraf tells you *why*.',
 
   /* The second line rotates through these. titleB stays the canonical one: it

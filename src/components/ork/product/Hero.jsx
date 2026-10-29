@@ -327,11 +327,26 @@ export function Hero() {
               longest alternate is now 30 characters against the old 37, so
               both lines clear the container with more room than before. */}
           <div className="ork-hero-grid">
+          {/* ⚠ ONE LINE, AND <Rotator> IS GONE FROM THE RENDER. The headline
+              was two lines — a static first and a rotating second cycling
+              four alternates. It is now a single positioning line, so there
+              is no second line for the rotator to animate.
+
+              Rotator, HERO.titleB and HERO.titleBAlts all REMAIN on disk.
+              site.js says why they are kept; restoring the two-line headline
+              is re-adding the span below, which is left here as a comment
+              rather than described in prose so it can be pasted back:
+
+                <span className="ork-h1-line ork-h1-accent">
+                  <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB}
+                           base={420} reduced={reduced} />
+                </span>
+
+              The word reveal still runs — `base={260}` is unchanged — so the
+              headline arrives the same way it always did, just without the
+              cycling line underneath. */}
           <h1 className="ork-mono-h1">
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
-            <span className="ork-h1-line ork-h1-accent">
-              <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB} base={420} reduced={reduced} />
-            </span>
           </h1>
 
           {/* The standfirst sits between the headline and the buttons —
