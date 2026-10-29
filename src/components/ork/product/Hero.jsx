@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Container, Button } from '../ui';
 import { HERO, EXTERNAL, COMPANY } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { usePointerTilt } from '@/hooks/usePointerTilt';
 
 /* Lazy so three.js stays out of the entry bundle — a visitor who bounces
    above the fold never pays for it. Never rendered under reduced motion, so
@@ -213,6 +214,12 @@ function Rotator({ alts, canonical, base, reduced }) {
 
 export function Hero() {
   const reduced = useReducedMotion();
+  /* Writes --px/--py (-1..1 from the panel's centre) while the pointer
+     moves. Everything built on it is CSS — see .ork-hero-deep in
+     orkastor.css. The hook handles damping, the idle guard, touch and
+     reduced motion; it is deliberately shared rather than copied, because
+     each of those was arrived at by measuring. */
+  const tiltRef = usePointerTilt();
   const p = useHeroScroll(!reduced);
   const ref = useRef(null);
 
@@ -240,7 +247,12 @@ export function Hero() {
 
   return (
     <section
-      ref={ref}
+      /* ⚠ TWO refs on one node. `ref` is the IntersectionObserver that
+         replays the word reveal; `tiltRef` measures the pointer against this
+         element. A callback ref assigns both — React takes one ref prop, and
+         silently keeping whichever was written last is how one of them stops
+         working without any error. */
+      ref={(node) => { ref.current = node; tiltRef.current = node; }}
       /* ⚠ NO .ork-atmos HERE ANY MORE. The hero used to own its field; the
          field is now fixed behind the entire document (.ork-field, mounted
          in Layout). Keeping a second one here would paint a section-sized
@@ -323,7 +335,14 @@ export function Hero() {
             Orkastor has nothing behind it, so reproducing it would be an
             input that does nothing, or worse, implies an AI product that
             does not exist. The two CTAs occupy its position instead. */}
+        {/* ⚠ TWO ELEMENTS, TWO TRANSFORMS, AND THAT IS WHY. copyStyle is the
+            scroll parallax and it sets `transform` INLINE on this element.
+            An inline transform beats a stylesheet rule outright, so the 3D
+            tilt declared in CSS resolved to identity when it lived here —
+            the custom properties updated correctly and nothing moved.
+            Scroll drift stays on the outer node; the tilt gets its own. */}
         <div className="ork-hero-centre" style={copyStyle}>
+        <div className="ork-hero-tilt">
           <h1 className="ork-mono-h1 ork-hero-centre-h1">
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
           </h1>
@@ -360,6 +379,7 @@ export function Hero() {
             <li>Your clusters, your keys</li>
             <li>No inbound ports</li>
           </ul>
+        </div>
         </div>
       </Container>
     </section>
