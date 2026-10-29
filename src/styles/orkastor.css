@@ -855,3 +855,47 @@
   .ork-aura { max-width: 230px; }
   .ork-aura-field { filter: blur(32px) saturate(118%); }
 }
+
+/* ── Hero: the minimal pass ───────────────────────────────────────────────
+ * The reference's hero is headline, two small buttons, three short lines,
+ * and a great deal of air. Three things were between this hero and that,
+ * and all three are removed rather than tuned:
+ *
+ *   the underline under 'Orchestrator'  -> gone, see HERO.titleA
+ *   the four-line standfirst            -> gone, see Hero.jsx
+ *   large CTAs with arrows              -> handled here
+ *
+ * ⚠ SCOPED TO THE HERO. .ork-btn is the site's button everywhere else and
+ * its current size is correct there; this only makes the two hero CTAs
+ * quieter, because they now sit directly under 60px type with nothing
+ * between, and at full size they competed with it.
+ */
+.ork-hero-3col .ork-btn {
+  height: 44px;
+  padding: 0 22px;
+  font-size: 14.5px;
+  letter-spacing: 0.005em;
+}
+
+/* The headline carries the hero alone now, so it gets the room the
+   paragraph was using. Tighter leading as well — at this size the default
+   opens gaps that read as three separate lines rather than one statement. */
+.ork-hero-3col .ork-mono-h1 {
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+/* ⚠ THERE IS NO max-width HERE, AND THERE WAS. A `max-width: 13ch` sat on
+   this rule to force the headline into the reference's two-line shape. It
+   did nothing: the grid column is narrower than the measure, so the column
+   is what wraps the text, and every value from 13ch to none produced the
+   same 456px box and the same three lines. Dead CSS with a comment claiming
+   it controlled the break — worse than no rule.
+
+   The headline sets as three lines in this column, which is correct for a
+   30-character phrase. The reference's two lines come from a 21-character
+   one, not from a measure. To force two, the font-size has to come down —
+   do that rather than reaching for max-width again. */
+@media (max-width: 960px) {
+  .ork-hero-3col .ork-btn { height: 48px; }
+}
