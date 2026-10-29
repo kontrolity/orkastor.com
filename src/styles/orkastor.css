@@ -624,16 +624,38 @@
   /* Full-bleed: it is the first child of the header, OUTSIDE the Container,
      so it spans the viewport rather than the content column. */
   width: 100%;
-  /* A real gold, warm at the ends and bright through the middle, so the
-     strip reads as metal rather than as a flat yellow bar. */
-  background: linear-gradient(90deg, #8A6410 0%, #C9A227 22%, #F3DC92 50%, #C9A227 78%, #8A6410 100%);
-  border-bottom: 1px solid rgba(90, 68, 9, 0.38);
-  /* #2A1F03 on the #C9A227 shoulders is 7.1:1 and on the #F3DC92 centre
-     14.0:1. The ink is near-black-brown rather than black so it belongs to
-     the gold; pure #000 on this ramp reads as a warning strip. */
-  color: #2A1F03;
+  /* ── THE GOLD ─────────────────────────────────────────────────────────
+     Two layers. The horizontal ramp is the metal; the vertical one is the
+     light falling on it — bright along the top edge, shaded along the
+     bottom — which is what makes a flat strip read as a curved surface.
+
+     ⚠ THE DEPTH IS VERTICAL FOR A REASON. The previous ramp got its
+     richness from dark horizontal shoulders (#8A6410 at each end), and
+     those shoulders sat UNDER THE TEXT: at 320px the sentence spans nearly
+     edge to edge, where the ink measured 2.1:1 — far under AA. Putting the
+     darkness on the vertical axis instead buys the same depth and can
+     never land behind a glyph.
+
+     Every stop of the horizontal ramp clears AA against the ink: #A87A12
+     at the ends is 4.58:1, #CFA63A 7.70:1, #FFEDB4 at the centre 15.14:1.
+     #A87A12 is close to the floor — the darkest this gold can go against
+     #241602 is #AB771B — so do not deepen the ends without re-measuring. */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 42%, rgba(90, 62, 6, 0.20) 100%),
+    linear-gradient(90deg, #A87A12 0%, #CFA63A 26%, #FFEDB4 50%, #CFA63A 74%, #A87A12 100%);
+  border-bottom: 1px solid #6E4A06;
+  box-shadow: inset 0 -1px 0 rgba(255, 245, 210, 0.22);
+  /* Near-black-brown rather than pure black, so the ink belongs to the gold
+     instead of reading as a hazard stripe. */
+  color: #241602;
 }
 .ork-banner-inner {
+  /* ⚠ ABOVE THE SHEEN. .ork-banner-sheen is a later sibling with no
+     z-index, so it painted OVER the text and washed the ink out each time
+     it swept past — a contrast dip on a loop. Raising the content puts the
+     shine behind the words, where a highlight belongs. */
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 12px;
