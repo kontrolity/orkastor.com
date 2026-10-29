@@ -1263,3 +1263,37 @@
   .ork-hero-deep .ork-btn:hover,
   .ork-hero-deep .ork-btn:focus-visible { transform: none; box-shadow: none; }
 }
+
+/* ── Hero: narrow and short viewports ────────────────────────────────────
+ * ⚠ THE HERO IS CONTENT-DRIVEN BELOW min-height, AND THAT IS WHAT BREAKS.
+ * Measured at 320x568 the panel came to 539px — 95% of the viewport — with
+ * the second button and the whole facts row under the fold. min-height was
+ * never the constraint there; the stack simply did not fit. Landscape was
+ * worse at 103%.
+ *
+ * That matters beyond tidiness: mono.css deliberately reduced this hero
+ * FROM 100svh so the next section breaks the fold and the page reads as
+ * something to scroll. A hero that overflows the screen undoes exactly
+ * that, and it does it only on the smallest devices, where it is least
+ * likely to be noticed.
+ *
+ * ⚠ Scoped as `.ork-hero-deep .ork-mono-h1` for the type size, for the
+ * same reason the colour is: a single class ties .ork-mono-h1 and loses on
+ * load order.
+ */
+@media (max-width: 380px) {
+  .ork-hero-deep .ork-mono-h1 { font-size: 30px; }
+  .ork-hero-centre-sub { margin-top: 14px; font-size: 14.5px; }
+  .ork-hero-centre-cta { margin-top: 24px; gap: 10px; }
+  .ork-hero-centre-facts { margin-top: 20px; gap: 5px 14px; }
+}
+
+/* Landscape phones: wide but only ~390px tall, so the vertical budget is
+   the scarce one and the headline has room to go wider instead. The banner
+   is already hidden at this height by the rule further up. */
+@media (max-height: 450px) {
+  .ork-hero-deep .ork-mono-h1 { font-size: clamp(26px, 4vw, 40px); }
+  .ork-hero-centre-sub { margin-top: 10px; font-size: 14px; }
+  .ork-hero-centre-cta { margin-top: 18px; }
+  .ork-hero-centre-facts { margin-top: 14px; font-size: 12.5px; }
+}
