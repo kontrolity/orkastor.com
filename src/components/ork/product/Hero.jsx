@@ -8,6 +8,12 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
    that setting also means the chunk is never fetched. */
 const HeroField = lazy(() => import('@/components/ork/visuals/HeroField'));
 
+/* NOT lazy, unlike HeroField: the aura is the hero's subject and sits above
+   the fold, so deferring it would only guarantee it arrives after the copy
+   it is meant to sit beside. It costs no JS beyond this component — the
+   effect itself is CSS. */
+import { HeroAura } from '@/components/ork/visuals/HeroAura';
+
 /**
  * The home hero. Copy only.
  *
@@ -303,7 +309,22 @@ export function Hero() {
             and differing alternate widths are symmetric about it, which is
             what a centred headline is supposed to do. Verified by measuring
             the h1's centre across a full rotation; it does not move. */}
-        <div className="ork-hero-copy" style={copyStyle}>
+        {/* ── THREE COLUMNS, FOLLOWING THE REFERENCE ───────────────────────
+            Headline and CTAs ranged left, the mark floating in a prismatic
+            bloom in the middle, three short supporting lines ranged right.
+
+            The right-hand column is NOT new copy. It is the status list that
+            already sat as a row beneath the CTAs — "Live in production",
+            "Your clusters, your keys", "No inbound ports". Same content, same
+            job, better position: in the reference those three lines are what
+            balances the composition against the headline.
+
+            ⚠ Below 960px this collapses back to the centred stack the hero
+            used before, which is why .ork-hero-copy keeps its `text-align:
+            center` and .ork-hero-3col only un-centres it. Three columns need
+            about 900px before the headline sets one word per line. */}
+        <div className="ork-hero-3col" style={copyStyle}>
+        <div className="ork-hero-copy ork-hero-copy-left">
           {/* The eyebrow ("INFRASTRUCTURE, WITHOUT THE OPERATING TAX") was
               here. The reference opens straight on the headline, and the
               line it carried is a positioning claim that the headline and
@@ -384,24 +405,32 @@ export function Hero() {
               See pricing <Arrow />
             </Button>
           </div>
+        </div>
 
-          {/* ── STATUS LINE ────────────────────────────────────────────────
-              The reference puts short factual descriptors directly under its
-              CTAs — "Live in production", and two properties of the product.
-              It is the last thing read before a click, so it carries the
-              facts most likely to stop one: whether this is real, whose
-              infrastructure it touches, and what it opens.
+        {/* ── THE AURA ─────────────────────────────────────────────────────
+            The mark in a prismatic bloom. Not lazy-loaded and not WebGL:
+            HeroAura.jsx records why five blurred gradients beat a second GL
+            context here, and it is above the fold, so deferring it would
+            only guarantee it arrives late. */}
+        <HeroAura markSize={100} />
 
-              A <ul>, not three spans: these are a list, and the separators
-              are CSS so a screen reader does not read "dot" between them. */}
-          <ul
-            className="ork-hero-status"
-            style={reduced ? undefined : { animationDelay: '820ms' }}
-          >
-            <li>Live in production</li>
-            <li>Your clusters, your keys</li>
-            <li>No inbound ports</li>
-          </ul>
+        {/* ── THE THREE LINES ──────────────────────────────────────────────
+            Same list, same facts, moved from a row under the CTAs to the
+            right-hand column — which is where the reference puts them and
+            what balances the headline.
+
+            Still a <ul> and still three <li>: these are a list, and keeping
+            the element means the separators that the old row drew in CSS
+            simply stop applying rather than needing to be deleted. A screen
+            reader never read "dot" between them and still does not. */}
+        <ul
+          className="ork-hero-aside"
+          style={reduced ? undefined : { animationDelay: '820ms' }}
+        >
+          <li>Live in production</li>
+          <li>Your clusters, your keys</li>
+          <li>No inbound ports</li>
+        </ul>
         </div>
       </Container>
     </section>
