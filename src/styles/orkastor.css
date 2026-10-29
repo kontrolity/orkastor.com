@@ -960,3 +960,164 @@
   .ork .ork-hero { min-height: min(68svh, 720px); }
   .ork-hero-3col .ork-hero-cta { margin-top: 32px; }
 }
+
+/* ── Hero: the deep panel ────────────────────────────────────────────────
+ * Follows a reference whose hero is a dark blue ground with everything
+ * centred on it and the light coming from the background. It replaces the
+ * three-column prismatic layout entirely; .ork-hero-3col and the .ork-aura
+ * rules above it are now unused and are left in place only because
+ * HeroAura.jsx is, for the same reason.
+ *
+ * ⚠ THIS DOES NOT USE --deep-bg, AND THAT IS NOT AN OVERSIGHT. mono.css
+ * tokenises the deep ground so it resolves to the PAGE colour on the light
+ * theme — "the white site paints no section grounds" is the note there, and
+ * that decision is correct for the sections that use it. This hero has to
+ * be dark in both themes, because the design is the dark panel. So it
+ * carries its own blue rather than redefining a token other sections read.
+ */
+.ork-hero-deep {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Rounded at the top only: the panel meets the nav above it and runs into
+     the page below, which is the reference's shape. */
+  border-radius: 22px 22px 0 0;
+  background:
+    radial-gradient(90% 70% at 72% 18%, rgba(140, 198, 255, 0.40), rgba(140, 198, 255, 0) 60%),
+    radial-gradient(70% 55% at 22% 12%, rgba(42, 112, 220, 0.42), rgba(42, 112, 220, 0) 62%),
+    radial-gradient(120% 90% at 50% 112%, rgba(5, 11, 18, 0.92), rgba(5, 11, 18, 0) 58%),
+    linear-gradient(168deg, #0E3C78 0%, #0A2A57 42%, #061A36 100%);
+  color: #F5F8FA;
+}
+
+/* The light. Two soft blooms drifting on mutually-prime periods, the same
+   device the aura used — but here they are the BACKGROUND rather than an
+   object, so they are large, low-contrast and never leave the panel. */
+.ork-hero-deep::before,
+.ork-hero-deep::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.ork-hero-deep::before {
+  width: 52%; height: 70%; top: -18%; left: 8%;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.55), rgba(96, 165, 250, 0) 70%);
+  animation: ork-deep-drift 29s ease-in-out infinite alternate;
+}
+.ork-hero-deep::after {
+  width: 46%; height: 62%; top: 2%; right: 4%;
+  background: radial-gradient(circle, rgba(191, 225, 255, 0.52), rgba(191, 225, 255, 0) 70%);
+  animation: ork-deep-drift 37s ease-in-out infinite alternate-reverse;
+}
+@keyframes ork-deep-drift {
+  from { transform: translate3d(-6%, -4%, 0) scale(1); }
+  to   { transform: translate3d(7%, 6%, 0) scale(1.16); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ork-hero-deep::before,
+  .ork-hero-deep::after { animation: none; }
+}
+
+/* ── The centred stack ──────────────────────────────────────────────────── */
+.ork-hero-centre { text-align: center; max-width: 820px; margin-inline: auto; }
+/* ⚠ .ork-hero-deep .ork-mono-h1, NOT .ork-hero-centre-h1. The headline's
+   colour comes from .ork-mono-h1 { color: var(--text) } in mono.css, which
+   ties any single class here on specificity and wins on load order. On the
+   light theme --text is the navy #0A1A2B, so the headline rendered
+   near-black on a navy panel — unreadable, and visible immediately in a
+   screenshot. Two classes beat it without !important. */
+.ork-hero-deep .ork-mono-h1,
+.ork-hero-centre-h1 {
+  color: #FFFFFF;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+/* One line, and it is allowed to be quiet — the reference's sub is markedly
+   lighter than its headline, which is what keeps the headline the subject. */
+.ork-hero-centre-sub {
+  margin: 20px auto 0;
+  max-width: 52ch;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.55;
+  color: rgba(245, 248, 250, 0.72);
+}
+.ork-hero-centre-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 34px;
+}
+/* The three facts, centred under the controls where the reference puts its
+   "or start from" row. Separators are CSS, so a screen reader reads three
+   list items and no punctuation. */
+.ork-hero-centre-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 22px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  color: rgba(245, 248, 250, 0.58);
+}
+.ork-hero-centre-facts > li { display: inline-flex; align-items: center; }
+.ork-hero-centre-facts > li + li::before {
+  content: '';
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  margin-right: 22px;
+}
+
+/* ⚠ THE SECONDARY BUTTON NEEDS INVERTING ON THIS GROUND. .ork-btn's
+   secondary is a hairline frame in page ink, which on a navy panel is a
+   dark line on a dark ground — invisible. Scoped to the hero so the
+   button's own definition is untouched everywhere else. */
+.ork-hero-deep .ork-btn { height: 46px; padding: 0 24px; font-size: 15px; }
+/* ⚠ THE CLASS IS .ork-btn-line. `variant="secondary"` emits ork-btn-line,
+   not ork-btn--secondary — the first version of this rule guessed the BEM
+   name, matched nothing, and the button stayed dark-on-navy. Read the
+   variant map in ui/index.jsx rather than inferring the class. */
+.ork-hero-deep .ork-btn-line {
+  color: #F5F8FA;
+  border-color: rgba(245, 248, 250, 0.34);
+  background: rgba(245, 248, 250, 0.06);
+}
+.ork-hero-deep .ork-btn-line:hover {
+  border-color: rgba(245, 248, 250, 0.62);
+  background: rgba(245, 248, 250, 0.12);
+}
+
+@media (max-width: 640px) {
+  .ork-hero-deep { border-radius: 16px 16px 0 0; }
+  .ork-hero-centre-facts { gap: 6px 14px; font-size: 12.5px; }
+  .ork-hero-centre-facts > li + li::before { display: none; }
+}
+
+
+/* ── The nav over the deep hero ──────────────────────────────────────────
+ * ⚠ THE HOME NAV WAS DARK-ON-DARK AND THIS IS WHY. Navbar paints its ink
+ * with var(--deep-ink) when `onDeep` is set, and mono.css redefines
+ * --deep-ink to var(--text) on the light theme — because until now a
+ * "deep" section on the white site was not actually dark. This hero IS
+ * dark in both themes, so the token has to be the light ink again while
+ * the bar is over it.
+ *
+ * Redefined ON THE HEADER rather than globally: the inline style reads the
+ * variable from its own element, so this reaches the nav without touching
+ * any other section that uses deep tokens. Scoped to :not(.is-scrolled)
+ * because once scrolled the bar paints its own surface and the ink should
+ * follow the page again — which is the existing behaviour, unchanged.
+ */
+.ork-nav.is-deep:not(.is-scrolled) {
+  --deep-ink: #F5F8FA;
+  --deep-ink-muted: rgba(245, 248, 250, 0.66);
+}

@@ -74,7 +74,11 @@ export function Navbar({ onDeep = false }) {
           supposed to be flush to the viewport edge. The gap is now margin on
           the nav row itself, which is the only thing it was ever for. */}
       <header
-        className={`ork-nav fixed top-0 left-0 right-0 z-50${scrolled ? ' is-scrolled' : ''}`}
+        /* `is-deep` lets CSS reach this element when the bar is over a dark
+           hero. The ink itself still comes from the inline style below; the
+           class only re-points --deep-ink, which on the light theme would
+           otherwise resolve to the page's navy and paint dark on dark. */
+        className={`ork-nav fixed top-0 left-0 right-0 z-50${onDeep ? ' is-deep' : ''}${scrolled ? ' is-scrolled' : ''}`}
       >
         {/* ⚠ FIRST CHILD, AND OUTSIDE THE CONTAINER. The banner is full-bleed
             — it spans the viewport, not the content column — so it cannot go
@@ -92,7 +96,11 @@ export function Navbar({ onDeep = false }) {
                 64px bar it read as a faint smudge next to a solid wordmark.
                 The lockup crop is 346x106, so 2x stays sharp up to ~53px —
                 this keeps a margin under that ceiling. */}
-            <OrkastorLogo size={44} />
+            {/* ⚠ tone follows the GROUND, not the theme. Over the deep hero
+                the surface is navy in both themes, so the lockup needs its
+                inverse artwork — `auto` would read the theme and serve the
+                dark-ink version onto a dark panel. */}
+            <OrkastorLogo size={44} tone={inv ? 'light' : 'auto'} />
           </a>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
