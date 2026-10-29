@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Container, Button } from '../ui';
-import { HERO, EXTERNAL } from '@/content/site';
+import { HERO, EXTERNAL, COMPANY } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 /* Lazy so three.js stays out of the entry bundle — a visitor who bounces
@@ -8,11 +8,15 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
    that setting also means the chunk is never fetched. */
 const HeroField = lazy(() => import('@/components/ork/visuals/HeroField'));
 
-/* NOT lazy, unlike HeroField: the aura is the hero's subject and sits above
-   the fold, so deferring it would only guarantee it arrives after the copy
-   it is meant to sit beside. It costs no JS beyond this component — the
-   effect itself is CSS. */
-import { HeroAura } from '@/components/ork/visuals/HeroAura';
+/* ⚠ <HeroAura /> IS NO LONGER RENDERED. It was the mark floating in a
+   prismatic bloom in a three-column layout, following a previous reference.
+   The hero now follows a different one: a deep blue panel with the copy
+   centred on it and the light coming from the background rather than from
+   an object in the middle.
+
+   HeroAura.jsx stays on disk. It is self-contained, it carries the damped
+   pointer-tilt loop and the note about headless rAF throttling that cost
+   two wrong diagnoses, and re-rendering it is one import plus one tag. */
 
 /**
  * The home hero. Copy only.
@@ -242,7 +246,7 @@ export function Hero() {
          in Layout). Keeping a second one here would paint a section-sized
          gradient on top of the page-sized one, and the seam where they met
          would be the most visible edge on the site. */
-      className="ork-mono-hero ork-hero relative overflow-hidden"
+      className="ork-mono-hero ork-hero ork-hero-deep relative overflow-hidden"
     >
       {/* ── THE FIELD ──────────────────────────────────────────────────────
           A WebGL ambient ground, NOT the object that used to live here.
@@ -309,137 +313,53 @@ export function Hero() {
             and differing alternate widths are symmetric about it, which is
             what a centred headline is supposed to do. Verified by measuring
             the h1's centre across a full rotation; it does not move. */}
-        {/* ── THREE COLUMNS, FOLLOWING THE REFERENCE ───────────────────────
-            Headline and CTAs ranged left, the mark floating in a prismatic
-            bloom in the middle, three short supporting lines ranged right.
+        {/* ── CENTRED ON A DEEP PANEL ──────────────────────────────────────
+            Follows the supplied reference: everything centred on a dark blue
+            ground, with the light in the background rather than in an object.
+            Headline, one line of sub, the two controls, and the three facts.
 
-            The right-hand column is NOT new copy. It is the status list that
-            already sat as a row beneath the CTAs — "Live in production",
-            "Your clusters, your keys", "No inbound ports". Same content, same
-            job, better position: in the reference those three lines are what
-            balances the composition against the headline.
-
-            ⚠ Below 960px this collapses back to the centred stack the hero
-            used before, which is why .ork-hero-copy keeps its `text-align:
-            center` and .ork-hero-3col only un-centres it. Three columns need
-            about 900px before the headline sets one word per line. */}
-        <div className="ork-hero-3col" style={copyStyle}>
-        <div className="ork-hero-copy ork-hero-copy-left">
-          {/* The eyebrow ("INFRASTRUCTURE, WITHOUT THE OPERATING TAX") was
-              here. The reference opens straight on the headline, and the
-              line it carried is a positioning claim that the headline and
-              standfirst already make between them — kept in content/site.js
-              as HERO.eyebrow, so restoring it is re-adding this block. The
-              status descriptors that now sit under the CTAs do the job the
-              eyebrow was really doing: telling you this is real and running. */}
-
-          {/* Two lines, two colours, one <h1>. The second line carries its own
-              colour rather than relying on a gradient-clip: a clipped span
-              whose fallback is transparent is one unsupported property away
-              from invisible text. (It is no longer teal — see --rotator-ink.)
-
-              ⚠ Each line is WIDE, not stacked. The copy column runs the full
-              container so each line sets on one line instead of breaking into
-              two — four short lines read as a poem, not as a headline. It
-              still wraps on a phone, which is correct; the wrapping was only
-              wrong when there was room not to.
-
-              That constraint got EASIER, not harder, with the new copy: the
-              longest alternate is now 30 characters against the old 37, so
-              both lines clear the container with more room than before. */}
-          <div className="ork-hero-grid">
-          {/* ⚠ ONE LINE, AND <Rotator> IS GONE FROM THE RENDER. The headline
-              was two lines — a static first and a rotating second cycling
-              four alternates. It is now a single positioning line, so there
-              is no second line for the rotator to animate.
-
-              Rotator, HERO.titleB and HERO.titleBAlts all REMAIN on disk.
-              site.js says why they are kept; restoring the two-line headline
-              is re-adding the span below, which is left here as a comment
-              rather than described in prose so it can be pasted back:
-
-                <span className="ork-h1-line ork-h1-accent">
-                  <Rotator alts={HERO.titleBAlts} canonical={HERO.titleB}
-                           base={420} reduced={reduced} />
-                </span>
-
-              The word reveal still runs — `base={260}` is unchanged — so the
-              headline arrives the same way it always did, just without the
-              cycling line underneath. */}
-          <h1 className="ork-mono-h1">
+            ⚠ THE REFERENCE'S PROMPT BOX IS DELIBERATELY ABSENT. It is the
+            product on that site — you type into it and it builds something.
+            Orkastor has nothing behind it, so reproducing it would be an
+            input that does nothing, or worse, implies an AI product that
+            does not exist. The two CTAs occupy its position instead. */}
+        <div className="ork-hero-centre" style={copyStyle}>
+          <h1 className="ork-mono-h1 ork-hero-centre-h1">
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
           </h1>
 
-          {/* ⚠ THE STANDFIRST IS GONE FROM THE HERO. It read "KubeGraf is an
-              AI SRE for the clusters you already have…" and sat here, between
-              the headline and the buttons.
-
-              Two reasons, and the second is the one that settles it. It was a
-              KubeGraf sentence under an Orkastor headline, flagged as
-              mismatched when the headline became a company line. And the
-              reference this hero follows has no paragraph at all: headline,
-              two buttons, three short lines, and air. A four-line paragraph
-              is the difference between following that reference and merely
-              resembling it.
-
-              HERO.sub stays in content/site.js with the note explaining which
-              approved copy each half came from. Restoring it is re-adding
-              this <p>. */}
-          </div>
+          {/* COMPANY.oneLine, not HERO.sub. The reference carries one short
+              line under its headline, and this hero's headline is a company
+              statement — so the line under it has to be about the company
+              too. HERO.sub is a KubeGraf sentence and was retired from here
+              for exactly that mismatch. */}
+          <p className="ork-hero-centre-sub">
+            <Words key={`sub-${run}`} text={COMPANY.oneLine} base={560} step={13} reduced={reduced} />
+          </p>
 
           <div
             key={`cta-${run}`}
-            /* mt-8, not mt-10, and no arrows on the labels — see
-               .ork-hero-3col .ork-btn. With the paragraph gone the buttons
-               sit directly under the headline, which is the reference's
-               arrangement, and they only read as part of it if they are
-               quiet enough not to compete with 60px type. */
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-8 ork-hero-cta"
-            style={reduced ? undefined : { animationDelay: '700ms' }}
+            className="ork-hero-cta ork-hero-centre-cta"
+            style={reduced ? undefined : { animationDelay: '720ms' }}
           >
-            {/* Was /kubegraf, this site's own KubeGraf page. That page is gone
-                — the product has its own site, kept current by the team that
-                ships it, and a second one here was copy that could drift. */}
             <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
               Explore KubeGraf
             </Button>
-            {/* Was "Explore Domineta". The hero now has one product, so the
-                second CTA points at the thing a visitor most likely wants
-                next rather than at an unlisted one.
-
-                It pointed at /pricing, which no longer exists, and then at
-                kubegraf.io's root — which made both CTAs the same URL once
-                the primary went external. It now names the page it promises. */}
             <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer">
               See pricing
             </Button>
           </div>
-        </div>
 
-        {/* ── THE AURA ─────────────────────────────────────────────────────
-            The mark in a prismatic bloom. Not lazy-loaded and not WebGL:
-            HeroAura.jsx records why five blurred gradients beat a second GL
-            context here, and it is above the fold, so deferring it would
-            only guarantee it arrives late. */}
-        <HeroAura markSize={100} />
-
-        {/* ── THE THREE LINES ──────────────────────────────────────────────
-            Same list, same facts, moved from a row under the CTAs to the
-            right-hand column — which is where the reference puts them and
-            what balances the headline.
-
-            Still a <ul> and still three <li>: these are a list, and keeping
-            the element means the separators that the old row drew in CSS
-            simply stop applying rather than needing to be deleted. A screen
-            reader never read "dot" between them and still does not. */}
-        <ul
-          className="ork-hero-aside"
-          style={reduced ? undefined : { animationDelay: '820ms' }}
-        >
-          <li>Live in production</li>
-          <li>Your clusters, your keys</li>
-          <li>No inbound ports</li>
-        </ul>
+          {/* Same three facts, now a centred row beneath the controls —
+              which is where the reference puts its "or start from" row. */}
+          <ul
+            className="ork-hero-centre-facts"
+            style={reduced ? undefined : { animationDelay: '840ms' }}
+          >
+            <li>Live in production</li>
+            <li>Your clusters, your keys</li>
+            <li>No inbound ports</li>
+          </ul>
         </div>
       </Container>
     </section>
