@@ -636,18 +636,21 @@
      darkness on the vertical axis instead buys the same depth and can
      never land behind a glyph.
 
-     Every stop of the horizontal ramp clears AA against the ink: #A87A12
-     at the ends is 4.58:1, #CFA63A 7.70:1, #FFEDB4 at the centre 15.14:1.
-     #A87A12 is close to the floor — the darkest this gold can go against
-     #241602 is #AB771B — so do not deepen the ends without re-measuring. */
+     Every stop of the horizontal ramp clears AA against the ink: #BD7512
+     at the ends is 4.76:1, #E09A2E 7.36:1, #FFD98A at the centre 12.96:1.
+     The ends sit just above the floor — the darkest this amber can go
+     against #2A1403 is #B97110 (4.53:1) — so do not deepen them without
+     re-measuring. The amber ramp runs darker than the yellow-gold one did
+     at equal lightness, which is exactly why the ends had to be lifted
+     from the #7A3E05 the design started from. */
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 42%, rgba(90, 62, 6, 0.20) 100%),
-    linear-gradient(90deg, #A87A12 0%, #CFA63A 26%, #FFEDB4 50%, #CFA63A 74%, #A87A12 100%);
-  border-bottom: 1px solid #6E4A06;
-  box-shadow: inset 0 -1px 0 rgba(255, 245, 210, 0.22);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0) 42%, rgba(80, 40, 4, 0.22) 100%),
+    linear-gradient(90deg, #BD7512 0%, #E09A2E 26%, #FFD98A 50%, #E09A2E 74%, #BD7512 100%);
+  border-bottom: 1px solid #6B3B04;
+  box-shadow: inset 0 -1px 0 rgba(255, 228, 180, 0.22);
   /* Near-black-brown rather than pure black, so the ink belongs to the gold
      instead of reading as a hazard stripe. */
-  color: #241602;
+  color: #2A1403;
 }
 .ork-banner-inner {
   /* ⚠ ABOVE THE SHEEN. .ork-banner-sheen is a later sibling with no
