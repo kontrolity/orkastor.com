@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { Container, Button, Arrow } from '../ui';
+import { Container, Button } from '../ui';
 import { HERO, EXTERNAL } from '@/content/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -370,29 +370,38 @@ export function Hero() {
             <Words key={`t1-${run}`} text={HERO.titleA} base={260} reduced={reduced} />
           </h1>
 
-          {/* The standfirst sits between the headline and the buttons —
-              the one position it cannot be skipped from, since you pass it on
-              the way to the only two controls on the screen.
+          {/* ⚠ THE STANDFIRST IS GONE FROM THE HERO. It read "KubeGraf is an
+              AI SRE for the clusters you already have…" and sat here, between
+              the headline and the buttons.
 
-              It was briefly a right-hand column, copying the reference. That
-              laid it over the hero's 3D object; the object has since gone
-              (see above), so the collision is moot, but the stacked order is
-              the better reading anyway and stays. */}
-          <p className="ork-mono-sub ork-hero-lead">
-            <Words key={`sub-${run}`} text={HERO.sub} base={640} step={11} reduced={reduced} />
-          </p>
+              Two reasons, and the second is the one that settles it. It was a
+              KubeGraf sentence under an Orkastor headline, flagged as
+              mismatched when the headline became a company line. And the
+              reference this hero follows has no paragraph at all: headline,
+              two buttons, three short lines, and air. A four-line paragraph
+              is the difference between following that reference and merely
+              resembling it.
+
+              HERO.sub stays in content/site.js with the note explaining which
+              approved copy each half came from. Restoring it is re-adding
+              this <p>. */}
           </div>
 
           <div
             key={`cta-${run}`}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-10 ork-hero-cta"
+            /* mt-8, not mt-10, and no arrows on the labels — see
+               .ork-hero-3col .ork-btn. With the paragraph gone the buttons
+               sit directly under the headline, which is the reference's
+               arrangement, and they only read as part of it if they are
+               quiet enough not to compete with 60px type. */
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-8 ork-hero-cta"
             style={reduced ? undefined : { animationDelay: '700ms' }}
           >
             {/* Was /kubegraf, this site's own KubeGraf page. That page is gone
                 — the product has its own site, kept current by the team that
                 ships it, and a second one here was copy that could drift. */}
             <Button href={EXTERNAL.kubegrafSite} accent="kg" target="_blank" rel="noopener noreferrer">
-              Explore KubeGraf <Arrow />
+              Explore KubeGraf
             </Button>
             {/* Was "Explore Domineta". The hero now has one product, so the
                 second CTA points at the thing a visitor most likely wants
@@ -402,7 +411,7 @@ export function Hero() {
                 kubegraf.io's root — which made both CTAs the same URL once
                 the primary went external. It now names the page it promises. */}
             <Button href={EXTERNAL.kubegrafPricing} variant="secondary" target="_blank" rel="noopener noreferrer">
-              See pricing <Arrow />
+              See pricing
             </Button>
           </div>
         </div>
